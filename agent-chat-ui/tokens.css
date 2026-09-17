@@ -1,0 +1,69 @@
+[data-ds-theme] {
+  /* Agent Chat UI design tokens. Generic, unbranded, values-only. */
+
+  /* ===== colour ===== */
+  --ds-color-gold-50: #F9F7ED;
+  --ds-color-gold-100: #F2ECCF;
+  --ds-color-gold-500: #B68A35;
+  --ds-color-gold-600: #92722A;
+  --ds-color-gold-700: #7C5E24;
+
+  --ds-color-neutral-50: #F7F7F7;
+  --ds-color-neutral-100: #E1E3E5;
+  --ds-color-neutral-300: #9EA2A9;
+  --ds-color-neutral-500: #5F646D;
+  --ds-color-neutral-800: #232528;
+
+  --ds-color-red-50: #FEF2F2;
+  --ds-color-red-200: #FDCDCB;
+  --ds-color-red-700: #B52520;
+
+  --ds-color-green-50: #F3FAF4;
+  --ds-color-green-700: #2F663C;
+
+  --ds-color-focus: #D67907;
+
+  /* ===== type ===== */
+  --ds-font-body: "Roboto", sans-serif;
+  --ds-font-heading: "Inter", sans-serif;
+  --ds-font-body-rtl: "Noto Kufi Arabic", sans-serif;
+  --ds-font-heading-rtl: "Alexandria", sans-serif;
+  --ds-size-chat-text: 16px;
+  --ds-line-chat-text: 24px;
+  --ds-size-meta: 14px;
+  --ds-line-meta: 20px;
+
+  /* ===== spacing ===== */
+  --ds-space-unit: 4px;
+  --ds-panel-padding: 24px;
+  --ds-message-gap: 16px;
+  --ds-bubble-padding-y: 8px;
+  --ds-bubble-padding-x: 12px;
+  --ds-control-padding-x: 24px;
+
+  /* ===== shape ===== */
+  --ds-radius-control: 8px;
+  --ds-radius-card: 12px;
+  --ds-radius-pill: 999px;
+  --ds-control-height: 48px;
+  --ds-control-height-sm: 40px;
+  --ds-control-height-xs: 32px;
+
+  /* ===== elevation ===== */
+  --ds-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --ds-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --ds-shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.12);
+  --ds-shadow-window: 0 5px 40px rgba(0, 0, 0, 0.16);
+
+  /* ===== layout ===== */
+  --ds-popup-width: 24rem;
+  --ds-popup-height: 600px;
+  --ds-sidebar-width: 28rem;
+  --ds-header-height: 64px;
+
+  /* ===== motion ===== */
+  --ds-motion-activity: 1.4s;
+  --ds-motion-spinner: 1s;
+  --ds-motion-window-open: 200ms;
+  --ds-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+}

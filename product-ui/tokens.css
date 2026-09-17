@@ -1,0 +1,76 @@
+:root {
+  /* Product UI design tokens. Generic, unbranded, values-only. */
+
+  /* ===== colour ===== */
+  --ds-color-gold-300: #D7BC6D;
+  --ds-color-gold-500: #B68A35;
+  --ds-color-gold-600: #92722A;
+
+  --ds-color-neutral-50: #F7F7F7;
+  --ds-color-neutral-100: #E1E3E5;
+  --ds-color-neutral-800: #232528;
+  --ds-color-neutral-500: #5F646D;
+  --ds-color-page: #FFFFFF;
+  --ds-color-page-alt: #FCFCFC;
+
+  --ds-color-green-600: #3F8E50;
+  --ds-color-blue-600: #043DFF;
+  --ds-color-amber-fill: #D67909;
+  --ds-color-amber-text: #B2550B;
+  --ds-color-red-600: #D83731;
+  --ds-color-focus: #D67909;
+
+  /* AI-generated content chip (light) */
+  --ds-ai-chip-bg: #F9F7ED;
+  --ds-ai-chip-fg: #92722A;
+
+  /* ===== type ===== */
+  --ds-font-body: "Roboto", sans-serif;
+  --ds-font-heading: "Inter", sans-serif;
+  --ds-font-body-rtl: "Noto Kufi Arabic", sans-serif;
+  --ds-font-heading-rtl: "Alexandria", sans-serif;
+
+  --ds-size-h1: 76px; --ds-weight-h1: 200;
+  --ds-size-h2: 62px; --ds-weight-h2: 800;
+  --ds-size-h3: 48px; --ds-weight-h3: 800;
+  --ds-size-h4: 40px; --ds-weight-h4: 800;
+  --ds-size-h5: 32px; --ds-weight-h5: 700;
+  --ds-size-h6: 26px; --ds-weight-h6: 700;
+  --ds-size-h7: 20px; --ds-weight-h7: 600;
+
+  --ds-size-body-xl: 30px;
+  --ds-size-body-lg: 24px;
+  --ds-size-body-md: 20px;
+  --ds-size-body: 18px;
+  --ds-size-body-base: 16px;
+  --ds-size-body-sm: 14px;
+  --ds-size-caption: 12px;
+
+  /* ===== spacing ===== */
+  --ds-space-unit: 4px;
+  --ds-gap-xs: 8px;
+  --ds-gap-sm: 16px;
+  --ds-gap-md: 24px;
+  --ds-gap-lg: 28px;
+  --ds-grid-columns: 6;
+  --ds-grid-gutter: 24px;
+
+  /* ===== radii ===== */
+  --ds-radius-xs: 4px;
+  --ds-radius-sm: 6px;
+  --ds-radius-md: 8px;
+  --ds-radius-lg: 12px;
+  --ds-radius-xl: 16px;
+  --ds-radius-full: 999px;
+
+  /* ===== elevation ===== */
+  --ds-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --ds-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.10);
+  --ds-shadow-modal: 0 10px 15px -3px rgba(27, 29, 33, 0.10);
+
+  /* ===== motion ===== */
+  --ds-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ds-motion-standard: 0.3s;
+  --ds-motion-toggle: 200ms;
+  --ds-motion-spinner: 1s;
+}
