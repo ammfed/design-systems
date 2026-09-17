@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decision cards, template</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+<!--
+  Chart and layout rules for this template — see the folder README for the full rationale.
+  1. Bars or a dot plot on a shared scale only — never a radar/spider chart.
+  2. A rate/probability states a natural frequency first ("3 of 10"), percentage second at most.
+  3. A progress count pairs with a visible fill that closes toward the goal, not bare text.
+  4. One headline number per card, read first; supporting detail comes after it.
+  5. No points, badges, streaks, or leaderboards comparing people.
+  6. The weakest measure on a card carries a text/position cue, not colour alone.
+  7. Any range/projection is stated in words next to a shaded band, not shading alone.
+  8. Layout: the card sits on one side, a canvas showing the current decision visually sits beside it,
+     horizontally, never stacked. Each card may carry a `canvas` HTML/SVG string; without one, the canvas
+     draws the card's headline and bars large.
+-->
+<style>
+:root{
+  --gold-500:#B68A35; --gold-600:#92722A; --gold-700:#7C5E24; --gold-50:#F9F7ED;
+  --ink-900:#1B1D21; --ink-800:#232528; --ink-500:#5F646D; --ink-100:#E1E3E5;
+  --white-200:#F7F7F7;
+  --green-700:#2F663C; --green-50:#F3FAF4;
+  --amber-700:#B2550B; --amber-50:#FFFBEB;
+  --radius:12px;
+}
+*{box-sizing:border-box}
+body{background:#EDEDED;color:var(--ink-800);font-family:'Roboto',ui-sans-serif,system-ui,sans-serif;
+  font-size:15px;line-height:1.5;margin:0;padding-block:28px}
+h1,h2,h3{font-family:'Inter',ui-sans-serif,system-ui,sans-serif;color:var(--ink-900);margin:0}
+.wrap{max-width:1680px;margin:0 auto;padding-inline:28px}
+header.top{margin-bottom:18px}
+.eyebrow{font-family:'Roboto Mono',monospace;font-size:13px;letter-spacing:.06em;color:var(--gold-700);
+  text-transform:uppercase;margin-bottom:6px}
+h1{font-size:34px;font-weight:800;letter-spacing:-.01em}
+.lede{color:var(--ink-500);font-size:17px;margin-top:8px;max-width:none}
+
+.waiting{background:var(--amber-50);border:1px solid var(--ink-100);border-radius:var(--radius);
+  padding:14px 18px;margin-top:16px;display:flex;gap:18px;flex-wrap:wrap;align-items:baseline}
+.waiting b{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--amber-700);font-weight:700}
+.waiting ul{margin:0;padding:0;list-style:none;display:flex;gap:18px;flex-wrap:wrap}
+.waiting li{font-size:13.5px}
+.waiting a{color:var(--ink-800)}
+
+.progress-row{margin-top:20px;display:flex;flex-direction:column;gap:6px}
+.main{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;margin-top:12px;align-items:stretch}
+@media (max-width:720px){.main{grid-template-columns:1fr}}
+.canvas{background:#fff;border:1px solid var(--ink-100);border-radius:16px;padding:26px 28px;min-height:460px;
+  display:flex;flex-direction:column;gap:14px}
+.canvas .c-eyebrow{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--gold-700);letter-spacing:.04em}
+.canvas h2{font-size:22px;font-weight:800;line-height:1.3}
+.canvas .c-body{flex:1;display:flex;flex-direction:column;justify-content:center;gap:14px}
+.canvas .headline .num{font-size:56px}
+.canvas .visual .row{grid-template-columns:140px 1fr auto;font-size:14px}
+.canvas .visual .row .track{height:16px;border-radius:8px}
+.canvas svg{max-width:100%;height:auto}
+.c-tabs{display:flex;flex-wrap:wrap;gap:6px}
+.c-tabs button{font:600 13px 'Inter',sans-serif;border:1px solid var(--ink-100);background:#fff;color:var(--ink-800);
+  border-radius:999px;padding:6px 12px;cursor:pointer}
+.c-tabs button[aria-pressed="true"]{background:var(--gold-50);border-color:var(--gold-500);color:var(--gold-700)}
+.c-tabs .chosen{font-size:10px;font-weight:700;text-transform:uppercase;color:var(--green-700);margin-left:4px}
+.decided{margin-top:20px}
+.decided > summary{cursor:pointer;font-size:12.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-500);font-weight:700;padding:8px 0}
+
+.sheet{background:#fff;border:1px solid var(--ink-100);border-radius:16px;padding:26px 28px}
+.section-title{font-size:12.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-500);
+  font-weight:700;margin:0 0 12px}
+.group{margin-bottom:22px}
+.group:last-child{margin-bottom:0}
+.group h3{font-size:13.5px;font-weight:700;color:var(--gold-700);margin-bottom:8px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-500);
+  font-weight:700;padding:6px 8px;border-bottom:1px solid var(--ink-100)}
+td{padding:8px 8px;border-bottom:1px solid var(--white-200);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.date{color:var(--ink-500);font-size:12px;white-space:nowrap}
+.decided-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;
+  color:var(--green-700);background:var(--green-50);border-radius:4px;padding:2px 6px;margin-left:6px}
+
+.proposed{margin-top:20px}
+.proposed li{font-size:13px;color:var(--ink-500);margin-bottom:4px}
+
+/* --- decision stack, right pane --- */
+.side{padding:0;display:flex;flex-direction:column;gap:16px}
+.side .stack{flex:1}
+.side .card[data-depth="0"]{height:100%}
+.progress{display:flex;justify-content:space-between;align-items:baseline;
+  font-size:13px;font-variant-caps:small-caps;letter-spacing:.04em;color:var(--ink-500)}
+.progress b{font-weight:700;color:var(--ink-900)}
+/* rule 3: progress is a visible fill, not a bare count */
+.progress-bar{height:4px;background:var(--ink-100);border-radius:4px;overflow:hidden}
+.progress-bar i{display:block;height:100%;background:var(--gold-500);border-radius:4px;transition:width .3s ease}
+
+.stack{position:relative;display:grid;min-height:420px}
+.stack[hidden]{display:none}
+.card{position:absolute;inset:0;background:#fff;border:1px solid var(--ink-100);border-radius:16px;
+  padding:26px 28px;display:flex;flex-direction:column;gap:10px;transition:transform .35s ease,opacity .35s ease;overflow:hidden}
+.card[data-depth="0"]{position:relative;inset:auto;z-index:3;overflow:visible;box-shadow:none}
+.card[data-depth="1"]{transform:translate(8px,8px);z-index:2;pointer-events:none}
+.card[data-depth="2"]{transform:translate(16px,16px);z-index:1;pointer-events:none}
+.card:not([data-depth="0"]) > *{visibility:hidden}
+.card.gone{position:absolute;inset:0;transform:translateX(-110%) rotate(-4deg);opacity:0;pointer-events:none}
+.card[hidden]{display:none}
+
+.card-id{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--gold-700);letter-spacing:.04em}
+.card h3{font-size:17px;font-weight:700;line-height:1.35}
+.card .q{font-size:14px;color:var(--ink-800)}
+.card .note{font-size:12.5px;color:var(--ink-500);border-left:2px solid var(--gold-500);padding-left:10px}
+
+/* rule 4: one headline number per card, read first */
+.headline{display:flex;align-items:baseline;gap:10px;margin-top:2px}
+.headline .num{font-family:'Inter',sans-serif;font-weight:800;font-size:34px;line-height:1;color:var(--ink-900)}
+.headline .cap{font-size:12.5px;color:var(--ink-500)}
+
+/* rule 1: bars/dot plots only, rendered as plain divs, never a radar/canvas polygon */
+.visual{margin-top:2px;display:flex;flex-direction:column;gap:5px}
+.visual .row{display:grid;grid-template-columns:96px 1fr auto;gap:8px;align-items:center;font-size:12px}
+.visual .row .label{color:var(--ink-500)}
+.visual .row .track{display:block;height:9px;background:var(--white-200);border-radius:5px;overflow:hidden}
+.visual .row .fill{display:block;height:100%;background:var(--gold-500);border-radius:5px}
+.visual .row.weak .fill{background:#B52520}
+.visual .row .val{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--ink-800)}
+
+.opts{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+.opts label{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;padding:8px 10px;
+  border:1px solid var(--ink-100);border-radius:8px;cursor:pointer;position:relative}
+.opts label:has(input:checked){border-color:var(--gold-500);background:var(--gold-50)}
+.opts input{margin-top:3px}
+.rec-badge{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;
+  color:var(--green-700);background:var(--green-50);border-radius:4px;padding:1px 6px;margin-left:6px}
+
+/* evidence drawer: one-line evidence up top, detail behind Why */
+.evidence-line{font-size:12.5px;color:var(--ink-800);background:var(--gold-50);border-radius:8px;
+  padding:8px 10px;border:1px solid var(--gold-50)}
+.evidence-line b{color:var(--gold-700)}
+.why{border-top:1px solid var(--ink-100);margin-top:2px}
+.why summary{cursor:pointer;font-size:12.5px;font-weight:700;color:var(--gold-700);padding:8px 0;list-style:none}
+.why summary::-webkit-details-marker{display:none}
+.why summary::before{content:"Why  ";}
+.why[open] summary::after{content:" ▴"}
+.why summary::after{content:" ▾";color:var(--ink-500)}
+.why .detail{font-size:12.5px;color:var(--ink-500);padding-bottom:8px;line-height:1.6}
+.why .detail b{color:var(--ink-800)}
+
+textarea.reason{width:100%;border:1px solid var(--ink-100);border-radius:8px;padding:8px 10px;
+  font:12.5px 'Roboto',sans-serif;resize:vertical;min-height:44px;color:var(--ink-800)}
+textarea.reason::placeholder{color:var(--ink-500)}
+
+.queue-btn{align-self:flex-start;background:var(--ink-900);color:#fff;border:none;border-radius:8px;
+  padding:9px 16px;font:13px 'Inter',sans-serif;font-weight:700;cursor:pointer}
+.queue-btn:disabled{background:var(--ink-100);color:var(--ink-500);cursor:not-allowed}
+
+.done{border:2px solid var(--gold-500);border-radius:16px;padding:24px 26px;background:#fff}
+.done h2{font-size:19px;font-weight:800;margin-bottom:4px}
+.done p.note{font-size:13px;color:var(--ink-500);margin:0 0 14px}
+.ledger{list-style:none;margin:0 0 4px;padding:0;font-size:13px;line-height:1.9}
+.ledger b{color:var(--gold-700)}
+.send{width:100%;margin-top:16px;font:14px 'Inter',sans-serif;font-weight:700;letter-spacing:.02em;
+  background:var(--gold-600);color:#fff;border:none;border-radius:8px;padding:12px 16px;cursor:pointer}
+.send:disabled{background:var(--ink-100);color:var(--ink-500)}
+.sent{font-size:13px;color:var(--green-700);margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="eyebrow">Decisions review</div>
+  <h1>Decisions review</h1>
+  <p class="lede">Each open decision is shown as a picture on the left and a short question on the right. Answer each one, then send them all back together. What is already decided sits at the bottom.</p>
+</header>
+
+<div class="progress-row"><div class="progress"><span>open decisions</span><b id="progress"></b></div>
+<div class="progress-bar"><i id="bar" style="width:0%"></i></div></div>
+<main class="main">
+  <section class="canvas" id="canvas" aria-live="polite"></section>
+
+  <aside class="side">
+    <div class="stack" id="stack"></div>
+    <div class="done" id="done" hidden>
+      <h2>All open decisions answered</h2>
+      <p class="note">Your answers are recorded below. Send them back when ready.</p>
+      <ul class="ledger" id="ledger"></ul>
+      <button type="button" class="send" id="send" onclick="sendBack()">Send my answers back</button>
+      <p class="sent" id="sent" hidden>Sent.</p>
+    </div>
+  </aside>
+
+</main>
+<details class="decided">
+  <summary>Decided so far</summary>
+
+  <section class="sheet">
+    <span class="section-title">Decided so far</span>
+
+    <div class="group">
+      <h3>Example group</h3>
+      <table>
+        <thead><tr><th>Topic</th><th>Decision</th><th></th></tr></thead>
+        <tbody>
+          <tr><td>Example topic</td><td>Replace with a real decided row, or remove this table.</td><td class="date">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="proposed">
+      <span class="section-title">Proposed, not decided (for reference only)</span>
+      <ul>
+        <li>Replace with real proposed-but-undecided items, or remove this list.</li>
+      </ul>
+    </div>
+  </section>
+
+  </details>
+</div>
+
+<script>
+/*
+  CARD SHAPE (fill these fields in per card; none are mandatory beyond id/title/q/options):
+
+  headline: optional { num: "8/10", cap: "confirmed skill precision" } — one number, shown before detail (rule 4).
+  canvas: optional HTML or inline SVG drawn large in the side canvas while this card is on top.
+  previews: optional { optionValue: HTML/SVG } — one visual PER OPTION. The canvas shows buttons to flip between
+            every option's visual, and follows the radio the viewer picks. Use this for any visual choice —
+            never show only the recommended option's visual.
+  visual: optional array of { label, value 0..1, val: "4/5", weak?: true } — renders as bars, never radar (rule 1).
+          For a probability, prefer stating it in the label/val as a natural frequency, e.g. val:"3 of 10" (rule 2).
+  evidenceLine: optional one-sentence string shown above the Why drawer, the "evidence in one line" (rule 4).
+  why: optional free-form HTML detail, shown in a closed-by-default drawer.
+  rec: optional recommended-option value; the matching option gets the green "Recommended" badge (rule 4).
+*/
+const CARDS = [
+  { id:'D-1', title:'Assessment chart style', q:'Confirm bars for the assessment view, with the weakest measure marked.',
+    note:'Example card. Replace it with real content for each decision set.',
+    headline:{ num:'6/10', cap:'overall rating' },
+    visual:[
+      { label:'Likelihood', value:0.8, val:'4/5' },
+      { label:'Impact', value:0.6, val:'3/5' },
+      { label:'Controls', value:0.9, val:'4.5/5' },
+      { label:'Treatment', value:0.3, val:'weak', weak:true },
+      { label:'Monitoring', value:0.8, val:'4/5' },
+    ],
+    evidenceLine:'Bars beat radar on every measured axis: accuracy, speed, and honesty of scale.',
+    previews:{
+      'bars-only':'<p class="lede">Bars on one shared scale, weakest one marked.</p>',
+      'radar-only':'<p class="lede">A filled radar shape. The shape changes if the axes are reordered.</p>'
+    },
+    kind:'radio', name:'chart-style', rec:'bars-only',
+    options:[
+      ["bars-only","Bars only, weakest measure marked in red"],
+      ["radar-only","Replace with radar (not recommended)"],
+    ] },
+];
+
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function visualBlock(rows){
+  if (!rows || !rows.length) return '';
+  return `<div class="visual">${rows.map(r => `
+    <div class="row${r.weak ? ' weak' : ''}">
+      <span class="label">${esc(r.label)}</span>
+      <span class="track"><span class="fill" style="width:${Math.round((r.value||0)*100)}%"></span></span>
+      <span class="val">${esc(r.val||'')}</span>
+    </div>`).join('')}</div>`;
+}
+
+function cardBody(c){
+  if (c.kind === 'radio2') {
+    const groups = c.groups.map(g => `
+      <div class="opts-group">
+        <div style="font-size:12px;font-weight:700;color:var(--ink-500);margin-top:6px">${esc(g.label)}</div>
+        <div class="opts">
+          ${g.options.map(([v,l]) => `<label><input type="radio" name="${g.name}" value="${v}"> <span>${esc(l)}</span>${v===c.rec ? '<span class="rec-badge">Recommended</span>' : ''}</label>`).join('')}
+        </div>
+      </div>`).join('');
+    return groups;
+  }
+  return `<div class="opts">${c.options.map(([v,l]) => `<label><input type="radio" name="${c.name}" value="${v}"> <span>${esc(l)}</span>${v===c.rec ? '<span class="rec-badge">Recommended</span>' : ''}</label>`).join('')}</div>`;
+}
+
+const stack = document.getElementById('stack');
+let topIdx = 0; const ledger = [];
+stack.innerHTML = CARDS.map((c,i) => `
+  <div class="card" id="card-${i}" data-idx="${i}">
+    <span class="card-id">${c.id} · ${i+1}/${CARDS.length}</span>
+    <h3>${esc(c.title)}</h3>
+    <p class="q">${esc(c.q)}</p>
+    ${c.note ? `<p class="note">${esc(c.note)}</p>` : ''}
+    ${cardBody(c)}
+    ${c.evidenceLine ? `<p class="evidence-line"><b>Evidence:</b> ${esc(c.evidenceLine)}</p>` : ''}
+    ${c.why ? `<details class="why"><summary>evidence</summary><div class="detail">${c.why}</div></details>` : ''}
+    <textarea class="reason" placeholder="optional note"></textarea>
+    <button type="button" class="queue-btn" disabled onclick="commit(${i})">Queue this answer</button>
+  </div>`).join('');
+
+stack.querySelectorAll('input[type=radio]').forEach(r => r.addEventListener('change', () => {
+  const card = r.closest('.card');
+  const c = CARDS[Number(card.dataset.idx)];
+  const ready = c.kind === 'radio2'
+    ? c.groups.every(g => card.querySelector(`input[name="${g.name}"]:checked`))
+    : !!card.querySelector(`input[name="${c.name}"]:checked`);
+  card.querySelector('.queue-btn').disabled = !ready;
+  if (c.previews) { previewPick[c.id] = r.value; drawCanvas(); }
+}));
+
+let previewPick = {};
+function drawCanvas(){
+  const el = document.getElementById('canvas');
+  const c = CARDS[Math.min(topIdx, CARDS.length-1)];
+  if (topIdx >= CARDS.length) { el.innerHTML = '<div class="c-body"><h2>All answered</h2><p class="lede">Your picks are listed on the right. Send them when you are ready.</p></div>'; return; }
+  const opts = (c.options || []).filter(o => c.previews && c.previews[o[0]]);
+  if (opts.length) {
+    const card = document.getElementById('card-'+topIdx);
+    const checked = card && card.querySelector(`input[name="${c.name}"]:checked`);
+    const show = previewPick[c.id] || (checked && checked.value) || c.rec || opts[0][0];
+    const tabs = opts.map(([v,l]) => `<button type="button" data-lavish-action aria-pressed="${v===show}" onclick="previewPick['${c.id}']='${v}';drawCanvas()">${esc(l)}${checked && checked.value===v ? '<span class="chosen">picked</span>' : ''}</button>`).join('');
+    el.innerHTML = `<span class="c-eyebrow">${esc(c.id)} · ${topIdx+1} of ${CARDS.length}</span><h2>${esc(c.title)}</h2><div class="c-tabs" role="group" aria-label="Preview each option">${tabs}</div><div class="c-body">${c.previews[show]}</div>`;
+    return;
+  }
+  const body = c.canvas
+    ? c.canvas
+    : `${c.headline ? `<div class="headline"><span class="num">${esc(c.headline.num)}</span><span class="cap">${esc(c.headline.cap)}</span></div>` : ''}${visualBlock(c.visual)}`;
+  el.innerHTML = `<span class="c-eyebrow">${esc(c.id)} · ${topIdx+1} of ${CARDS.length}</span><h2>${esc(c.title)}</h2><div class="c-body">${body}</div>`;
+}
+
+function layout(){
+  CARDS.forEach((c,i) => {
+    const el = document.getElementById('card-'+i);
+    if (el.classList.contains('gone')) return;
+    const depth = i - topIdx;
+    if (depth < 0 || depth > 2) { el.hidden = depth !== 0; }
+    if (depth >= 0 && depth <= 2) { el.hidden = false; el.dataset.depth = String(depth); }
+  });
+  const n = Math.min(topIdx, CARDS.length);
+  document.getElementById('progress').textContent = `${n} / ${CARDS.length}`;
+  document.getElementById('bar').style.width = (100 * n / CARDS.length) + '%';
+  drawCanvas();
+}
+
+function commit(i){
+  const card = document.getElementById('card-'+i);
+  const c = CARDS[i];
+  const reason = card.querySelector('.reason').value.trim();
+  let answerText, data;
+  if (c.kind === 'radio2') {
+    const picks = c.groups.map(g => {
+      const val = card.querySelector(`input[name="${g.name}"]:checked`).value;
+      const label = g.options.find(o => o[0] === val)[1];
+      return `${g.label}: ${label}`;
+    });
+    answerText = picks.join('; ');
+    data = { id:c.id, picks };
+  } else {
+    const val = card.querySelector(`input[name="${c.name}"]:checked`).value;
+    answerText = c.options.find(o => o[0] === val)[1];
+    data = { id:c.id, answer: val };
+  }
+  ledger.push({ id:c.id, title:c.title, answer:answerText, reason });
+  if (window.lavish?.queuePrompt) {
+    window.lavish.queuePrompt(
+      `${c.id} (${c.title}): ${answerText}.` + (reason ? ` Note: ${reason}` : ''),
+      { tag:'ds-decision', queueKey:c.id, text:`${c.id}: ${answerText}`, element:card, data:{ ...data, reason } });
+  }
+  card.classList.add('gone');
+  topIdx += 1;
+  layout();
+  setTimeout(() => { card.hidden = true; layout(); }, 360);
+  if (topIdx >= CARDS.length) {
+    document.getElementById('ledger').innerHTML =
+      ledger.map(l => `<li><b>${l.id}</b> ${esc(l.title)} — ${esc(l.answer)}${l.reason ? ' (' + esc(l.reason) + ')' : ''}</li>`).join('');
+    setTimeout(() => { stack.hidden = true; document.getElementById('done').hidden = false; }, 400);
+  }
+}
+
+function sendBack(){
+  const btn = document.getElementById('send');
+  if (window.lavish?.queuePrompt) {
+    window.lavish.queuePrompt(
+      `All ${CARDS.length} open decisions on this card set are answered. Record these rulings, dated today.`,
+      { tag:'ds-decision', queueKey:'cards-complete', text:'All decisions recorded — update the source',
+        element: document.getElementById('done'), data:{ complete:true, ledger } });
+  }
+  window.lavish?.sendQueuedPrompts?.();
+  btn.disabled = true;
+  btn.textContent = 'Sent';
+  document.getElementById('sent').hidden = false;
+}
+
+layout();
+</script>
+</body>
+</html>

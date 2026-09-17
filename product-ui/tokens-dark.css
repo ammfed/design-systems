@@ -1,0 +1,31 @@
+/* Product UI — dark theme, opt-in EXTENSION. Not imported by tokens.css.
+   Load explicitly and set a dark-mode attribute on the document root.
+   Intended for internal, data-dense command views only — the public
+   website and product portal stay light; a page is one theme or the
+   other, never toggled at runtime. */
+[data-ds-theme="dark"] {
+  --ds-dark-bg-page: #1B1D21;
+  --ds-dark-bg-subtle: #0E0F12;
+  --ds-dark-bg-card: #232528;
+  --ds-dark-bg-raised: #3E4046;
+  --ds-dark-border: #3E4046;
+  --ds-dark-border-strong: #4B4F58;
+  --ds-dark-text: #E1E3E5;
+  --ds-dark-text-muted: #9EA2A9;
+  --ds-dark-text-heading: #FFFFFF;
+  --ds-dark-accent: #CBA344;
+  --ds-dark-accent-hover: #D7BC6D;
+  --ds-dark-accent-text: #D7BC6D;
+  --ds-dark-focus: #F29F0E;
+  --ds-dark-chip-bg: #3E4046;
+  --ds-dark-chip-fg: #D7BC6D;
+
+  /* status badges: deep ground + light-tinted text, not the light-mode pair */
+  --ds-dark-badge-neutral-bg: #3E4046;   --ds-dark-badge-neutral-fg: #E1E3E5;
+  --ds-dark-badge-success-bg: #1E3D25;   --ds-dark-badge-success-fg: #A6DBB0;
+  --ds-dark-badge-info-bg: #0B1F5C;      --ds-dark-badge-info-fg: #81C1FF;
+  --ds-dark-badge-warning-bg: #4A2A05;   --ds-dark-badge-warning-fg: #F6C76C;
+  --ds-dark-badge-error-bg: #5A1512;     --ds-dark-badge-error-fg: #FAAAA7;
+
+  color-scheme: dark;
+}
