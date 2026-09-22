@@ -1,69 +1,229 @@
-[data-ds-theme] {
-  /* Agent Chat UI design tokens. Generic, unbranded, values-only. */
+/* Agent Chat UI design tokens, 2.0.0. Generic, unbranded, values-only.
+   Scope: any element with a data-ds-theme attribute. Light is the default; load tokens-dark.css and set data-ds-theme="dark" for the opt-in dark theme.
+   Components read ROLES (surface, ink, line, user, machine, status, focus), never palette steps, so one set of names serves both themes.
+   Contrast for every role pair, light and dark, is in guidelines.md. */
 
-  /* ===== colour ===== */
+[data-ds-theme] {
+  /* ===== palette ===== */
   --ds-color-gold-50: #F9F7ED;
   --ds-color-gold-100: #F2ECCF;
-  --ds-color-gold-500: #B68A35;
-  --ds-color-gold-600: #92722A;
-  --ds-color-gold-700: #7C5E24;
+  --ds-color-gold-200: #E6D7A2;
+  --ds-color-gold-300: #D7BC6D;
+  --ds-color-gold-400: #CBA344;
+  --ds-color-gold-500: #B68A35;   /* accent only, never under white text (3.15:1) */
+  --ds-color-gold-600: #92722A;   /* white on it 4.50:1 */
+  --ds-color-gold-700: #7C5E24;   /* white on it 6.03:1 */
+  --ds-color-gold-edge: #EBDFBF;
 
+  --ds-color-neutral-0: #FFFFFF;
+  --ds-color-neutral-25: #FCFCFC;
   --ds-color-neutral-50: #F7F7F7;
   --ds-color-neutral-100: #E1E3E5;
+  --ds-color-neutral-200: #C3C6CB;
   --ds-color-neutral-300: #9EA2A9;
+  --ds-color-neutral-400: #797E86;
   --ds-color-neutral-500: #5F646D;
+  --ds-color-neutral-600: #4B4F58;
+  --ds-color-neutral-700: #3E4046;
   --ds-color-neutral-800: #232528;
+  --ds-color-neutral-900: #1B1D21;
+  --ds-color-neutral-950: #0E0F12;
+
+  --ds-color-blue-50: #EEF5FB;
+  --ds-color-blue-100: #DFECF7;
+  --ds-color-blue-200: #9FC0DA;
+  --ds-color-blue-300: #86B7E1;
+  --ds-color-blue-600: #2C6A9B;
 
   --ds-color-red-50: #FEF2F2;
   --ds-color-red-200: #FDCDCB;
+  --ds-color-red-300: #FAAAA7;
+  --ds-color-red-600: #D83731;
   --ds-color-red-700: #B52520;
-
   --ds-color-green-50: #F3FAF4;
+  --ds-color-green-300: #A0D5AB;
+  --ds-color-green-600: #3F8E50;
   --ds-color-green-700: #2F663C;
 
-  --ds-color-focus: #D67907;
+  --ds-color-amber-500: #F29F10;  /* focus ring, dark */
+  --ds-color-amber-600: #D67907;  /* the 1.x focus ring: 2.97:1 on the quiet well, so retired */
+  --ds-color-amber-700: #B2550A;  /* focus ring, light */
 
-  /* ===== type ===== */
-  --ds-font-body: "Roboto", sans-serif;
-  --ds-font-heading: "Inter", sans-serif;
-  --ds-font-body-rtl: "Noto Kufi Arabic", sans-serif;
-  --ds-font-heading-rtl: "Alexandria", sans-serif;
-  --ds-size-chat-text: 16px;
-  --ds-line-chat-text: 24px;
-  --ds-size-meta: 14px;
-  --ds-line-meta: 20px;
+  /* ===== roles: light (the default) ===== */
+  --ds-surface: var(--ds-color-neutral-0);           /* the page, the dock, the thread */
+  --ds-surface-quiet: var(--ds-color-neutral-50);    /* a well: filled chip, code, table head, hover, selected row */
+  --ds-surface-raised: var(--ds-color-neutral-0);    /* cards and the message box, lifted by elevation */
+  --ds-surface-overlay: var(--ds-color-neutral-0);   /* popovers, the tooltip, the popup window */
+  --ds-surface-side: var(--ds-color-neutral-25);
+  --ds-ink: var(--ds-color-neutral-800);             /* 15.37:1 */
+  --ds-ink-muted: var(--ds-color-neutral-500);       /* 5.95:1; 5.55:1 on the quiet well */
+  --ds-ink-faint: var(--ds-color-neutral-300);       /* disabled only, never meaning */
+  --ds-line: var(--ds-color-neutral-100);
+  --ds-line-strong: var(--ds-color-neutral-200);
+  --ds-line-bold: var(--ds-color-neutral-300);
+  /* The user: the accent hue marks the user and nothing else (their bubble, the message box, their avatar, where they are, their choice, their own action) */
+  --ds-user-strong: var(--ds-color-gold-600);
+  --ds-user-strong-hover: var(--ds-color-gold-700);
+  --ds-user-on-strong: var(--ds-color-neutral-0);
+  --ds-user-idle: var(--ds-color-gold-200);
+  --ds-user-bg: var(--ds-color-gold-50);
+  --ds-user-bg-hover: var(--ds-color-gold-100);
+  --ds-user-edge: var(--ds-color-gold-edge);
+  --ds-user-mark: var(--ds-color-gold-500);
+  --ds-user-ink: var(--ds-color-gold-700);         /* 5.61:1 on the user's ground */
+  /* The machine: anything the assistant or a helper produced */
+  --ds-machine: var(--ds-color-blue-600);            /* links, the streaming caret, activity: 5.77:1 */
+  --ds-machine-rule: var(--ds-color-blue-200);       /* the 2px rule beside the assistant's words */
+  --ds-machine-soft: var(--ds-color-blue-100);
+  --ds-machine-tint: var(--ds-color-blue-50);
+  --ds-error-bg: var(--ds-color-red-50);
+  --ds-error-line: var(--ds-color-red-200);
+  --ds-error-ink: var(--ds-color-red-700);
+  --ds-success-bg: var(--ds-color-green-50);
+  --ds-success-ink: var(--ds-color-green-700);
+  --ds-focus: var(--ds-color-amber-700);             /* 4.66 to 5.00:1 on every light surface */
 
-  /* ===== spacing ===== */
+  /* ===== type: a minor third (x1.2) from 16, named roles =====
+     footnote 14 (step -1) · body 16 · name 17 (half step) · heading 20 (step 1) · title 24-28 (step 3, fluid) · greeting 28-34 (step 4, fluid).
+     Families by name only; nothing is shipped. Every family ends in a system fallback. */
+  --ds-font-body: "Roboto", ui-sans-serif, system-ui, sans-serif;
+  --ds-font-heading: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --ds-font-body-rtl: "Noto Kufi Arabic", "Noto Sans Arabic", Tahoma, system-ui, sans-serif;
+  --ds-font-heading-rtl: "Alexandria", "Noto Kufi Arabic", Tahoma, system-ui, sans-serif;
+  --ds-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --ds-size-footnote: 0.875rem;
+  --ds-size-body: 1rem;
+  --ds-size-name: 1.0625rem;
+  --ds-size-heading: 1.25rem;
+  --ds-size-title: clamp(1.5rem, 1.1rem + 1.1cqi, 1.75rem);
+  --ds-size-greeting: clamp(1.75rem, 1.25rem + 1.2cqi, 2.125rem);
+
+  /* ===== space and shape ===== */
   --ds-space-unit: 4px;
-  --ds-panel-padding: 24px;
-  --ds-message-gap: 16px;
-  --ds-bubble-padding-y: 8px;
-  --ds-bubble-padding-x: 12px;
-  --ds-control-padding-x: 24px;
-
-  /* ===== shape ===== */
-  --ds-radius-control: 8px;
-  --ds-radius-card: 12px;
-  --ds-radius-pill: 999px;
-  --ds-control-height: 48px;
-  --ds-control-height-sm: 40px;
-  --ds-control-height-xs: 32px;
-
-  /* ===== elevation ===== */
-  --ds-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
-  --ds-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --ds-shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.12);
-  --ds-shadow-window: 0 5px 40px rgba(0, 0, 0, 0.16);
-
-  /* ===== layout ===== */
+  --ds-space-1: 0.25rem; --ds-space-2: 0.5rem; --ds-space-3: 0.75rem; --ds-space-4: 1rem; --ds-space-6: 1.5rem; --ds-space-8: 2rem; --ds-space-12: 3rem;
+  --ds-radius-control: 0.5rem;
+  --ds-radius-bubble: 0.625rem;
+  --ds-radius-card: 0.75rem;
+  --ds-radius-window: 1rem;
+  --ds-radius-pill: 9999px;
+  --ds-target-min: 32px;          /* nothing smaller; WCAG 2.2 asks for 24 */
+  --ds-focus-width: 2px;
+  --ds-focus-offset: 2px;
+  --ds-rail-width: 56px;
+  --ds-face: 2.5rem;
+  --ds-face-greeting: 7.5rem;
+  --ds-greeting-width: 600px;
   --ds-popup-width: 24rem;
   --ds-popup-height: 600px;
   --ds-sidebar-width: 28rem;
   --ds-header-height: 64px;
 
-  /* ===== motion ===== */
-  --ds-motion-activity: 1.4s;
-  --ds-motion-spinner: 1s;
-  --ds-motion-window-open: 200ms;
-  --ds-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  /* ===== elevation and material: five levels, one job each ===== */
+  --ds-elevation-0: none;                                                                             /* ground */
+  --ds-elevation-1: 0 1px 2px rgb(14 15 18 / 0.06), 0 1px 3px rgb(14 15 18 / 0.04);                  /* raised: cards */
+  --ds-elevation-2: 0 2px 4px rgb(14 15 18 / 0.05), 0 8px 20px -6px rgb(14 15 18 / 0.12);            /* floating: toggle, jump, tooltip */
+  --ds-elevation-3: 0 4px 8px rgb(14 15 18 / 0.05), 0 18px 40px -12px rgb(14 15 18 / 0.20);          /* overlay: popovers */
+  --ds-elevation-4: 0 8px 16px rgb(14 15 18 / 0.06), 0 28px 64px -16px rgb(14 15 18 / 0.26);         /* window: the popup */
+  --ds-material-glass: rgb(255 255 255 / 0.90);      /* small floating layers only; text stays AA even over pure black */
+  --ds-material-filter: blur(20px) saturate(1.25);
+  --ds-material-edge: rgb(14 15 18 / 0.08);
+  --ds-dock-edge: inset -1px 0 0 var(--ds-line), inset -6px 0 12px -10px rgb(14 15 18 / 0.18);
+  --ds-dock-edge-rtl: inset 1px 0 0 var(--ds-line), inset 6px 0 12px -10px rgb(14 15 18 / 0.18);
+
+  /* ===== motion: one calm tempo ===== */
+  --ds-duration-quick: 120ms;     /* hover tints, a tooltip, anything leaving */
+  --ds-duration-control: 200ms;   /* focus, press, the send colour */
+  --ds-duration-content: 400ms;   /* a message arriving, a popover */
+  --ds-duration-card: 450ms;      /* the dock folding to the rail */
+  --ds-duration-travel: 700ms;    /* the message box travelling from the greeting into the dock */
+  --ds-ease: cubic-bezier(.22, 1, .36, 1);        /* enter and settle */
+  --ds-ease-exit: cubic-bezier(.4, 0, 1, 1);      /* accelerate away */
+  --ds-ease-move: cubic-bezier(.65, 0, .35, 1);   /* something on screen changing size or place */
+  --ds-ease-spring: var(--ds-ease);               /* the travel; replaced by a sampled spring below where linear() is supported */
+  --ds-motion-rise: 8px;
+  --ds-motion-pop-scale: 0.98;
+  --ds-activity-cycle: 1.4s;
+  --ds-spinner-cycle: 1s;
+
+  /* ===== 1.x names, kept as aliases for this major version; new work uses the names above ===== */
+  --ds-color-focus: var(--ds-focus);
+  --ds-size-chat-text: var(--ds-size-body); --ds-line-chat-text: 1.5rem;
+  --ds-size-meta: var(--ds-size-footnote); --ds-line-meta: 1.25rem;
+  --ds-shadow-sm: var(--ds-elevation-1); --ds-shadow-md: var(--ds-elevation-2); --ds-shadow-lg: var(--ds-elevation-3); --ds-shadow-window: var(--ds-elevation-4);
+  --ds-motion-activity: var(--ds-activity-cycle); --ds-motion-spinner: var(--ds-spinner-cycle);
+  --ds-motion-window-open: var(--ds-duration-control); --ds-ease-standard: var(--ds-ease);
+  --ds-control-height-sm: 2.5rem; --ds-control-height-xs: 2rem; --ds-control-padding-x: 1.5rem;
+}
+
+@supports (transition-timing-function: linear(0, 1)) {
+  /* 0.93% overshoot, settles by 700ms, never a bounce */
+  [data-ds-theme] { --ds-ease-spring: linear(0, 0.049 4.2%, 0.163 8.3%, 0.303 12.5%, 0.444 16.7%, 0.574 20.8%, 0.686 25%, 0.777 29.2%, 0.848 33.3%, 0.902 37.5%, 0.941 41.7%, 0.969 45.8%, 0.987 50%, 0.998 54.2%, 1.005 58.3%, 1.008 62.5%, 1.009 66.7%, 1.009 70.8%, 1.008 75%, 1.007 79.2%, 1.006 83.3%, 1.004 87.5%, 1.003 91.7%, 1.002 95.8%, 1); }
+}
+
+/* Direction: families and leading follow the text direction. Left to right is the default; Arabic takes taller leading (body 16/28) and is never tracked.
+   Separate rules on purpose, so a browser without :dir() still honours an explicit dir attribute. */
+[data-ds-theme], [data-ds-theme] [dir="ltr"] {
+  --ds-family-text: var(--ds-font-body); --ds-family-display: var(--ds-font-heading);
+  --ds-leading-footnote: 1.25rem; --ds-leading-body: 1.5rem; --ds-leading-name: 1.5rem; --ds-leading-heading: 1.75rem;
+  --ds-leading-title: 1.2857; --ds-leading-greeting: 1.2941; --ds-tracking-display: -0.01em;
+}
+[data-ds-theme]:dir(rtl) {
+  --ds-family-text: var(--ds-font-body-rtl); --ds-family-display: var(--ds-font-heading-rtl);
+  --ds-leading-footnote: 1.5rem; --ds-leading-body: 1.75rem; --ds-leading-name: 1.75rem; --ds-leading-heading: 2rem;
+  --ds-leading-title: 1.4286; --ds-leading-greeting: 1.4118; --ds-tracking-display: 0;
+}
+[data-ds-theme][dir="rtl"], [data-ds-theme] [dir="rtl"] {
+  --ds-family-text: var(--ds-font-body-rtl); --ds-family-display: var(--ds-font-heading-rtl);
+  --ds-leading-footnote: 1.5rem; --ds-leading-body: 1.75rem; --ds-leading-name: 1.75rem; --ds-leading-heading: 2rem;
+  --ds-leading-title: 1.4286; --ds-leading-greeting: 1.4118; --ds-tracking-display: 0;
+}
+/* Type roles, used as font shorthands: font: var(--ds-type-body). Nothing below body except the footnote. */
+[data-ds-theme], [data-ds-theme] [dir] {
+  --ds-type-footnote: 400 var(--ds-size-footnote)/var(--ds-leading-footnote) var(--ds-family-text);
+  --ds-type-body: 400 var(--ds-size-body)/var(--ds-leading-body) var(--ds-family-text);
+  --ds-type-body-strong: 500 var(--ds-size-body)/var(--ds-leading-body) var(--ds-family-text);
+  --ds-type-name: 600 var(--ds-size-name)/var(--ds-leading-name) var(--ds-family-display);
+  --ds-type-heading: 600 var(--ds-size-heading)/var(--ds-leading-heading) var(--ds-family-display);
+  --ds-type-title: 700 var(--ds-size-title)/var(--ds-leading-title) var(--ds-family-display);
+  --ds-type-greeting: 700 var(--ds-size-greeting)/var(--ds-leading-greeting) var(--ds-family-display);
+  --ds-type-code: 400 0.9375rem/1.5rem var(--ds-font-mono); /* 15/24 mono reads as 16 body */
+}
+
+/* Density: space and targets, never type. Comfortable is the default. */
+[data-ds-theme], [data-ds-density="comfortable"] {
+  --ds-dock-width: 400px; --ds-panel-padding: 1.125rem; --ds-message-gap: 0.875rem;
+  --ds-bubble-padding-y: 0.5rem; --ds-bubble-padding-x: 1rem; --ds-card-padding: 1.5rem;
+  --ds-control-height: 3rem; --ds-chip-height: 2.5rem; --ds-icon-button: 2.25rem; --ds-icon-button-dock: 2rem; --ds-row-height: 3rem;
+}
+[data-ds-density="compact"] {
+  --ds-dock-width: 380px; --ds-panel-padding: 0.875rem; --ds-message-gap: 0.625rem;
+  --ds-bubble-padding-y: 0.375rem; --ds-bubble-padding-x: 0.75rem; --ds-card-padding: 1.125rem;
+  --ds-control-height: 2.5rem; --ds-chip-height: 2.25rem; --ds-icon-button: 2rem; --ds-icon-button-dock: 2rem; --ds-row-height: 2.5rem;
+}
+[data-ds-density="touch"] {
+  --ds-dock-width: 440px; --ds-panel-padding: 1.25rem; --ds-message-gap: 1rem;
+  --ds-bubble-padding-y: 0.625rem; --ds-bubble-padding-x: 1.125rem; --ds-card-padding: 1.5rem;
+  --ds-control-height: 3rem; --ds-chip-height: 2.75rem; --ds-icon-button: 2.75rem; --ds-icon-button-dock: 2.75rem; --ds-row-height: 3.25rem;
+}
+
+/* The user's system settings, honoured at the token level */
+@media (prefers-reduced-motion: reduce) {
+  [data-ds-theme] {
+    --ds-duration-control: var(--ds-duration-quick); --ds-duration-content: var(--ds-duration-quick);
+    --ds-duration-card: 0ms; --ds-duration-travel: 0ms; --ds-motion-rise: 0px; --ds-motion-pop-scale: 1;
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  [data-ds-theme] { --ds-material-glass: var(--ds-surface-overlay); --ds-material-filter: none; }
+}
+@media (prefers-contrast: more) {
+  [data-ds-theme] {
+    --ds-line: var(--ds-color-neutral-400); --ds-line-strong: var(--ds-color-neutral-500); --ds-line-bold: var(--ds-color-neutral-600);
+    --ds-ink-muted: var(--ds-color-neutral-600); --ds-user-edge: var(--ds-color-gold-500); --ds-machine-rule: var(--ds-color-blue-600);
+    --ds-material-glass: var(--ds-surface-overlay);
+  }
+}
+@media (forced-colors: active) {
+  /* Shadows and fills disappear: floating layers need a real border (see guidelines.md) and the glass stops blurring */
+  [data-ds-theme] { --ds-material-filter: none; }
 }

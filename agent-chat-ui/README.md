@@ -1,43 +1,58 @@
 # Agent Chat UI
 
-A theme for an AI chat assistant surface — inline panel, sidebar, and popup — in a chat-framework-agnostic form: colour, type, shape, spacing and motion tokens, plus the slot and label conventions a typical chat-framework theming layer expects (message view, scroll view, input, suggestions, welcome screen, header, toggle button, and nested assistant/user/toolbar elements). It does not replace any chat framework's own component library — it themes it.
+A theme for an AI chat assistant surface: a docked panel that folds to a rail, an inline panel, a sidebar, and a floating popup. It is framework-agnostic: colour, type, space, depth and motion tokens, plus the slot and label conventions a typical chat-framework theming layer expects. It themes a chat framework's own components; it does not replace them.
 
-Three surfaces are covered, each in both text directions: an inline **chat panel**, a **sidebar** panel, and a floating **popup** with its own toggle. Light theme only for this release.
+Version 2.0.0 adds a principled type scale, an opt-in dark theme, motion, depth and materials, density modes, a measured WCAG 2.2 AA pass in both themes, and four components the system was missing. Everything works in both text directions.
+
+Open `preview.html` to see it: the tokens, light and dark side by side, the motion and depth in use, and the key components. It makes no network requests.
+
+## The rules that make the look
+
+1. **Nothing small unless it earns its place.** No badges, tags, captions, sub-labels, timestamps, system rows or hint lines beyond the few that honesty or meaning keeps. State lives in the control. Everything is body size (16/24) except a footnote role for footer lines.
+2. **The ways to talk are icons inside the message box**: type, speak, live conversation, then send. One row, each icon with one short sentence. Never worded buttons, and no disclaimer line under the box.
+3. **The mode picker is one icon** at the start of the box. Opened, one row per mode with one sentence each, and one fixed line: an act with consequences always waits for the user, in every mode.
+4. **The greeting is four things**: the face, one line, the message box, up to five suggestion chips. No digest, no count, no tagline.
+5. **The dock has a designed edge**, never a plain border, and folds to a 56px rail.
+6. **The accent marks the user and nothing else**: their bubble, the message box, their avatar, where they are, their choice, their own action. Never chips in general, counts, stripes, rules, links or activity. Structure is ink; the machine is a quiet blue tint.
+7. **Full mirror in right to left.** Logical properties throughout; digits stay Latin; faces never flip.
+8. **Generous space, calm motion.** Nothing decorative moves and nothing decorative loops.
 
 ## Content rules
 
-- Formal, plain, institutional tone. Second person to the user ("Ask a question", "Verify important information"); the assistant never speaks in an effusive first person. No exclamation marks, no emoji, no jokes.
-- Sentence case everywhere; spell the product name out in full rather than using a nickname.
-- Every string exists in both languages and is delivered through the framework's label/slot props — never hard-coded into CSS or DOM overrides. Digits use a consistent style in both languages.
-- A disclaimer stays visible under the input: the assistant may make mistakes, verify important information.
-- Labels are short imperatives: Send, Retry, Approve, Request changes.
+- Plain, direct words. Address the user as you. No exclamation marks, no emoji, no jokes, no taglines.
+- Sentence case everywhere.
+- Every string exists in both languages and comes through the framework's label and slot props, never hard-coded in CSS or DOM overrides. Every icon's sentence is its accessible name and its tooltip.
+- Labels are short imperatives: Send, Retry, Approve, Change.
 
-## Visual foundations
+## What 2.0.0 adds
 
-**Colour.** One hue. The primary action colour sits at exactly the accessibility threshold for 16px/medium-weight text, so it is used at that size or larger. A brighter version of the same hue is accent-only — icons, a header rule, a hover state — never a background under white text. A soft tint of the hue marks user message bubbles, pills and selected states. Body text is near-black neutral; secondary text and borders are lighter neutrals; two surfaces only (white and a very light grey). Success and error each get one supporting hue, used only in confirmation and error contexts.
+**Roles, not palette steps.** Components read roles: surface (ground, quiet, raised, overlay, side), ink (text, muted, faint), line (hairline, strong, bold), user, machine, error, success and focus. One set of names serves both themes.
 
-**Type.** Two family pairings, one per text direction, swapped by direction rather than duplicated per component. Chat text is never smaller than 16/24; timestamps, disclaimers and pills go down to 14/20; nothing drops below 12px. At most five weights on one screen.
+**Dark theme, opt-in.** Load `tokens-dark.css` and set `data-ds-theme="dark"`. Light stays the default everywhere. A near-black ground `#1B1D21`, wells and cards one step lighter, overlays one more; soft ink `#E1E3E5` to avoid halation; the user's strong colour moves to a lighter step carrying dark ink; the machine lightens to a pale blue.
 
-**Spacing and shape.** A 4px spacing scale; panel padding roughly 24px; message gap roughly 16px; bubble padding 8/12. Controls, inputs and bubbles get a small radius; cards, the chat window and code blocks get a larger radius; badges, chips and the popup toggle are fully rounded.
+**Measured contrast.** 23 role pairs computed from the token files in both themes: every text pair 4.5:1 or better, every control edge, icon and focus ring 3:1 or better. Translucent glass was measured over pure black and pure white. The table is in `guidelines.md`.
 
-**Elevation.** Inputs and chips carry a small shadow, cards and the toggle a medium one, modals a large one, and the floating window its own soft, wide shadow. No shadow anywhere is decorative — each marks a distinct elevation level.
+**Type roles on one scale.** A minor third (x1.2) from 16. Roles are `font` shorthands (`--ds-type-footnote`, `-body`, `-body-strong`, `-name`, `-heading`, `-title`, `-greeting`, `-code`). Title and greeting are fluid by container width, so the greeting fits a narrow dock without wrapping. Right-to-left text takes taller leading (body 16/28).
 
-**Backgrounds.** Flat white or very light grey only. No gradients, no glows, no textures, no photography behind the UI.
+**Depth and materials.** Five elevation levels, each with one job (ground, raised, floating, overlay, window): two-layer shadows in light, a rim of light plus a deeper shadow in dark. One glass material for small floating layers only, opaque enough that text stays at AA over anything. The dock edge is one token that themes and mirrors.
 
-**Interaction states.** Hover darkens the primary colour by one step and lightens the soft tint by one step; message controls fade in rather than snapping in. Press uses colour only, no scale change beyond a chat framework's own small icon-button scale. Focus is a solid 2px ring in a colour distinct from the primary action colour, offset from the element. Disabled drops opacity to 30% (50% for soft-tinted elements) and removes pointer interaction.
+**Motion.** Five durations, four easings including a sampled spring under 1% overshoot, and four transitions that earn their place (`motion.css`): a new turn rises into place, the machine rule draws as a reply starts, a popover grows from its anchor, a tooltip fades. Reduced motion stills travel, scale and loops and keeps a short fade.
 
-**Layout.** A popup window is roughly 24rem wide and 600px tall; a sidebar is roughly 28rem wide and full height; both keep a fixed header, a pinned input at the bottom, and a scrolling message area between them. The mirrored-direction layout flips alignment so the user's own messages sit at the inline-end.
+**Density.** `data-ds-density="compact|comfortable|touch"` changes space and targets, never type. No target under 32px; touch gives 44px.
 
-**Motion.** Activity indicator roughly 1.4s ease-in-out, a spinner at 1s linear, window open at roughly 200ms ease-out. No bounces.
+**Accessibility.** A focus ring that reaches 3:1 on every surface and draws inward inside the message box; a real tooltip in place of the browser `title`; pressed states on the microphone and live buttons; the mode picker as a radio group; the thread as a polite log; answers to more contrast, reduced transparency, reduced motion and forced colours.
 
-## Iconography
-
-One icon family, regular weight for body text, bold weight paired with headings, minimum 24px, rendered in the current text colour. A fixed mapping from icon name to role (send, stop, regenerate, open, close, push-to-talk, activity, attach, copy, feedback, error, success) keeps every instance of the assistant consistent. Directional glyphs (arrows, carets, the send icon) mirror in the reversed text direction; everything else stays put. No icon font, no emoji, no Unicode glyphs as icons.
+**Components added.** Tooltip, jump to the latest, hand-off row, approval card. See `guidelines.md`.
 
 ## Files
 
 ```
-tokens.css        colour, type, spacing, shape, and motion custom properties
-guidelines.md     the rules above in full, plus the slot/label mapping
+tokens.css        palette, light roles, type, space, shape, density, elevation, material and motion tokens
+tokens-dark.css   the opt-in dark theme: the same roles, redefined
+motion.css        optional: the transition and status-loop classes
+guidelines.md     the rules in full: roles, measured contrast, type, density, depth, motion, accessibility, layout, icons, slots, components
+preview.html      one self-contained page showing the system in both themes
 CHANGELOG.md      dated changes to this system
 ```
+
+Fonts are referenced by family name only and never shipped; every stack ends in a system fallback, so the system reads correctly with no web font at all.

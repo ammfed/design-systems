@@ -1,0 +1,59 @@
+/* Agent Chat UI, dark theme, 2.0.0. OPT-IN: not imported by tokens.css. Load it after tokens.css and set data-ds-theme="dark" on the element that should be dark.
+   Light stays the default everywhere. The same role names as tokens.css, so every component follows without a second stylesheet.
+   Tints are a palette colour at a stated opacity over the dark ground, flattened to hex so they never shift with what is behind them.
+   The accent still marks the user and nothing else. Every text pair is 4.5:1 or better and every control and ring 3:1 or better; the table is in guidelines.md. */
+[data-ds-theme="dark"] {
+  --ds-surface: var(--ds-color-neutral-900);        /* #1B1D21 */
+  --ds-surface-quiet: var(--ds-color-neutral-800);  /* wells read lighter than the ground in the dark */
+  --ds-surface-raised: var(--ds-color-neutral-800);
+  --ds-surface-overlay: #2C2E30;                    /* white 4% over neutral-800: popovers one step above cards */
+  --ds-surface-side: var(--ds-color-neutral-950);
+  --ds-ink: var(--ds-color-neutral-100);            /* 13.12:1; softer than white, no halation */
+  --ds-ink-muted: var(--ds-color-neutral-300);      /* 6.59:1; 6.00:1 on a well */
+  --ds-ink-faint: var(--ds-color-neutral-600);      /* disabled only */
+  --ds-line: var(--ds-color-neutral-700);
+  --ds-line-strong: var(--ds-color-neutral-600);
+  --ds-line-bold: var(--ds-color-neutral-400);
+  --ds-user-strong: var(--ds-color-gold-400);     /* 7.12:1; carries dark ink, never white (white on it is 2.37:1) */
+  --ds-user-strong-hover: var(--ds-color-gold-300);
+  --ds-user-on-strong: var(--ds-color-neutral-900);
+  --ds-user-idle: #463B27;                        /* gold-500 28% over the ground */
+  --ds-user-bg: #312C24;                          /* gold-500 14% */
+  --ds-user-bg-hover: #3D3525;                    /* gold-500 22% */
+  --ds-user-edge: #4D4027;                        /* gold-500 32% */
+  --ds-user-mark: var(--ds-color-gold-500);
+  --ds-user-ink: var(--ds-color-gold-100);        /* 11.66:1 on the user's ground */
+  --ds-machine: var(--ds-color-blue-300);           /* 7.94:1 */
+  --ds-machine-rule: var(--ds-color-blue-600);
+  --ds-machine-soft: #1F2F3E;                       /* blue-600 24% */
+  --ds-machine-tint: #1D2832;                       /* blue-600 14% */
+  --ds-error-bg: #3D2224;                           /* red-600 18% */
+  --ds-error-line: #702928;                         /* red-600 45% */
+  --ds-error-ink: var(--ds-color-red-300);          /* 7.83:1 */
+  --ds-success-bg: #213129;                         /* green-600 18% */
+  --ds-success-ink: var(--ds-color-green-300);      /* 8.20:1 */
+  --ds-focus: var(--ds-color-amber-500);            /* 6.32 to 7.83:1 on every dark surface */
+
+  /* Depth in the dark: each level adds a 1px rim of light along its top edge and a deeper shadow; surfaces step lighter as they rise */
+  --ds-elevation-1: inset 0 1px 0 rgb(255 255 255 / 0.04), 0 1px 2px rgb(0 0 0 / 0.40);
+  --ds-elevation-2: inset 0 1px 0 rgb(255 255 255 / 0.06), 0 2px 4px rgb(0 0 0 / 0.30), 0 8px 20px -6px rgb(0 0 0 / 0.55);
+  --ds-elevation-3: inset 0 1px 0 rgb(255 255 255 / 0.07), 0 4px 8px rgb(0 0 0 / 0.30), 0 18px 40px -12px rgb(0 0 0 / 0.65);
+  --ds-elevation-4: inset 0 1px 0 rgb(255 255 255 / 0.08), 0 8px 16px rgb(0 0 0 / 0.35), 0 28px 64px -16px rgb(0 0 0 / 0.70);
+  --ds-material-glass: rgb(40 42 44 / 0.94);        /* text stays AA even over pure white */
+  --ds-material-edge: rgb(255 255 255 / 0.08);
+  --ds-dock-edge: inset -1px 0 0 var(--ds-line), inset -8px 0 16px -12px rgb(0 0 0 / 0.70);
+  --ds-dock-edge-rtl: inset 1px 0 0 var(--ds-line), inset 8px 0 16px -12px rgb(0 0 0 / 0.70);
+
+  color-scheme: dark;
+}
+@media (prefers-reduced-transparency: reduce) {
+  [data-ds-theme="dark"] { --ds-material-glass: var(--ds-surface-overlay); }
+}
+@media (prefers-contrast: more) {
+  [data-ds-theme="dark"] {
+    --ds-line: var(--ds-color-neutral-400); --ds-line-strong: var(--ds-color-neutral-300); --ds-line-bold: var(--ds-color-neutral-200);
+    --ds-ink: var(--ds-color-neutral-0); --ds-ink-muted: var(--ds-color-neutral-200);
+    --ds-user-edge: var(--ds-color-gold-400); --ds-machine-rule: var(--ds-color-blue-300);
+    --ds-material-glass: var(--ds-surface-overlay);
+  }
+}
