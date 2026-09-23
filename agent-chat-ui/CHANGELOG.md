@@ -6,7 +6,7 @@ Components now read role tokens instead of palette steps. Every 1.x token name s
 
 - Roles: surface, ink, line, user, machine, error, success and focus roles, so one set of names serves both themes. The palette gains the steps the roles need. The three line roles are new in 2.0, with one job each: `--ds-line` a plain hairline, `--ds-line-strong` every control edge at 3:1 or better on every surface, `--ds-line-bold` that edge hovered or selected.
 - Dark theme, opt-in: `tokens-dark.css` with `data-ds-theme="dark"`. Light stays the default.
-- Contrast: 27 role pairs measured in both themes, all at WCAG 2.2 AA, with the numbers in `guidelines.md`. The focus ring moves to a darker amber in light (the 1.x ring was 2.97:1 on the quiet well) and a brighter one in dark.
+- Contrast: 28 role pairs measured in both themes, all at WCAG 2.2 AA, with the numbers in `guidelines.md`. The focus ring moves to a darker amber in light (the 1.x ring was 2.97:1 on the quiet well) and a brighter one in dark.
 - Type: a minor-third scale from 16 with named roles used as `font` shorthands; title and greeting are fluid by container width; right-to-left text takes taller leading. Nothing below body except the footnote role (1.x allowed 14px pills and 12px text).
 - Depth: five elevation levels by job, with a rim of light in dark; one glass material for small floating layers; the dock edge as one mirrored token.
 - Motion: five durations, four easings including a sampled spring, and `motion.css` with four transitions and the status loops. Reduced motion stills travel, scale and loops and keeps a short fade.

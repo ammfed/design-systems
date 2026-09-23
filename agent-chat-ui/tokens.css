@@ -70,7 +70,7 @@
   --ds-user-bg: var(--ds-color-gold-50);
   --ds-user-bg-hover: var(--ds-color-gold-100);
   --ds-user-edge: var(--ds-color-gold-edge);
-  --ds-user-mark: var(--ds-color-gold-500);
+  --ds-user-mark: var(--ds-color-gold-600);        /* a voice mark: 4.19:1 on the user's ground */
   --ds-user-ink: var(--ds-color-gold-700);         /* 5.61:1 on the user's ground */
   /* The machine: anything the assistant or a helper produced */
   --ds-machine: var(--ds-color-blue-600);            /* links, the streaming caret, activity: 5.77:1 */

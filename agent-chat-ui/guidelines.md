@@ -40,7 +40,7 @@ Components read roles, never palette steps. One set of names serves both themes,
 | `--ds-user-strong-hover` | `#7C5E24` | `#D7BC6D` | hover darkens in light, lightens under dark ink in dark |
 | `--ds-user-bg`, `-bg-hover` | `#F9F7ED`, `#F2ECCF` | `#312C24`, `#3D3525` | the user's bubble, the avatar, a selected choice |
 | `--ds-user-ink` | `#7C5E24` | `#F2ECCF` | text on the user's ground |
-| `--ds-user-edge`, `-idle`, `-mark` | soft edge, idle edge, `#B68A35` | the same roles, tinted for the dark | the bubble edge, an idle box, a voice mark |
+| `--ds-user-edge`, `-idle`, `-mark` | soft edge, idle edge, `#92722A` | the same roles, tinted for the dark | the bubble edge, an idle box, a voice mark |
 | `--ds-machine` | `#2C6A9B` | `#86B7E1` | links, the streaming caret, activity |
 | `--ds-machine-rule` | `#9FC0DA` | `#2C6A9B` | the 2px rule beside the assistant's words |
 | `--ds-machine-soft`, `-tint` | `#DFECF7`, `#EEF5FB` | `#1F2F3E`, `#1D2832` | hand-off rows |
@@ -79,6 +79,7 @@ Computed from the token files as shipped (WCAG 2.x relative luminance). Every te
 | Message box edge | `user-strong` on `surface` | 4.50 | 7.12 | 3.0 |
 | Off microphone icon | `ink-muted` on `surface-raised` | 5.95 | 6.00 | 3.0 |
 | Activity dots, spinner | `machine` on `surface` | 5.77 | 7.94 | 3.0 |
+| Voice mark on the user's bubble | `user-mark` on `user-bg` | 4.19 | 4.40 | 3.0 |
 | Focus ring on the ground | `focus` on `surface` | 5.00 | 7.83 | 3.0 |
 | Focus ring on a quiet well | `focus` on `surface-quiet` | 4.67 | 7.13 | 3.0 |
 | Focus ring on the user's ground | `focus` on `user-bg` | 4.66 | 6.42 | 3.0 |

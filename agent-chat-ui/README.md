@@ -31,7 +31,7 @@ Open `preview.html` to see it: the tokens, light and dark side by side, the moti
 
 **Dark theme, opt-in.** Load `tokens-dark.css` and set `data-ds-theme="dark"`. Light stays the default everywhere. A near-black ground `#1B1D21`, wells and cards one step lighter, overlays one more; soft ink `#E1E3E5` to avoid halation; the user's strong colour moves to a lighter step carrying dark ink; the machine lightens to a pale blue.
 
-**Measured contrast.** 27 role pairs computed from the token files in both themes: every text pair 4.5:1 or better, every control edge, icon and focus ring 3:1 or better. Translucent glass was measured over pure black and pure white. The table is in `guidelines.md`.
+**Measured contrast.** 28 role pairs computed from the token files in both themes: every text pair 4.5:1 or better, every control edge, icon and focus ring 3:1 or better. Translucent glass was measured over pure black and pure white. The table is in `guidelines.md`.
 
 **Type roles on one scale.** A minor third (x1.2) from 16. Roles are `font` shorthands (`--ds-type-footnote`, `-body`, `-body-strong`, `-name`, `-heading`, `-title`, `-greeting`, `-code`). Title and greeting are fluid by container width, so the greeting fits a narrow dock without wrapping. Right-to-left text takes taller leading (body 16/28).
 

@@ -110,7 +110,6 @@ svg.i.s16 { width: 16px; height: 16px; } svg.i.s18 { width: 18px; height: 18px; 
 .box .mode { color: var(--ds-ink); }
 .box .send { width: var(--ds-icon-button); height: var(--ds-icon-button); min-width: var(--ds-target-min); min-height: var(--ds-target-min); border: 0; border-radius: var(--ds-radius-control); background: var(--ds-user-strong); color: var(--ds-user-on-strong); display: grid; place-items: center; padding: 0; cursor: pointer; flex: none; transition: background-color var(--ds-duration-control) var(--ds-ease); }
 .box .send:hover { background: var(--ds-user-strong-hover); }
-.box .send.idle { background: var(--ds-user-idle); cursor: default; }
 .box.greet { width: min(100%, var(--ds-greeting-width)); }
 .focusdemo { outline: var(--ds-focus-width) solid var(--ds-focus); outline-offset: calc(var(--ds-focus-width) * -1); }
 
@@ -132,7 +131,6 @@ svg.i.s16 { width: 16px; height: 16px; } svg.i.s18 { width: 18px; height: 18px; 
 .picker [role="radio"] .line { grid-column: 2; color: var(--ds-ink-muted); }
 .picker .tick { grid-row: 1; grid-column: 3; color: var(--ds-ink); }
 .picker [role="radio"][aria-checked="false"] .tick { visibility: hidden; }
-.picker .mh { font: var(--ds-type-body-strong); margin: 0; padding: var(--ds-space-2) var(--ds-space-3) var(--ds-space-1); }
 .picker hr { border: 0; border-top: 1px solid var(--ds-line); margin: var(--ds-space-1) var(--ds-space-3); }
 .picker p { margin: 0; padding: var(--ds-space-2) var(--ds-space-3) var(--ds-space-3); }
 .tip { position: absolute; bottom: calc(100% + var(--ds-space-2)); inset-inline-end: 0; width: max-content; max-width: 18rem; padding: var(--ds-space-2) var(--ds-space-3); border-radius: var(--ds-radius-control); box-shadow: var(--ds-elevation-2); font: var(--ds-type-body); color: var(--ds-ink); text-align: start; pointer-events: none; }
@@ -306,7 +304,7 @@ table.cr .ok { color: var(--ds-success-ink); display: inline-flex; }
         <button class="ib" type="button" aria-label="${t.fold}">${icon('collapse')}</button></div>
       <div class="thread">
         <div class="turns" role="log" aria-live="polite" aria-label="${t.name}">
-          ${t.threadHello === false ? '' : ai(t.hello)}
+          ${ai(t.hello)}
           <p class="msg me">${t.ask}</p>
           ${handoff(t, 'done')}
           ${ai(t.link ? `${t.reply} <a href="#" onclick="return false">${t.link}</a>` : t.reply)}
@@ -328,6 +326,7 @@ table.cr .ok { color: var(--ds-success-ink); display: inline-flex; }
     ['Outline button, talk icons', 'user-ink', 'surface', 4.5], ['Link, streaming caret', 'machine', 'surface', 4.5], ['Hand-off row', 'ink', 'machine-tint', 4.5],
     ['Error', 'error-ink', 'error-bg', 4.5], ['Success', 'success-ink', 'success-bg', 4.5], ['Done word', 'success-ink', 'surface', 4.5],
     ['Message box edge', 'user-strong', 'surface', 3], ['Off microphone', 'ink-muted', 'surface-raised', 3], ['Activity', 'machine', 'surface', 3],
+    ['Voice mark', 'user-mark', 'user-bg', 3],
     ['Focus on the ground', 'focus', 'surface', 3], ['Focus on a quiet well', 'focus', 'surface-quiet', 3], ["Focus on the user's ground", 'focus', 'user-bg', 3], ['Focus on an overlay', 'focus', 'surface-overlay', 3],
     ['Control edge on the ground', 'line-strong', 'surface', 3], ['Control edge on a quiet well', 'line-strong', 'surface-quiet', 3], ['Control edge on an overlay', 'line-strong', 'surface-overlay', 3],
     ['Control edge on the error tint', 'line-strong', 'error-bg', 3], ['Hover and selected edge', 'line-bold', 'surface-quiet', 3],
@@ -358,7 +357,6 @@ table.cr .ok { color: var(--ds-success-ink); display: inline-flex; }
     <section class="plate"><h3>Mode picker</h3>
       <div class="ground"><div class="float">
         <div class="picker glass ds-pop" role="radiogroup" aria-label="${en.modeLabel}" data-replay>
-          ${en.modeHeading ? `<p class="mh">${en.modeHeading}</p>` : ''}
           ${en.modes.map(([g, n, l, on]) => `<div role="radio" aria-checked="${on ? 'true' : 'false'}" tabindex="${on ? 0 : -1}">${icon(g, 's24')}<b>${n}</b><span class="line">${l}</span><span class="tick">${icon('tick')}</span></div>`).join('')}
           <hr><p>${en.fixed}</p>
         </div>
