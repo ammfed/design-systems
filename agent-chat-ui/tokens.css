@@ -58,9 +58,9 @@
   --ds-ink: var(--ds-color-neutral-800);             /* 15.37:1 */
   --ds-ink-muted: var(--ds-color-neutral-500);       /* 5.95:1; 5.55:1 on the quiet well */
   --ds-ink-faint: var(--ds-color-neutral-300);       /* disabled only, never meaning */
-  --ds-line: var(--ds-color-neutral-100);
-  --ds-line-strong: var(--ds-color-neutral-200);
-  --ds-line-bold: var(--ds-color-neutral-300);
+  --ds-line: var(--ds-color-neutral-100);            /* a plain hairline or divider: structure, never a boundary on its own */
+  --ds-line-strong: var(--ds-color-neutral-400);     /* every control edge: 3.73:1 or better on every light surface, including the error tint */
+  --ds-line-bold: var(--ds-color-neutral-500);       /* the hover and selected edge: 5.44:1 or better */
   /* The user: the accent hue marks the user and nothing else (their bubble, the message box, their avatar, where they are, their choice, their own action) */
   --ds-user-strong: var(--ds-color-gold-600);
   --ds-user-strong-hover: var(--ds-color-gold-700);

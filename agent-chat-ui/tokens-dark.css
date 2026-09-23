@@ -11,9 +11,9 @@
   --ds-ink: var(--ds-color-neutral-100);            /* 13.12:1; softer than white, no halation */
   --ds-ink-muted: var(--ds-color-neutral-300);      /* 6.59:1; 6.00:1 on a well */
   --ds-ink-faint: var(--ds-color-neutral-600);      /* disabled only */
-  --ds-line: var(--ds-color-neutral-700);
-  --ds-line-strong: var(--ds-color-neutral-600);
-  --ds-line-bold: var(--ds-color-neutral-400);
+  --ds-line: var(--ds-color-neutral-700);           /* a plain hairline or divider */
+  --ds-line-strong: var(--ds-color-neutral-400);    /* every control edge: 3.34:1 or better on every dark surface, including the error tint */
+  --ds-line-bold: var(--ds-color-neutral-300);      /* the hover and selected edge: 5.32:1 or better */
   --ds-user-strong: var(--ds-color-gold-400);     /* 7.12:1; carries dark ink, never white (white on it is 2.37:1) */
   --ds-user-strong-hover: var(--ds-color-gold-300);
   --ds-user-on-strong: var(--ds-color-neutral-900);

@@ -33,7 +33,9 @@ Components read roles, never palette steps. One set of names serves both themes,
 | `--ds-ink` | `#232528` | `#E1E3E5` | text |
 | `--ds-ink-muted` | `#5F646D` | `#9EA2A9` | secondary text, placeholder, the off microphone |
 | `--ds-ink-faint` | `#9EA2A9` | `#4B4F58` | disabled only, never meaning |
-| `--ds-line`, `-strong`, `-bold` | neutral 100, 200, 300 | neutral 700, 600, 400 | hairlines, input edges, a blockquote rule |
+| `--ds-line` | `#E1E3E5` | `#3E4046` | a plain hairline: a divider, a table rule, a blockquote rule, the dock's edge |
+| `--ds-line-strong` | `#797E86` | `#797E86` | every control edge: a button, a chip, a field, an avatar ring |
+| `--ds-line-bold` | `#5F646D` | `#9EA2A9` | the same edge, hovered or selected |
 | `--ds-user-strong` | `#92722A`, white ink | `#CBA344`, dark ink | send, the primary action, the message box edge |
 | `--ds-user-strong-hover` | `#7C5E24` | `#D7BC6D` | hover darkens in light, lightens under dark ink in dark |
 | `--ds-user-bg`, `-bg-hover` | `#F9F7ED`, `#F2ECCF` | `#312C24`, `#3D3525` | the user's bubble, the avatar, a selected choice |
@@ -49,11 +51,13 @@ Components read roles, never palette steps. One set of names serves both themes,
 
 **Dark tints are flattened.** Each dark tint is a palette colour at a stated opacity over the dark ground (the user's ground is the accent at 14%, the hand-off row the machine at 14%), written as a solid hex so it never shifts with what is behind it. The opacity is in a comment beside each value.
 
+**A control edge is never a hairline.** A button, a chip and a field are drawn by their edge alone, so `--ds-line-strong` carries them and reaches 3:1 on every surface a control can sit on, including the error tint behind a Retry button; `--ds-line-bold` is the same edge hovered or selected. `--ds-line` is for rules that separate rather than enclose, so it stays light and never draws a control.
+
 **The brightest accent step (`#B68A35`) never sits under white text** (3.15:1). In the dark theme the strong accent carries dark ink; white on it would be 2.37:1.
 
 ## Contrast, measured
 
-Computed from the token files as shipped (WCAG 2.x relative luminance). Every text pair is 4.5:1 or better and every control edge, icon and ring 3:1 or better, in both themes.
+Computed from the token files as shipped (WCAG 2.x relative luminance). Every text pair is 4.5:1 or better and every control edge, icon and ring 3:1 or better, in both themes. Plain hairlines (`--ds-line`) sit below that on purpose: they separate, they never enclose a control, and nothing depends on seeing them.
 
 | Pair | Foreground on background | Light | Dark | Needs |
 |---|---|---|---|---|
@@ -79,6 +83,11 @@ Computed from the token files as shipped (WCAG 2.x relative luminance). Every te
 | Focus ring on a quiet well | `focus` on `surface-quiet` | 4.67 | 7.13 | 3.0 |
 | Focus ring on the user's ground | `focus` on `user-bg` | 4.66 | 6.42 | 3.0 |
 | Focus ring on an overlay | `focus` on `surface-overlay` | 5.00 | 6.32 | 3.0 |
+| Control edge on the ground | `line-strong` on `surface` | 4.08 | 4.13 | 3.0 |
+| Control edge on a quiet well | `line-strong` on `surface-quiet` | 3.81 | 3.76 | 3.0 |
+| Control edge on an overlay | `line-strong` on `surface-overlay` | 4.08 | 3.34 | 3.0 |
+| Control edge on the error tint | `line-strong` on `error-bg` | 3.73 | 3.54 | 3.0 |
+| Hover and selected edge | `line-bold` on `surface-quiet` | 5.55 | 6.00 | 3.0 |
 
 **Glass, worst case.** The glass material is translucent, so its text was measured over pure black and pure white behind it. Light glass: ink 12.31 to 15.37, muted 4.77 to 5.95. Dark glass: ink 9.29 to 11.62, muted 4.66 to 5.83. Nothing on glass drops below 4.5:1 whatever is underneath.
 
@@ -90,7 +99,7 @@ A minor third (x1.2) from 16, with named roles. Each role is a `font` shorthand,
 
 | Role | Size / leading, left to right | Right to left | Weight, family | For |
 |---|---|---|---|---|
-| `--ds-type-footnote` | 14/20 | 14/24 | 400, text | footer lines, a time under full detail, a staged-voice label. Nothing else |
+| `--ds-type-footnote` | 14/20 | 14/24 | 400, text | the surface footer's honesty line, a time under full detail, a staged-voice label. Nothing else |
 | `--ds-type-body` | 16/24 | 16/28 | 400, text | everything else: messages, chips, fields, buttons, rows, cards |
 | `--ds-type-body-strong` | 16/24 | 16/28 | 500, text | a name inside a row, a button label |
 | `--ds-type-name` | 17/24 | 17/28 | 600, display | the assistant's name in a header |
@@ -124,6 +133,7 @@ Density changes space and targets, never type.
 | `--ds-icon-button-dock` | 32px | 32px | 44px |
 | `--ds-row-height` | 40px | 48px | 52px |
 
+- `--ds-icon-button` is every icon button the user aims at inside the message box: mode, type, speak, live and send, all one size in a row. `--ds-icon-button-dock` is dock chrome only, the header and the rail, which sit quieter than the box.
 - No target is ever under 32px (WCAG 2.2 asks for 24; 2.5.8). Touch gives every target 44px (2.5.5).
 - Compact is for long desk sessions, touch for tablets. Neither ever becomes a reason to shrink text.
 
@@ -179,7 +189,7 @@ WCAG 2.2 AA in both themes.
 - **Targets:** 32px minimum, 44px in touch density.
 - **Icons speak through one sentence.** Each icon button has an `aria-label` with that sentence, and the same sentence shows in a tooltip on hover (after 400ms) and at once on keyboard focus. It stays while the pointer is on it and closes on Escape (1.4.13). The tooltip bubble is `aria-hidden`, so nothing is read twice. Never the browser `title`: it does not show on keyboard focus or touch, and it renders at the system's small size.
 - **State lives in the control.** The microphone and live-conversation buttons carry `aria-pressed`; off is a slashed glyph in muted ink (3:1 or better), not a word.
-- **The mode picker is a radio group:** arrow keys, Home and End move the choice; Escape closes and returns focus to the mode icon.
+- **The mode picker is a radio group:** arrow keys, Home and End move the choice and the focus together, one tab stop for the group (roving `tabindex`, `aria-checked` on the chosen row); the arrows follow the text direction. Escape closes and returns focus to the mode icon.
 - **The thread is a polite log** (`role="log"`, `aria-live="polite"`), so each new turn is heard once. Hand-off rows and a settled approval are `role="status"`.
 - **Never colour alone.** A tick and a word say done; a slash says off.
 - **The user's system settings, answered by the tokens:** more contrast (visible lines, darker muted ink, solid glass), reduced transparency (solid glass), reduced motion (above), forced colours (no blur; give floating layers, the user's bubble and the toggle a `1px solid CanvasText` border and let the ring use `Highlight`).
@@ -194,8 +204,9 @@ WCAG 2.2 AA in both themes.
 ## Layout
 
 - **The dock:** `--ds-dock-width` (400px by default) on the inline-start side, with the designed edge. It folds to a 56px rail (`--ds-rail-width`) over the card duration with the move easing; the rail keeps the assistant's face and one open control.
-- **The greeting:** four things only. The face (`--ds-face-greeting`, 120px), one line in the greeting role, the message box at `--ds-greeting-width` (600px), and up to five chips. No digest, no count, no tagline.
+- **The greeting:** four things only. The face (`--ds-face-greeting`, 120px), one line in the greeting role, the message box at `--ds-greeting-width` (600px), and up to five chips. No digest, no count, no tagline. The footer below them is the surface's, not a fifth thing.
 - **The popup:** about 24rem by 600px, window elevation, radius 16. **The sidebar:** about 28rem, full height. Both keep a fixed header (64px), a pinned message box, and a scrolling thread between.
+- **The footer:** the last row of every chat surface, below the message box and outside it, holding the honesty line and nothing else. It is pinned with the box, not scrolled with the thread, and it is the only standing use of the footnote role.
 
 ## Icon role mapping
 
@@ -225,8 +236,8 @@ One outline icon family at regular weight, 20px glyphs on at least a 32px target
 
 A chat framework's theming layer typically exposes:
 
-- **Slots:** message view, scroll view, input, suggestion view, welcome screen, header, toggle button; nested assistant message, user message, toolbar, copy button. Apply the motion classes through the slots' class props.
-- **Labels:** header title, welcome message, input placeholder, every icon's sentence. Always from the framework's label props in both languages, never hard-coded in CSS or DOM overrides.
+- **Slots:** message view, scroll view, input, suggestion view, welcome screen, header, footer, toggle button; nested assistant message, user message, toolbar, copy button. Apply the motion classes through the slots' class props. Where a framework has no footer slot, the footer is rendered once beneath the input slot, still outside the input.
+- **Labels:** header title, welcome message, input placeholder, the footer's honesty line, every icon's sentence. Always from the framework's label props in both languages, never hard-coded in CSS or DOM overrides.
 - **Icon props:** a name-to-glyph map matching the table above, including type, speak, live, mode, jump, hand-off and approve.
 
 Theme through these contracts only. Every value here is reachable through custom properties on the framework's own theming attribute, plus the slot, label and icon props. Never fork the framework's DOM or class names to apply a colour.
@@ -235,13 +246,14 @@ Theme through these contracts only. Every value here is reachable through custom
 
 A themed mirror of the framework's pieces, for design work only. Every one reads roles, so it follows the theme, the density and the direction.
 
-- **Message box:** one row. The mode icon at the start, the field, then inside the box at its end the three ways to talk as icons (type, speak, live) and send. Never worded buttons. A 2px edge in `--ds-user-strong`, raised elevation. No disclaimer line under it: honesty lines live in the page footer.
+- **Message box:** one row. The mode icon at the start, the field, then inside the box at its end the three ways to talk as icons (type, speak, live) and send. Never worded buttons. A 2px edge in `--ds-user-strong`, raised elevation. Every icon in the row is one size (`--ds-icon-button`), send included. No disclaimer line of its own: the honesty line belongs to the surface footer below it.
 - **Mode picker:** one icon at the start of the box; opened, a glass popover at the overlay level with one row per mode (icon, name, one sentence, a tick on the current one) and one fixed line saying that an act with consequences always waits for the user, in every mode. The tick and the current row are ink, not the accent.
 - **Message:** the user's turn is a bubble at the inline end in `--ds-user-bg` with `--ds-user-edge`; the assistant's turn has no bubble and a 2px machine rule at the inline start. No toolbar, no timestamps, no system rows.
 - **Thread:** one gap, no dividers, no date rows; a polite log.
 - **Jump to the latest (new):** one round glass button with a down arrow, sticky at the foot of the thread, shown only while the user has scrolled up and something new has arrived. No count.
 - **Hand-off row (new):** one pill in the machine tint with a machine-soft edge: two faces at 24px, the two names, an arrow that mirrors, optionally the task and "working" (the spinner) or "done" (a tick and the done word in the success ink). The machine talking about itself, so no accent.
 - **Approval card (new):** the one shape for an act that waits for the user. Waiting: a title saying what will happen, the fields, and two actions only, Approve (primary) and Change (outline). No third button, no countdown. Decided: it settles to one row in ink (a tick and "Approved", or a back arrow and "Sent back for a change"), announced once as a status. Nothing accented after the decision.
+- **Surface footer (new):** required on every chat surface (dock, rail's opened panel, inline panel, sidebar, popup, greeting). One line in `--ds-type-footnote`, muted ink, centred, saying plainly that answers can be wrong and what matters is worth checking. It belongs to the surface, not to the message box, so the box keeps no line of its own and the sentence is never repeated inside the thread. One sentence, no link, no icon, no accent; it is the one place a size below body is allowed.
 - **Tooltip (new):** body size in ink on the glass material, radius 8, floating elevation. Never small, never accented.
 - **Suggestions:** up to five chips, two kinds only (outline and filled), never a written kind.
 - **Welcome screen:** the greeting (see Layout).

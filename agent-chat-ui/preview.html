@@ -4,336 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Agent Chat UI preview</title>
-<!-- One self-contained page: tokens.css, tokens-dark.css and motion.css are inlined verbatim between the BEGIN and END markers, so it opens anywhere with no network requests. Re-copy them when a token file changes. Fonts are named in the tokens and fall back to the system. -->
-<style>
-/* BEGIN tokens.css */
-/* Agent Chat UI design tokens, 2.0.0. Generic, unbranded, values-only.
-   Scope: any element with a data-ds-theme attribute. Light is the default; load tokens-dark.css and set data-ds-theme="dark" for the opt-in dark theme.
-   Components read ROLES (surface, ink, line, user, machine, status, focus), never palette steps, so one set of names serves both themes.
-   Contrast for every role pair, light and dark, is in guidelines.md. */
-
-[data-ds-theme] {
-  /* ===== palette ===== */
-  --ds-color-gold-50: #F9F7ED;
-  --ds-color-gold-100: #F2ECCF;
-  --ds-color-gold-200: #E6D7A2;
-  --ds-color-gold-300: #D7BC6D;
-  --ds-color-gold-400: #CBA344;
-  --ds-color-gold-500: #B68A35;   /* accent only, never under white text (3.15:1) */
-  --ds-color-gold-600: #92722A;   /* white on it 4.50:1 */
-  --ds-color-gold-700: #7C5E24;   /* white on it 6.03:1 */
-  --ds-color-gold-edge: #EBDFBF;
-
-  --ds-color-neutral-0: #FFFFFF;
-  --ds-color-neutral-25: #FCFCFC;
-  --ds-color-neutral-50: #F7F7F7;
-  --ds-color-neutral-100: #E1E3E5;
-  --ds-color-neutral-200: #C3C6CB;
-  --ds-color-neutral-300: #9EA2A9;
-  --ds-color-neutral-400: #797E86;
-  --ds-color-neutral-500: #5F646D;
-  --ds-color-neutral-600: #4B4F58;
-  --ds-color-neutral-700: #3E4046;
-  --ds-color-neutral-800: #232528;
-  --ds-color-neutral-900: #1B1D21;
-  --ds-color-neutral-950: #0E0F12;
-
-  --ds-color-blue-50: #EEF5FB;
-  --ds-color-blue-100: #DFECF7;
-  --ds-color-blue-200: #9FC0DA;
-  --ds-color-blue-300: #86B7E1;
-  --ds-color-blue-600: #2C6A9B;
-
-  --ds-color-red-50: #FEF2F2;
-  --ds-color-red-200: #FDCDCB;
-  --ds-color-red-300: #FAAAA7;
-  --ds-color-red-600: #D83731;
-  --ds-color-red-700: #B52520;
-  --ds-color-green-50: #F3FAF4;
-  --ds-color-green-300: #A0D5AB;
-  --ds-color-green-600: #3F8E50;
-  --ds-color-green-700: #2F663C;
-
-  --ds-color-amber-500: #F29F10;  /* focus ring, dark */
-  --ds-color-amber-600: #D67907;  /* the 1.x focus ring: 2.97:1 on the quiet well, so retired */
-  --ds-color-amber-700: #B2550A;  /* focus ring, light */
-
-  /* ===== roles: light (the default) ===== */
-  --ds-surface: var(--ds-color-neutral-0);           /* the page, the dock, the thread */
-  --ds-surface-quiet: var(--ds-color-neutral-50);    /* a well: filled chip, code, table head, hover, selected row */
-  --ds-surface-raised: var(--ds-color-neutral-0);    /* cards and the message box, lifted by elevation */
-  --ds-surface-overlay: var(--ds-color-neutral-0);   /* popovers, the tooltip, the popup window */
-  --ds-surface-side: var(--ds-color-neutral-25);
-  --ds-ink: var(--ds-color-neutral-800);             /* 15.37:1 */
-  --ds-ink-muted: var(--ds-color-neutral-500);       /* 5.95:1; 5.55:1 on the quiet well */
-  --ds-ink-faint: var(--ds-color-neutral-300);       /* disabled only, never meaning */
-  --ds-line: var(--ds-color-neutral-100);
-  --ds-line-strong: var(--ds-color-neutral-200);
-  --ds-line-bold: var(--ds-color-neutral-300);
-  /* The user: the accent hue marks the user and nothing else (their bubble, the message box, their avatar, where they are, their choice, their own action) */
-  --ds-user-strong: var(--ds-color-gold-600);
-  --ds-user-strong-hover: var(--ds-color-gold-700);
-  --ds-user-on-strong: var(--ds-color-neutral-0);
-  --ds-user-idle: var(--ds-color-gold-200);
-  --ds-user-bg: var(--ds-color-gold-50);
-  --ds-user-bg-hover: var(--ds-color-gold-100);
-  --ds-user-edge: var(--ds-color-gold-edge);
-  --ds-user-mark: var(--ds-color-gold-500);
-  --ds-user-ink: var(--ds-color-gold-700);         /* 5.61:1 on the user's ground */
-  /* The machine: anything the assistant or a helper produced */
-  --ds-machine: var(--ds-color-blue-600);            /* links, the streaming caret, activity: 5.77:1 */
-  --ds-machine-rule: var(--ds-color-blue-200);       /* the 2px rule beside the assistant's words */
-  --ds-machine-soft: var(--ds-color-blue-100);
-  --ds-machine-tint: var(--ds-color-blue-50);
-  --ds-error-bg: var(--ds-color-red-50);
-  --ds-error-line: var(--ds-color-red-200);
-  --ds-error-ink: var(--ds-color-red-700);
-  --ds-success-bg: var(--ds-color-green-50);
-  --ds-success-ink: var(--ds-color-green-700);
-  --ds-focus: var(--ds-color-amber-700);             /* 4.66 to 5.00:1 on every light surface */
-
-  /* ===== type: a minor third (x1.2) from 16, named roles =====
-     footnote 14 (step -1) · body 16 · name 17 (half step) · heading 20 (step 1) · title 24-28 (step 3, fluid) · greeting 28-34 (step 4, fluid).
-     Families by name only; nothing is shipped. Every family ends in a system fallback. */
-  --ds-font-body: "Roboto", ui-sans-serif, system-ui, sans-serif;
-  --ds-font-heading: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --ds-font-body-rtl: "Noto Kufi Arabic", "Noto Sans Arabic", Tahoma, system-ui, sans-serif;
-  --ds-font-heading-rtl: "Alexandria", "Noto Kufi Arabic", Tahoma, system-ui, sans-serif;
-  --ds-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  --ds-size-footnote: 0.875rem;
-  --ds-size-body: 1rem;
-  --ds-size-name: 1.0625rem;
-  --ds-size-heading: 1.25rem;
-  --ds-size-title: clamp(1.5rem, 1.1rem + 1.1cqi, 1.75rem);
-  --ds-size-greeting: clamp(1.75rem, 1.25rem + 1.2cqi, 2.125rem);
-
-  /* ===== space and shape ===== */
-  --ds-space-unit: 4px;
-  --ds-space-1: 0.25rem; --ds-space-2: 0.5rem; --ds-space-3: 0.75rem; --ds-space-4: 1rem; --ds-space-6: 1.5rem; --ds-space-8: 2rem; --ds-space-12: 3rem;
-  --ds-radius-control: 0.5rem;
-  --ds-radius-bubble: 0.625rem;
-  --ds-radius-card: 0.75rem;
-  --ds-radius-window: 1rem;
-  --ds-radius-pill: 9999px;
-  --ds-target-min: 32px;          /* nothing smaller; WCAG 2.2 asks for 24 */
-  --ds-focus-width: 2px;
-  --ds-focus-offset: 2px;
-  --ds-rail-width: 56px;
-  --ds-face: 2.5rem;
-  --ds-face-greeting: 7.5rem;
-  --ds-greeting-width: 600px;
-  --ds-popup-width: 24rem;
-  --ds-popup-height: 600px;
-  --ds-sidebar-width: 28rem;
-  --ds-header-height: 64px;
-
-  /* ===== elevation and material: five levels, one job each ===== */
-  --ds-elevation-0: none;                                                                             /* ground */
-  --ds-elevation-1: 0 1px 2px rgb(14 15 18 / 0.06), 0 1px 3px rgb(14 15 18 / 0.04);                  /* raised: cards */
-  --ds-elevation-2: 0 2px 4px rgb(14 15 18 / 0.05), 0 8px 20px -6px rgb(14 15 18 / 0.12);            /* floating: toggle, jump, tooltip */
-  --ds-elevation-3: 0 4px 8px rgb(14 15 18 / 0.05), 0 18px 40px -12px rgb(14 15 18 / 0.20);          /* overlay: popovers */
-  --ds-elevation-4: 0 8px 16px rgb(14 15 18 / 0.06), 0 28px 64px -16px rgb(14 15 18 / 0.26);         /* window: the popup */
-  --ds-material-glass: rgb(255 255 255 / 0.90);      /* small floating layers only; text stays AA even over pure black */
-  --ds-material-filter: blur(20px) saturate(1.25);
-  --ds-material-edge: rgb(14 15 18 / 0.08);
-  --ds-dock-edge: inset -1px 0 0 var(--ds-line), inset -6px 0 12px -10px rgb(14 15 18 / 0.18);
-  --ds-dock-edge-rtl: inset 1px 0 0 var(--ds-line), inset 6px 0 12px -10px rgb(14 15 18 / 0.18);
-
-  /* ===== motion: one calm tempo ===== */
-  --ds-duration-quick: 120ms;     /* hover tints, a tooltip, anything leaving */
-  --ds-duration-control: 200ms;   /* focus, press, the send colour */
-  --ds-duration-content: 400ms;   /* a message arriving, a popover */
-  --ds-duration-card: 450ms;      /* the dock folding to the rail */
-  --ds-duration-travel: 700ms;    /* the message box travelling from the greeting into the dock */
-  --ds-ease: cubic-bezier(.22, 1, .36, 1);        /* enter and settle */
-  --ds-ease-exit: cubic-bezier(.4, 0, 1, 1);      /* accelerate away */
-  --ds-ease-move: cubic-bezier(.65, 0, .35, 1);   /* something on screen changing size or place */
-  --ds-ease-spring: var(--ds-ease);               /* the travel; replaced by a sampled spring below where linear() is supported */
-  --ds-motion-rise: 8px;
-  --ds-motion-pop-scale: 0.98;
-  --ds-activity-cycle: 1.4s;
-  --ds-spinner-cycle: 1s;
-
-  /* ===== 1.x names, kept as aliases for this major version; new work uses the names above ===== */
-  --ds-color-focus: var(--ds-focus);
-  --ds-size-chat-text: var(--ds-size-body); --ds-line-chat-text: 1.5rem;
-  --ds-size-meta: var(--ds-size-footnote); --ds-line-meta: 1.25rem;
-  --ds-shadow-sm: var(--ds-elevation-1); --ds-shadow-md: var(--ds-elevation-2); --ds-shadow-lg: var(--ds-elevation-3); --ds-shadow-window: var(--ds-elevation-4);
-  --ds-motion-activity: var(--ds-activity-cycle); --ds-motion-spinner: var(--ds-spinner-cycle);
-  --ds-motion-window-open: var(--ds-duration-control); --ds-ease-standard: var(--ds-ease);
-  --ds-control-height-sm: 2.5rem; --ds-control-height-xs: 2rem; --ds-control-padding-x: 1.5rem;
-}
-
-@supports (transition-timing-function: linear(0, 1)) {
-  /* 0.93% overshoot, settles by 700ms, never a bounce */
-  [data-ds-theme] { --ds-ease-spring: linear(0, 0.049 4.2%, 0.163 8.3%, 0.303 12.5%, 0.444 16.7%, 0.574 20.8%, 0.686 25%, 0.777 29.2%, 0.848 33.3%, 0.902 37.5%, 0.941 41.7%, 0.969 45.8%, 0.987 50%, 0.998 54.2%, 1.005 58.3%, 1.008 62.5%, 1.009 66.7%, 1.009 70.8%, 1.008 75%, 1.007 79.2%, 1.006 83.3%, 1.004 87.5%, 1.003 91.7%, 1.002 95.8%, 1); }
-}
-
-/* Direction: families and leading follow the text direction. Left to right is the default; Arabic takes taller leading (body 16/28) and is never tracked.
-   Separate rules on purpose, so a browser without :dir() still honours an explicit dir attribute. */
-[data-ds-theme], [data-ds-theme] [dir="ltr"] {
-  --ds-family-text: var(--ds-font-body); --ds-family-display: var(--ds-font-heading);
-  --ds-leading-footnote: 1.25rem; --ds-leading-body: 1.5rem; --ds-leading-name: 1.5rem; --ds-leading-heading: 1.75rem;
-  --ds-leading-title: 1.2857; --ds-leading-greeting: 1.2941; --ds-tracking-display: -0.01em;
-}
-[data-ds-theme]:dir(rtl) {
-  --ds-family-text: var(--ds-font-body-rtl); --ds-family-display: var(--ds-font-heading-rtl);
-  --ds-leading-footnote: 1.5rem; --ds-leading-body: 1.75rem; --ds-leading-name: 1.75rem; --ds-leading-heading: 2rem;
-  --ds-leading-title: 1.4286; --ds-leading-greeting: 1.4118; --ds-tracking-display: 0;
-}
-[data-ds-theme][dir="rtl"], [data-ds-theme] [dir="rtl"] {
-  --ds-family-text: var(--ds-font-body-rtl); --ds-family-display: var(--ds-font-heading-rtl);
-  --ds-leading-footnote: 1.5rem; --ds-leading-body: 1.75rem; --ds-leading-name: 1.75rem; --ds-leading-heading: 2rem;
-  --ds-leading-title: 1.4286; --ds-leading-greeting: 1.4118; --ds-tracking-display: 0;
-}
-/* Type roles, used as font shorthands: font: var(--ds-type-body). Nothing below body except the footnote. */
-[data-ds-theme], [data-ds-theme] [dir] {
-  --ds-type-footnote: 400 var(--ds-size-footnote)/var(--ds-leading-footnote) var(--ds-family-text);
-  --ds-type-body: 400 var(--ds-size-body)/var(--ds-leading-body) var(--ds-family-text);
-  --ds-type-body-strong: 500 var(--ds-size-body)/var(--ds-leading-body) var(--ds-family-text);
-  --ds-type-name: 600 var(--ds-size-name)/var(--ds-leading-name) var(--ds-family-display);
-  --ds-type-heading: 600 var(--ds-size-heading)/var(--ds-leading-heading) var(--ds-family-display);
-  --ds-type-title: 700 var(--ds-size-title)/var(--ds-leading-title) var(--ds-family-display);
-  --ds-type-greeting: 700 var(--ds-size-greeting)/var(--ds-leading-greeting) var(--ds-family-display);
-  --ds-type-code: 400 0.9375rem/1.5rem var(--ds-font-mono); /* 15/24 mono reads as 16 body */
-}
-
-/* Density: space and targets, never type. Comfortable is the default. */
-[data-ds-theme], [data-ds-density="comfortable"] {
-  --ds-dock-width: 400px; --ds-panel-padding: 1.125rem; --ds-message-gap: 0.875rem;
-  --ds-bubble-padding-y: 0.5rem; --ds-bubble-padding-x: 1rem; --ds-card-padding: 1.5rem;
-  --ds-control-height: 3rem; --ds-chip-height: 2.5rem; --ds-icon-button: 2.25rem; --ds-icon-button-dock: 2rem; --ds-row-height: 3rem;
-}
-[data-ds-density="compact"] {
-  --ds-dock-width: 380px; --ds-panel-padding: 0.875rem; --ds-message-gap: 0.625rem;
-  --ds-bubble-padding-y: 0.375rem; --ds-bubble-padding-x: 0.75rem; --ds-card-padding: 1.125rem;
-  --ds-control-height: 2.5rem; --ds-chip-height: 2.25rem; --ds-icon-button: 2rem; --ds-icon-button-dock: 2rem; --ds-row-height: 2.5rem;
-}
-[data-ds-density="touch"] {
-  --ds-dock-width: 440px; --ds-panel-padding: 1.25rem; --ds-message-gap: 1rem;
-  --ds-bubble-padding-y: 0.625rem; --ds-bubble-padding-x: 1.125rem; --ds-card-padding: 1.5rem;
-  --ds-control-height: 3rem; --ds-chip-height: 2.75rem; --ds-icon-button: 2.75rem; --ds-icon-button-dock: 2.75rem; --ds-row-height: 3.25rem;
-}
-
-/* The user's system settings, honoured at the token level */
-@media (prefers-reduced-motion: reduce) {
-  [data-ds-theme] {
-    --ds-duration-control: var(--ds-duration-quick); --ds-duration-content: var(--ds-duration-quick);
-    --ds-duration-card: 0ms; --ds-duration-travel: 0ms; --ds-motion-rise: 0px; --ds-motion-pop-scale: 1;
-  }
-}
-@media (prefers-reduced-transparency: reduce) {
-  [data-ds-theme] { --ds-material-glass: var(--ds-surface-overlay); --ds-material-filter: none; }
-}
-@media (prefers-contrast: more) {
-  [data-ds-theme] {
-    --ds-line: var(--ds-color-neutral-400); --ds-line-strong: var(--ds-color-neutral-500); --ds-line-bold: var(--ds-color-neutral-600);
-    --ds-ink-muted: var(--ds-color-neutral-600); --ds-user-edge: var(--ds-color-gold-500); --ds-machine-rule: var(--ds-color-blue-600);
-    --ds-material-glass: var(--ds-surface-overlay);
-  }
-}
-@media (forced-colors: active) {
-  /* Shadows and fills disappear: floating layers need a real border (see guidelines.md) and the glass stops blurring */
-  [data-ds-theme] { --ds-material-filter: none; }
-}
-/* END tokens.css */
-</style>
-<style>
-/* BEGIN tokens-dark.css */
-/* Agent Chat UI, dark theme, 2.0.0. OPT-IN: not imported by tokens.css. Load it after tokens.css and set data-ds-theme="dark" on the element that should be dark.
-   Light stays the default everywhere. The same role names as tokens.css, so every component follows without a second stylesheet.
-   Tints are a palette colour at a stated opacity over the dark ground, flattened to hex so they never shift with what is behind them.
-   The accent still marks the user and nothing else. Every text pair is 4.5:1 or better and every control and ring 3:1 or better; the table is in guidelines.md. */
-[data-ds-theme="dark"] {
-  --ds-surface: var(--ds-color-neutral-900);        /* #1B1D21 */
-  --ds-surface-quiet: var(--ds-color-neutral-800);  /* wells read lighter than the ground in the dark */
-  --ds-surface-raised: var(--ds-color-neutral-800);
-  --ds-surface-overlay: #2C2E30;                    /* white 4% over neutral-800: popovers one step above cards */
-  --ds-surface-side: var(--ds-color-neutral-950);
-  --ds-ink: var(--ds-color-neutral-100);            /* 13.12:1; softer than white, no halation */
-  --ds-ink-muted: var(--ds-color-neutral-300);      /* 6.59:1; 6.00:1 on a well */
-  --ds-ink-faint: var(--ds-color-neutral-600);      /* disabled only */
-  --ds-line: var(--ds-color-neutral-700);
-  --ds-line-strong: var(--ds-color-neutral-600);
-  --ds-line-bold: var(--ds-color-neutral-400);
-  --ds-user-strong: var(--ds-color-gold-400);     /* 7.12:1; carries dark ink, never white (white on it is 2.37:1) */
-  --ds-user-strong-hover: var(--ds-color-gold-300);
-  --ds-user-on-strong: var(--ds-color-neutral-900);
-  --ds-user-idle: #463B27;                        /* gold-500 28% over the ground */
-  --ds-user-bg: #312C24;                          /* gold-500 14% */
-  --ds-user-bg-hover: #3D3525;                    /* gold-500 22% */
-  --ds-user-edge: #4D4027;                        /* gold-500 32% */
-  --ds-user-mark: var(--ds-color-gold-500);
-  --ds-user-ink: var(--ds-color-gold-100);        /* 11.66:1 on the user's ground */
-  --ds-machine: var(--ds-color-blue-300);           /* 7.94:1 */
-  --ds-machine-rule: var(--ds-color-blue-600);
-  --ds-machine-soft: #1F2F3E;                       /* blue-600 24% */
-  --ds-machine-tint: #1D2832;                       /* blue-600 14% */
-  --ds-error-bg: #3D2224;                           /* red-600 18% */
-  --ds-error-line: #702928;                         /* red-600 45% */
-  --ds-error-ink: var(--ds-color-red-300);          /* 7.83:1 */
-  --ds-success-bg: #213129;                         /* green-600 18% */
-  --ds-success-ink: var(--ds-color-green-300);      /* 8.20:1 */
-  --ds-focus: var(--ds-color-amber-500);            /* 6.32 to 7.83:1 on every dark surface */
-
-  /* Depth in the dark: each level adds a 1px rim of light along its top edge and a deeper shadow; surfaces step lighter as they rise */
-  --ds-elevation-1: inset 0 1px 0 rgb(255 255 255 / 0.04), 0 1px 2px rgb(0 0 0 / 0.40);
-  --ds-elevation-2: inset 0 1px 0 rgb(255 255 255 / 0.06), 0 2px 4px rgb(0 0 0 / 0.30), 0 8px 20px -6px rgb(0 0 0 / 0.55);
-  --ds-elevation-3: inset 0 1px 0 rgb(255 255 255 / 0.07), 0 4px 8px rgb(0 0 0 / 0.30), 0 18px 40px -12px rgb(0 0 0 / 0.65);
-  --ds-elevation-4: inset 0 1px 0 rgb(255 255 255 / 0.08), 0 8px 16px rgb(0 0 0 / 0.35), 0 28px 64px -16px rgb(0 0 0 / 0.70);
-  --ds-material-glass: rgb(40 42 44 / 0.94);        /* text stays AA even over pure white */
-  --ds-material-edge: rgb(255 255 255 / 0.08);
-  --ds-dock-edge: inset -1px 0 0 var(--ds-line), inset -8px 0 16px -12px rgb(0 0 0 / 0.70);
-  --ds-dock-edge-rtl: inset 1px 0 0 var(--ds-line), inset 8px 0 16px -12px rgb(0 0 0 / 0.70);
-
-  color-scheme: dark;
-}
-@media (prefers-reduced-transparency: reduce) {
-  [data-ds-theme="dark"] { --ds-material-glass: var(--ds-surface-overlay); }
-}
-@media (prefers-contrast: more) {
-  [data-ds-theme="dark"] {
-    --ds-line: var(--ds-color-neutral-400); --ds-line-strong: var(--ds-color-neutral-300); --ds-line-bold: var(--ds-color-neutral-200);
-    --ds-ink: var(--ds-color-neutral-0); --ds-ink-muted: var(--ds-color-neutral-200);
-    --ds-user-edge: var(--ds-color-gold-400); --ds-machine-rule: var(--ds-color-blue-300);
-    --ds-material-glass: var(--ds-surface-overlay);
-  }
-}
-/* END tokens-dark.css */
-</style>
-<style>
-/* BEGIN motion.css */
-/* Agent Chat UI motion, 2.0.0. Optional: the four transitions that earn their place, and the two status loops, as classes a chat framework's slots accept.
-   Reads only the motion tokens in tokens.css, so a reduced-motion setting reaches every one of them.
-     .ds-arrive   a new turn rises by --ds-motion-rise and fades in, once. Never on history loaded from before.
-     .ds-draw     the machine rule beside a new assistant turn draws from the top as the reply starts.
-     .ds-pop      a popover grows from its anchor (the inline-start foot) and fades in.
-     .ds-fade     a tooltip fades in.
-     .ds-dot      one of the three activity dots; stagger them with animation-delay 0, 0.16s, 0.32s.
-     .ds-spin     the spinner.
-   Loops are status only. Nothing decorative loops, and the streaming caret stays still.
-   Reduced motion: nothing travels or scales, loops stop, and colour or opacity keep a 120ms fade so a change is never a hard flash. */
-@keyframes ds-arrive { from { opacity: 0; transform: translateY(var(--ds-motion-rise)); } to { opacity: 1; transform: none; } }
-@keyframes ds-draw { from { transform: scaleY(0); } to { transform: scaleY(1); } }
-@keyframes ds-pop { from { opacity: 0; transform: translateY(calc(var(--ds-motion-rise) / 2)) scale(var(--ds-motion-pop-scale)); } to { opacity: 1; transform: none; } }
-@keyframes ds-fade { from { opacity: 0; } to { opacity: 1; } }
-@keyframes ds-dot { 0%, 80%, 100% { transform: scale(.5); opacity: .5; } 40% { transform: scale(1); opacity: 1; } }
-@keyframes ds-spin { to { transform: rotate(360deg); } }
-
-.ds-arrive { animation: ds-arrive var(--ds-duration-content) var(--ds-ease) both; }
-.ds-draw { transform-origin: 50% 0; animation: ds-draw var(--ds-duration-content) var(--ds-ease) both; }
-.ds-pop { transform-origin: 0 100%; animation: ds-pop var(--ds-duration-content) var(--ds-ease) both; }
-[dir="rtl"] .ds-pop, .ds-pop[dir="rtl"] { transform-origin: 100% 100%; }
-.ds-fade { animation: ds-fade var(--ds-duration-quick) var(--ds-ease) both; }
-.ds-dot { animation: ds-dot var(--ds-activity-cycle) ease-in-out infinite both; }
-.ds-spin { animation: ds-spin var(--ds-spinner-cycle) linear infinite; }
-
-@media (prefers-reduced-motion: reduce) {
-  .ds-draw, .ds-dot, .ds-spin { animation: none; }
-  .ds-dot { opacity: .75; transform: none; }
-}
-/* END motion.css */
-</style>
+<!-- The three stylesheets are the ones this system ships, loaded from this directory. Nothing else is fetched: no external requests, no build step. Fonts are named in the tokens and fall back to the system. -->
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="tokens-dark.css">
+<link rel="stylesheet" href="motion.css">
 <style>
 /* Preview only: how the components are drawn from the roles. Nothing here is a token. */
 * { box-sizing: border-box; }
@@ -411,7 +85,9 @@ svg.i.s16 { width: 16px; height: 16px; } svg.i.s18 { width: 18px; height: 18px; 
 .jump { position: absolute; inset-inline: 0; bottom: var(--ds-space-3); display: flex; justify-content: center; pointer-events: none; }
 .glass { background: var(--ds-material-glass); -webkit-backdrop-filter: var(--ds-material-filter); backdrop-filter: var(--ds-material-filter); border: 1px solid var(--ds-material-edge); }
 .jump button { pointer-events: auto; width: 40px; height: 40px; border-radius: var(--ds-radius-pill); box-shadow: var(--ds-elevation-2); color: var(--ds-ink); display: grid; place-items: center; padding: 0; cursor: pointer; }
-.foot { padding: var(--ds-space-3) var(--ds-panel-padding) var(--ds-panel-padding); flex: none; }
+.foot { padding: var(--ds-space-3) var(--ds-panel-padding) var(--ds-space-2); flex: none; }
+.pagefoot { font: var(--ds-type-footnote); color: var(--ds-ink-muted); text-align: center; margin: 0; flex: none; }
+.dock .pagefoot { padding: 0 var(--ds-panel-padding) var(--ds-space-3); }
 
 /* states */
 .states { display: flex; flex-direction: column; gap: var(--ds-space-3); align-items: flex-start; }
@@ -427,7 +103,7 @@ svg.i.s16 { width: 16px; height: 16px; } svg.i.s18 { width: 18px; height: 18px; 
 .box:focus-within { border-color: var(--ds-focus); }
 .box input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: var(--ds-type-body); color: var(--ds-ink); padding-inline-start: var(--ds-space-1); }
 .box input::placeholder { color: var(--ds-ink-muted); opacity: 1; }
-.box .ib { color: var(--ds-user-ink); }
+.box .ib { width: var(--ds-icon-button); height: var(--ds-icon-button); color: var(--ds-user-ink); }
 .box .ib.off { color: var(--ds-ink-muted); }
 .box .ib:hover { background: var(--ds-user-bg); }
 .box .ib:focus-visible, .box .send:focus-visible { outline-offset: calc(var(--ds-focus-width) * -1); }
@@ -440,7 +116,7 @@ svg.i.s16 { width: 16px; height: 16px; } svg.i.s18 { width: 18px; height: 18px; 
 
 /* greeting and chips */
 .greeting { display: flex; flex-direction: column; align-items: center; gap: var(--ds-space-6); text-align: center; padding: var(--ds-space-8) var(--ds-space-4); }
-.greeting p { font: var(--ds-type-greeting); letter-spacing: var(--ds-tracking-display); margin: 0; text-wrap: balance; }
+.greeting .hello { font: var(--ds-type-greeting); letter-spacing: var(--ds-tracking-display); margin: 0; text-wrap: balance; }
 .chips { display: flex; gap: var(--ds-space-2); flex-wrap: wrap; justify-content: center; }
 .chip { font: var(--ds-type-body-strong); height: var(--ds-chip-height); padding: 0 var(--ds-space-4); border-radius: var(--ds-radius-pill); border: 1px solid var(--ds-line-strong); background: var(--ds-surface); color: var(--ds-ink); display: inline-flex; align-items: center; cursor: pointer; transition: background-color var(--ds-duration-quick) var(--ds-ease); }
 .chip.open { background: var(--ds-surface-quiet); border-color: var(--ds-line-bold); }
@@ -455,6 +131,7 @@ svg.i.s16 { width: 16px; height: 16px; } svg.i.s18 { width: 18px; height: 18px; 
 .picker [role="radio"] b { font: var(--ds-type-body-strong); }
 .picker [role="radio"] .line { grid-column: 2; color: var(--ds-ink-muted); }
 .picker .tick { grid-row: 1; grid-column: 3; color: var(--ds-ink); }
+.picker [role="radio"][aria-checked="false"] .tick { visibility: hidden; }
 .picker .mh { font: var(--ds-type-body-strong); margin: 0; padding: var(--ds-space-2) var(--ds-space-3) var(--ds-space-1); }
 .picker hr { border: 0; border-top: 1px solid var(--ds-line); margin: var(--ds-space-1) var(--ds-space-3); }
 .picker p { margin: 0; padding: var(--ds-space-2) var(--ds-space-3) var(--ds-space-3); }
@@ -473,7 +150,7 @@ svg.i.s16 { width: 16px; height: 16px; } svg.i.s18 { width: 18px; height: 18px; 
 .lvl.l4 { background: var(--ds-surface-overlay); box-shadow: var(--ds-elevation-4); }
 .glassdemo { position: relative; overflow: hidden; border-radius: var(--ds-radius-card); padding: var(--ds-space-6); background: var(--ds-surface); box-shadow: inset 0 0 0 1px var(--ds-line); }
 .glassdemo .under { color: var(--ds-ink-muted); display: grid; gap: var(--ds-space-1); }
-.glassdemo .under i { display: block; height: 10px; border-radius: 5px; background: var(--ds-line-strong); }
+.glassdemo .under i { display: block; height: 10px; border-radius: 5px; background: var(--ds-ink-faint); }
 .glassdemo .under i:nth-child(2n) { width: 82%; } .glassdemo .under i:nth-child(3n) { width: 64%; background: var(--ds-machine-soft); }
 .glassdemo .over { position: absolute; inset-inline-start: 12%; top: 50%; translate: 0 -50%; padding: var(--ds-space-2) var(--ds-space-3); border-radius: var(--ds-radius-control); box-shadow: var(--ds-elevation-2); }
 .glassdemo .over span { color: var(--ds-ink-muted); }
@@ -602,6 +279,7 @@ table.cr .ok { color: var(--ds-success-ink); display: inline-flex; }
       cardTitle: 'إرسال الردود الثلاثة', fields: [['إلى', '3 أشخاص'], ['متى', 'الآن']], approve: 'موافقة', change: 'تغيير', done: 'تم',
       say: 'غيّر الثاني إلى يوم الخميس.', stream: 'أغيّر الرد الثاني إلى يوم الخميس', phShort: 'اكتب ما تريد', working: 'قيد العمل',
       jump: 'انتقل إلى الأحدث', ph: 'اكتب ما تريد أن تفعل', modeName: 'متوازن',
+      footnote: 'قد تكون الإجابات خاطئة. تحقق مما يهم.',
       tType: 'اكتب، وأنا أقرأ.', tSpeak: 'الميكروفون مغلق. اضغط لتتحدث، وأنا أستمع.', tLive: 'محادثة حيّة، نتحدث معاً.', send: 'إرسال',
     },
   };
@@ -638,6 +316,7 @@ table.cr .ok { color: var(--ds-success-ink); display: inline-flex; }
         </div>
       </div>
       <div class="foot">${box(t, { short: true })}</div>
+      <p class="pagefoot">${t.footnote}</p>
     </div>`;
 
   const rail = (t) => `<div class="rail" dir="${t.dir}"><span class="face" aria-hidden="true"></span><button class="ib" type="button" aria-label="${t.name}">${icon('open')}</button></div>`;
@@ -650,6 +329,8 @@ table.cr .ok { color: var(--ds-success-ink); display: inline-flex; }
     ['Error', 'error-ink', 'error-bg', 4.5], ['Success', 'success-ink', 'success-bg', 4.5], ['Done word', 'success-ink', 'surface', 4.5],
     ['Message box edge', 'user-strong', 'surface', 3], ['Off microphone', 'ink-muted', 'surface-raised', 3], ['Activity', 'machine', 'surface', 3],
     ['Focus on the ground', 'focus', 'surface', 3], ['Focus on a quiet well', 'focus', 'surface-quiet', 3], ["Focus on the user's ground", 'focus', 'user-bg', 3], ['Focus on an overlay', 'focus', 'surface-overlay', 3],
+    ['Control edge on the ground', 'line-strong', 'surface', 3], ['Control edge on a quiet well', 'line-strong', 'surface-quiet', 3], ['Control edge on an overlay', 'line-strong', 'surface-overlay', 3],
+    ['Control edge on the error tint', 'line-strong', 'error-bg', 3], ['Hover and selected edge', 'line-bold', 'surface-quiet', 3],
   ];
   const SW = ['surface', 'surface-quiet', 'surface-overlay', 'ink', 'ink-muted', 'line-strong', 'user-strong', 'user-bg', 'user-ink', 'machine', 'machine-rule', 'machine-tint', 'error-ink', 'success-ink', 'focus'];
 
@@ -670,14 +351,15 @@ table.cr .ok { color: var(--ds-success-ink); display: inline-flex; }
       <div class="app"><div class="screen main">${thread(en)}</div><div class="screen side">${rail(en)}</div></div></section>
 
     <section class="plate"><h3>Greeting</h3>
-      <div class="ground greeting"><span class="face big" aria-hidden="true"></span><p>${en.greet}</p>${box(en, { greet: true })}
-        <div class="chips">${en.chips.map(([c, k]) => `<button class="chip ${k}" type="button">${c}</button>`).join('')}</div></div></section>
+      <div class="ground greeting"><span class="face big" aria-hidden="true"></span><p class="hello">${en.greet}</p>${box(en, { greet: true })}
+        <div class="chips">${en.chips.map(([c, k]) => `<button class="chip ${k}" type="button">${c}</button>`).join('')}</div>
+        <p class="pagefoot">${en.footnote}</p></div></section>
 
     <section class="plate"><h3>Mode picker</h3>
       <div class="ground"><div class="float">
         <div class="picker glass ds-pop" role="radiogroup" aria-label="${en.modeLabel}" data-replay>
           ${en.modeHeading ? `<p class="mh">${en.modeHeading}</p>` : ''}
-          ${en.modes.map(([g, n, l, on]) => `<div role="radio" aria-checked="${on ? 'true' : 'false'}" tabindex="${on ? 0 : -1}">${icon(g, 's24')}<b>${n}</b><span class="line">${l}</span>${on ? `<span class="tick">${icon('tick')}</span>` : ''}</div>`).join('')}
+          ${en.modes.map(([g, n, l, on]) => `<div role="radio" aria-checked="${on ? 'true' : 'false'}" tabindex="${on ? 0 : -1}">${icon(g, 's24')}<b>${n}</b><span class="line">${l}</span><span class="tick">${icon('tick')}</span></div>`).join('')}
           <hr><p>${en.fixed}</p>
         </div>
         ${box(en)}
@@ -757,6 +439,23 @@ table.cr .ok { color: var(--ds-success-ink); display: inline-flex; }
     st.querySelectorAll('tr[data-f]').forEach((tr) => {
       const r = ratio(hexOf(st, tr.dataset.f), hexOf(st, tr.dataset.b)), ok = r >= +tr.dataset.need;
       tr.querySelector('td.n').innerHTML = `${r.toFixed(2)}${ok ? '' : ' below'}`;
+    });
+    st.querySelectorAll('[role="radiogroup"]').forEach((group) => {
+      const radios = [...group.querySelectorAll('[role="radio"]')];
+      const pick = (i) => { radios.forEach((r, n) => { r.setAttribute('aria-checked', n === i ? 'true' : 'false'); r.tabIndex = n === i ? 0 : -1; }); radios[i].focus(); };
+      const step = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 };
+      radios.forEach((r, i) => r.addEventListener('click', () => pick(i)));
+      group.addEventListener('keydown', (e) => {
+        const at = radios.findIndex((r) => r.getAttribute('aria-checked') === 'true');
+        let i;
+        if (e.key in step) i = (at + (/Left|Right/.test(e.key) && getComputedStyle(group).direction === 'rtl' ? -step[e.key] : step[e.key]) + radios.length) % radios.length;
+        else if (e.key === 'Home') i = 0;
+        else if (e.key === 'End') i = radios.length - 1;
+        else if (e.key === ' ' || e.key === 'Enter') i = radios.indexOf(e.target.closest('[role="radio"]'));
+        else return;
+        if (i < 0) return;
+        e.preventDefault(); pick(i);
+      });
     });
     st.querySelectorAll('[data-hex]').forEach((c) => { c.textContent = hexOf(st, c.dataset.hex); });
     st.querySelectorAll('[data-fam]').forEach((c) => { const cs = getComputedStyle(st); c.textContent = `${cs.getPropertyValue('--ds-font-body').trim()} · ${cs.getPropertyValue('--ds-font-body-rtl').trim()}`; });
