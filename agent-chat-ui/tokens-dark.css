@@ -17,7 +17,6 @@
   --ds-user-strong: var(--ds-color-gold-400);     /* 7.12:1; carries dark ink, never white (white on it is 2.37:1) */
   --ds-user-strong-hover: var(--ds-color-gold-300);
   --ds-user-on-strong: var(--ds-color-neutral-900);
-  --ds-user-idle: #463B27;                        /* gold-500 28% over the ground */
   --ds-user-bg: #312C24;                          /* gold-500 14% */
   --ds-user-bg-hover: #3D3525;                    /* gold-500 22% */
   --ds-user-edge: #4D4027;                        /* gold-500 32% */
@@ -54,6 +53,6 @@
     --ds-line: var(--ds-color-neutral-400); --ds-line-strong: var(--ds-color-neutral-300); --ds-line-bold: var(--ds-color-neutral-200);
     --ds-ink: var(--ds-color-neutral-0); --ds-ink-muted: var(--ds-color-neutral-200);
     --ds-user-edge: var(--ds-color-gold-400); --ds-machine-rule: var(--ds-color-blue-300);
-    --ds-material-glass: var(--ds-surface-overlay);
+    --ds-material-edge: var(--ds-line-strong); --ds-material-glass: var(--ds-surface-overlay);
   }
 }

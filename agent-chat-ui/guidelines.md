@@ -40,7 +40,7 @@ Components read roles, never palette steps. One set of names serves both themes,
 | `--ds-user-strong-hover` | `#7C5E24` | `#D7BC6D` | hover darkens in light, lightens under dark ink in dark |
 | `--ds-user-bg`, `-bg-hover` | `#F9F7ED`, `#F2ECCF` | `#312C24`, `#3D3525` | the user's bubble, the avatar, a selected choice |
 | `--ds-user-ink` | `#7C5E24` | `#F2ECCF` | text on the user's ground |
-| `--ds-user-edge`, `-idle`, `-mark` | soft edge, idle edge, `#92722A` | the same roles, tinted for the dark | the bubble edge, an idle box, a voice mark |
+| `--ds-user-edge`, `-mark` | soft edge, `#92722A` | the same roles, tinted for the dark | the bubble edge, a voice mark |
 | `--ds-machine` | `#2C6A9B` | `#86B7E1` | links, the streaming caret, activity |
 | `--ds-machine-rule` | `#9FC0DA` | `#2C6A9B` | the 2px rule beside the assistant's words |
 | `--ds-machine-soft`, `-tint` | `#DFECF7`, `#EEF5FB` | `#1F2F3E`, `#1D2832` | hand-off rows |
@@ -219,7 +219,7 @@ One outline icon family at regular weight, 20px glyphs on at least a 32px target
 | stop | stop square |
 | regenerate | clockwise arrow (mirrors) |
 | open | chat bubble |
-| close (collapse) | caret down |
+| close (collapse) | caret toward the inline start (mirrors) |
 | header close | x |
 | type | keyboard |
 | speak (push to talk) | microphone; microphone with a slash when off |
@@ -228,6 +228,7 @@ One outline icon family at regular weight, 20px glyphs on at least a 32px target
 | activity, spinner | three dots, a spinner |
 | jump to the latest | arrow down |
 | hand-off | arrow right (mirrors) |
+| sent back for a change | back arrow (mirrors) |
 | approve, success | check |
 | error | warning circle |
 | copy, feedback | copy, thumbs up and down |

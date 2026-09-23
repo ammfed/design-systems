@@ -66,7 +66,6 @@
   --ds-user-strong: var(--ds-color-gold-600);
   --ds-user-strong-hover: var(--ds-color-gold-700);
   --ds-user-on-strong: var(--ds-color-neutral-0);
-  --ds-user-idle: var(--ds-color-gold-200);
   --ds-user-bg: var(--ds-color-gold-50);
   --ds-user-bg-hover: var(--ds-color-gold-100);
   --ds-user-edge: var(--ds-color-gold-edge);
@@ -221,7 +220,7 @@
   [data-ds-theme] {
     --ds-line: var(--ds-color-neutral-400); --ds-line-strong: var(--ds-color-neutral-500); --ds-line-bold: var(--ds-color-neutral-600);
     --ds-ink-muted: var(--ds-color-neutral-600); --ds-user-edge: var(--ds-color-gold-500); --ds-machine-rule: var(--ds-color-blue-600);
-    --ds-material-glass: var(--ds-surface-overlay);
+    --ds-material-edge: var(--ds-line-strong); --ds-material-glass: var(--ds-surface-overlay);
   }
 }
 @media (forced-colors: active) {
