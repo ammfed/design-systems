@@ -1,6 +1,6 @@
 # Design Systems
 
-Three small design systems for building formal, trust-sensitive software: long-form documents and decks, an AI chat assistant surface, and a product/website UI kit. They share one visual language (a restrained gold-accent palette, generous white space, bilingual LTR/RTL support) expressed through three different token sets, because a report, a chat panel, and a dashboard each need different defaults.
+Three small design systems for building formal, trust-sensitive software: long-form documents and decks, an AI chat assistant surface, and a product/website UI kit. They share one visual language (a restrained palette with a single accent reserved for a person, generous white space, bilingual LTR/RTL support) expressed through three different token sets, because a report, a chat panel, and a dashboard each need different defaults.
 
 Each system is self-contained: a `README.md` explaining its intent and rules, a `tokens.css` with the raw design tokens, a `guidelines.md` with the visual and content rules, and a `CHANGELOG.md`.
 

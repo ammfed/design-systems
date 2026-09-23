@@ -54,7 +54,7 @@
   --ds-color-blue-400: #4F98FF;
   --ds-color-blue-500: #286CFF;
   --ds-color-blue-600: #043DFF;
-  --ds-color-blue-700: #003CFF;
+  --ds-color-blue-700: #0033D6;
   --ds-color-blue-800: #002DC2;
   --ds-color-blue-900: #0B32A4;
   --ds-color-blue-950: #071C5F;
@@ -142,6 +142,11 @@
 @media (prefers-contrast: more) {
   :root, [data-ds-theme="light"] { --ds-ink-muted: var(--ds-color-neutral-700); --ds-hairline: var(--ds-color-neutral-300); --ds-series-2: var(--ds-color-neutral-600); }
 }
+/* Grounds a control can sit on that the theme's ring cannot hold 3:1 against: set data-ds-surface on that block
+   and the one ring re-points to suit it. Solid callout grounds are the 700 shades in both themes, so one light
+   amber step serves both; an inverse block is the opposite of its theme's paper, so it takes the darker step. */
+[data-ds-surface="solid"] { --ds-focus: var(--ds-color-amber-300); }
+[data-ds-surface="inverse"] { --ds-focus: var(--ds-color-amber-700); }
 
 /* ===== type ===== */
 :root {
@@ -277,7 +282,6 @@
 /* ===== motion ===== */
 /* Short, one-way, once. Reduced motion keeps a short fade for the slide change only; data-ds-motion="off" keeps nothing. */
 :root {
-  --ds-dur-instant: 0ms; /* Anything under reduced motion that is not a fade */
   --ds-dur-quick: 120ms; /* Hover and press colour in viewer chrome */
   --ds-dur-swift: 200ms; /* Theme and density cross-fade */
   --ds-dur-steady: 360ms; /* Slide change, overview open; fade only when reduced */
@@ -297,7 +301,6 @@
 [data-ds-medium="print"] { --ds-distance: 0px; }
 @media (prefers-reduced-motion: reduce) {
   :root, [data-ds-medium] {
-    --ds-dur-instant: 0ms;
     --ds-dur-quick: 0ms;
     --ds-dur-swift: 0ms;
     --ds-dur-steady: 120ms;
@@ -309,7 +312,6 @@
   }
 }
 [data-ds-motion="off"], [data-ds-motion="off"] [data-ds-medium] {
-  --ds-dur-instant: 0ms;
   --ds-dur-quick: 0ms;
   --ds-dur-swift: 0ms;
   --ds-dur-steady: 0ms;
@@ -334,15 +336,19 @@
   --ds-size-body-lg: 18px;
   --ds-size-body: 16px;
   --ds-size-body-sm: 14px;
-  --ds-size-caption: 12px; /* below the 2.0.0 floor: use --ds-type-caption-size (14px on screen) */
-  --ds-radius-sm: 4px;
-  --ds-radius-md: 8px;
-  --ds-radius-lg: 12px;
-  --ds-radius-xl: 16px;
   --ds-motion-reveal: 700ms; /* now --ds-dur-reveal */
   --ds-motion-draw: 900ms; /* now --ds-dur-draw */
   --ds-dark-bg: #232528; /* now tokens-dark.css */
   --ds-dark-text: #FFFFFF;
   --ds-dark-hairline: #4B4F58;
   --ds-dark-accent: #CBA344; /* 2.0.0: the accent marks people only; use --ds-person */
+}
+/* These follow their 2.0.0 role rather than a fixed 1.x value, so a page part-way through the move still
+   picks up the medium's units and the 14px caption floor. Re-declared per medium for the same reason. */
+:root, [data-ds-medium] {
+  --ds-size-caption: var(--ds-type-caption-size); /* now --ds-type-caption-size */
+  --ds-radius-sm: var(--ds-radius-1);
+  --ds-radius-md: var(--ds-radius-2);
+  --ds-radius-lg: var(--ds-radius-3);
+  --ds-radius-xl: var(--ds-radius-3);
 }

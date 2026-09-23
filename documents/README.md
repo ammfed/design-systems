@@ -46,7 +46,7 @@ tokens.css        light roles, materials, type roles, space, density, layout and
 tokens-dark.css   the opt-in dark theme: the same role names with dark values, forced light in print
 motion.css        keyframes and attribute hooks (rise, draw, grow, trace, enter, fade), with the reduced path
 guidelines.md     roles, type, space, depth, motion, components and their states, RTL, focus and contrast in full
-preview.html      a self-contained page showing all of the above in light and dark; no external requests
+preview.html      shows all of the above in light and dark; links the three files above and fetches nothing else
 CHANGELOG.md      dated changes to this system
 ```
 
