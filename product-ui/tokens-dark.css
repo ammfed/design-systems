@@ -1,31 +1,91 @@
-/* Product UI — dark theme, opt-in EXTENSION. Not imported by tokens.css.
-   Load explicitly and set a dark-mode attribute on the document root.
-   Intended for internal, data-dense command views only — the public
-   website and product portal stay light; a page is one theme or the
-   other, never toggled at runtime. */
+/* Product UI dark theme, 2.0.0. Opt-in: not imported by tokens.css, and light stays the default.
+   Load it after tokens.css and set data-ds-theme="dark" on <html> (or on any region, for a dark panel inside a light page).
+   It re-points the colour roles and the depth tokens only, so every component follows with no per-component rules.
+   Palette steps only, no one-off tints. Every text pair is AA or better; see the contrast table in guidelines.md. */
 [data-ds-theme="dark"] {
-  --ds-dark-bg-page: #1B1D21;
-  --ds-dark-bg-subtle: #0E0F12;
-  --ds-dark-bg-card: #232528;
-  --ds-dark-bg-raised: #3E4046;
-  --ds-dark-border: #3E4046;
-  --ds-dark-border-strong: #4B4F58;
-  --ds-dark-text: #E1E3E5;
-  --ds-dark-text-muted: #9EA2A9;
-  --ds-dark-text-heading: #FFFFFF;
-  --ds-dark-accent: #CBA344;
-  --ds-dark-accent-hover: #D7BC6D;
-  --ds-dark-accent-text: #D7BC6D;
-  --ds-dark-focus: #F29F0E;
-  --ds-dark-chip-bg: #3E4046;
-  --ds-dark-chip-fg: #D7BC6D;
-
-  /* status badges: deep ground + light-tinted text, not the light-mode pair */
-  --ds-dark-badge-neutral-bg: #3E4046;   --ds-dark-badge-neutral-fg: #E1E3E5;
-  --ds-dark-badge-success-bg: #1E3D25;   --ds-dark-badge-success-fg: #A6DBB0;
-  --ds-dark-badge-info-bg: #0B1F5C;      --ds-dark-badge-info-fg: #81C1FF;
-  --ds-dark-badge-warning-bg: #4A2A05;   --ds-dark-badge-warning-fg: #F6C76C;
-  --ds-dark-badge-error-bg: #5A1512;     --ds-dark-badge-error-fg: #FAAAA7;
-
   color-scheme: dark;
+
+  /* Surfaces: floating layers lift with a faint tint and a lit rim, not a lighter swatch */
+  --ds-surface-canvas: #1B1D21;
+  --ds-surface-sunken: #0E0F12;
+  --ds-surface-base: #232528;
+  --ds-surface-raised: #232528;
+  --ds-surface-float: #232528;
+  --ds-surface-overlay: #232528;
+  --ds-surface-hover: #3E404666;   /* 40% */
+  --ds-surface-pressed: #3E4046A6; /* 65% */
+  --ds-surface-inverse: #E1E3E5;
+  --ds-surface-veil: #1B1D21E6;
+  --ds-scrim: #0E0F12B3;
+
+  /* Ink */
+  --ds-ink: #E1E3E5;
+  --ds-ink-strong: #F7F7F7;        /* softer than pure white on near-black */
+  --ds-ink-muted: #9EA2A9;
+  --ds-ink-inverse: #1B1D21;
+  --ds-ink-disabled: #5F646D;
+
+  /* Lines */
+  --ds-line: #3E4046;
+  --ds-line-emphasis: #4B4F58;
+  --ds-line-strong: #797E86;
+  --ds-line-float: #4B4F58;
+
+  /* The user: the accent moves to a lighter step and text on it turns dark */
+  --ds-user: #CBA344;
+  --ds-user-hover: #D7BC6D;        /* lighter on dark, so text on it gets stronger */
+  --ds-user-pressed: #E6D7A2;
+  --ds-user-on: #1B1D21;
+  --ds-user-soft: #361E12;
+  --ds-user-soft-hover: #5D3B26;
+  --ds-user-ink: #E6D7A2;
+  --ds-user-line: #CBA344;
+
+  /* Ink actions invert */
+  --ds-ink-action: #E1E3E5;
+  --ds-ink-action-hover: #FFFFFF;
+  --ds-ink-action-on: #1B1D21;
+
+  /* The machine */
+  --ds-machine: #2CCAFF;
+  --ds-machine-ink: #75DBFF;
+  --ds-machine-soft: #04334D;
+  --ds-machine-line: #065074;
+  --ds-machine-bar: linear-gradient(90deg, #75DBFF, #00ABEB);
+
+  /* Status: the hue's darkest step as the ground, a light step as the words */
+  --ds-success-fg: #A0D5AB; --ds-success-soft: #0F2415; --ds-success-solid: #6FB97F; --ds-success-on: #1B1D21; --ds-success-line: #6FB97F;
+  --ds-info-fg: #81C1FF;    --ds-info-soft: #071C5F;    --ds-info-solid: #4F98FF;    --ds-info-on: #1B1D21;    --ds-info-line: #4F98FF;
+  --ds-warning-fg: #FAD44F; --ds-warning-soft: #441B04; --ds-warning-solid: #F8C027; --ds-warning-on: #1B1D21; --ds-warning-line: #F29F0E;
+  --ds-error-fg: #FAAAA7;   --ds-error-soft: #430E0C;   --ds-error-solid: #F47A75;   --ds-error-on: #1B1D21;   --ds-error-line: #F47A75;
+  --ds-error-text: #F47A75;
+  --ds-error-on-inverse: #B52520;
+  --ds-error-solid-hover: #FAAAA7; --ds-error-solid-pressed: #FDCDCB; --ds-error-soft-hover: #7C2320;
+
+  /* Focus */
+  --ds-focus: #F29F0E;
+
+  /* Data */
+  --ds-data-1: #2CCAFF;
+  --ds-data-2: #E879F9;
+  --ds-data-3: #4F98FF;
+  --ds-data-4: #9EA2A9;
+  --ds-data-user: #CBA344;
+  --ds-data-pos: #6FB97F;
+  --ds-data-neg: #F47A75;
+  --ds-data-grid: #3E4046;
+  --ds-data-track: #3E4046;
+
+  /* Depth: deeper shadows, a lit rim on every raised layer, and a faint lift tint */
+  --ds-elevation-raised: 0 1px 2px 0 #00000066, inset 0 1px 0 0 #FFFFFF0A;
+  --ds-elevation-float: 0 2px 4px -1px #00000066, 0 16px 32px -8px #000000A6, inset 0 1px 0 0 #FFFFFF14;
+  --ds-elevation-overlay: 0 4px 8px -2px #00000080, 0 32px 64px -12px #000000B3, inset 0 1px 0 0 #FFFFFF14;
+  --ds-rim: inset 0 1px 0 0 #FFFFFF40;
+  --ds-tint-raised: #FFFFFF05;
+  --ds-tint-float: #FFFFFF0A;      /* a float surface reads #2C2E31 */
+}
+
+/* Higher contrast on request: stronger lines and muted text */
+@media (prefers-contrast: more) {
+  [data-ds-theme="dark"] { --ds-line: #797E86; --ds-line-float: #797E86; --ds-ink-muted: #E1E3E5; }
 }

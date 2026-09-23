@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0 - 2026-09-23
+
+- Product UI: colour by role (the accent reserved for the user, a separate machine colour for model output), a complete opt-in dark theme with every pair measured at WCAG 2.2 AA, fluid type roles, density modes, depth and materials, named motion with a reduced-motion path, RTL motion mirroring, filled-in tables, dashboards, navigation and forms, and a self-contained preview page.
+
 ## 1.1.0 — 2026-09-17
 
 - Documents: added a dark counterpart for every slide master, a whole-deck setting.

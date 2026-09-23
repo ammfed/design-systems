@@ -1,28 +1,105 @@
+/* Product UI design tokens, 2.0.0. Generic, unbranded, values-only. Light is the default theme.
+   Three layers:
+     palette  fixed hue steps (hex). Never read by components.
+     roles    what a colour means: surface, ink, line, user, machine, status, focus, data.
+              Components read roles only, so tokens-dark.css re-points roles and nothing else.
+     systems  type roles, density, depth, motion, focus and targets.
+   Contrast for every text and control pair, in both themes, is listed in guidelines.md. */
+
 :root {
-  /* Product UI design tokens. Generic, unbranded, values-only. */
+  /* ===== palette ===== */
+  /* accent: a warm metallic hue. Reserved for the user (see roles). */
+  --ds-accent-50: #F9F7ED;  --ds-accent-100: #F2ECCF; --ds-accent-200: #E6D7A2; --ds-accent-300: #D7BC6D;
+  --ds-accent-400: #CBA344; --ds-accent-500: #B68A35; --ds-accent-600: #92722A; --ds-accent-700: #7C5E24;
+  --ds-accent-800: #6C4527; --ds-accent-900: #5D3B26; --ds-accent-950: #361E12;
 
-  /* ===== colour ===== */
-  --ds-color-gold-300: #D7BC6D;
-  --ds-color-gold-500: #B68A35;
-  --ds-color-gold-600: #92722A;
+  --ds-neutral-0: #FFFFFF;  --ds-neutral-25: #FCFCFC; --ds-neutral-50: #F7F7F7; --ds-neutral-75: #F2F2F2;
+  --ds-neutral-90: #EDEDED; --ds-neutral-100: #E1E3E5; --ds-neutral-200: #C3C6CB; --ds-neutral-300: #9EA2A9;
+  --ds-neutral-400: #797E86; --ds-neutral-500: #5F646D; --ds-neutral-600: #4B4F58; --ds-neutral-700: #3E4046;
+  --ds-neutral-800: #232528; --ds-neutral-900: #1B1D21; --ds-neutral-950: #0E0F12;
 
-  --ds-color-neutral-50: #F7F7F7;
-  --ds-color-neutral-100: #E1E3E5;
-  --ds-color-neutral-800: #232528;
-  --ds-color-neutral-500: #5F646D;
-  --ds-color-page: #FFFFFF;
-  --ds-color-page-alt: #FCFCFC;
+  --ds-cyan-50: #EFFAFF;  --ds-cyan-200: #B6EAFF; --ds-cyan-300: #75DBFF; --ds-cyan-400: #2CCAFF; --ds-cyan-500: #00ABEB;
+  --ds-cyan-700: #0073AB; --ds-cyan-800: #00608D; --ds-cyan-900: #065074; --ds-cyan-950: #04334D;
+  --ds-blue-50: #E7F5FF;  --ds-blue-300: #81C1FF; --ds-blue-400: #4F98FF; --ds-blue-600: #043DFF; --ds-blue-700: #003CFF; --ds-blue-950: #071C5F;
+  --ds-green-50: #F3FAF4; --ds-green-300: #A0D5AB; --ds-green-400: #6FB97F; --ds-green-600: #3F8E50; --ds-green-700: #2F663C; --ds-green-950: #0F2415;
+  --ds-amber-50: #FFFBEB; --ds-amber-300: #FAD44F; --ds-amber-400: #F8C027; --ds-amber-500: #F29F0E; --ds-amber-600: #D67909; --ds-amber-700: #B2550B; --ds-amber-950: #441B04;
+  --ds-red-50: #FEF2F2;   --ds-red-100: #FDE4E3;  --ds-red-200: #FDCDCB;  --ds-red-300: #FAAAA7;  --ds-red-400: #F47A75;
+  --ds-red-600: #D83731;  --ds-red-700: #B52520;  --ds-red-800: #95231F;  --ds-red-900: #7C2320;  --ds-red-950: #430E0C;
+  --ds-magenta-400: #E879F9; --ds-magenta-700: #A21CAF;
 
-  --ds-color-green-600: #3F8E50;
-  --ds-color-blue-600: #043DFF;
-  --ds-color-amber-fill: #D67909;
-  --ds-color-amber-text: #B2550B;
-  --ds-color-red-600: #D83731;
-  --ds-color-focus: #D67909;
+  /* ===== roles (light) ===== */
+  /* Surfaces: canvas (the page) < sunken (wells, sidebar, table head) < base (cards, panels) < raised, float, overlay (materials, see depth) */
+  --ds-surface-canvas: #FCFCFC;
+  --ds-surface-sunken: #F7F7F7;
+  --ds-surface-base: #FFFFFF;
+  --ds-surface-raised: #FFFFFF;
+  --ds-surface-float: #FFFFFF;    /* menus, popovers, toasts, pickers */
+  --ds-surface-overlay: #FFFFFF;  /* modal, drawer */
+  --ds-surface-hover: #F2F2F2;    /* row and item hover */
+  --ds-surface-pressed: #EDEDED;
+  --ds-surface-inverse: #1B1D21;  /* tooltips, the bulk-action bar */
+  --ds-surface-veil: #FCFCFCE6;   /* 90%: sticky chrome over scrolling content only */
+  --ds-scrim: #1B1D2180;
 
-  /* AI-generated content chip (light) */
-  --ds-ai-chip-bg: #F9F7ED;
-  --ds-ai-chip-fg: #92722A;
+  /* Ink: text and icons */
+  --ds-ink: #232528;              /* body */
+  --ds-ink-strong: #1B1D21;       /* headings, figures */
+  --ds-ink-muted: #5F646D;        /* secondary text, placeholders */
+  --ds-ink-inverse: #F7F7F7;      /* on surface-inverse */
+  --ds-ink-disabled: #9EA2A9;     /* only with a disabled control */
+
+  /* Lines */
+  --ds-line: #E1E3E5;             /* hairlines, card and table borders (decorative) */
+  --ds-line-emphasis: #C3C6CB;    /* connectors, tracks, dividers that must be seen */
+  --ds-line-strong: #797E86;      /* control boundaries (needs 3:1) */
+  --ds-line-float: #E1E3E5;       /* edges of float materials */
+
+  /* The user: their one primary action, their choices, where they are, their own item in a chart. Never structure. */
+  --ds-user: #92722A;             /* primary fill, selection bar, checked controls */
+  --ds-user-hover: #7C5E24;       /* one step darker, so text on it gets stronger */
+  --ds-user-pressed: #6C4527;
+  --ds-user-on: #FFFFFF;          /* text and icons on a user fill */
+  --ds-user-soft: #F9F7ED;        /* a chosen row, chip, segment or day */
+  --ds-user-soft-hover: #F2ECCF;
+  --ds-user-ink: #7C5E24;         /* accent text on soft or base */
+  --ds-user-line: #92722A;        /* the selection edge */
+
+  /* Every action that is not the user's one primary step */
+  --ds-ink-action: #232528;
+  --ds-ink-action-hover: #0E0F12;
+  --ds-ink-action-on: #F7F7F7;
+
+  /* The machine: content a model produced, progress, activity, data series 1 */
+  --ds-machine: #0073AB;
+  --ds-machine-ink: #00608D;
+  --ds-machine-soft: #EFFAFF;
+  --ds-machine-line: #B6EAFF;     /* the rule beside machine content (decorative) */
+  --ds-machine-bar: linear-gradient(90deg, #00ABEB, #0073AB); /* 2px "working" bar */
+
+  /* Status. fg = text on soft; solid + on = filled badges and solid alerts; line = the inline-start bar */
+  --ds-success-fg: #2F663C; --ds-success-soft: #F3FAF4; --ds-success-solid: #2F663C; --ds-success-on: #FFFFFF; --ds-success-line: #3F8E50;
+  --ds-info-fg: #003CFF;    --ds-info-soft: #E7F5FF;    --ds-info-solid: #043DFF;    --ds-info-on: #FFFFFF;    --ds-info-line: #043DFF;
+  --ds-warning-fg: #B2550B; --ds-warning-soft: #FFFBEB; --ds-warning-solid: #D67909; --ds-warning-on: #1B1D21; --ds-warning-line: #D67909;
+  --ds-error-fg: #B52520;   --ds-error-soft: #FEF2F2;   --ds-error-solid: #D83731;   --ds-error-on: #FFFFFF;   --ds-error-line: #D83731;
+  --ds-error-text: #B52520;       /* an error message on any base surface */
+  --ds-error-on-inverse: #FAAAA7; /* an error word on the inverse surface */
+  --ds-error-solid-hover: #B52520; --ds-error-solid-pressed: #95231F; --ds-error-soft-hover: #FDE4E3;
+
+  /* Focus: one colour for every control, distinct from the user's fill */
+  --ds-focus: #B2550B;
+  --ds-focus-width: 2px;
+  --ds-focus-offset: 2px;          /* 0 on soft controls, -2px (inset) in tables, menus and segments */
+
+  /* Data: four categorical series, then group the rest into "other". The accent marks only the user's own item. */
+  --ds-data-1: #0073AB;
+  --ds-data-2: #A21CAF;
+  --ds-data-3: #043DFF;
+  --ds-data-4: #5F646D;           /* comparison, previous period, target */
+  --ds-data-user: #92722A;
+  --ds-data-pos: #3F8E50;         /* signed deltas only */
+  --ds-data-neg: #D83731;
+  --ds-data-grid: #E1E3E5;
+  --ds-data-track: #F2F2F2;
 
   /* ===== type ===== */
   --ds-font-body: "Roboto", sans-serif;
@@ -30,6 +107,7 @@
   --ds-font-body-rtl: "Noto Kufi Arabic", sans-serif;
   --ds-font-heading-rtl: "Alexandria", sans-serif;
 
+  /* Fixed steps (1.x). Every role below is one of these steps, or moves between two of them. */
   --ds-size-h1: 76px; --ds-weight-h1: 200;
   --ds-size-h2: 62px; --ds-weight-h2: 800;
   --ds-size-h3: 48px; --ds-weight-h3: 800;
@@ -37,16 +115,29 @@
   --ds-size-h5: 32px; --ds-weight-h5: 700;
   --ds-size-h6: 26px; --ds-weight-h6: 700;
   --ds-size-h7: 20px; --ds-weight-h7: 600;
-
   --ds-size-body-xl: 30px;
   --ds-size-body-lg: 24px;
   --ds-size-body-md: 20px;
   --ds-size-body: 18px;
   --ds-size-body-base: 16px;
   --ds-size-body-sm: 14px;
-  --ds-size-caption: 12px;
 
-  /* ===== spacing ===== */
+  /* Roles. Fluid roles move between two steps from a 360px to a 1280px viewport; the rem term keeps browser zoom working.
+     Nothing is under 16px except meta (14px), which is only for timestamps, table footers, chart ticks and helper text. */
+  --ds-type-display-size: clamp(3rem, 2.3152rem + 3.0435vw, 4.75rem);   --ds-type-display-leading: 1.05; --ds-type-display-weight: 200; --ds-type-display-tracking: -0.02em;
+  --ds-type-headline-size: clamp(2rem, 1.6087rem + 1.7391vw, 3rem);      --ds-type-headline-leading: 1.15; --ds-type-headline-weight: 800; --ds-type-headline-tracking: -0.015em;
+  --ds-type-title-1-size: clamp(1.625rem, 1.4783rem + 0.6522vw, 2rem);   --ds-type-title-1-leading: 1.2; --ds-type-title-1-weight: 700; --ds-type-title-1-tracking: -0.01em;
+  --ds-type-title-2-size: clamp(1.25rem, 1.1033rem + 0.6522vw, 1.625rem); --ds-type-title-2-leading: 1.25; --ds-type-title-2-weight: 700; --ds-type-title-2-tracking: -0.005em;
+  --ds-type-title-3-size: 1.25rem;  --ds-type-title-3-leading: 1.75rem; --ds-type-title-3-weight: 600; --ds-type-title-3-tracking: 0;
+  --ds-type-figure-size: clamp(2rem, 1.8043rem + 0.8696vw, 2.5rem);     --ds-type-figure-leading: 1.1; --ds-type-figure-weight: 700; --ds-type-figure-tracking: -0.02em;
+  --ds-type-lead-size: clamp(1.125rem, 1.0761rem + 0.2174vw, 1.25rem);  --ds-type-lead-leading: 1.6; --ds-type-lead-weight: 400;
+  --ds-type-body-size: 1rem;    --ds-type-body-leading: 1.5rem;  --ds-type-body-weight: 400; --ds-type-body-paragraph-leading: 1.5;
+  --ds-type-label-size: 1rem;   --ds-type-label-leading: 1.5rem; --ds-type-label-weight: 500;
+  --ds-type-meta-size: 0.875rem; --ds-type-meta-leading: 1.25rem; --ds-type-meta-weight: 400;
+  --ds-type-numeric: tabular-nums lining-nums;
+  --ds-measure: 68ch;
+
+  /* ===== spacing and grid ===== */
   --ds-space-unit: 4px;
   --ds-gap-xs: 8px;
   --ds-gap-sm: 16px;
@@ -62,15 +153,96 @@
   --ds-radius-lg: 12px;
   --ds-radius-xl: 16px;
   --ds-radius-full: 999px;
+  /* Roles. Nested corners: inner radius = outer radius minus the padding between them. */
+  --ds-radius-control: 8px;   /* buttons, inputs, menus */
+  --ds-radius-panel: 12px;    /* cards, panels */
+  --ds-radius-overlay: 12px;  /* modals, drawers, pickers */
+  --ds-radius-chip: 999px;    /* chips, segment thumbs, pagination pages */
 
-  /* ===== elevation ===== */
-  --ds-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
-  --ds-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.10);
-  --ds-shadow-modal: 0 10px 15px -3px rgba(27, 29, 33, 0.10);
+  /* ===== targets and shell ===== */
+  --ds-target-min: 40px;      /* every stand-alone control */
+  --ds-target-floor: 24px;    /* inline icon buttons inside a chip or badge, with 8px clear space */
+  --ds-sidebar-width: 264px;
+  --ds-sidebar-rail: 72px;    /* collapsed sidebar: icons with tooltips */
+  --ds-drawer-width: 448px;
+  --ds-z-sticky: 20; --ds-z-appbar: 30; --ds-z-scrim: 40; --ds-z-overlay: 50; --ds-z-float: 60; --ds-z-toast: 70;
+
+  /* ===== depth ===== */
+  /* Flat by default: canvas, sunken and base are separated by 1px lines. Depth is only for layers that sit over others. */
+  --ds-elevation-flat: none;
+  --ds-elevation-raised: 0 1px 2px 0 #1B1D210F, 0 1px 3px 0 #1B1D210A;          /* a hovered card, a sticky table head */
+  --ds-elevation-float: 0 2px 4px -1px #1B1D210F, 0 12px 24px -6px #1B1D2124;   /* menus, popovers, toasts, pickers, command menu */
+  --ds-elevation-overlay: 0 4px 8px -2px #1B1D2114, 0 24px 48px -12px #1B1D2138; /* modal, drawer */
+  --ds-rim: inset 0 1px 0 0 #FFFFFF33;        /* lit top edge on filled controls */
+  --ds-tint-raised: #FFFFFF00;                /* dark theme lifts layers with a faint white tint; light needs none */
+  --ds-tint-float: #FFFFFF00;
+  --ds-veil-blur: 16px;
 
   /* ===== motion ===== */
+  /* Durations are named by what moves, easings by direction. See motion.css for the transitions that use them. */
+  --ds-duration-instant: 0ms;
+  --ds-duration-feedback: 120ms;  /* hover and press recolour */
+  --ds-duration-state: 200ms;     /* toggles, checks, the glide of a selection marker */
+  --ds-duration-float-in: 240ms;
+  --ds-duration-float-out: 160ms;
+  --ds-duration-panel-in: 360ms;
+  --ds-duration-panel-out: 240ms;
+  --ds-duration-data: 640ms;      /* a changed value settles */
+  --ds-duration-reveal: 480ms;    /* public website hero only */
+  --ds-duration-spin: 1s;
+  --ds-duration-sweep: 2.4s;
   --ds-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
-  --ds-motion-standard: 0.3s;
-  --ds-motion-toggle: 200ms;
-  --ds-motion-spinner: 1s;
+  --ds-ease-enter: cubic-bezier(0.22, 1, 0.36, 1);
+  --ds-ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --ds-ease-data: cubic-bezier(0.65, 0, 0.35, 1);
+  --ds-motion-rise: 6px;          /* float travel */
+  --ds-motion-lift: 12px;         /* modal travel */
+  --ds-motion-slide: 100%;        /* drawer travel: its own width */
+  --ds-stagger: 40ms;             /* at most 6 steps, website hero only */
+}
+
+/* 1 in LTR, -1 in RTL. Multiply every horizontal travel by it. */
+:root, [dir="ltr"] { --ds-dir: 1; }
+[dir="rtl"] {
+  --ds-dir: -1;
+  --ds-font-heading: var(--ds-font-heading-rtl);
+  --ds-font-body: var(--ds-font-body-rtl);
+  /* Joined scripts never take letter-spacing (it breaks the joins) and need more leading. */
+  --ds-type-display-tracking: 0; --ds-type-headline-tracking: 0; --ds-type-title-1-tracking: 0; --ds-type-title-2-tracking: 0; --ds-type-figure-tracking: 0;
+  --ds-type-display-leading: 1.2; --ds-type-headline-leading: 1.3; --ds-type-title-1-leading: 1.35; --ds-type-title-2-leading: 1.4;
+  --ds-type-body-leading: 1.75rem; --ds-type-body-paragraph-leading: 1.7; --ds-type-label-leading: 1.75rem; --ds-type-lead-leading: 1.75; --ds-type-meta-leading: 1.5rem;
+}
+
+/* ===== density ===== */
+/* Set data-ds-density on any container. Density changes space and control height, never text size, and never goes under the 40px target. */
+:root, [data-ds-density="comfortable"] {
+  --ds-control-height: 48px; --ds-control-pad-x: 24px; --ds-field-pad-x: 16px;
+  --ds-row-height: 52px; --ds-cell-pad-x: 16px;
+  --ds-panel-pad: 24px; --ds-stack-gap: 24px; --ds-cluster-gap: 12px;
+  --ds-nav-item-height: 48px; --ds-icon-size: 24px; --ds-appbar-height: 64px; --ds-check-size: 20px;
+}
+[data-ds-density="compact"] {
+  --ds-control-height: 40px; --ds-control-pad-x: 16px; --ds-field-pad-x: 12px;
+  --ds-row-height: 44px; --ds-cell-pad-x: 12px;
+  --ds-panel-pad: 16px; --ds-stack-gap: 16px; --ds-cluster-gap: 8px;
+  --ds-nav-item-height: 40px; --ds-icon-size: 20px; --ds-appbar-height: 56px; --ds-check-size: 20px;
+}
+[data-ds-density="spacious"] {
+  --ds-control-height: 56px; --ds-control-pad-x: 28px; --ds-field-pad-x: 20px;
+  --ds-row-height: 64px; --ds-cell-pad-x: 20px;
+  --ds-panel-pad: 32px; --ds-stack-gap: 32px; --ds-cluster-gap: 16px;
+  --ds-nav-item-height: 56px; --ds-icon-size: 24px; --ds-appbar-height: 72px; --ds-check-size: 24px;
+}
+
+/* ===== reduced motion ===== */
+/* The OS setting, or data-ds-motion="reduce" set by the product. Nothing travels, spins or settles; colour feedback and short fades stay. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ds-duration-state: 0ms; --ds-duration-float-in: 120ms; --ds-duration-float-out: 0ms; --ds-duration-panel-in: 120ms; --ds-duration-panel-out: 0ms;
+    --ds-duration-data: 0ms; --ds-duration-reveal: 0ms; --ds-motion-rise: 0px; --ds-motion-lift: 0px; --ds-motion-slide: 0%; --ds-stagger: 0ms;
+  }
+}
+[data-ds-motion="reduce"] {
+  --ds-duration-state: 0ms; --ds-duration-float-in: 120ms; --ds-duration-float-out: 0ms; --ds-duration-panel-in: 120ms; --ds-duration-panel-out: 0ms;
+  --ds-duration-data: 0ms; --ds-duration-reveal: 0ms; --ds-motion-rise: 0px; --ds-motion-lift: 0px; --ds-motion-slide: 0%; --ds-stagger: 0ms;
 }
