@@ -50,6 +50,7 @@
   --ds-color-amber-700: #B2550A;  /* focus ring, light */
 
   /* ===== roles: light (the default) ===== */
+  color-scheme: light;
   --ds-surface: var(--ds-color-neutral-0);           /* the page, the dock, the thread */
   --ds-surface-quiet: var(--ds-color-neutral-50);    /* a well: filled chip, code, table head, hover, selected row */
   --ds-surface-raised: var(--ds-color-neutral-0);    /* cards and the message box, lifted by elevation */
