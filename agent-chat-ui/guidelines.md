@@ -223,6 +223,7 @@ One outline icon family at regular weight, 20px glyphs on at least a 32px target
 | header close | x |
 | type | keyboard |
 | speak (push to talk) | microphone; microphone with a slash when off |
+| voice mark | microphone at 16px, never flips |
 | live conversation | waveform; waveform with a slash when off |
 | mode | one glyph per mode: an open hand, scales, a lightning bolt |
 | activity, spinner | three dots, a spinner |
@@ -250,7 +251,7 @@ A themed mirror of the framework's pieces, for design work only. Every one reads
 
 - **Message box:** one row. The mode icon at the start, the field, then inside the box at its end the three ways to talk as icons (type, speak, live) and send. Never worded buttons. A 2px edge in `--ds-user-strong`, raised elevation. Every icon in the row is one size (`--ds-icon-button`), send included. No disclaimer line of its own: the honesty line belongs to the surface footer below it.
 - **Mode picker:** one icon at the start of the box; opened, a glass popover at the overlay level with one row per mode (icon, name, one sentence, a tick on the current one) and one fixed line saying that an act with consequences always waits for the user, in every mode. The tick and the current row are ink, not the accent.
-- **Message:** the user's turn is a bubble at the inline end in `--ds-user-bg` with `--ds-user-edge`; the assistant's turn has no bubble and a 2px machine rule at the inline start. No toolbar, no timestamps, no system rows.
+- **Message:** the user's turn is a bubble at the inline end in `--ds-user-bg` with `--ds-user-edge`; the assistant's turn has no bubble and a 2px machine rule at the inline start. A turn the user spoke opens with the voice mark in `--ds-user-mark`. No toolbar, no timestamps, no system rows.
 - **Thread:** one gap, no dividers, no date rows; a polite log.
 - **Jump to the latest (new):** one round glass button with a down arrow, sticky at the foot of the thread, shown only while the user has scrolled up and something new has arrived. No count.
 - **Hand-off row (new):** one pill in the machine tint with a machine-soft edge: two faces at 24px, the two names, an arrow that mirrors, optionally the task and "working" (the spinner) or "done" (a tick and the done word in the success ink). The machine talking about itself, so no accent.
