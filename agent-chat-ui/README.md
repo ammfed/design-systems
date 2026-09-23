@@ -9,7 +9,7 @@ Open `preview.html` to see it: the tokens, light and dark side by side, the moti
 ## The rules that make the look
 
 1. **Nothing small unless it earns its place.** No badges, tags, captions, sub-labels, timestamps, system rows or hint lines beyond the few that honesty or meaning keeps. State lives in the control. Everything is body size (16/24) except a footnote role, whose standing use is the surface footer.
-2. **The ways to talk are icons inside the message box**: type, speak, live conversation, then send. One row, each icon with one short sentence. Never worded buttons, and no disclaimer line of its own under the box: that line is the surface's footer (rule 9).
+2. **The ways to talk are icons inside the message box**: type, speak, live conversation, then send. One row, each icon with a short label: a sentence for an action, the control's name for a toggle. Never worded buttons, and no disclaimer line of its own under the box: that line is the surface's footer (rule 9).
 3. **The mode picker is one icon** at the start of the box. Opened, one row per mode with one sentence each, and one fixed line: an act with consequences always waits for the user, in every mode.
 4. **The greeting is four things**: the face, one line, the message box, up to five suggestion chips. No digest, no count, no tagline. The footer below them belongs to the surface.
 5. **The dock has a designed edge**, never a plain border, and folds to a 56px rail.
@@ -22,7 +22,7 @@ Open `preview.html` to see it: the tokens, light and dark side by side, the moti
 
 - Plain, direct words. Address the user as you. No exclamation marks, no emoji, no jokes, no taglines.
 - Sentence case everywhere.
-- Every string exists in both languages and comes through the framework's label and slot props, never hard-coded in CSS or DOM overrides. Every icon's sentence is its accessible name and its tooltip.
+- Every string exists in both languages and comes through the framework's label and slot props, never hard-coded in CSS or DOM overrides. Every icon's label is its accessible name and its tooltip.
 - Labels are short imperatives: Send, Retry, Approve, Change.
 
 ## What 2.0.0 adds
@@ -41,7 +41,7 @@ Open `preview.html` to see it: the tokens, light and dark side by side, the moti
 
 **Density.** `data-ds-density="compact|comfortable|touch"` changes space and targets, never type. No target under 32px; touch gives 44px.
 
-**Accessibility.** A focus ring that reaches 3:1 on every surface and draws inward inside the message box; a real tooltip in place of the browser `title`; pressed states on the microphone and live buttons; the mode picker as a radio group; the thread as a polite log; answers to more contrast, reduced transparency, reduced motion and forced colours.
+**Accessibility.** A focus ring that reaches 3:1 on every surface, drawn inward on the controls inside the message box and outside the box's own accent edge; a real tooltip in place of the browser `title`; pressed states on the microphone and live buttons; the mode picker as a radio group; the thread as a polite log; answers to more contrast, reduced transparency, reduced motion and forced colours.
 
 **Components added.** Tooltip, jump to the latest, hand-off row, approval card, surface footer. See `guidelines.md`.
 

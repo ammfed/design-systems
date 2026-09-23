@@ -186,10 +186,10 @@ Only status loops: the three activity dots (`.ds-dot`) and the spinner (`.ds-spi
 
 WCAG 2.2 AA in both themes.
 
-- **Focus:** a solid 2px ring in `--ds-focus`, offset 2px, on `:focus-visible` only. Inside the message box the ring draws inward (negative offset), so a neighbour never covers it (2.4.11). The ring colour is distinct from the user's colour, so it never reads as another button.
+- **Focus:** a solid 2px ring in `--ds-focus`, offset 2px, on `:focus-visible` only. The icon buttons inside the message box draw it inward (negative offset), so a neighbour never covers it (2.4.11); the box itself takes the standard outward ring when its field has focus, so the accent edge stays visible beneath it. The ring colour is distinct from the user's colour, so it never reads as another button.
 - **Targets:** 32px minimum, 44px in touch density.
-- **Icons speak through one sentence.** Each icon button has an `aria-label` with that sentence, and the same sentence shows in a tooltip on hover (after 400ms) and at once on keyboard focus. It stays while the pointer is on it and closes on Escape (1.4.13). The tooltip bubble is `aria-hidden`, so nothing is read twice. Never the browser `title`: it does not show on keyboard focus or touch, and it renders at the system's small size.
-- **State lives in the control.** The microphone and live-conversation buttons carry `aria-pressed`; off is a slashed glyph in muted ink (3:1 or better), not a word.
+- **Icons speak.** Each icon button has an `aria-label`, and the same words show in a tooltip on hover (after 400ms) and at once on keyboard focus. An action says what it does in one short sentence; a toggle is named by its control alone, never by its state. It stays while the pointer is on it and closes on Escape (1.4.13). The tooltip bubble is `aria-hidden`, so nothing is read twice. Never the browser `title`: it does not show on keyboard focus or touch, and it renders at the system's small size.
+- **State lives in the control.** The microphone and live-conversation buttons carry `aria-pressed`; off is a slashed glyph in muted ink (3:1 or better), not a word, and never part of the name, so it is never announced twice.
 - **The mode picker is a radio group:** arrow keys, Home and End move the choice and the focus together, one tab stop for the group (roving `tabindex`, `aria-checked` on the chosen row); the arrows follow the text direction. Escape closes and returns focus to the mode icon.
 - **The thread is a polite log** (`role="log"`, `aria-live="polite"`), so each new turn is heard once. Hand-off rows and a settled approval are `role="status"`.
 - **Never colour alone.** A tick and a word say done; a slash says off.
@@ -240,7 +240,7 @@ One outline icon family at regular weight, 20px glyphs on at least a 32px target
 A chat framework's theming layer typically exposes:
 
 - **Slots:** message view, scroll view, input, suggestion view, welcome screen, header, footer, toggle button; nested assistant message, user message, toolbar, copy button. Apply the motion classes through the slots' class props. Where a framework has no footer slot, the footer is rendered once beneath the input slot, still outside the input.
-- **Labels:** header title, welcome message, input placeholder, the footer's honesty line, every icon's sentence. Always from the framework's label props in both languages, never hard-coded in CSS or DOM overrides.
+- **Labels:** header title, welcome message, input placeholder, the footer's honesty line, every icon's words. Always from the framework's label props in both languages, never hard-coded in CSS or DOM overrides.
 - **Icon props:** a name-to-glyph map matching the table above, including type, speak, live, mode, jump, hand-off and approve.
 
 Theme through these contracts only. Every value here is reachable through custom properties on the framework's own theming attribute, plus the slot, label and icon props. Never fork the framework's DOM or class names to apply a colour.
