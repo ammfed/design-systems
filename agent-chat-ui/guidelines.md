@@ -31,7 +31,7 @@ Components read roles, never palette steps. One set of names serves both themes,
 | `--ds-surface-overlay` | `#FFFFFF` | `#2C2E30` | popovers, the popup window |
 | `--ds-surface-side` | `#FCFCFC` | `#0E0F12` | the collapsed rail |
 | `--ds-ink` | `#232528` | `#E1E3E5` | text |
-| `--ds-ink-muted` | `#5F646D` | `#9EA2A9` | secondary text, placeholder, the off microphone |
+| `--ds-ink-muted` | `#5F646D` | `#9EA2A9` | secondary text, placeholder, the off microphone and live-conversation buttons |
 | `--ds-ink-faint` | `#9EA2A9` | `#4B4F58` | disabled only, never meaning |
 | `--ds-line` | `#E1E3E5` | `#3E4046` | a plain hairline: a divider, a table rule, a blockquote rule, the dock's edge |
 | `--ds-line-strong` | `#797E86` | `#797E86` | every control edge: a button, a chip, a field, an avatar ring |
