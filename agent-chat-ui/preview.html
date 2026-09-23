@@ -239,7 +239,7 @@ table.cr .ok { color: var(--ds-success-ink); display: inline-flex; }
 
 <header class="top">
   <h1>Agent Chat UI</h1><span class="ver">2.0.0</span><span class="grow"></span>
-  <button class="btn" type="button" id="replay"><svg class="i"><use href="#replay"/></svg>Replay motion</button>
+  <button class="btn" type="button" id="replay-btn"><svg class="i"><use href="#replay"/></svg>Replay motion</button>
 </header>
 <main class="pair">
   <section class="stage" data-ds-theme aria-label="Light theme"></section>
@@ -478,7 +478,7 @@ table.cr .ok { color: var(--ds-success-ink); display: inline-flex; }
     again.forEach(([el, c]) => el.classList.add(...c));
     requestAnimationFrame(() => requestAnimationFrame(settle));
   };
-  document.getElementById('replay').addEventListener('click', replay);
+  document.getElementById('replay-btn').addEventListener('click', replay);
   replay();
   const root = document.documentElement;
   addEventListener('resize', () => { root.classList.add('noanim'); settle(); void document.body.offsetWidth; root.classList.remove('noanim'); });
