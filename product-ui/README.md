@@ -63,8 +63,8 @@ Actions, forms (including a date picker and calendar), navigation (including an 
 ## Files
 
 ```
-tokens.css        palette, colour roles, type roles, spacing, radii, targets, depth, motion, density, reduced motion
-tokens-dark.css   the opt-in dark theme: re-points the colour roles and depth
+tokens.css        palette, colour roles, type roles, spacing, radii, targets, depth, motion, density, reduced motion, higher contrast
+tokens-dark.css   the opt-in dark theme: re-points the colour roles and depth, with its higher-contrast pair
 motion.css        the six named transitions and the reduced-motion path for the sweep
 materials.css     the raised, float (base and inverse), overlay and veil materials, with fallbacks
 guidelines.md     the rules in full: roles, the contrast table, dark theme, type, density, depth, motion, states, focus, RTL, layout, imagery, components
