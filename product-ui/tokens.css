@@ -54,7 +54,7 @@
   --ds-line-strong: #797E86;      /* control boundaries (needs 3:1) */
   --ds-line-float: #E1E3E5;       /* edges of float materials */
 
-  /* The user: their one primary action, their choices, where they are, their own item in a chart. Never structure. */
+  /* The user: their one primary action, their choices, where they are, their own value in a chart. Never structure. */
   --ds-user: #92722A;             /* primary fill, selection bar, checked controls */
   --ds-user-hover: #7C5E24;       /* one step darker, so text on it gets stronger */
   --ds-user-pressed: #6C4527;
@@ -90,12 +90,13 @@
   --ds-focus-width: 2px;
   --ds-focus-offset: 2px;          /* 0 on soft controls, -2px (inset) in tables, menus and segments */
 
-  /* Data: four categorical series, then group the rest into "other". The accent marks only the user's own item. */
+  /* Data: four categorical series, then group the rest into "other".
+     The accent marks the user's own value or series: their own reading over time, or against their own target. Never their rank among other people. */
   --ds-data-1: #0073AB;
   --ds-data-2: #A21CAF;
   --ds-data-3: #043DFF;
   --ds-data-4: #5F646D;           /* comparison, previous period, target */
-  --ds-data-user: #92722A;
+  --ds-data-user: #92722A;        /* the user's own value or series, never a place in a ranking */
   --ds-data-pos: #3F8E50;         /* signed deltas only */
   --ds-data-neg: #D83731;
   --ds-data-grid: #E1E3E5;

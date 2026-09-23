@@ -27,7 +27,7 @@
 
 .ds-settle { transition-property: width, height, stroke-dasharray, stroke-dashoffset, transform; transition-duration: var(--ds-duration-data); transition-timing-function: var(--ds-ease-data); }
 
-.ds-sweep { height: 2px; background: var(--ds-machine-bar); background-size: 200% 100%; animation: ds-sweep var(--ds-duration-sweep) var(--ds-ease-data) infinite; }
+.ds-sweep { height: 2px; background: var(--ds-machine-bar); background-size: 200% 100%; transform: scaleX(var(--ds-dir)); animation: ds-sweep var(--ds-duration-sweep) var(--ds-ease-data) infinite; }
 .ds-sweep.is-done { animation: none; background: var(--ds-machine-line); }
 @keyframes ds-sweep { from { background-position: 100% 0; } to { background-position: -100% 0; } }
 

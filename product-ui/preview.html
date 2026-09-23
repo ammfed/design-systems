@@ -5,413 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Product UI preview</title>
 <link rel="icon" href="data:,">
-<!-- Self-contained: tokens.css, tokens-dark.css, motion.css and materials.css are inlined verbatim below, icons are inline SVG,
-     fonts are the token families with their system fallbacks, and nothing is fetched. Re-inline the four files if they change. -->
-<style id="tokens-css">
-/* Product UI design tokens, 2.0.0. Generic, unbranded, values-only. Light is the default theme.
-   Three layers:
-     palette  fixed hue steps (hex). Never read by components.
-     roles    what a colour means: surface, ink, line, user, machine, status, focus, data.
-              Components read roles only, so tokens-dark.css re-points roles and nothing else.
-     systems  type roles, density, depth, motion, focus and targets.
-   Contrast for every text and control pair, in both themes, is listed in guidelines.md. */
-
-:root {
-  /* ===== palette ===== */
-  /* accent: a warm metallic hue. Reserved for the user (see roles). */
-  --ds-accent-50: #F9F7ED;  --ds-accent-100: #F2ECCF; --ds-accent-200: #E6D7A2; --ds-accent-300: #D7BC6D;
-  --ds-accent-400: #CBA344; --ds-accent-500: #B68A35; --ds-accent-600: #92722A; --ds-accent-700: #7C5E24;
-  --ds-accent-800: #6C4527; --ds-accent-900: #5D3B26; --ds-accent-950: #361E12;
-
-  --ds-neutral-0: #FFFFFF;  --ds-neutral-25: #FCFCFC; --ds-neutral-50: #F7F7F7; --ds-neutral-75: #F2F2F2;
-  --ds-neutral-90: #EDEDED; --ds-neutral-100: #E1E3E5; --ds-neutral-200: #C3C6CB; --ds-neutral-300: #9EA2A9;
-  --ds-neutral-400: #797E86; --ds-neutral-500: #5F646D; --ds-neutral-600: #4B4F58; --ds-neutral-700: #3E4046;
-  --ds-neutral-800: #232528; --ds-neutral-900: #1B1D21; --ds-neutral-950: #0E0F12;
-
-  --ds-cyan-50: #EFFAFF;  --ds-cyan-200: #B6EAFF; --ds-cyan-300: #75DBFF; --ds-cyan-400: #2CCAFF; --ds-cyan-500: #00ABEB;
-  --ds-cyan-700: #0073AB; --ds-cyan-800: #00608D; --ds-cyan-900: #065074; --ds-cyan-950: #04334D;
-  --ds-blue-50: #E7F5FF;  --ds-blue-300: #81C1FF; --ds-blue-400: #4F98FF; --ds-blue-600: #043DFF; --ds-blue-700: #003CFF; --ds-blue-950: #071C5F;
-  --ds-green-50: #F3FAF4; --ds-green-300: #A0D5AB; --ds-green-400: #6FB97F; --ds-green-600: #3F8E50; --ds-green-700: #2F663C; --ds-green-950: #0F2415;
-  --ds-amber-50: #FFFBEB; --ds-amber-300: #FAD44F; --ds-amber-400: #F8C027; --ds-amber-500: #F29F0E; --ds-amber-600: #D67909; --ds-amber-700: #B2550B; --ds-amber-950: #441B04;
-  --ds-red-50: #FEF2F2;   --ds-red-100: #FDE4E3;  --ds-red-200: #FDCDCB;  --ds-red-300: #FAAAA7;  --ds-red-400: #F47A75;
-  --ds-red-600: #D83731;  --ds-red-700: #B52520;  --ds-red-800: #95231F;  --ds-red-900: #7C2320;  --ds-red-950: #430E0C;
-  --ds-magenta-400: #E879F9; --ds-magenta-700: #A21CAF;
-
-  /* ===== roles (light) ===== */
-  /* Surfaces: canvas (the page) < sunken (wells, sidebar, table head) < base (cards, panels) < raised, float, overlay (materials, see depth) */
-  --ds-surface-canvas: #FCFCFC;
-  --ds-surface-sunken: #F7F7F7;
-  --ds-surface-base: #FFFFFF;
-  --ds-surface-raised: #FFFFFF;
-  --ds-surface-float: #FFFFFF;    /* menus, popovers, toasts, pickers */
-  --ds-surface-overlay: #FFFFFF;  /* modal, drawer */
-  --ds-surface-hover: #F2F2F2;    /* row and item hover */
-  --ds-surface-pressed: #EDEDED;
-  --ds-surface-inverse: #1B1D21;  /* tooltips, the bulk-action bar */
-  --ds-surface-veil: #FCFCFCE6;   /* 90%: sticky chrome over scrolling content only */
-  --ds-scrim: #1B1D2180;
-
-  /* Ink: text and icons */
-  --ds-ink: #232528;              /* body */
-  --ds-ink-strong: #1B1D21;       /* headings, figures */
-  --ds-ink-muted: #5F646D;        /* secondary text, placeholders */
-  --ds-ink-inverse: #F7F7F7;      /* on surface-inverse */
-  --ds-ink-disabled: #9EA2A9;     /* only with a disabled control */
-
-  /* Lines */
-  --ds-line: #E1E3E5;             /* hairlines, card and table borders (decorative) */
-  --ds-line-emphasis: #C3C6CB;    /* connectors, tracks, dividers that must be seen */
-  --ds-line-strong: #797E86;      /* control boundaries (needs 3:1) */
-  --ds-line-float: #E1E3E5;       /* edges of float materials */
-
-  /* The user: their one primary action, their choices, where they are, their own item in a chart. Never structure. */
-  --ds-user: #92722A;             /* primary fill, selection bar, checked controls */
-  --ds-user-hover: #7C5E24;       /* one step darker, so text on it gets stronger */
-  --ds-user-pressed: #6C4527;
-  --ds-user-on: #FFFFFF;          /* text and icons on a user fill */
-  --ds-user-soft: #F9F7ED;        /* a chosen row, chip, segment or day */
-  --ds-user-soft-hover: #F2ECCF;
-  --ds-user-ink: #7C5E24;         /* accent text on soft or base */
-  --ds-user-line: #92722A;        /* the selection edge */
-
-  /* Every action that is not the user's one primary step */
-  --ds-ink-action: #232528;
-  --ds-ink-action-hover: #0E0F12;
-  --ds-ink-action-on: #F7F7F7;
-
-  /* The machine: content a model produced, progress, activity, data series 1 */
-  --ds-machine: #0073AB;
-  --ds-machine-ink: #00608D;
-  --ds-machine-soft: #EFFAFF;
-  --ds-machine-line: #B6EAFF;     /* the rule beside machine content (decorative) */
-  --ds-machine-bar: linear-gradient(90deg, #00ABEB, #0073AB); /* 2px "working" bar */
-
-  /* Status. fg = text on soft; solid + on = filled badges and solid alerts; line = the inline-start bar */
-  --ds-success-fg: #2F663C; --ds-success-soft: #F3FAF4; --ds-success-solid: #2F663C; --ds-success-on: #FFFFFF; --ds-success-line: #3F8E50;
-  --ds-info-fg: #003CFF;    --ds-info-soft: #E7F5FF;    --ds-info-solid: #043DFF;    --ds-info-on: #FFFFFF;    --ds-info-line: #043DFF;
-  --ds-warning-fg: #B2550B; --ds-warning-soft: #FFFBEB; --ds-warning-solid: #D67909; --ds-warning-on: #1B1D21; --ds-warning-line: #D67909;
-  --ds-error-fg: #B52520;   --ds-error-soft: #FEF2F2;   --ds-error-solid: #D83731;   --ds-error-on: #FFFFFF;   --ds-error-line: #D83731;
-  --ds-error-text: #B52520;       /* an error message on any base surface */
-  --ds-error-on-inverse: #FAAAA7; /* an error word on the inverse surface */
-  --ds-error-solid-hover: #B52520; --ds-error-solid-pressed: #95231F; --ds-error-soft-hover: #FDE4E3;
-
-  /* Focus: one colour for every control, distinct from the user's fill */
-  --ds-focus: #B2550B;
-  --ds-focus-width: 2px;
-  --ds-focus-offset: 2px;          /* 0 on soft controls, -2px (inset) in tables, menus and segments */
-
-  /* Data: four categorical series, then group the rest into "other". The accent marks only the user's own item. */
-  --ds-data-1: #0073AB;
-  --ds-data-2: #A21CAF;
-  --ds-data-3: #043DFF;
-  --ds-data-4: #5F646D;           /* comparison, previous period, target */
-  --ds-data-user: #92722A;
-  --ds-data-pos: #3F8E50;         /* signed deltas only */
-  --ds-data-neg: #D83731;
-  --ds-data-grid: #E1E3E5;
-  --ds-data-track: #F2F2F2;
-
-  /* ===== type ===== */
-  --ds-font-body: "Roboto", sans-serif;
-  --ds-font-heading: "Inter", sans-serif;
-  --ds-font-body-rtl: "Noto Kufi Arabic", sans-serif;
-  --ds-font-heading-rtl: "Alexandria", sans-serif;
-
-  /* Fixed steps (1.x). Every role below is one of these steps, or moves between two of them. */
-  --ds-size-h1: 76px; --ds-weight-h1: 200;
-  --ds-size-h2: 62px; --ds-weight-h2: 800;
-  --ds-size-h3: 48px; --ds-weight-h3: 800;
-  --ds-size-h4: 40px; --ds-weight-h4: 800;
-  --ds-size-h5: 32px; --ds-weight-h5: 700;
-  --ds-size-h6: 26px; --ds-weight-h6: 700;
-  --ds-size-h7: 20px; --ds-weight-h7: 600;
-  --ds-size-body-xl: 30px;
-  --ds-size-body-lg: 24px;
-  --ds-size-body-md: 20px;
-  --ds-size-body: 18px;
-  --ds-size-body-base: 16px;
-  --ds-size-body-sm: 14px;
-
-  /* Roles. Fluid roles move between two steps from a 360px to a 1280px viewport; the rem term keeps browser zoom working.
-     Nothing is under 16px except meta (14px), which is only for timestamps, table footers, chart ticks and helper text. */
-  --ds-type-display-size: clamp(3rem, 2.3152rem + 3.0435vw, 4.75rem);   --ds-type-display-leading: 1.05; --ds-type-display-weight: 200; --ds-type-display-tracking: -0.02em;
-  --ds-type-headline-size: clamp(2rem, 1.6087rem + 1.7391vw, 3rem);      --ds-type-headline-leading: 1.15; --ds-type-headline-weight: 800; --ds-type-headline-tracking: -0.015em;
-  --ds-type-title-1-size: clamp(1.625rem, 1.4783rem + 0.6522vw, 2rem);   --ds-type-title-1-leading: 1.2; --ds-type-title-1-weight: 700; --ds-type-title-1-tracking: -0.01em;
-  --ds-type-title-2-size: clamp(1.25rem, 1.1033rem + 0.6522vw, 1.625rem); --ds-type-title-2-leading: 1.25; --ds-type-title-2-weight: 700; --ds-type-title-2-tracking: -0.005em;
-  --ds-type-title-3-size: 1.25rem;  --ds-type-title-3-leading: 1.75rem; --ds-type-title-3-weight: 600; --ds-type-title-3-tracking: 0;
-  --ds-type-figure-size: clamp(2rem, 1.8043rem + 0.8696vw, 2.5rem);     --ds-type-figure-leading: 1.1; --ds-type-figure-weight: 700; --ds-type-figure-tracking: -0.02em;
-  --ds-type-lead-size: clamp(1.125rem, 1.0761rem + 0.2174vw, 1.25rem);  --ds-type-lead-leading: 1.6; --ds-type-lead-weight: 400;
-  --ds-type-body-size: 1rem;    --ds-type-body-leading: 1.5rem;  --ds-type-body-weight: 400; --ds-type-body-paragraph-leading: 1.5;
-  --ds-type-label-size: 1rem;   --ds-type-label-leading: 1.5rem; --ds-type-label-weight: 500;
-  --ds-type-meta-size: 0.875rem; --ds-type-meta-leading: 1.25rem; --ds-type-meta-weight: 400;
-  --ds-type-numeric: tabular-nums lining-nums;
-  --ds-measure: 68ch;
-
-  /* ===== spacing and grid ===== */
-  --ds-space-unit: 4px;
-  --ds-gap-xs: 8px;
-  --ds-gap-sm: 16px;
-  --ds-gap-md: 24px;
-  --ds-gap-lg: 28px;
-  --ds-grid-columns: 6;
-  --ds-grid-gutter: 24px;
-
-  /* ===== radii ===== */
-  --ds-radius-xs: 4px;
-  --ds-radius-sm: 6px;
-  --ds-radius-md: 8px;
-  --ds-radius-lg: 12px;
-  --ds-radius-xl: 16px;
-  --ds-radius-full: 999px;
-  /* Roles. Nested corners: inner radius = outer radius minus the padding between them. */
-  --ds-radius-control: 8px;   /* buttons, inputs, menus */
-  --ds-radius-panel: 12px;    /* cards, panels */
-  --ds-radius-overlay: 12px;  /* modals, drawers, pickers */
-  --ds-radius-chip: 999px;    /* chips, segment thumbs, pagination pages */
-
-  /* ===== targets and shell ===== */
-  --ds-target-min: 40px;      /* every stand-alone control */
-  --ds-target-floor: 24px;    /* inline icon buttons inside a chip or badge, with 8px clear space */
-  --ds-sidebar-width: 264px;
-  --ds-sidebar-rail: 72px;    /* collapsed sidebar: icons with tooltips */
-  --ds-drawer-width: 448px;
-  --ds-z-sticky: 20; --ds-z-appbar: 30; --ds-z-scrim: 40; --ds-z-overlay: 50; --ds-z-float: 60; --ds-z-toast: 70;
-
-  /* ===== depth ===== */
-  /* Flat by default: canvas, sunken and base are separated by 1px lines. Depth is only for layers that sit over others. */
-  --ds-elevation-flat: none;
-  --ds-elevation-raised: 0 1px 2px 0 #1B1D210F, 0 1px 3px 0 #1B1D210A;          /* a hovered card, a sticky table head */
-  --ds-elevation-float: 0 2px 4px -1px #1B1D210F, 0 12px 24px -6px #1B1D2124;   /* menus, popovers, toasts, pickers, command menu */
-  --ds-elevation-overlay: 0 4px 8px -2px #1B1D2114, 0 24px 48px -12px #1B1D2138; /* modal, drawer */
-  --ds-rim: inset 0 1px 0 0 #FFFFFF33;        /* lit top edge on filled controls */
-  --ds-tint-raised: #FFFFFF00;                /* dark theme lifts layers with a faint white tint; light needs none */
-  --ds-tint-float: #FFFFFF00;
-  --ds-veil-blur: 16px;
-
-  /* ===== motion ===== */
-  /* Durations are named by what moves, easings by direction. See motion.css for the transitions that use them. */
-  --ds-duration-instant: 0ms;
-  --ds-duration-feedback: 120ms;  /* hover and press recolour */
-  --ds-duration-state: 200ms;     /* toggles, checks, the glide of a selection marker */
-  --ds-duration-float-in: 240ms;
-  --ds-duration-float-out: 160ms;
-  --ds-duration-panel-in: 360ms;
-  --ds-duration-panel-out: 240ms;
-  --ds-duration-data: 640ms;      /* a changed value settles */
-  --ds-duration-reveal: 480ms;    /* public website hero only */
-  --ds-duration-spin: 1s;
-  --ds-duration-sweep: 2.4s;
-  --ds-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
-  --ds-ease-enter: cubic-bezier(0.22, 1, 0.36, 1);
-  --ds-ease-exit: cubic-bezier(0.4, 0, 1, 1);
-  --ds-ease-data: cubic-bezier(0.65, 0, 0.35, 1);
-  --ds-motion-rise: 6px;          /* float travel */
-  --ds-motion-lift: 12px;         /* modal travel */
-  --ds-motion-slide: 100%;        /* drawer travel: its own width */
-  --ds-stagger: 40ms;             /* at most 6 steps, website hero only */
-}
-
-/* 1 in LTR, -1 in RTL. Multiply every horizontal travel by it. */
-:root, [dir="ltr"] { --ds-dir: 1; }
-[dir="rtl"] {
-  --ds-dir: -1;
-  --ds-font-heading: var(--ds-font-heading-rtl);
-  --ds-font-body: var(--ds-font-body-rtl);
-  /* Joined scripts never take letter-spacing (it breaks the joins) and need more leading. */
-  --ds-type-display-tracking: 0; --ds-type-headline-tracking: 0; --ds-type-title-1-tracking: 0; --ds-type-title-2-tracking: 0; --ds-type-figure-tracking: 0;
-  --ds-type-display-leading: 1.2; --ds-type-headline-leading: 1.3; --ds-type-title-1-leading: 1.35; --ds-type-title-2-leading: 1.4;
-  --ds-type-body-leading: 1.75rem; --ds-type-body-paragraph-leading: 1.7; --ds-type-label-leading: 1.75rem; --ds-type-lead-leading: 1.75; --ds-type-meta-leading: 1.5rem;
-}
-
-/* ===== density ===== */
-/* Set data-ds-density on any container. Density changes space and control height, never text size, and never goes under the 40px target. */
-:root, [data-ds-density="comfortable"] {
-  --ds-control-height: 48px; --ds-control-pad-x: 24px; --ds-field-pad-x: 16px;
-  --ds-row-height: 52px; --ds-cell-pad-x: 16px;
-  --ds-panel-pad: 24px; --ds-stack-gap: 24px; --ds-cluster-gap: 12px;
-  --ds-nav-item-height: 48px; --ds-icon-size: 24px; --ds-appbar-height: 64px; --ds-check-size: 20px;
-}
-[data-ds-density="compact"] {
-  --ds-control-height: 40px; --ds-control-pad-x: 16px; --ds-field-pad-x: 12px;
-  --ds-row-height: 44px; --ds-cell-pad-x: 12px;
-  --ds-panel-pad: 16px; --ds-stack-gap: 16px; --ds-cluster-gap: 8px;
-  --ds-nav-item-height: 40px; --ds-icon-size: 20px; --ds-appbar-height: 56px; --ds-check-size: 20px;
-}
-[data-ds-density="spacious"] {
-  --ds-control-height: 56px; --ds-control-pad-x: 28px; --ds-field-pad-x: 20px;
-  --ds-row-height: 64px; --ds-cell-pad-x: 20px;
-  --ds-panel-pad: 32px; --ds-stack-gap: 32px; --ds-cluster-gap: 16px;
-  --ds-nav-item-height: 56px; --ds-icon-size: 24px; --ds-appbar-height: 72px; --ds-check-size: 24px;
-}
-
-/* ===== reduced motion ===== */
-/* The OS setting, or data-ds-motion="reduce" set by the product. Nothing travels, spins or settles; colour feedback and short fades stay. */
-@media (prefers-reduced-motion: reduce) {
-  :root {
-    --ds-duration-state: 0ms; --ds-duration-float-in: 120ms; --ds-duration-float-out: 0ms; --ds-duration-panel-in: 120ms; --ds-duration-panel-out: 0ms;
-    --ds-duration-data: 0ms; --ds-duration-reveal: 0ms; --ds-motion-rise: 0px; --ds-motion-lift: 0px; --ds-motion-slide: 0%; --ds-stagger: 0ms;
-  }
-}
-[data-ds-motion="reduce"] {
-  --ds-duration-state: 0ms; --ds-duration-float-in: 120ms; --ds-duration-float-out: 0ms; --ds-duration-panel-in: 120ms; --ds-duration-panel-out: 0ms;
-  --ds-duration-data: 0ms; --ds-duration-reveal: 0ms; --ds-motion-rise: 0px; --ds-motion-lift: 0px; --ds-motion-slide: 0%; --ds-stagger: 0ms;
-}
-</style>
-<style id="tokens-dark-css">
-/* Product UI dark theme, 2.0.0. Opt-in: not imported by tokens.css, and light stays the default.
-   Load it after tokens.css and set data-ds-theme="dark" on <html> (or on any region, for a dark panel inside a light page).
-   It re-points the colour roles and the depth tokens only, so every component follows with no per-component rules.
-   Palette steps only, no one-off tints. Every text pair is AA or better; see the contrast table in guidelines.md. */
-[data-ds-theme="dark"] {
-  color-scheme: dark;
-
-  /* Surfaces: floating layers lift with a faint tint and a lit rim, not a lighter swatch */
-  --ds-surface-canvas: #1B1D21;
-  --ds-surface-sunken: #0E0F12;
-  --ds-surface-base: #232528;
-  --ds-surface-raised: #232528;
-  --ds-surface-float: #232528;
-  --ds-surface-overlay: #232528;
-  --ds-surface-hover: #3E404666;   /* 40% */
-  --ds-surface-pressed: #3E4046A6; /* 65% */
-  --ds-surface-inverse: #E1E3E5;
-  --ds-surface-veil: #1B1D21E6;
-  --ds-scrim: #0E0F12B3;
-
-  /* Ink */
-  --ds-ink: #E1E3E5;
-  --ds-ink-strong: #F7F7F7;        /* softer than pure white on near-black */
-  --ds-ink-muted: #9EA2A9;
-  --ds-ink-inverse: #1B1D21;
-  --ds-ink-disabled: #5F646D;
-
-  /* Lines */
-  --ds-line: #3E4046;
-  --ds-line-emphasis: #4B4F58;
-  --ds-line-strong: #797E86;
-  --ds-line-float: #4B4F58;
-
-  /* The user: the accent moves to a lighter step and text on it turns dark */
-  --ds-user: #CBA344;
-  --ds-user-hover: #D7BC6D;        /* lighter on dark, so text on it gets stronger */
-  --ds-user-pressed: #E6D7A2;
-  --ds-user-on: #1B1D21;
-  --ds-user-soft: #361E12;
-  --ds-user-soft-hover: #5D3B26;
-  --ds-user-ink: #E6D7A2;
-  --ds-user-line: #CBA344;
-
-  /* Ink actions invert */
-  --ds-ink-action: #E1E3E5;
-  --ds-ink-action-hover: #FFFFFF;
-  --ds-ink-action-on: #1B1D21;
-
-  /* The machine */
-  --ds-machine: #2CCAFF;
-  --ds-machine-ink: #75DBFF;
-  --ds-machine-soft: #04334D;
-  --ds-machine-line: #065074;
-  --ds-machine-bar: linear-gradient(90deg, #75DBFF, #00ABEB);
-
-  /* Status: the hue's darkest step as the ground, a light step as the words */
-  --ds-success-fg: #A0D5AB; --ds-success-soft: #0F2415; --ds-success-solid: #6FB97F; --ds-success-on: #1B1D21; --ds-success-line: #6FB97F;
-  --ds-info-fg: #81C1FF;    --ds-info-soft: #071C5F;    --ds-info-solid: #4F98FF;    --ds-info-on: #1B1D21;    --ds-info-line: #4F98FF;
-  --ds-warning-fg: #FAD44F; --ds-warning-soft: #441B04; --ds-warning-solid: #F8C027; --ds-warning-on: #1B1D21; --ds-warning-line: #F29F0E;
-  --ds-error-fg: #FAAAA7;   --ds-error-soft: #430E0C;   --ds-error-solid: #F47A75;   --ds-error-on: #1B1D21;   --ds-error-line: #F47A75;
-  --ds-error-text: #F47A75;
-  --ds-error-on-inverse: #B52520;
-  --ds-error-solid-hover: #FAAAA7; --ds-error-solid-pressed: #FDCDCB; --ds-error-soft-hover: #7C2320;
-
-  /* Focus */
-  --ds-focus: #F29F0E;
-
-  /* Data */
-  --ds-data-1: #2CCAFF;
-  --ds-data-2: #E879F9;
-  --ds-data-3: #4F98FF;
-  --ds-data-4: #9EA2A9;
-  --ds-data-user: #CBA344;
-  --ds-data-pos: #6FB97F;
-  --ds-data-neg: #F47A75;
-  --ds-data-grid: #3E4046;
-  --ds-data-track: #3E4046;
-
-  /* Depth: deeper shadows, a lit rim on every raised layer, and a faint lift tint */
-  --ds-elevation-raised: 0 1px 2px 0 #00000066, inset 0 1px 0 0 #FFFFFF0A;
-  --ds-elevation-float: 0 2px 4px -1px #00000066, 0 16px 32px -8px #000000A6, inset 0 1px 0 0 #FFFFFF14;
-  --ds-elevation-overlay: 0 4px 8px -2px #00000080, 0 32px 64px -12px #000000B3, inset 0 1px 0 0 #FFFFFF14;
-  --ds-rim: inset 0 1px 0 0 #FFFFFF40;
-  --ds-tint-raised: #FFFFFF05;
-  --ds-tint-float: #FFFFFF0A;      /* a float surface reads #2C2E31 */
-}
-
-/* Higher contrast on request: stronger lines and muted text */
-@media (prefers-contrast: more) {
-  [data-ds-theme="dark"] { --ds-line: #797E86; --ds-line-float: #797E86; --ds-ink-muted: #E1E3E5; }
-}
-</style>
-<style id="motion-css">
-/* Product UI motion, 2.0.0. The six transitions that earn their place, built on the motion tokens in tokens.css.
-     feedback  hover and press recolour a control; never scale
-     float     menus, popovers, tooltips and pickers fade in and rise 6px from their anchor, and leave faster than they came
-     panel     drawers slide in from the inline-end edge (mirrored in RTL), modals rise 12px, the scrim fades
-     glide     the user's marker (tab bar, segment thumb, sidebar bar) travels to the new choice
-     settle    a value that changes (bar, ring, progress) eases to its new size; the first paint is static
-     sweep     the machine is working: a 2px bar under the content it is producing
-   Nothing animates on page load in product screens. Under reduced motion the tokens zero every travel; the loops below stop. */
-
-.ds-t-feedback { transition-property: color, background-color, border-color, box-shadow, text-decoration-color; transition-duration: var(--ds-duration-feedback); transition-timing-function: var(--ds-ease-standard); }
-
-.ds-float-enter { animation: ds-float-in var(--ds-duration-float-in) var(--ds-ease-enter) both; }
-.ds-float-enter[data-side="top"] { --ds-float-from: var(--ds-motion-rise); }
-@keyframes ds-float-in { from { opacity: 0; transform: translateY(var(--ds-float-from, calc(var(--ds-motion-rise) * -1))); } to { opacity: 1; transform: none; } }
-
-.ds-panel-enter { animation: ds-panel-in var(--ds-duration-panel-in) var(--ds-ease-enter) both; }
-.ds-panel-enter.from-start { --ds-panel-sign: -1; }
-@keyframes ds-panel-in { from { transform: translateX(calc(var(--ds-motion-slide) * var(--ds-dir) * var(--ds-panel-sign, 1))); opacity: 0.4; } to { transform: none; opacity: 1; } }
-
-.ds-modal-enter { animation: ds-modal-in var(--ds-duration-panel-in) var(--ds-ease-enter) both; }
-@keyframes ds-modal-in { from { opacity: 0; transform: translateY(var(--ds-motion-lift)); } to { opacity: 1; transform: none; } }
-
-.ds-scrim-enter { animation: ds-fade-in var(--ds-duration-panel-in) var(--ds-ease-standard) both; }
-@keyframes ds-fade-in { from { opacity: 0; } to { opacity: 1; } }
-
-.ds-glide { transition-property: inset-inline-start, inset-block-start, width, height, transform; transition-duration: var(--ds-duration-state); transition-timing-function: var(--ds-ease-standard); }
-
-.ds-settle { transition-property: width, height, stroke-dasharray, stroke-dashoffset, transform; transition-duration: var(--ds-duration-data); transition-timing-function: var(--ds-ease-data); }
-
-.ds-sweep { height: 2px; background: var(--ds-machine-bar); background-size: 200% 100%; animation: ds-sweep var(--ds-duration-sweep) var(--ds-ease-data) infinite; }
-.ds-sweep.is-done { animation: none; background: var(--ds-machine-line); }
-@keyframes ds-sweep { from { background-position: 100% 0; } to { background-position: -100% 0; } }
-
-/* Native popover and dialog elements get the same float and exit with no script. */
-.ds-native-float { opacity: 0; translate: 0 calc(var(--ds-motion-rise) * -1); transition: opacity var(--ds-duration-float-out) var(--ds-ease-exit), translate var(--ds-duration-float-out) var(--ds-ease-exit), overlay var(--ds-duration-float-out) allow-discrete, display var(--ds-duration-float-out) allow-discrete; }
-.ds-native-float:popover-open, .ds-native-float[open] { opacity: 1; translate: 0 0; transition-duration: var(--ds-duration-float-in); transition-timing-function: var(--ds-ease-enter); }
-@starting-style { .ds-native-float:popover-open, .ds-native-float[open] { opacity: 0; translate: 0 calc(var(--ds-motion-rise) * -1); } }
-
-/* Theme change: a short cross-fade when the product switches theme through document.startViewTransition. */
-::view-transition-old(root), ::view-transition-new(root) { animation-duration: var(--ds-duration-state); animation-timing-function: var(--ds-ease-standard); }
-
-/* Loops stop under reduced motion; everything else is already zeroed by the tokens. */
-@media (prefers-reduced-motion: reduce) { .ds-sweep, .ds-spin, .ds-skeleton { animation: none !important; } }
-[data-ds-motion="reduce"] :is(.ds-sweep, .ds-spin, .ds-skeleton) { animation: none !important; }
-</style>
-<style id="materials-css">
-/* Product UI materials, 2.0.0. Four levels of depth, built on the depth tokens in tokens.css; the same classes work in both themes.
-     flat     canvas, sunken and base: separated by 1px lines, no shadow (no class needed)
-     raised   a hovered interactive card, a sticky table head
-     float    menus, popovers, tooltips, toasts, pickers, the command menu, the bulk-action bar
-     overlay  modal and drawer, over the scrim
-     veil     translucent with blur, for sticky chrome over scrolling content only; solid wherever blur or transparency is unavailable or unwanted
-   Screens use these classes rather than hand-rolled shadows. */
-.ds-material-raised { background-color: var(--ds-surface-raised); background-image: linear-gradient(var(--ds-tint-raised), var(--ds-tint-raised)); box-shadow: var(--ds-elevation-raised); }
-.ds-material-float { background-color: var(--ds-surface-float); background-image: linear-gradient(var(--ds-tint-float), var(--ds-tint-float)); border: 1px solid var(--ds-line-float); box-shadow: var(--ds-elevation-float); }
-.ds-material-overlay { background-color: var(--ds-surface-overlay); background-image: linear-gradient(var(--ds-tint-float), var(--ds-tint-float)); box-shadow: var(--ds-elevation-overlay); }
-.ds-material-veil { background-color: var(--ds-surface-veil); -webkit-backdrop-filter: blur(var(--ds-veil-blur)); backdrop-filter: blur(var(--ds-veil-blur)); }
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .ds-material-veil { background-color: var(--ds-surface-canvas); } }
-@media (prefers-reduced-transparency: reduce) { .ds-material-veil { background-color: var(--ds-surface-canvas); -webkit-backdrop-filter: none; backdrop-filter: none; } }
-@media (forced-colors: active) { .ds-material-raised, .ds-material-float, .ds-material-overlay, .ds-material-veil { background: Canvas; border: 1px solid CanvasText; box-shadow: none; } }
-</style>
+<!-- Nothing is fetched from the network: the four stylesheets below sit beside this file, icons are inline SVG, and the
+     fonts are the token families with their system fallbacks. Every number on this page is read back from these files. -->
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="tokens-dark.css">
+<link rel="stylesheet" href="motion.css">
+<link rel="stylesheet" href="materials.css">
 <style id="preview-css">
 /* ===== Preview only. Every colour, size and duration below is a token. ===== */
 *, *::before, *::after { box-sizing: border-box; }
@@ -503,7 +102,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
 /* ----- segmented ----- */
 .seg { --pad: 4px; position: relative; display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr; min-width: max-content; padding: var(--pad); border: 1px solid var(--ds-line); border-radius: var(--ds-radius-control); background: var(--ds-surface-sunken); isolation: isolate; }
 .seg .thumb { position: absolute; z-index: -1; top: var(--pad); bottom: var(--pad); inset-inline-start: calc(var(--pad) + (100% - 2 * var(--pad)) / var(--n) * var(--k)); width: calc((100% - 2 * var(--pad)) / var(--n)); border-radius: calc(var(--ds-radius-control) - var(--pad)); background: var(--ds-user-soft); box-shadow: inset 0 0 0 1px var(--ds-user-line), var(--ds-elevation-raised); }
-.seg button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: var(--ds-target-min); min-height: calc(var(--ds-control-height) - 2 * var(--pad) - 2px); padding: 0 14px; border: 0; border-radius: calc(var(--ds-radius-control) - var(--pad)); background: none; color: var(--ds-ink-muted); font-weight: 500; white-space: nowrap; cursor: pointer; }
+.seg button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: var(--ds-target-min); min-height: max(var(--ds-target-min), calc(var(--ds-control-height) - 2 * var(--pad) - 2px)); padding: 0 14px; border: 0; border-radius: calc(var(--ds-radius-control) - var(--pad)); background: none; color: var(--ds-ink-muted); font-weight: 500; white-space: nowrap; cursor: pointer; }
 .seg.icons button { padding: 0 10px; }
 .seg button:hover { color: var(--ds-ink-strong); }
 .seg button[aria-checked="true"] { color: var(--ds-ink-strong); font-weight: 600; }
@@ -550,13 +149,15 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
 .tbl-wrap { max-height: calc(var(--ds-row-height) * 5.5); overflow: auto; border: 1px solid var(--ds-line); border-radius: var(--ds-radius-panel); background: var(--ds-surface-base); }
 .tbl { width: 100%; border-collapse: separate; border-spacing: 0; font-variant-numeric: var(--ds-type-numeric); }
 .tbl th, .tbl td { height: var(--ds-row-height); padding: 0 var(--ds-cell-pad-x); border-bottom: 1px solid var(--ds-line); text-align: start; white-space: nowrap; }
-.tbl thead th { position: sticky; top: 0; z-index: 1; height: 48px; font-weight: 500; color: var(--ds-ink-muted); background-color: var(--ds-surface-veil); -webkit-backdrop-filter: blur(var(--ds-veil-blur)); backdrop-filter: blur(var(--ds-veil-blur)); }
+.tbl thead th { position: sticky; top: 0; z-index: 1; height: 48px; font-weight: 500; color: var(--ds-ink-muted); }
 .tbl tbody th { font-weight: 500; color: var(--ds-ink-strong); }
 .tbl tbody tr:hover > * { background: var(--ds-surface-hover); }
 .tbl tbody tr.is-chosen > * { background: var(--ds-user-soft); }
 .tbl tbody tr.is-chosen > :first-child { box-shadow: inset calc(3px * var(--ds-dir)) 0 0 var(--ds-user-line); }
 .tbl tr:last-child > * { border-bottom: 0; }
 .tbl .c-sel { width: 48px; padding-inline-end: 0; }
+.tbl .c-sel .cbx { position: relative; }
+.tbl .c-sel .cbx::after { content: ""; position: absolute; inset-block-start: 50%; inset-inline-start: 50%; width: var(--ds-target-min); height: var(--ds-target-min); transform: translate(calc(-50% * var(--ds-dir)), -50%); }
 .tbl .c-num { text-align: end; }
 .tbl .c-act { width: 56px; padding: 0 8px; text-align: end; }
 .tbl .c-act .btn { width: 40px; min-height: 40px; opacity: 0; }
@@ -574,6 +175,8 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
 .kpi .lbl { font-weight: 500; color: var(--ds-ink-muted); }
 .delta { display: inline-flex; align-items: center; gap: 6px; color: var(--ds-success-fg); font-weight: 500; }
 .delta .i { color: var(--ds-data-pos); }
+.delta.down { color: var(--ds-error-fg); }
+.delta.down .i { color: var(--ds-data-neg); transform: rotate(180deg); }
 .spark { width: 100%; height: auto; overflow: visible; }
 .spark polyline { fill: none; stroke: var(--ds-machine); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
 .spark circle { fill: var(--ds-machine); stroke: var(--ds-surface-base); stroke-width: 3; }
@@ -741,8 +344,8 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
 </header>
 
 <main class="panes">
-  <section class="pane" id="pane-light" aria-labelledby="h-light"></section>
-  <section class="pane" id="pane-dark" data-ds-theme="dark" aria-labelledby="h-dark"></section>
+  <section class="pane" id="pane-light" aria-labelledby="h-l"></section>
+  <section class="pane" id="pane-dark" data-ds-theme="dark" aria-labelledby="h-d"></section>
 </main>
 
 <section class="fonts" aria-labelledby="h-fonts">
@@ -831,7 +434,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
     <h4 class="sub" id="{p}-cap">Work queue</h4>
     <div class="tbl-wrap" tabindex="0" role="region" aria-labelledby="{p}-cap">
       <table class="tbl" aria-labelledby="{p}-cap">
-        <thead><tr><th class="c-sel"><input type="checkbox" class="cbx" aria-label="Select all" data-all></th><th scope="col">Request</th><th scope="col">Status</th><th scope="col" class="c-num">Days open</th><th class="c-act"><span class="sr">Actions</span></th></tr></thead>
+        <thead><tr><th class="c-sel ds-material-veil"><input type="checkbox" class="cbx" aria-label="Select all" data-all></th><th scope="col" class="ds-material-veil">Request</th><th scope="col" class="ds-material-veil">Status</th><th scope="col" class="c-num ds-material-veil">Days open</th><th class="c-act ds-material-veil"><span class="sr">Actions</span></th></tr></thead>
         <tbody data-rows>
           <tr><td class="c-sel"><input type="checkbox" class="cbx" aria-label="Select Site inspection"></td><th scope="row">Site inspection</th><td><span class="badge success">On track</span></td><td class="c-num">3</td><td class="c-act"><button type="button" class="btn ghost icon" aria-label="More for Site inspection"><svg class="i s20"><use href="#i-more"/></svg></button></td></tr>
           <tr class="is-chosen"><td class="c-sel"><input type="checkbox" class="cbx" aria-label="Select Permit renewal" checked></td><th scope="row">Permit renewal</th><td><span class="badge warning">At risk</span></td><td class="c-num">12</td><td class="c-act"><button type="button" class="btn ghost icon" aria-label="More for Permit renewal"><svg class="i s20"><use href="#i-more"/></svg></button></td></tr>
@@ -851,30 +454,30 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
     <h4 class="sub">Dashboard</h4>
     <div class="two">
       <div class="panel kpi">
-        <span class="lbl">On-time delivery</span>
-        <span class="t-figure">86%</span>
-        <span class="delta"><svg class="i s20"><use href="#i-up"/></svg><bdi dir="ltr">+4.2</bdi> pts, better</span>
-        <div class="meter" role="img" aria-label="86% against a target of 90%" style="--v:86;--t:90"><i class="ds-settle" data-settle></i><b></b></div>
-        <span class="meta">Target 90%</span>
+        <span class="lbl">Your requests closed on time</span>
+        <span class="t-figure" data-kpi>43 of 50</span>
+        <span class="delta" data-delta><svg class="i s20"><use href="#i-up"/></svg><bdi dir="ltr">+3</bdi> against last month, better</span>
+        <div class="meter" role="img" aria-label="43 of your 50 requests closed on time, against a target of 45." style="--v:86;--t:90" data-meter><i class="ds-settle"></i><b></b></div>
+        <span class="meta" data-note>86%, against a target of 45 of 50 (90%).</span>
         <p class="t-label" style="margin-top:12px;color:var(--ds-ink-strong)">Last 6 months</p>
-        <svg class="spark" viewBox="0 0 240 56" role="img" aria-label="Rising over six months, from 78% to 86%"><polyline points="4,44 50,36 96,40 142,24 188,18 234,10"/><circle cx="234" cy="10" r="5"/></svg>
+        <svg class="spark" viewBox="0 0 240 56" role="img" aria-label="Closed on time in each of the last six months: 37, 39, 38, 41, 40, then 43 of 50." data-spark><polyline points="4,44.0 50,32.7 96,38.3 142,21.3 188,27.0 234,10.0"/><circle cx="234" cy="10.0" r="5"/></svg>
       </div>
       <div class="panel">
-        <div class="panel-h"><div><p class="t-label" style="color:var(--ds-ink-strong)">Closed this month</p><p class="meta">By team</p></div></div>
+        <div class="panel-h"><div><p class="t-label" style="color:var(--ds-ink-strong)">Requests you closed</p><p class="meta">By month</p></div></div>
         <div class="chart">
           <div class="ticks" aria-hidden="true"><span style="--p:0">100</span><span style="--p:25">75</span><span style="--p:50">50</span><span style="--p:75">25</span></div>
-          <div class="plot" role="img" aria-label="Requests closed this month by team. Your team closed 92, the most; the other teams closed between 48 and 80." data-plot>
-            <i class="ds-settle" style="--v:64"></i><i class="ds-settle" style="--v:48"></i><i class="ds-settle you" style="--v:92"></i><i class="ds-settle" style="--v:80"></i><i class="ds-settle" style="--v:56"></i><i class="ds-settle" style="--v:71"></i>
+          <div class="plot" role="img" aria-label="Requests you closed in each of the last six months: 58, 62, 54, 70, 66, then 78 this month." data-plot>
+            <i class="ds-settle" style="--v:58"></i><i class="ds-settle" style="--v:62"></i><i class="ds-settle" style="--v:54"></i><i class="ds-settle" style="--v:70"></i><i class="ds-settle" style="--v:66"></i><i class="ds-settle you" style="--v:78"></i>
           </div>
-          <div class="xl" aria-hidden="true"><span>A</span><span>B</span><span class="you">You</span><span>D</span><span>E</span><span>F</span></div>
+          <div class="xl" aria-hidden="true"><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span class="you">Sep</span></div>
         </div>
-        <div class="legend"><span><i class="key" style="--k:var(--ds-data-1)"></i>Other teams</span><span><i class="key diamond" style="--k:var(--ds-data-user)"></i>Your team</span></div>
+        <div class="legend"><span><i class="key" style="--k:var(--ds-data-1)"></i>Earlier months</span><span><i class="key diamond" style="--k:var(--ds-data-user)"></i>This month</span></div>
       </div>
     </div>
     <div class="insight" style="margin-top:16px">
       <div class="ds-sweep" aria-hidden="true"></div>
       <span class="disc" aria-hidden="true"><svg class="i"><use href="#i-spark"/></svg></span>
-      <div class="body"><span class="mchip"><svg class="i s16"><use href="#i-spark"/></svg>Generated</span><p aria-live="polite">Requests in review rose <bdi dir="ltr">18%</bdi> this month, mostly permit renewals waiting on one approver.</p></div>
+      <div class="body"><span class="mchip"><svg class="i s16"><use href="#i-spark"/></svg>Generated</span><p aria-live="polite">Requests in review rose from 22 to 26 this month, mostly permit renewals waiting on one approver.</p></div>
       <div class="acts"><button type="button" class="btn link">Show the requests</button></div>
     </div>
 
@@ -921,7 +524,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
     <div class="demos">
       <div class="demo"><p class="t-label">Float</p><p class="meta">rise 6px, ease enter</p><div class="menu ds-material-float ds-float-enter" data-replay aria-hidden="true"><button type="button" tabindex="-1">Assign</button><button type="button" tabindex="-1">Duplicate</button></div></div>
       <div class="demo"><p class="t-label">Panel</p><p class="meta">from the end</p><div class="drawer ds-material-overlay ds-panel-enter" data-replay aria-hidden="true"><p class="t-label">Details</p><div class="bar"></div><div class="bar" style="width:70%"></div></div></div>
-      <div class="demo"><p class="t-label">Settle</p><p class="meta">values ease to new sizes</p><div class="mini-bars" data-mini aria-hidden="true"><i class="ds-settle" style="--v:40"></i><i class="ds-settle" style="--v:70"></i><i class="ds-settle you" style="--v:90"></i><i class="ds-settle" style="--v:55"></i></div></div>
+      <div class="demo"><p class="t-label">Settle</p><p class="meta">values ease to new sizes</p><div class="mini-bars" data-mini aria-hidden="true"><i class="ds-settle" style="--v:51"></i><i class="ds-settle" style="--v:60"></i><i class="ds-settle" style="--v:48"></i><i class="ds-settle you" style="--v:63"></i></div></div>
       <div class="demo"><p class="t-label">Sweep</p><p class="meta">the machine is working</p><div class="ds-sweep" style="margin-top:28px"></div><div class="insight" style="margin-top:0;border-start-start-radius:0;border-start-end-radius:0;padding:14px"><span class="disc" aria-hidden="true"><svg class="i s20"><use href="#i-spark"/></svg></span><p class="meta" style="align-self:center">Writing a summary</p></div></div>
     </div>
   </section>
@@ -1002,7 +605,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
     ['line-strong', 'surface-base', 'Control edge'], ['line-strong', 'surface-sunken', 'Control edge in a well'], ['focus', 'surface-base', 'Focus ring'], ['focus', 'surface-sunken', 'Focus in a well'],
     ['focus', 'user-soft', 'Focus on a chosen item'], ['user', 'surface-base', 'Checked control'], ['user-line', 'user-soft', 'Selection edge'], ['machine', 'surface-base', 'Progress'],
     ['data-1', 'surface-base', 'Series 1'], ['data-2', 'surface-base', 'Series 2'], ['data-3', 'surface-base', 'Series 3'], ['data-4', 'surface-base', 'Series 4'],
-    ['data-user', 'surface-base', 'Your item'], ['data-pos', 'surface-base', 'Positive delta'], ['data-neg', 'surface-base', 'Negative delta']
+    ['data-user', 'surface-base', 'Your own value'], ['data-pos', 'surface-base', 'Positive delta'], ['data-neg', 'surface-base', 'Negative delta']
   ];
 
   function fill(pane) {
@@ -1014,7 +617,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
     }).join('');
     var lo = [99, 99], fails = 0;
     var rows = text.map(function (r) { return [r, 4.5, false]; }).concat(graphic.map(function (r) { return [r, 3, true]; })).map(function (x) {
-      var r = x[0], bg = solid(el, r[1]), fg = r[0] === 'surface-float' ? solid(el, r[0]) : (tok(el, r[0]).length > 7 ? over(tok(el, r[0]), bg) : tok(el, r[0]));
+      var r = x[0], bg = solid(el, r[1]), fg = tok(el, r[0]).length > 7 ? over(tok(el, r[0]), bg) : tok(el, r[0]);
       var v = ratio(fg, bg), i = x[2] ? 1 : 0; lo[i] = Math.min(lo[i], v); if (v < x[1]) fails++;
       return '<div><span class="aa' + (x[2] ? ' g' : '') + '" style="background:' + bg + ';color:' + fg + ';--fg:' + fg + '" aria-hidden="true">Aa</span><span>' + r[2] + '<br><span class="meta">' + r[0] + ' on ' + r[1].replace('surface-', '') + '</span></span><span class="v' + (v < x[1] ? ' fail' : '') + '">' + v.toFixed(2) + '</span></div>';
     });
@@ -1062,16 +665,50 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
     sync();
   });
 
+  /* ---- the dashboard: the user's own months and their own target. Every figure, summary and label is written from this one set ---- */
+  var sets = [
+    { bars: [58, 62, 54, 70, 66, 78], on: [37, 39, 38, 41, 40, 43] },
+    { bars: [44, 51, 60, 48, 63, 57], on: [40, 43, 42, 44, 43, 38] },
+    { bars: [70, 52, 66, 62, 68, 77], on: [38, 41, 43, 44, 42, 46] }
+  ];
+  var goal = 50, target = 45;
+  function points(v) {
+    var lo = Math.min.apply(null, v), hi = Math.max.apply(null, v), span = hi - lo || 1;
+    return v.map(function (n, i) { return (4 + i * 46) + ',' + (44 - (n - lo) / span * 34).toFixed(1); });
+  }
+  function paint(k) {
+    var s = sets[k], now = s.on[5], d = now - s.on[4], pct = Math.round(now / goal * 100), pts = points(s.on), end = pts[5].split(',');
+    document.querySelectorAll('[data-plot]').forEach(function (p) {
+      Array.prototype.forEach.call(p.children, function (b, i) { b.style.setProperty('--v', s.bars[i]); });
+      p.setAttribute('aria-label', 'Requests you closed in each of the last six months: ' + s.bars.slice(0, 5).join(', ') + ', then ' + s.bars[5] + ' this month.');
+    });
+    document.querySelectorAll('[data-mini]').forEach(function (p) { Array.prototype.forEach.call(p.children, function (b, i) { b.style.setProperty('--v', sets[(k + 1) % 3].bars[i + 1]); }); });
+    document.querySelectorAll('[data-kpi]').forEach(function (f) { f.textContent = now + ' of ' + goal; });
+    document.querySelectorAll('[data-delta]').forEach(function (e) {
+      e.className = 'delta' + (d < 0 ? ' down' : '');
+      e.innerHTML = '<svg class="i s20"><use href="#i-up"/></svg><bdi dir="ltr">' + (d < 0 ? '' : '+') + d + '</bdi> against last month, ' + (d < 0 ? 'worse' : 'better');
+    });
+    document.querySelectorAll('[data-meter]').forEach(function (m) {
+      m.style.setProperty('--v', pct);
+      m.setAttribute('aria-label', now + ' of your ' + goal + ' requests closed on time, against a target of ' + target + '.');
+    });
+    document.querySelectorAll('[data-note]').forEach(function (t) { t.textContent = pct + '%, against a target of ' + target + ' of ' + goal + ' (' + Math.round(target / goal * 100) + '%).'; });
+    document.querySelectorAll('[data-spark]').forEach(function (g) {
+      g.querySelector('polyline').setAttribute('points', pts.join(' '));
+      g.querySelector('circle').setAttribute('cx', end[0]);
+      g.querySelector('circle').setAttribute('cy', end[1]);
+      g.setAttribute('aria-label', 'Closed on time in each of the last six months: ' + s.on.slice(0, 5).join(', ') + ', then ' + now + ' of ' + goal + '.');
+    });
+  }
+  paint(0);
+
   /* ---- motion: replay every demo; reduce motion ---- */
   var turn = 0;
   function replay() {
     turn++;
     document.querySelectorAll('[data-dur]').forEach(function (d) { d.classList.remove('go'); void d.offsetWidth; d.classList.add('go'); });
     document.querySelectorAll('[data-replay]').forEach(function (m) { var c = m.className; m.className = c.replace(/ ds-(float|panel)-enter/, ''); void m.offsetWidth; m.className = c; });
-    var sets = [[64, 48, 92, 80, 56, 71], [58, 66, 84, 74, 61, 50], [70, 52, 96, 62, 68, 77]];
-    document.querySelectorAll('[data-plot]').forEach(function (p) { Array.prototype.forEach.call(p.children, function (b, i) { b.style.setProperty('--v', sets[turn % 3][i]); }); });
-    document.querySelectorAll('[data-mini]').forEach(function (p) { Array.prototype.forEach.call(p.children, function (b, i) { b.style.setProperty('--v', sets[(turn + 1) % 3][i + 1]); }); });
-    document.querySelectorAll('[data-settle]').forEach(function (m) { m.parentNode.style.setProperty('--v', [86, 74, 91][turn % 3]); });
+    paint(turn % 3);
     document.querySelectorAll('.pane [data-seg]').forEach(function (s) { var n = +getComputedStyle(s).getPropertyValue('--n'), k = (+getComputedStyle(s).getPropertyValue('--k') + 1) % n; s.querySelectorAll('button')[k].click(); });
   }
   document.getElementById('replay').addEventListener('click', replay);

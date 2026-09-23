@@ -23,11 +23,11 @@ Components read **roles**, never palette steps. A role says what a colour means;
 
 ### The user and the machine
 
-- **The accent is the user's colour, never structure.** It marks their one primary action per view, what they chose (a selected row, a checked box, the current step, a chosen chip, segment or day), where they are (the current nav item, the tab bar, the current page) and their own item in a chart. Links, borders, rules, counts, card edges, charts in general and activity are ink or the machine.
+- **The accent is the user's colour, never structure.** It marks their one primary action per view, what they chose (a selected row, a checked box, the current step, a chosen chip, segment or day), where they are (the current nav item, the tab bar, the current page) and their own value in a chart. Links, borders, rules, counts, card edges, charts in general and activity are ink or the machine.
 - **The machine has its own colour.** Anything a model produced carries the machine rule and chip, so it is never mistaken for the user's choice or for something a user entered. While it is working, a 2px bar sweeps under the content.
 - **Secondary actions are ink.** Solid, soft, outline and link buttons all come in ink; links are ink and underlined. One solid accent button per view.
 - **Status colours are for status.** Success, info, warning and error each come as soft (a ground plus text) and solid (a fill plus text), with a line colour for the inline-start bar of an alert.
-- **Data: four series, then "other".** Series 1 is the machine colour; series 4 is the neutral used for comparison, previous period and target. The accent marks only the user's own item. Positive and negative colours are for signed deltas only, and always sit with a sign and a word or icon, never colour alone.
+- **Data: four series, then "other".** Series 1 is the machine colour; series 4 is the neutral used for comparison, previous period and target. The accent marks the user's own value or series: their own reading over time, or against their own target, never a place in a ranking. Positive and negative colours are for signed deltas only, and always sit with a sign and a word or icon, never colour alone.
 
 ### Contrast
 
@@ -83,7 +83,7 @@ Controls, focus and charts (needs 3:1)
 | Series 2 | `data-2` on `surface-base` | 6.32 | 6.24 |
 | Series 3 | `data-3` on `surface-base` | 6.74 | 5.32 |
 | Series 4, comparison | `data-4` on `surface-base` | 5.95 | 6.00 |
-| The user's own item | `data-user` on `surface-base` | 4.50 | 6.48 |
+| The user's own value | `data-user` on `surface-base` | 4.50 | 6.48 |
 | Positive delta | `data-pos` on `surface-base` | 4.04 | 6.53 |
 | Negative delta | `data-neg` on `surface-base` | 4.66 | 5.77 |
 
@@ -189,6 +189,15 @@ The six transitions in `motion.css`:
 
 **Reduced motion.** Under `prefers-reduced-motion: reduce`, or `data-ds-motion="reduce"` set by the product, the tokens zero every travel and settle; floats and panels become 120ms fades; loops (sweep, spinners, skeleton shimmer) stop. Colour feedback stays.
 
+## Interaction states
+
+- **Hover moves one step inside the same role.** A filled control takes its hover step (`--ds-user-hover`, `--ds-ink-action-hover`, `--ds-error-solid-hover`); a soft control takes `--ds-user-soft-hover` or `--ds-error-soft-hover`; a row, menu item or ghost button takes `--ds-surface-hover`. The fill darkens, so text on it gets stronger rather than weaker (`user-on` on `user-hover` is 6.03 light, 9.08 dark).
+- **Press is colour only,** one step further again (`--ds-user-pressed`, `--ds-surface-pressed`, `--ds-error-solid-pressed`), over `--ds-duration-feedback`. Nothing scales, lifts or bounces.
+- **Links are ink and underlined at rest.** Hover moves them to `--ds-ink-action-hover` and thickens the underline; the underline never appears or disappears on hover alone.
+- **Disabled:** text and icons drop to `--ds-ink-disabled`, the surface stays, the control takes no pointer or keyboard interaction, and `aria-disabled` carries it. This is the one ink outside the contrast table, because WCAG exempts inactive controls, which is also why a disabled control is never the only explanation: say what would enable it, or leave it enabled and explain on submit.
+- **Chosen is not hovered.** A selected row, chip or segment keeps `--ds-user-soft` and its `--ds-user-line` edge while the pointer is over it, so a choice and a pointer never read as the same state.
+- Every state is announced as well as coloured: `aria-pressed`, `aria-checked`, `aria-current` and `aria-expanded` carry what the colour shows.
+
 ## Focus and targets
 
 - One focus ring everywhere: 2px solid `--ds-focus`, offset 2px, on `:focus-visible` only. Soft controls use offset 0; rows, menu items and segments draw it inset (-2px) so it is never clipped.
@@ -211,7 +220,18 @@ The six transitions in `motion.css`:
 
 4px base unit. Common gaps: 8 (button group), 16 (toast, small card), 24 (card padding, section stack, grid gap), 28 (large card). Six-column grid, 24px gutter, container widths tiered by breakpoint (roughly 1480 / 1240 / 980 / 740 / fluid).
 
+Content sits inside a per-section container, never one page-wide wrapper, so a full-bleed band can carry its own background while its text still lines up with the section above it. Screens are written mobile-first and gain columns as the container grows. Under roughly 1024px the product sidebar collapses to its rail and the public website's navigation collapses to a menu; panels and KPI tiles restack on their own container's width, not the viewport's.
+
 Radius roles: 8 for controls, 12 for panels and overlays, full for chips, segment thumbs and pagination. Nested corners: the inner radius is the outer radius minus the padding between them. The fixed scale (4, 6, 8, 12, 16, full) stays for badges, checkboxes and small buttons.
+
+## Backgrounds and imagery
+
+- Surfaces are flat. The only gradients in the system are the thin accent bar in the public website header and footer, the machine's working bar (`--ds-machine-bar`), a progress fill and the protection overlay on an image.
+- A subtle line pattern may sit behind the public website hero, always under a protection fade so type keeps its measured contrast. Product screens carry no pattern.
+- Photography is real and naturally lit, on simple backgrounds, with a dark overlay (never a coloured one) under any text. Photographs sit back a little in dark, about 92% brightness.
+- A small set of fixed aspect ratios, reused everywhere, rather than a one-off crop per page.
+- Illustration is geometric and solid-colour, drawn from the same roles as everything else. No photographic collage and no stock-photo look.
+- A real screenshot or a worked example beats an invented illustration wherever either would do.
 
 ## Components
 
@@ -221,7 +241,7 @@ Radius roles: 8 for controls, 12 for panels and overlays, full for chips, segmen
 - **Forms:** input, textarea, select, combobox (marks the chosen option), checkbox (with a mixed state), radio group, toggle, file input, range slider, **date picker and calendar**, and errors at 16px with an icon beside the field.
 - **Navigation:** breadcrumb, tabs (a gliding bar) and pill tabs, **segmented control**, pagination, steps, dropdown menu (arrow keys, danger items), sidebar with a collapsible icon rail, **app bar**, **command menu** (Ctrl or Cmd K).
 - **Data display:** card, badge, avatar, accordion, blockquote, **table** (see below), KPI tile, description list, timeline, status pill, **chip** (toggle and applied), **filter bar**, **panel**.
-- **Dashboards:** bar chart, ring chart, sparkline, **chart legend**, **insight** (the machine's reading of the data).
+- **Dashboards:** bar chart, **progress ring** (one value closing toward its goal, never a donut or pie), sparkline, **chart legend**, **insight** (the machine's reading of the data).
 - **Feedback:** alert, toast (machine tone, action, timed dismissal that pauses), modal (default, serious, language), tooltip, popover, banner, drawer, progress (determinate and indeterminate), spinner, skeleton, empty state, error page, **bulk-action bar**.
 - **Layout blocks:** header with mega menu, footer and hero for the public website.
 
@@ -237,7 +257,9 @@ Radius roles: 8 for controls, 12 for panels and overlays, full for chips, segmen
 ### Dashboards
 
 - A KPI tile says what moved, by how much, and whether that is good: the value in `figure`, a signed delta isolated for RTL, a direction that can be good or bad, and an optional target meter. Tiles stack their parts in narrow containers (a container query, not the viewport).
-- Charts: ticks at round values, a legend with colour and shape, the user's own series in the accent, a one-sentence summary for screen readers, and values that settle when they change.
+- Charts: ticks at round values, a legend with colour and shape, a one-sentence summary for screen readers, and values that settle when they change. The accent marks the user's own value: their own series over time, or their own reading against their own target.
+- **Never a comparison across people.** Progress and state are self-referential. A chart does not rank one person, or one team, against another, and a target is the user's own, not someone else's result.
+- **A progress ring, never a donut or a pie.** The ring carries one value closing toward its goal with the number in the middle. Length on a shared baseline is read accurately and angle is not, so a comparison across categories is labelled horizontal bars, every time. No gauges.
 - The insight block holds the machine's reading, marked with the machine rule and disc, with its actions beside it; its text is announced when it finishes.
 - A panel groups a chart or list with a title, a short sub-line and actions, and can run flush for tables.
 
@@ -257,6 +279,7 @@ Radius roles: 8 for controls, 12 for panels and overlays, full for chips, segmen
 
 - Voice: professional, accessible, plain; speak to the user, not at them. "You/your" for the user, "we" for the product or organisation.
 - Sentence case everywhere. Buttons use a verb, under four words.
+- **Rates as a natural frequency first:** "43 of 50" before "86%". Give the percentage after it, never instead of it: a count the reader can verify is read correctly far more often than a bare rate.
 - Errors and empty states in plain language, no codes, no blame.
 - Full, natural translation for the second language, not transliteration.
 - No emoji, no taglines, no filler text. Modes and view options are icons with accessible names, not worded buttons.
