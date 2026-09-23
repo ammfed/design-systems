@@ -1,52 +1,55 @@
 # Documents
 
-A design system for reports, decks, and briefs. It is not a web UI kit — its building blocks are page furniture: covers, dividers, running headers, tables, callouts, captions, and signature blocks, plus slide masters for a 16:9 deck.
+A design system for reports, decks and briefs, and for reading them on screen. It is not a web UI kit. Its building blocks are page furniture (covers, contents, dividers, running headers, tables, callouts, key facts, captions, signature blocks), slide masters for a 16:9 deck, and two screen viewers: a deck viewer and a reading view.
+
+Version 2.0.0. Open `preview.html` to see the tokens and components in light and dark side by side.
 
 ## Design direction
 
-Restrained decoration, one accent colour used sparingly, generous white space, dark neutral text on white, fully bilingual with mirrored right-to-left pages for the second language. The palette and type scale are shared with the other two systems in this repo; the layout rules here are specific to print and slide formats.
+Structure in ink, generous space, one strong rule where a page needs one, and the accent kept for people. Light by default with an opt-in dark theme for screens. Fully bilingual, with mirrored right-to-left pages for the second language. The palette is shared with the other two systems in this repo; the type roles, media and layout rules here are specific to print, slides and long-form reading.
 
 ## Content rules
 
-- Sentence case everywhere — headings, table headers, labels. No all-caps in running text.
-- Plain, formal voice: the document speaks as the organisation, not "we/I"; the reader is addressed directly only in correspondence.
-- Numbers: consistent digit style even in bilingual documents, thousands separators, unit after the value, spell out numbers that open a sentence.
-- Single quotation marks, Oxford comma, "and" written out rather than "&".
-- Bold at most once or twice per paragraph; italics for emphasis, citations, and defined terms; underline reserved for hyperlinks.
-- No emoji, no decorative Unicode, no exclamation marks, no informal phrasing in formal documents.
-- Slides: one idea per slide, at most six bullets, text capped at roughly 60% of slide width when there's no supporting graphic.
-- Every table has a header row and a caption above it; every figure has a caption below it; every image has alt text.
+- Sentence case everywhere: headings, table headers, labels. No all-caps in running text.
+- A plain, formal voice. The document speaks as the organisation, not "we" or "I"; the reader is addressed directly only in correspondence.
+- Numbers: Latin digits in both languages, thousands separators, the unit after the value, and numbers spelled out when they open a sentence. An unknown value reads "Not yet known"; a forecast is shown as a range.
+- Single quotation marks, the Oxford comma, and "and" written out rather than "&".
+- Bold at most once or twice per paragraph. Italics for emphasis, citations and defined terms. Underline only for links.
+- No emoji, decorative Unicode, exclamation marks, taglines or filler.
+- Slides: one idea per slide, at most six bullets, text capped at about 60% of the slide width when there is no supporting graphic.
+- Every table has a header row and a caption above it, every figure has a caption below it, and every image has alt text.
 
 ## Visual foundations
 
-**Colour.** One accent colour used for rules, bullets, and large display text only — it fails accessibility contrast at body-text size, so body text stays in a near-black neutral. A light tint of the accent marks quotes, key facts, and total rows. Supporting hues (blue, green, amber-brown, red) appear only inside note/success/important/warning callouts, never as decoration. At most one accent element competes for attention per page — a title rule, or a table header, or a pull quote, never all three at once.
+**Colour.** Components use roles (`--ds-ink`, `--ds-paper`, `--ds-rule-strong`, `--ds-series-1` and the rest), never the ramps. Structure is ink: titles, rules, table headers, bullets and chart series are neutral. The accent (the gold ramp) marks a person only: the bar beside their quoted words, their name, a signature. Supporting hues (blue, amber, red, green) appear only in note, important, warning and success callouts and in status cells. Every role pair passes WCAG 2.2 AA in both themes; the numbers are in `guidelines.md`.
 
-**Type.** A serif-free heading family paired with a plain body family; a second pairing for the second language, swapped by document direction rather than by weight. Print and screen each get their own type scale so print sizes stay in points and screen sizes stay in pixels. Left-align the primary language, right-align the mirrored language, never justify either.
+**Dark theme.** Opt-in, for screens, and for a whole deck or document at a time, never mixed slide by slide. Load `tokens-dark.css` and set `data-ds-theme="dark"`; every role keeps its name, so components need no dark variants. Offer it as a moon icon. Print is always light.
 
-**Layout.** A fixed page grid (columns and rows with consistent gutters) reserves a protected margin column for a mark or full-bleed image; body text runs across the remaining columns. Slides use a wide-format grid with a consistent corner position for a mark, a consistent corner for a running label, and a consistent corner for a page/slide number.
+**Type.** Eleven named roles, from hero to caption plus a light figure role. Each role has a size per medium: fluid `clamp()` sizes on screen (360 to 1440px), points in print, pixels on a 1920 x 1080 slide. A heading family and a body family, with a second pair swapped in by direction; the second script keeps the same sizes, takes no tracking and gets taller lines. Nothing goes below the floors: 14px on screen, 8pt in print, 24px on slides. Left-align the primary language and right-align the mirrored one; never justify either.
 
-**Shape and elevation.** No drop shadows — sections are separated with white space and a hairline rule, not elevation. Radii scale from small (badges, table corners) to large (feature blocks), used sparingly in print. Cards are bordered, not shadowed.
+**Layout and density.** A4 pages use 12mm margins and an 8 x 10 grid with 4mm gutters, with a protected column for a mark or a full-bleed image. Slides use a 48px margin, a 12 x 6 grid, registration ticks, a rail, and a hairline progress line. The reading view runs at a 72ch measure. Space comes in eight steps per medium, multiplied by a density: compact, comfortable or spacious.
 
-**Backgrounds and imagery.** White pages, no gradients, no background patterns on covers (a subtle pattern is acceptable elsewhere, kept very light). Photography is real and contextual, never stock-looking; text over a photo always sits on a dark overlay, never a coloured one. Illustration, when used, is a flat geometric style, not photographic.
+**Depth and materials.** Inside a page there are no shadows: paper, a tonal plate, a recessed well and, at most once per page, an inverse block. On screen, the sheet sits on a canvas with a soft shadow, and viewer chrome is frosted glass with a float shadow and a rim. Glass turns solid when the reader asks for less transparency. Print drops both.
 
-**Motion.** Documents are static. Slide/deck previews may use a single restrained fade-and-rise on body content and a slow draw-in on an accent line, both disabled under reduced-motion preferences.
+**Motion.** Short, one-way and once: content rises, accent lines draw, bars grow from the baseline, slides enter from the direction of travel. The keyframes and attribute hooks live in `motion.css`. Under reduced motion, only a short fade on the slide change remains; `data-ds-motion="off"` and print remove everything.
 
-**Dark deck theme.** Slide masters (title, section, stat, chart, closing) each have a dark counterpart — near-black ground, white text, dimmed hairlines, mark on a white band. It's a whole-deck choice, never mixed slide-by-slide. A4 print documents stay light-only.
-
-**Bilingual layout.** The second-language version of a page is a full mirror: grid, mark position, margins, protected column, and header/footer sides all flip. Punctuation marks that have a directional form (quotes, carets) mirror too; icons that aren't inherently directional do not.
+**Bilingual layout.** The second-language version of a page is a full mirror: grid, mark position, margins, protected column, header and footer sides, callout rules and quote bars all flip, and bar charts grow from the right. Time axes keep their order. Arrows, carets and quotation marks mirror; other icons do not.
 
 ## Iconography
 
-A single icon family, regular weight paired with normal-weight text and bold weight paired with headings, minimum 24px, used sparingly and always next to a text label — icons alone never carry meaning. No icon font, no emoji, no Unicode glyphs standing in for icons.
+A single outline icon family, regular weight, at least 24px, with visible text or an accessible name on every icon. Modes are icons rather than worded buttons: a moon for dark, three line icons for density, a grid for overview, corners for fullscreen, each with `aria-pressed` or `aria-checked`. No icon font, no emoji, and no Unicode glyphs standing in for icons.
 
 ## Files
 
 ```
-tokens.css        colour, type, spacing, radius, and motion custom properties
-guidelines.md     the rules above in full, plus a components list
+tokens.css        light roles, materials, type roles, space, density, layout and motion tokens (the default)
+tokens-dark.css   the opt-in dark theme: the same role names with dark values, forced light in print
+motion.css        keyframes and attribute hooks (rise, draw, grow, trace, enter, fade), with the reduced path
+guidelines.md     roles, type, space, depth, motion, components and their states, RTL, focus and contrast in full
+preview.html      a self-contained page showing all of the above in light and dark; no external requests
 CHANGELOG.md      dated changes to this system
 ```
 
 ## Open questions
 
-Font licensing for offline/print production, the exact slide aspect ratio for older print formats, and a reversed/light logo variant are all still open — this system ships a working default for each and notes it rather than blocking on it.
+Font licensing for offline and print production, the exact slide aspect ratio for older print formats, and a reversed mark variant are all still open. This system ships a working default for each and notes it rather than blocking on it.

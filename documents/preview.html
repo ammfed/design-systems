@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Documents 2.0.0 preview</title>
+<!-- Self-contained: tokens.css, tokens-dark.css and motion.css are inlined below. No fonts, images or scripts are fetched. -->
+<style>
+/* Documents design tokens, 2.0.0. Generic, unbranded, values only; no build step.
+   Files: tokens.css (this file: light default and every scale), tokens-dark.css (opt-in dark theme), motion.css (keyframes and hooks).
+   Medium: data-ds-medium="print" on an A4 page and "slide" on a 1920 x 1080 slide switch type, space and radius units; screen is the default.
+   Theme: data-ds-theme="dark" on a whole deck or document, with tokens-dark.css loaded. Print is always light.
+   Density: data-ds-density="compact" | "comfortable" | "spacious". Motion off: data-ds-motion="off".
+   Components use the role tokens (--ds-ink, --ds-paper, --ds-rule-strong ...), never the ramps directly. */
+:root {
+  /* white */
+  --ds-color-white-50: #FFFFFF;
+  --ds-color-white-100: #FCFCFC;
+  --ds-color-white-200: #F7F7F7;
+  --ds-color-white-300: #F2F2F2;
+  /* neutral */
+  --ds-color-neutral-50: #F7F7F7;
+  --ds-color-neutral-100: #E1E3E5;
+  --ds-color-neutral-200: #C3C6CB;
+  --ds-color-neutral-300: #9EA2A9;
+  --ds-color-neutral-400: #797E86;
+  --ds-color-neutral-500: #5F646D;
+  --ds-color-neutral-600: #4B4F58;
+  --ds-color-neutral-700: #3E4046;
+  --ds-color-neutral-800: #232528;
+  --ds-color-neutral-900: #1B1D21;
+  --ds-color-neutral-950: #0E0F12;
+  /* gold */
+  --ds-color-gold-50: #F9F7ED;
+  --ds-color-gold-100: #F2ECCF;
+  --ds-color-gold-200: #E6D7A2;
+  --ds-color-gold-300: #D7BC6D;
+  --ds-color-gold-400: #CBA344;
+  --ds-color-gold-500: #B68A35;
+  --ds-color-gold-600: #92722A;
+  --ds-color-gold-700: #7C5E24;
+  --ds-color-gold-800: #6C4527;
+  --ds-color-gold-900: #5D3B26;
+  --ds-color-gold-950: #361E12;
+  /* amber */
+  --ds-color-amber-50: #FFFBEB;
+  --ds-color-amber-100: #FDF4C8;
+  --ds-color-amber-200: #FBE68C;
+  --ds-color-amber-300: #FAD44F;
+  --ds-color-amber-400: #F8C027;
+  --ds-color-amber-500: #F29F0E;
+  --ds-color-amber-600: #D67909;
+  --ds-color-amber-700: #B2550B;
+  --ds-color-amber-800: #904110;
+  --ds-color-amber-900: #773610;
+  --ds-color-amber-950: #441B04;
+  /* blue */
+  --ds-color-blue-50: #E7F5FF;
+  --ds-color-blue-100: #D3EDFF;
+  --ds-color-blue-200: #B0DBFF;
+  --ds-color-blue-300: #81C1FF;
+  --ds-color-blue-400: #4F98FF;
+  --ds-color-blue-500: #286CFF;
+  --ds-color-blue-600: #043DFF;
+  --ds-color-blue-700: #003CFF;
+  --ds-color-blue-800: #002DC2;
+  --ds-color-blue-900: #0B32A4;
+  --ds-color-blue-950: #071C5F;
+  /* red */
+  --ds-color-red-50: #FEF2F2;
+  --ds-color-red-100: #FDE4E3;
+  --ds-color-red-200: #FDCDCB;
+  --ds-color-red-300: #FAAAA7;
+  --ds-color-red-400: #F47A75;
+  --ds-color-red-500: #EA4F49;
+  --ds-color-red-600: #D83731;
+  --ds-color-red-700: #B52520;
+  --ds-color-red-800: #95231F;
+  --ds-color-red-900: #7C2320;
+  --ds-color-red-950: #430E0C;
+  /* green */
+  --ds-color-green-50: #F3FAF4;
+  --ds-color-green-100: #E4F4E7;
+  --ds-color-green-200: #CAE8CF;
+  --ds-color-green-300: #A0D5AB;
+  --ds-color-green-400: #6FB97F;
+  --ds-color-green-500: #4A9D5C;
+  --ds-color-green-600: #3F8E50;
+  --ds-color-green-700: #2F663C;
+  --ds-color-green-800: #2A5133;
+  --ds-color-green-900: #24432B;
+  --ds-color-green-950: #0F2415;
+}
+
+/* ===== colour roles and materials: light (default) ===== */
+/* The accent (gold ramp) marks a person only: the bar beside their quoted words, their name, a signature. Structure is ink. */
+:root, [data-ds-theme="light"] {
+  color-scheme: light;
+  --ds-ink: var(--ds-color-neutral-800); /* Body text */
+  --ds-ink-strong: var(--ds-color-neutral-900); /* Headings, figures, the one thing read first */
+  --ds-ink-muted: var(--ds-color-neutral-500); /* Captions, labels, metadata */
+  --ds-ink-inverse: var(--ds-color-white-50); /* Text on an inverse block */
+  --ds-canvas: var(--ds-color-white-300); /* Screen only: the desk a page or slide sits on */
+  --ds-paper: var(--ds-color-white-50); /* The page or slide ground */
+  --ds-plate: var(--ds-color-white-200); /* A tonal block on the paper: key facts, key message, zebra rows */
+  --ds-well: var(--ds-color-white-300); /* A recessed field: section-divider field, appendix wells */
+  --ds-inverse: var(--ds-color-neutral-900); /* An inverse block, used at most once per page */
+  --ds-glass: rgb(255 255 255 / .86); /* Screen only: viewer chrome floating over content */
+  --ds-scrim: rgb(14 15 18 / .45); /* Photo overlay under text, 30 to 60% black */
+  --ds-mark-plate: var(--ds-color-white-50); /* The white ground an organisation mark keeps in both themes */
+  --ds-hairline: var(--ds-color-neutral-100); /* Row rules, separators, tracks */
+  --ds-rule: var(--ds-color-neutral-200); /* Signing lines, registration ticks, stronger separators */
+  --ds-rule-strong: var(--ds-color-neutral-800); /* Table header and total rules, the accent line */
+  --ds-series-1: var(--ds-color-neutral-800); /* Series 1, meter fill, current milestone */
+  --ds-series-2: var(--ds-color-neutral-400); /* Series 2, ranges, the rest */
+  --ds-series-track: var(--ds-color-neutral-100); /* Meter and chart tracks */
+  --ds-marker: var(--ds-color-neutral-500); /* List bullets and numbers */
+  --ds-person: var(--ds-color-gold-700); /* A person's name beside their own words */
+  --ds-person-mark: var(--ds-color-gold-500); /* The bar beside a person's words */
+  --ds-person-tint: var(--ds-color-gold-50); /* Ground under a person's words (a neutral plate in dark) */
+  --ds-focus: var(--ds-color-amber-700); /* Keyboard focus ring, 2px, 2px offset */
+  --ds-note-bg: var(--ds-color-blue-50); /* Note ground */
+  --ds-note-fg: var(--ds-color-blue-700); /* Note title and icon */
+  --ds-note-rule: var(--ds-color-blue-600); /* Note start rule */
+  --ds-important-bg: var(--ds-color-amber-50); /* Important ground */
+  --ds-important-fg: var(--ds-color-amber-700); /* Important title and icon */
+  --ds-important-rule: var(--ds-color-amber-600); /* Important start rule */
+  --ds-warning-bg: var(--ds-color-red-50); /* Warning ground */
+  --ds-warning-fg: var(--ds-color-red-700); /* Warning title and icon */
+  --ds-warning-rule: var(--ds-color-red-600); /* Warning start rule */
+  --ds-success-bg: var(--ds-color-green-50); /* Success ground */
+  --ds-success-fg: var(--ds-color-green-700); /* Success title and icon */
+  --ds-success-rule: var(--ds-color-green-600); /* Success start rule */
+  --ds-key-bg: var(--ds-color-white-200); /* Key message ground */
+  --ds-key-fg: var(--ds-color-neutral-900); /* Key message title */
+  --ds-key-rule: var(--ds-color-neutral-800); /* Key message start rule */
+  --ds-note-solid: var(--ds-color-blue-700); /* Solid note ground */
+  --ds-important-solid: var(--ds-color-amber-700); /* Solid important ground */
+  --ds-warning-solid: var(--ds-color-red-700); /* Solid warning ground */
+  --ds-success-solid: var(--ds-color-green-700); /* Solid success ground */
+  --ds-shadow-sheet: 0 1px 2px rgb(14 15 18 / .06), 0 12px 32px -8px rgb(14 15 18 / .16);
+  --ds-shadow-float: 0 1px 2px rgb(14 15 18 / .06), 0 10px 28px -6px rgb(14 15 18 / .20);
+  --ds-rim: inset 0 0 0 1px rgb(14 15 18 / .06);
+  --ds-glass-blur: 16px;
+}
+/* Glass is solid when the reader asks for less transparency or the browser cannot blur. */
+@media (prefers-reduced-transparency: reduce) { :root, [data-ds-theme] { --ds-glass: var(--ds-paper); --ds-glass-blur: 0px; } }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { :root, [data-ds-theme] { --ds-glass: var(--ds-paper); } }
+/* More contrast on request: muted text and hairlines step one shade toward the ink. */
+@media (prefers-contrast: more) {
+  :root, [data-ds-theme="light"] { --ds-ink-muted: var(--ds-color-neutral-700); --ds-hairline: var(--ds-color-neutral-300); --ds-series-2: var(--ds-color-neutral-600); }
+}
+
+/* ===== type ===== */
+:root {
+  --ds-font-heading: "Inter", "Helvetica Neue", ui-sans-serif, system-ui, sans-serif;
+  --ds-font-body: "Roboto", "Helvetica Neue", ui-sans-serif, system-ui, sans-serif;
+  --ds-font-heading-rtl: "Alexandria", "Noto Kufi Arabic", ui-sans-serif, system-ui, sans-serif;
+  --ds-font-body-rtl: "Noto Kufi Arabic", ui-sans-serif, system-ui, sans-serif;
+  --ds-numerals: lining-nums tabular-nums;
+}
+:root, [dir="ltr"] { --ds-type-family-heading: var(--ds-font-heading); --ds-type-family-body: var(--ds-font-body); }
+[dir="rtl"] { --ds-type-family-heading: var(--ds-font-heading-rtl); --ds-type-family-body: var(--ds-font-body-rtl); }
+/* Eleven roles. Screen sizes are fluid between a 360px and a 1440px viewport. Use:
+   font-size: var(--ds-type-<role>-size); line-height: calc(var(--ds-type-<role>-leading) * var(--ds-script-display|text)). */
+:root, [data-ds-medium="screen"] {
+  --ds-type-hero-size: clamp(2.5rem, 2.0417rem + 2.037vw, 3.875rem); --ds-type-hero-leading: 1.05;
+  --ds-type-title-size: clamp(2rem, 1.6667rem + 1.4815vw, 3rem); --ds-type-title-leading: 1.1;
+  --ds-type-heading-size: clamp(1.625rem, 1.5rem + 0.5556vw, 2rem); --ds-type-heading-leading: 1.2;
+  --ds-type-subheading-size: clamp(1.25rem, 1.125rem + 0.5556vw, 1.625rem); --ds-type-subheading-leading: 1.3;
+  --ds-type-minor-size: 1.125rem; --ds-type-minor-leading: 1.4;
+  --ds-type-lead-size: clamp(1.125rem, 1.0417rem + 0.3704vw, 1.375rem); --ds-type-lead-leading: 1.5;
+  --ds-type-body-size: clamp(1rem, 0.9583rem + 0.1852vw, 1.125rem); --ds-type-body-leading: 1.6;
+  --ds-type-small-size: 1rem; --ds-type-small-leading: 1.5;
+  --ds-type-label-size: 0.875rem; --ds-type-label-leading: 1.43;
+  --ds-type-caption-size: 0.875rem; --ds-type-caption-leading: 1.5;
+  --ds-type-figure-size: clamp(3rem, 2.4167rem + 2.5926vw, 4.75rem); --ds-type-figure-leading: 1;
+}
+[data-ds-medium="print"] {
+  --ds-type-hero-size: 32pt; --ds-type-hero-leading: 42pt;
+  --ds-type-title-size: 32pt; --ds-type-title-leading: 38pt;
+  --ds-type-heading-size: 24pt; --ds-type-heading-leading: 29pt;
+  --ds-type-subheading-size: 18pt; --ds-type-subheading-leading: 22pt;
+  --ds-type-minor-size: 13.5pt; --ds-type-minor-leading: 16pt;
+  --ds-type-lead-size: 14pt; --ds-type-lead-leading: 20pt;
+  --ds-type-body-size: 10pt; --ds-type-body-leading: 14pt;
+  --ds-type-small-size: 9pt; --ds-type-small-leading: 12pt;
+  --ds-type-label-size: 9pt; --ds-type-label-leading: 11pt;
+  --ds-type-caption-size: 8pt; --ds-type-caption-leading: 11pt;
+  --ds-type-figure-size: 36pt; --ds-type-figure-leading: 36pt;
+}
+[data-ds-medium="slide"] {
+  --ds-type-hero-size: 136px; --ds-type-hero-leading: 1;
+  --ds-type-title-size: 100px; --ds-type-title-leading: 1.05;
+  --ds-type-heading-size: 56px; --ds-type-heading-leading: 1.1;
+  --ds-type-subheading-size: 44px; --ds-type-subheading-leading: 1.2;
+  --ds-type-minor-size: 32px; --ds-type-minor-leading: 1.3;
+  --ds-type-lead-size: 44px; --ds-type-lead-leading: 1.35;
+  --ds-type-body-size: 32px; --ds-type-body-leading: 1.5;
+  --ds-type-small-size: 28px; --ds-type-small-leading: 1.4;
+  --ds-type-label-size: 24px; --ds-type-label-leading: 1.3;
+  --ds-type-caption-size: 24px; --ds-type-caption-leading: 1.4;
+  --ds-type-figure-size: 200px; --ds-type-figure-leading: 0.9;
+}
+:root {
+  --ds-type-hero-weight: 700;
+  --ds-type-title-weight: 800;
+  --ds-type-heading-weight: 800;
+  --ds-type-subheading-weight: 700;
+  --ds-type-minor-weight: 700;
+  --ds-type-lead-weight: 400;
+  --ds-type-body-weight: 400;
+  --ds-type-small-weight: 400;
+  --ds-type-label-weight: 500;
+  --ds-type-caption-weight: 400;
+  --ds-type-figure-weight: 200;
+}
+/* Latin tracks large type tighter; the second script is never tracked and takes taller lines. */
+:root, [dir="ltr"] {
+  --ds-type-hero-tracking: -0.03em;
+  --ds-type-title-tracking: -0.025em;
+  --ds-type-heading-tracking: -0.02em;
+  --ds-type-subheading-tracking: -0.01em;
+  --ds-type-minor-tracking: 0;
+  --ds-type-lead-tracking: 0;
+  --ds-type-body-tracking: 0;
+  --ds-type-small-tracking: 0;
+  --ds-type-label-tracking: 0;
+  --ds-type-caption-tracking: 0;
+  --ds-type-figure-tracking: -0.04em;
+  --ds-script-display: 1; --ds-script-text: 1;
+}
+[dir="rtl"] {
+  --ds-type-hero-tracking: 0;
+  --ds-type-title-tracking: 0;
+  --ds-type-heading-tracking: 0;
+  --ds-type-subheading-tracking: 0;
+  --ds-type-minor-tracking: 0;
+  --ds-type-lead-tracking: 0;
+  --ds-type-body-tracking: 0;
+  --ds-type-small-tracking: 0;
+  --ds-type-label-tracking: 0;
+  --ds-type-caption-tracking: 0;
+  --ds-type-figure-tracking: 0;
+  --ds-script-display: 1.28; --ds-script-text: 1.14;
+}
+
+/* ===== space, radius and density ===== */
+/* Use: calc(var(--ds-space-4) * var(--ds-density)). Density never changes type size or page margins. */
+:root, [data-ds-medium="screen"] {
+  --ds-space-1: 4px; --ds-space-2: 8px; --ds-space-3: 12px; --ds-space-4: 16px; --ds-space-5: 24px; --ds-space-6: 32px; --ds-space-7: 48px; --ds-space-8: 64px;
+  --ds-radius-1: 4px; --ds-radius-2: 8px; --ds-radius-3: 12px;
+}
+[data-ds-medium="print"] {
+  --ds-space-1: 1mm; --ds-space-2: 2mm; --ds-space-3: 3mm; --ds-space-4: 4mm; --ds-space-5: 6mm; --ds-space-6: 8mm; --ds-space-7: 12mm; --ds-space-8: 16mm;
+  --ds-radius-1: 1mm; --ds-radius-2: 2mm; --ds-radius-3: 3mm;
+}
+[data-ds-medium="slide"] {
+  --ds-space-1: 8px; --ds-space-2: 16px; --ds-space-3: 24px; --ds-space-4: 32px; --ds-space-5: 48px; --ds-space-6: 64px; --ds-space-7: 96px; --ds-space-8: 128px;
+  --ds-radius-1: 6px; --ds-radius-2: 12px; --ds-radius-3: 16px;
+}
+:root { --ds-density: 1; } /* first, so a density set on <html> overrides it */
+[data-ds-density="compact"] { --ds-density: 0.75; }
+[data-ds-density="comfortable"] { --ds-density: 1; }
+[data-ds-density="spacious"] { --ds-density: 1.25; }
+
+/* ===== layout ===== */
+:root {
+  --ds-page-margin: 12mm;
+  --ds-page-columns: 8;
+  --ds-page-rows: 10;
+  --ds-page-gutter: 4mm;
+  --ds-page-col-width: 19.75mm;
+  --ds-page-row-height: 23.7mm;
+  --ds-page-protected-column: 33mm;
+  --ds-slide-width: 1920px;
+  --ds-slide-height: 1080px;
+  --ds-slide-margin: 48px;
+  --ds-slide-columns: 12;
+  --ds-slide-rows: 6;
+  --ds-reading-measure: 72ch;
+  --ds-target-min: 44px;
+}
+
+/* ===== motion ===== */
+/* Short, one-way, once. Reduced motion keeps a short fade for the slide change only; data-ds-motion="off" keeps nothing. */
+:root {
+  --ds-dur-instant: 0ms; /* Anything under reduced motion that is not a fade */
+  --ds-dur-quick: 120ms; /* Hover and press colour in viewer chrome */
+  --ds-dur-swift: 200ms; /* Theme and density cross-fade */
+  --ds-dur-steady: 360ms; /* Slide change, overview open; fade only when reduced */
+  --ds-dur-reveal: 560ms; /* Slide content entrance, bars growing from the baseline */
+  --ds-dur-draw: 900ms; /* The accent line under a slide title */
+  --ds-dur-count: 1400ms; /* Key figures counting up, once */
+  --ds-dur-trace: 2200ms; /* Hairline fields drawing in, once */
+  --ds-ease-standard: cubic-bezier(.2, 0, 0, 1); /* Colour and opacity changes */
+  --ds-ease-enter: cubic-bezier(.2, .7, .2, 1); /* Anything arriving: rise, drift, draw, grow */
+  --ds-ease-exit: cubic-bezier(.4, 0, 1, 1); /* Anything leaving */
+  --ds-stagger: 60ms;
+  --ds-dir: 1;
+}
+[dir="rtl"] { --ds-dir: -1; }
+:root, [data-ds-medium="screen"] { --ds-distance: 12px; }
+[data-ds-medium="slide"] { --ds-distance: 24px; }
+[data-ds-medium="print"] { --ds-distance: 0px; }
+@media (prefers-reduced-motion: reduce) {
+  :root, [data-ds-medium] {
+    --ds-dur-instant: 0ms;
+    --ds-dur-quick: 0ms;
+    --ds-dur-swift: 0ms;
+    --ds-dur-steady: 120ms;
+    --ds-dur-reveal: 0ms;
+    --ds-dur-draw: 0ms;
+    --ds-dur-count: 0ms;
+    --ds-dur-trace: 0ms;
+    --ds-stagger: 0ms; --ds-distance: 0px;
+  }
+}
+[data-ds-motion="off"], [data-ds-motion="off"] [data-ds-medium] {
+  --ds-dur-instant: 0ms;
+  --ds-dur-quick: 0ms;
+  --ds-dur-swift: 0ms;
+  --ds-dur-steady: 0ms;
+  --ds-dur-reveal: 0ms;
+  --ds-dur-draw: 0ms;
+  --ds-dur-count: 0ms;
+  --ds-dur-trace: 0ms;
+  --ds-stagger: 0ms; --ds-distance: 0px;
+}
+
+/* ===== 1.x names, kept so existing pages keep working (deprecated; prefer the roles and type roles above) ===== */
+:root {
+  --ds-scale-ratio: 1.333;
+  --ds-size-base: 16px;
+  --ds-size-display: 76px;
+  --ds-size-h1: 62px;
+  --ds-size-h2: 48px;
+  --ds-size-h3: 40px;
+  --ds-size-h4: 32px;
+  --ds-size-h5: 26px;
+  --ds-size-h6: 20px;
+  --ds-size-body-lg: 18px;
+  --ds-size-body: 16px;
+  --ds-size-body-sm: 14px;
+  --ds-size-caption: 12px; /* below the 2.0.0 floor: use --ds-type-caption-size (14px on screen) */
+  --ds-radius-sm: 4px;
+  --ds-radius-md: 8px;
+  --ds-radius-lg: 12px;
+  --ds-radius-xl: 16px;
+  --ds-motion-reveal: 700ms; /* now --ds-dur-reveal */
+  --ds-motion-draw: 900ms; /* now --ds-dur-draw */
+  --ds-dark-bg: #232528; /* now tokens-dark.css */
+  --ds-dark-text: #FFFFFF;
+  --ds-dark-hairline: #4B4F58;
+  --ds-dark-accent: #CBA344; /* 2.0.0: the accent marks people only; use --ds-person */
+}
+
+/* Documents, dark theme: opt-in. Load after tokens.css and set data-ds-theme="dark" on <html> or on one deck or document.
+   Light stays the default. A deck or document is one theme at a time, never mixed slide by slide or page by page.
+   Every role keeps its name; only the value changes, so components need no dark variants. The mark plate stays white
+   (an organisation mark drawn for white paper keeps its white ground). Print is always light. */
+[data-ds-theme="dark"] {
+  color-scheme: dark;
+  --ds-ink: var(--ds-color-neutral-100); /* Body text */
+  --ds-ink-strong: var(--ds-color-white-50); /* Headings, figures, the one thing read first */
+  --ds-ink-muted: var(--ds-color-neutral-300); /* Captions, labels, metadata */
+  --ds-ink-inverse: var(--ds-color-neutral-900); /* Text on an inverse block */
+  --ds-canvas: var(--ds-color-neutral-950); /* Screen only: the desk a page or slide sits on */
+  --ds-paper: var(--ds-color-neutral-900); /* The page or slide ground */
+  --ds-plate: var(--ds-color-neutral-800); /* A tonal block on the paper: key facts, key message, zebra rows */
+  --ds-well: var(--ds-color-neutral-950); /* A recessed field: section-divider field, appendix wells */
+  --ds-inverse: var(--ds-color-white-50); /* An inverse block, used at most once per page */
+  --ds-glass: rgb(27 29 33 / .86); /* Screen only: viewer chrome floating over content */
+  --ds-scrim: rgb(14 15 18 / .55); /* Photo overlay under text, 30 to 60% black */
+  --ds-mark-plate: var(--ds-color-white-50); /* The white ground an organisation mark keeps in both themes */
+  --ds-hairline: var(--ds-color-neutral-700); /* Row rules, separators, tracks */
+  --ds-rule: var(--ds-color-neutral-600); /* Signing lines, registration ticks, stronger separators */
+  --ds-rule-strong: var(--ds-color-neutral-100); /* Table header and total rules, the accent line */
+  --ds-series-1: var(--ds-color-white-100); /* Series 1, meter fill, current milestone */
+  --ds-series-2: var(--ds-color-neutral-400); /* Series 2, ranges, the rest */
+  --ds-series-track: var(--ds-color-neutral-700); /* Meter and chart tracks */
+  --ds-marker: var(--ds-color-neutral-300); /* List bullets and numbers */
+  --ds-person: var(--ds-color-gold-300); /* A person's name beside their own words */
+  --ds-person-mark: var(--ds-color-gold-400); /* The bar beside a person's words */
+  --ds-person-tint: var(--ds-color-neutral-800); /* Ground under a person's words (a neutral plate in dark) */
+  --ds-focus: var(--ds-color-amber-500); /* Keyboard focus ring, 2px, 2px offset */
+  --ds-note-bg: var(--ds-color-blue-950); /* Note ground */
+  --ds-note-fg: var(--ds-color-blue-300); /* Note title and icon */
+  --ds-note-rule: var(--ds-color-blue-400); /* Note start rule */
+  --ds-important-bg: var(--ds-color-amber-950); /* Important ground */
+  --ds-important-fg: var(--ds-color-amber-300); /* Important title and icon */
+  --ds-important-rule: var(--ds-color-amber-400); /* Important start rule */
+  --ds-warning-bg: var(--ds-color-red-950); /* Warning ground */
+  --ds-warning-fg: var(--ds-color-red-300); /* Warning title and icon */
+  --ds-warning-rule: var(--ds-color-red-400); /* Warning start rule */
+  --ds-success-bg: var(--ds-color-green-950); /* Success ground */
+  --ds-success-fg: var(--ds-color-green-300); /* Success title and icon */
+  --ds-success-rule: var(--ds-color-green-400); /* Success start rule */
+  --ds-key-bg: var(--ds-color-neutral-800); /* Key message ground */
+  --ds-key-fg: var(--ds-color-white-50); /* Key message title */
+  --ds-key-rule: var(--ds-color-neutral-100); /* Key message start rule */
+  --ds-note-solid: var(--ds-color-blue-700); /* Solid note ground */
+  --ds-important-solid: var(--ds-color-amber-700); /* Solid important ground */
+  --ds-warning-solid: var(--ds-color-red-700); /* Solid warning ground */
+  --ds-success-solid: var(--ds-color-green-700); /* Solid success ground */
+  --ds-shadow-sheet: 0 0 0 1px rgb(255 255 255 / .06), 0 18px 48px -12px rgb(0 0 0 / .65);
+  --ds-shadow-float: 0 0 0 1px rgb(255 255 255 / .08), 0 14px 36px -8px rgb(0 0 0 / .6);
+  --ds-rim: inset 0 0 0 1px rgb(255 255 255 / .06);
+  --ds-glass-blur: 16px;
+}
+/* Repeated here so they follow the dark block: solid glass for less transparency or no blur support. */
+@media (prefers-reduced-transparency: reduce) { [data-ds-theme="dark"] { --ds-glass: var(--ds-paper); --ds-glass-blur: 0px; } }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { [data-ds-theme="dark"] { --ds-glass: var(--ds-paper); } }
+@media (prefers-contrast: more) {
+  [data-ds-theme="dark"] { --ds-ink-muted: var(--ds-color-neutral-200); --ds-hairline: var(--ds-color-neutral-500); --ds-series-2: var(--ds-color-neutral-300); }
+}
+/* A dark page never reaches paper. */
+@media print {
+  [data-ds-theme="dark"] {
+    color-scheme: light;
+    --ds-ink: var(--ds-color-neutral-800); /* Body text */
+    --ds-ink-strong: var(--ds-color-neutral-900); /* Headings, figures, the one thing read first */
+    --ds-ink-muted: var(--ds-color-neutral-500); /* Captions, labels, metadata */
+    --ds-ink-inverse: var(--ds-color-white-50); /* Text on an inverse block */
+    --ds-canvas: var(--ds-color-white-300); /* Screen only: the desk a page or slide sits on */
+    --ds-paper: var(--ds-color-white-50); /* The page or slide ground */
+    --ds-plate: var(--ds-color-white-200); /* A tonal block on the paper: key facts, key message, zebra rows */
+    --ds-well: var(--ds-color-white-300); /* A recessed field: section-divider field, appendix wells */
+    --ds-inverse: var(--ds-color-neutral-900); /* An inverse block, used at most once per page */
+    --ds-glass: rgb(255 255 255 / .86); /* Screen only: viewer chrome floating over content */
+    --ds-scrim: rgb(14 15 18 / .45); /* Photo overlay under text, 30 to 60% black */
+    --ds-mark-plate: var(--ds-color-white-50); /* The white ground an organisation mark keeps in both themes */
+    --ds-hairline: var(--ds-color-neutral-100); /* Row rules, separators, tracks */
+    --ds-rule: var(--ds-color-neutral-200); /* Signing lines, registration ticks, stronger separators */
+    --ds-rule-strong: var(--ds-color-neutral-800); /* Table header and total rules, the accent line */
+    --ds-series-1: var(--ds-color-neutral-800); /* Series 1, meter fill, current milestone */
+    --ds-series-2: var(--ds-color-neutral-400); /* Series 2, ranges, the rest */
+    --ds-series-track: var(--ds-color-neutral-100); /* Meter and chart tracks */
+    --ds-marker: var(--ds-color-neutral-500); /* List bullets and numbers */
+    --ds-person: var(--ds-color-gold-700); /* A person's name beside their own words */
+    --ds-person-mark: var(--ds-color-gold-500); /* The bar beside a person's words */
+    --ds-person-tint: var(--ds-color-gold-50); /* Ground under a person's words (a neutral plate in dark) */
+    --ds-focus: var(--ds-color-amber-700); /* Keyboard focus ring, 2px, 2px offset */
+    --ds-note-bg: var(--ds-color-blue-50); /* Note ground */
+    --ds-note-fg: var(--ds-color-blue-700); /* Note title and icon */
+    --ds-note-rule: var(--ds-color-blue-600); /* Note start rule */
+    --ds-important-bg: var(--ds-color-amber-50); /* Important ground */
+    --ds-important-fg: var(--ds-color-amber-700); /* Important title and icon */
+    --ds-important-rule: var(--ds-color-amber-600); /* Important start rule */
+    --ds-warning-bg: var(--ds-color-red-50); /* Warning ground */
+    --ds-warning-fg: var(--ds-color-red-700); /* Warning title and icon */
+    --ds-warning-rule: var(--ds-color-red-600); /* Warning start rule */
+    --ds-success-bg: var(--ds-color-green-50); /* Success ground */
+    --ds-success-fg: var(--ds-color-green-700); /* Success title and icon */
+    --ds-success-rule: var(--ds-color-green-600); /* Success start rule */
+    --ds-key-bg: var(--ds-color-white-200); /* Key message ground */
+    --ds-key-fg: var(--ds-color-neutral-900); /* Key message title */
+    --ds-key-rule: var(--ds-color-neutral-800); /* Key message start rule */
+    --ds-note-solid: var(--ds-color-blue-700); /* Solid note ground */
+    --ds-important-solid: var(--ds-color-amber-700); /* Solid important ground */
+    --ds-warning-solid: var(--ds-color-red-700); /* Solid warning ground */
+    --ds-success-solid: var(--ds-color-green-700); /* Solid success ground */
+    --ds-shadow-sheet: 0 1px 2px rgb(14 15 18 / .06), 0 12px 32px -8px rgb(14 15 18 / .16);
+    --ds-shadow-float: 0 1px 2px rgb(14 15 18 / .06), 0 10px 28px -6px rgb(14 15 18 / .20);
+    --ds-rim: inset 0 0 0 1px rgb(14 15 18 / .06);
+    --ds-glass-blur: 16px;
+  }
+}
+
+/* Documents, motion: keyframes and attribute hooks. Load after tokens.css (the durations, easings and the reduced path live there).
+   Hooks: data-ds-rise, data-ds-draw, data-ds-grow="x|y", data-ds-trace, data-ds-enter (slide change; "prev" reverses), data-ds-fade.
+   Stagger with style="--ds-i: 2". Everything runs once; nothing loops. */
+@keyframes ds-rise { from { opacity: 0; transform: translateY(var(--ds-distance)); } to { opacity: 1; transform: none; } }
+@keyframes ds-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ds-draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes ds-grow-y { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes ds-grow-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes ds-trace { from { stroke-dashoffset: var(--ds-trace-len, 2000); } to { stroke-dashoffset: 0; } }
+@keyframes ds-drift { from { opacity: 0; transform: translateX(calc(var(--ds-distance) * var(--ds-dir) * var(--ds-way, 1))); } to { opacity: 1; transform: none; } }
+[data-ds-rise] { animation: ds-rise var(--ds-dur-reveal) var(--ds-ease-enter) both; animation-delay: calc(var(--ds-stagger) * var(--ds-i, 0)); }
+[data-ds-draw] { transform-origin: 0 50%; animation: ds-draw var(--ds-dur-draw) var(--ds-ease-enter) both; }
+[dir="rtl"] [data-ds-draw], [dir="rtl"][data-ds-draw] { transform-origin: 100% 50%; }
+[data-ds-grow="y"] { transform-box: fill-box; transform-origin: 50% 100%; animation: ds-grow-y var(--ds-dur-reveal) var(--ds-ease-enter) both; animation-delay: calc(var(--ds-stagger) * var(--ds-i, 0)); }
+[data-ds-grow="x"] { transform-box: fill-box; transform-origin: 0 50%; animation: ds-grow-x var(--ds-dur-reveal) var(--ds-ease-enter) both; animation-delay: calc(var(--ds-stagger) * var(--ds-i, 0)); }
+[dir="rtl"] [data-ds-grow="x"], [dir="rtl"][data-ds-grow="x"] { transform-origin: 100% 50%; }
+[data-ds-trace] path, [data-ds-trace] polygon, [data-ds-trace] circle[fill="none"], [data-ds-trace] line { stroke-dasharray: var(--ds-trace-len, 2000); animation: ds-trace var(--ds-dur-trace) var(--ds-ease-enter) both; }
+[data-ds-enter] { animation: ds-drift var(--ds-dur-steady) var(--ds-ease-enter) both; }
+[data-ds-enter="prev"] { --ds-way: -1; }
+[data-ds-fade], [data-ds-fade] * { transition: background-color var(--ds-dur-swift) var(--ds-ease-standard), color var(--ds-dur-swift) var(--ds-ease-standard), border-color var(--ds-dur-swift) var(--ds-ease-standard), fill var(--ds-dur-swift) var(--ds-ease-standard), stroke var(--ds-dur-swift) var(--ds-ease-standard); }
+@media (prefers-reduced-motion: reduce) {
+  [data-ds-rise], [data-ds-draw], [data-ds-grow], [data-ds-trace], [data-ds-trace] * { animation: none; stroke-dasharray: none; }
+  [data-ds-enter] { animation-name: ds-fade; }
+}
+[data-ds-motion="off"] [data-ds-rise], [data-ds-motion="off"] [data-ds-draw], [data-ds-motion="off"] [data-ds-grow], [data-ds-motion="off"] [data-ds-trace] *, [data-ds-motion="off"] [data-ds-enter], [data-ds-motion="off"][data-ds-enter] { animation: none !important; stroke-dasharray: none !important; }
+@media print { *, *::before, *::after { animation: none !important; transition: none !important; } [data-ds-trace] * { stroke-dasharray: none !important; } }
+
+</style>
+<style>
+/* ---------- preview page ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; background: var(--ds-canvas); color: var(--ds-ink); }
+body { font-family: var(--ds-type-family-body); font-size: var(--ds-type-body-size); line-height: var(--ds-type-body-leading); }
+.p-wrap { max-width: 1440px; margin: 0 auto; padding: 24px 16px 64px; }
+@media (min-width: 768px) { .p-wrap { padding: 32px 32px 80px; } }
+.p-top { display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: end; justify-content: space-between; margin-bottom: 24px; }
+.p-eyebrow { margin: 0; font: var(--ds-type-label-weight) var(--ds-type-label-size)/var(--ds-type-label-leading) var(--ds-type-family-body); color: var(--ds-ink-muted); }
+.p-h1 { margin: 4px 0 0; font-family: var(--ds-type-family-heading); font-size: var(--ds-type-title-size); line-height: var(--ds-type-title-leading); font-weight: var(--ds-type-title-weight); letter-spacing: var(--ds-type-title-tracking); color: var(--ds-ink-strong); }
+.p-lede { margin: 8px 0 0; color: var(--ds-ink-muted); max-width: 60ch; }
+.p-tools { display: flex; gap: 8px; align-items: center; padding: 6px; border-radius: 999px; background: var(--ds-glass); box-shadow: var(--ds-shadow-float), var(--ds-rim); -webkit-backdrop-filter: blur(var(--ds-glass-blur)) saturate(1.4); backdrop-filter: blur(var(--ds-glass-blur)) saturate(1.4); }
+.p-sep { width: 1px; height: 24px; background: var(--ds-hairline); }
+.p-icon { width: var(--ds-target-min); height: var(--ds-target-min); display: inline-grid; place-items: center; border: 0; border-radius: 999px; background: transparent; color: var(--ds-ink); cursor: pointer; transition: background-color var(--ds-dur-quick) var(--ds-ease-standard), color var(--ds-dur-quick) var(--ds-ease-standard); }
+.p-icon:hover { background: var(--ds-plate); }
+.p-icon[aria-checked="true"], .p-icon[aria-pressed="true"] { background: var(--ds-inverse); color: var(--ds-ink-inverse); }
+.p-icon svg { width: 24px; height: 24px; }
+.p-icon:focus-visible, .p-focus-demo { outline: 2px solid var(--ds-focus); outline-offset: 2px; }
+.p-themes { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
+@media (min-width: 1024px) { .p-themes { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.p-theme { background: var(--ds-canvas); color: var(--ds-ink); padding: 16px; border-radius: var(--ds-radius-3); box-shadow: var(--ds-rim); display: grid; gap: 24px; align-content: start; min-width: 0; }
+@media (min-width: 768px) { .p-theme { padding: 24px; } }
+.p-theme-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.p-theme-name { margin: 0; font-family: var(--ds-type-family-heading); font-size: var(--ds-type-subheading-size); line-height: var(--ds-type-subheading-leading); font-weight: var(--ds-type-subheading-weight); color: var(--ds-ink-strong); }
+.p-k { margin: 0 0 8px; font: var(--ds-type-label-weight) var(--ds-type-label-size)/var(--ds-type-label-leading) var(--ds-type-family-body); color: var(--ds-ink-muted); }
+.p-sheet { background: var(--ds-paper); color: var(--ds-ink); box-shadow: var(--ds-shadow-sheet); border-radius: 2px; min-width: 0; }
+/* swatches */
+.p-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 8px; }
+.p-sw { display: flex; gap: 8px; align-items: center; min-width: 0; font-size: var(--ds-type-caption-size); line-height: 1.3; color: var(--ds-ink); }
+.p-sw i { flex: 0 0 auto; width: 28px; height: 28px; border-radius: var(--ds-radius-1); box-shadow: inset 0 0 0 1px var(--ds-hairline); }
+.p-sw span { overflow-wrap: anywhere; }
+/* type roles */
+.p-type { padding: 20px; display: grid; gap: 10px; }
+.p-role { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 12px; align-items: baseline; }
+.p-role > code { font-size: var(--ds-type-caption-size); color: var(--ds-ink-muted); }
+.p-role > span { color: var(--ds-ink-strong); overflow-wrap: anywhere; }
+/* shared text roles (medium-aware) */
+.r-heading { margin: 0; font-family: var(--ds-type-family-heading); font-size: var(--ds-type-heading-size); line-height: calc(var(--ds-type-heading-leading) * var(--ds-script-display)); font-weight: var(--ds-type-heading-weight); letter-spacing: var(--ds-type-heading-tracking); color: var(--ds-ink-strong); text-wrap: balance; }
+.r-title { margin: 0; font-family: var(--ds-type-family-heading); font-size: var(--ds-type-title-size); line-height: calc(var(--ds-type-title-leading) * var(--ds-script-display)); font-weight: var(--ds-type-title-weight); letter-spacing: var(--ds-type-title-tracking); color: var(--ds-ink-strong); text-wrap: balance; }
+.r-body { margin: 0; font-family: var(--ds-type-family-body); font-size: var(--ds-type-body-size); line-height: calc(var(--ds-type-body-leading) * var(--ds-script-text)); color: var(--ds-ink); text-wrap: pretty; }
+.r-small { font-family: var(--ds-type-family-body); font-size: var(--ds-type-small-size); line-height: calc(var(--ds-type-small-leading) * var(--ds-script-text)); }
+.r-label { font-family: var(--ds-type-family-body); font-size: var(--ds-type-label-size); line-height: calc(var(--ds-type-label-leading) * var(--ds-script-text)); font-weight: var(--ds-type-label-weight); }
+.r-caption { margin: 0; font-family: var(--ds-type-family-body); font-size: var(--ds-type-caption-size); line-height: calc(var(--ds-type-caption-leading) * var(--ds-script-text)); color: var(--ds-ink-muted); }
+.r-figure { font-family: var(--ds-type-family-heading); font-size: var(--ds-type-figure-size); line-height: var(--ds-type-figure-leading); font-weight: var(--ds-type-figure-weight); letter-spacing: var(--ds-type-figure-tracking); color: var(--ds-ink-strong); font-variant-numeric: var(--ds-numerals); white-space: nowrap; }
+.r-unit { font-family: var(--ds-type-family-body); font-size: var(--ds-type-lead-size); color: var(--ds-ink-muted); margin-inline-start: .2em; letter-spacing: 0; }
+.s { --g: 1; }
+.gap-2 { display: grid; gap: calc(var(--ds-space-2) * var(--ds-density)); } .gap-3 { display: grid; gap: calc(var(--ds-space-3) * var(--ds-density)); } .gap-4 { display: grid; gap: calc(var(--ds-space-4) * var(--ds-density)); } .gap-5 { display: grid; gap: calc(var(--ds-space-5) * var(--ds-density)); }
+/* page (print medium) */
+.p-page { padding: calc(var(--ds-space-7)) calc(var(--ds-space-7)); }
+.p-runhead { display: flex; justify-content: space-between; gap: 12px; padding-bottom: var(--ds-space-2); border-bottom: 1px solid var(--ds-hairline); color: var(--ds-ink-muted); }
+.p-accent { width: 24mm; max-width: 30%; height: 2px; background: var(--ds-rule-strong); }
+[data-ds-medium="slide"] .p-accent { width: 96px; height: 3px; }
+/* key facts and meters */
+.p-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr)); gap: calc(var(--ds-space-4) * var(--ds-density)); }
+.p-fact { border-top: 1px solid var(--ds-hairline); padding-top: calc(var(--ds-space-3) * var(--ds-density)); display: grid; gap: calc(var(--ds-space-2) * var(--ds-density)); align-content: start; }
+.p-fact.is-lead { border-top: 2px solid var(--ds-rule-strong); }
+.p-fact.is-back .r-figure { color: var(--ds-ink-muted); }
+.p-fact.is-pending .r-figure { white-space: normal; font-size: var(--ds-type-subheading-size); line-height: 1.2; font-weight: 300; letter-spacing: 0; }
+.p-meter { position: relative; height: 6px; background: var(--ds-series-track); }
+.p-meter > b { position: absolute; inset-block: 0; inset-inline-start: 0; background: var(--ds-series-1); }
+.p-meter > i { position: absolute; top: -5px; bottom: -5px; width: 2px; background: var(--ds-ink-muted); }
+.p-segs { display: flex; gap: 3px; } .p-segs > b { flex: 1; height: 6px; background: var(--ds-series-track); } .p-segs > b.on { background: var(--ds-series-1); }
+.p-delta { display: flex; align-items: center; gap: 6px; color: var(--ds-ink); } .p-delta svg { width: 1.3em; height: 1.3em; flex: 0 0 auto; }
+/* table */
+.p-scroll { overflow-x: auto; }
+.p-scroll:focus-visible { outline: 2px solid var(--ds-focus); outline-offset: 2px; }
+table.p-t { width: 100%; border-collapse: collapse; font-variant-numeric: var(--ds-numerals); }
+.p-t caption { text-align: start; padding-bottom: var(--ds-space-2); caption-side: top; }
+.p-t caption b { color: var(--ds-ink); font-weight: 600; }
+.p-t th, .p-t td { padding: calc(var(--ds-space-2) * var(--ds-density)) calc(var(--ds-space-3) * var(--ds-density)); text-align: start; vertical-align: top; }
+.p-t thead th { color: var(--ds-ink-strong); font-weight: 600; border-bottom: 2px solid var(--ds-rule-strong); vertical-align: bottom; }
+.p-t tbody td, .p-t tbody th { border-bottom: 1px solid var(--ds-hairline); }
+.p-t tbody tr:nth-child(even) { background: var(--ds-plate); }
+.p-t tbody th { font-weight: 400; }
+.p-t tfoot td, .p-t tfoot th { border-top: 2px solid var(--ds-rule-strong); font-weight: 700; color: var(--ds-ink-strong); }
+.p-t .n { text-align: end; }
+.p-status { display: inline-flex; gap: .4em; align-items: center; } .p-status svg { width: 1.2em; height: 1.2em; flex: 0 0 auto; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+/* callouts and a person's words */
+.p-callout { display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; padding: calc(var(--ds-space-3) * var(--ds-density)) calc(var(--ds-space-4) * var(--ds-density)); border-radius: var(--ds-radius-1); border-inline-start: 3px solid; }
+.p-callout svg { width: 1.3em; height: 1.3em; grid-row: span 2; margin-top: .1em; }
+.p-callout b { font-weight: 700; }
+.p-callout.note { background: var(--ds-note-bg); border-color: var(--ds-note-rule); } .p-callout.note b, .p-callout.note svg { color: var(--ds-note-fg); }
+.p-callout.key { background: var(--ds-key-bg); border-color: var(--ds-key-rule); grid-template-columns: 1fr; } .p-callout.key b { color: var(--ds-key-fg); }
+.p-quote { margin: 0; padding: calc(var(--ds-space-4) * var(--ds-density)) calc(var(--ds-space-5) * var(--ds-density)); background: var(--ds-person-tint); border-inline-start: 4px solid var(--ds-person-mark); }
+.p-quote blockquote { margin: 0; color: var(--ds-ink-strong); font-family: var(--ds-type-family-body); font-size: var(--ds-type-lead-size); line-height: calc(var(--ds-type-lead-leading) * var(--ds-script-text)); }
+.p-quote figcaption { margin-top: calc(var(--ds-space-3) * var(--ds-density)); }
+.p-quote figcaption b { display: block; color: var(--ds-person); font-weight: 600; }
+.p-quote figcaption span { color: var(--ds-ink-muted); }
+ul.p-list { margin: 0; padding-inline-start: 1.2em; display: grid; gap: calc(var(--ds-space-1) * var(--ds-density)); } ul.p-list li::marker { color: var(--ds-marker); }
+/* chart */
+.p-bars { display: flex; align-items: flex-end; gap: 6%; height: 132px; border-bottom: 2px solid var(--ds-rule-strong); position: relative; padding-inline-start: 5.5em; }
+.p-bars > div:not(.p-target) { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 4px; height: 100%; }
+.p-bars > div > i { display: block; width: 100%; background: var(--ds-series-2); }
+.p-bars > div.hl > i { background: var(--ds-series-1); }
+.p-bars > div > span { position: relative; z-index: 1; padding: 0 4px; background: var(--ds-paper); font-size: var(--ds-type-caption-size); font-weight: 600; color: var(--ds-ink); font-variant-numeric: var(--ds-numerals); }
+.p-bars .p-target { position: absolute; inset-inline: 0; height: 0; border-top: 1.5px dashed var(--ds-ink-muted); }
+.p-bars .p-target span { position: absolute; inset-inline-start: 0; top: -.75em; line-height: 1.5; padding-inline-end: 6px; background: var(--ds-paper); font-size: var(--ds-type-caption-size); color: var(--ds-ink-muted); white-space: nowrap; }
+.p-axis { display: flex; gap: 6%; padding-inline-start: 5.5em; } .p-axis span { flex: 1; text-align: center; font-size: var(--ds-type-caption-size); color: var(--ds-ink-muted); font-variant-numeric: var(--ds-numerals); }
+.p-hbars { display: grid; gap: 8px; } .p-hbar { display: grid; grid-template-columns: 7em 1fr 3em; gap: 8px; align-items: center; font-size: var(--ds-type-caption-size); }
+.p-hbar i { display: block; height: 14px; background: var(--ds-series-2); } .p-hbar.hl i { background: var(--ds-series-1); } .p-hbar b { font-variant-numeric: var(--ds-numerals); }
+/* slide (slide medium, scaled to its frame) */
+.p-slide-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; }
+.p-slide { position: absolute; top: 0; inset-inline-start: 0; width: 1920px; height: 1080px; transform-origin: top left; transform: scale(var(--p-scale, .3)); background: var(--ds-paper); color: var(--ds-ink); }
+[dir="rtl"] .p-slide { transform-origin: top right; }
+.p-tick { position: absolute; width: 28px; height: 28px; border: 0 solid var(--ds-rule); }
+.p-rail { position: absolute; top: 50px; inset-inline-end: 88px; display: flex; gap: 24px; align-items: center; color: var(--ds-ink-muted); font-variant-numeric: var(--ds-numerals); }
+.p-rail i { width: 1px; height: 24px; background: var(--ds-hairline); }
+.p-slide-body { position: absolute; top: 200px; inset-inline: 48px; bottom: 136px; display: flex; flex-direction: column; gap: 28px; }
+.p-slide .r-heading { max-width: 1400px; }
+.p-slide-stats { flex: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 24px; }
+.p-slide-stats > div { display: flex; flex-direction: column; justify-content: flex-end; gap: 20px; padding-inline: 48px; border-inline-start: 1px solid var(--ds-hairline); }
+.p-slide-stats > div:first-child { padding-inline-start: 0; border: 0; }
+.p-slide .p-meter { height: 10px; } .p-slide .p-segs > b { height: 10px; }
+.p-progress { position: absolute; bottom: 48px; inset-inline: 48px; height: 1px; background: var(--ds-hairline); }
+.p-progress b { display: block; width: 28%; height: 1px; background: var(--ds-series-1); }
+.p-folio { position: absolute; bottom: 60px; inset-inline-end: 88px; color: var(--ds-ink-muted); font-weight: 300; font-variant-numeric: var(--ds-numerals); }
+/* depth */
+.p-desk { position: relative; background: var(--ds-canvas); padding: 20px 20px 84px; border-radius: var(--ds-radius-2); box-shadow: var(--ds-rim); }
+.p-desk .p-sheet { padding: 20px; display: grid; gap: 12px; }
+.p-mat { padding: 12px 14px; border-radius: var(--ds-radius-1); }
+.p-mat code { font-size: var(--ds-type-caption-size); }
+.p-glassbar { position: absolute; inset-inline: 32px; bottom: 20px; height: 56px; border-radius: 999px; display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--ds-glass); box-shadow: var(--ds-shadow-float), var(--ds-rim); -webkit-backdrop-filter: blur(var(--ds-glass-blur)) saturate(1.4); backdrop-filter: blur(var(--ds-glass-blur)) saturate(1.4); }
+.p-glassbar .p-count { min-width: 4.5ch; text-align: center; font-variant-numeric: var(--ds-numerals); font-size: var(--ds-type-small-size); }
+.p-under { position: absolute; inset-inline: 56px; bottom: 20px; height: 56px; display: flex; align-items: flex-end; gap: 10px; overflow: hidden; }
+.p-under i { flex: 1; background: var(--ds-series-2); }
+.p-under i:nth-child(3n) { background: var(--ds-series-1); }
+/* reference tables */
+.p-ref { margin-top: 32px; display: grid; gap: 24px; }
+.p-ref .p-sheet { padding: 20px; }
+.p-ref h2 { margin: 0 0 12px; font-family: var(--ds-type-family-heading); font-size: var(--ds-type-subheading-size); line-height: var(--ds-type-subheading-leading); color: var(--ds-ink-strong); }
+table.p-reft { width: 100%; border-collapse: collapse; font-size: var(--ds-type-small-size); font-variant-numeric: var(--ds-numerals); }
+.p-reft th { text-align: start; border-bottom: 2px solid var(--ds-rule-strong); padding: 6px 8px; color: var(--ds-ink-strong); font-weight: 600; }
+.p-reft td { border-bottom: 1px solid var(--ds-hairline); padding: 6px 8px; vertical-align: top; }
+.p-reft .n { text-align: end; }
+.p-reft code { font-size: .9em; overflow-wrap: anywhere; }
+@media print { .p-tools { display: none; } }
+</style>
+</head>
+<body>
+<div class="p-wrap">
+  <header class="p-top">
+    <div>
+      <p class="p-eyebrow">Documents 2.0.0</p>
+      <h1 class="p-h1">Tokens and components, light and dark</h1>
+      <p class="p-lede">Everything below is drawn from the three token files, inlined in this page. Fonts fall back to the system; nothing is fetched.</p>
+    </div>
+    <div class="p-tools" role="toolbar" aria-label="Preview controls">
+      <div role="radiogroup" aria-label="Density" style="display:flex;gap:4px">
+        <button class="p-icon" role="radio" aria-checked="false" aria-label="Compact" data-density="compact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M5 7h14M5 10.5h14M5 14h14M5 17.5h14"/></svg></button>
+        <button class="p-icon" role="radio" aria-checked="true" aria-label="Comfortable" data-density="comfortable"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M5 7h14M5 12h14M5 17h14"/></svg></button>
+        <button class="p-icon" role="radio" aria-checked="false" aria-label="Spacious" data-density="spacious"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M5 6h14M5 18h14"/></svg></button>
+      </div>
+      <span class="p-sep" aria-hidden="true"></span>
+      <button class="p-icon" aria-pressed="false" aria-label="Motion off" id="p-motion"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12c2.5-5 5.5-5 8 0s5.5 5 8 0"/><path d="M4 4l16 16"/></svg></button>
+      <button class="p-icon" aria-label="Replay motion" id="p-replay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3"/><path d="M4.5 4.5v4h4"/></svg></button>
+    </div>
+  </header>
+
+  <main>
+    <div class="p-themes">
+      <section class="p-theme" data-ds-theme="light" aria-label="Light theme, the default"></section>
+      <section class="p-theme" data-ds-theme="dark" aria-label="Dark theme, opt-in"></section>
+    </div>
+
+    <div class="p-ref">
+      <section class="p-sheet" aria-labelledby="ref-type"><h2 id="ref-type">Type roles</h2><div class="p-scroll" tabindex="0" role="region" aria-label="Type roles table"><table class="p-reft"><thead><tr><th>Role</th><th class="n">Screen</th><th class="n">Print</th><th class="n">Slide</th><th>Use</th></tr></thead><tbody><tr><td>hero</td><td class="n">40 to 62px</td><td class="n">32pt</td><td class="n">136px</td><td>Cover title, title-slide title</td></tr><tr><td>title</td><td class="n">32 to 48px</td><td class="n">32pt</td><td class="n">100px</td><td>Chapter and section-divider title</td></tr><tr><td>heading</td><td class="n">26 to 32px</td><td class="n">24pt</td><td class="n">56px</td><td>Section heading, slide heading</td></tr><tr><td>subheading</td><td class="n">20 to 26px</td><td class="n">18pt</td><td class="n">44px</td><td>Sub-section heading</td></tr><tr><td>minor</td><td class="n">18px</td><td class="n">13.5pt</td><td class="n">32px</td><td>Minor heading, column head</td></tr><tr><td>lead</td><td class="n">18 to 22px</td><td class="n">14pt</td><td class="n">44px</td><td>Standfirst, subtitle, the quote</td></tr><tr><td>body</td><td class="n">16 to 18px</td><td class="n">10pt</td><td class="n">32px</td><td>Running text</td></tr><tr><td>small</td><td class="n">16px</td><td class="n">9pt</td><td class="n">28px</td><td>Table cells, dense lists</td></tr><tr><td>label</td><td class="n">14px</td><td class="n">9pt</td><td class="n">24px</td><td>Table headers, rails, running headers</td></tr><tr><td>caption</td><td class="n">14px</td><td class="n">8pt</td><td class="n">24px</td><td>Captions, sources, footnotes (the one small size)</td></tr><tr><td>figure</td><td class="n">48 to 76px</td><td class="n">36pt</td><td class="n">200px</td><td>Key figures, light numerals</td></tr></tbody></table></div><p class="r-caption" style="margin-top:8px">Fluid screen sizes run between a 360px and a 1440px viewport. Floors: 14px captions and 16px text on screen, 8pt in print, 24px on slides.</p></section>
+      <section class="p-sheet" aria-labelledby="ref-motion"><h2 id="ref-motion">Motion</h2><div class="p-scroll" tabindex="0" role="region" aria-label="Motion durations table"><table class="p-reft"><thead><tr><th>Token</th><th class="n">Normal</th><th class="n">Reduced</th><th>Use</th></tr></thead><tbody><tr><td><code>--ds-dur-instant</code></td><td class="n">0ms</td><td class="n">0ms</td><td>Anything under reduced motion that is not a fade</td></tr><tr><td><code>--ds-dur-quick</code></td><td class="n">120ms</td><td class="n">0ms</td><td>Hover and press colour in viewer chrome</td></tr><tr><td><code>--ds-dur-swift</code></td><td class="n">200ms</td><td class="n">0ms</td><td>Theme and density cross-fade</td></tr><tr><td><code>--ds-dur-steady</code></td><td class="n">360ms</td><td class="n">120ms</td><td>Slide change, overview open; fade only when reduced</td></tr><tr><td><code>--ds-dur-reveal</code></td><td class="n">560ms</td><td class="n">0ms</td><td>Slide content entrance, bars growing from the baseline</td></tr><tr><td><code>--ds-dur-draw</code></td><td class="n">900ms</td><td class="n">0ms</td><td>The accent line under a slide title</td></tr><tr><td><code>--ds-dur-count</code></td><td class="n">1400ms</td><td class="n">0ms</td><td>Key figures counting up, once</td></tr><tr><td><code>--ds-dur-trace</code></td><td class="n">2200ms</td><td class="n">0ms</td><td>Hairline fields drawing in, once</td></tr></tbody></table></div></section>
+      <section class="p-sheet" aria-labelledby="ref-contrast"><h2 id="ref-contrast">Contrast, both themes (WCAG 2.2)</h2><div class="p-scroll" tabindex="0" role="region" aria-label="Contrast table"><table class="p-reft"><thead><tr><th>Use</th><th>Pair</th><th class="n">Needs</th><th class="n">Light</th><th class="n">Dark</th></tr></thead><tbody><tr><td>Body text</td><td><code>--ds-ink</code> on <code>--ds-paper</code></td><td class="n">4.5</td><td class="n">15.37</td><td class="n">13.12</td></tr><tr><td>Body text on a plate</td><td><code>--ds-ink</code> on <code>--ds-plate</code></td><td class="n">4.5</td><td class="n">14.34</td><td class="n">11.94</td></tr><tr><td>Headings and figures</td><td><code>--ds-ink-strong</code> on <code>--ds-paper</code></td><td class="n">4.5</td><td class="n">16.88</td><td class="n">16.88</td></tr><tr><td>Captions and labels</td><td><code>--ds-ink-muted</code> on <code>--ds-paper</code></td><td class="n">4.5</td><td class="n">5.95</td><td class="n">6.59</td></tr><tr><td>Captions on a plate</td><td><code>--ds-ink-muted</code> on <code>--ds-plate</code></td><td class="n">4.5</td><td class="n">5.55</td><td class="n">6.00</td></tr><tr><td>Labels in a well</td><td><code>--ds-ink-muted</code> on <code>--ds-well</code></td><td class="n">4.5</td><td class="n">5.31</td><td class="n">7.48</td></tr><tr><td>Text on glass, worst case</td><td><code>--ds-ink</code> on <code>--ds-glass</code></td><td class="n">4.5</td><td class="n">11.10</td><td class="n">8.47</td></tr><tr><td>Speaker name</td><td><code>--ds-person</code> on <code>--ds-paper</code></td><td class="n">4.5</td><td class="n">6.03</td><td class="n">9.08</td></tr><tr><td>Speaker name on the quote ground</td><td><code>--ds-person</code> on <code>--ds-person-tint</code></td><td class="n">4.5</td><td class="n">5.61</td><td class="n">8.27</td></tr><tr><td>Quote text</td><td><code>--ds-ink</code> on <code>--ds-person-tint</code></td><td class="n">4.5</td><td class="n">14.31</td><td class="n">11.94</td></tr><tr><td>Quote rule</td><td><code>--ds-person-mark</code> on <code>--ds-paper</code></td><td class="n">3</td><td class="n">3.15</td><td class="n">7.12</td></tr><tr><td>Series 1 and meter fill</td><td><code>--ds-series-1</code> on <code>--ds-paper</code></td><td class="n">3</td><td class="n">15.37</td><td class="n">16.45</td></tr><tr><td>Series 2</td><td><code>--ds-series-2</code> on <code>--ds-paper</code></td><td class="n">3</td><td class="n">4.08</td><td class="n">4.13</td></tr><tr><td>Series 2 on a plate</td><td><code>--ds-series-2</code> on <code>--ds-plate</code></td><td class="n">3</td><td class="n">3.81</td><td class="n">3.76</td></tr><tr><td>Focus ring</td><td><code>--ds-focus</code> on <code>--ds-paper</code></td><td class="n">3</td><td class="n">5.00</td><td class="n">7.83</td></tr><tr><td>Focus ring on a plate</td><td><code>--ds-focus</code> on <code>--ds-plate</code></td><td class="n">3</td><td class="n">4.67</td><td class="n">7.13</td></tr><tr><td>Focus ring on glass, worst case</td><td><code>--ds-focus</code> on <code>--ds-glass</code></td><td class="n">3</td><td class="n">3.61</td><td class="n">5.05</td></tr><tr><td>Note title</td><td><code>--ds-note-fg</code> on <code>--ds-note-bg</code></td><td class="n">4.5</td><td class="n">6.12</td><td class="n">8.21</td></tr><tr><td>Note body</td><td><code>--ds-ink</code> on <code>--ds-note-bg</code></td><td class="n">4.5</td><td class="n">13.83</td><td class="n">12.18</td></tr><tr><td>Important title</td><td><code>--ds-important-fg</code> on <code>--ds-important-bg</code></td><td class="n">4.5</td><td class="n">4.82</td><td class="n">10.39</td></tr><tr><td>Important body</td><td><code>--ds-ink</code> on <code>--ds-important-bg</code></td><td class="n">4.5</td><td class="n">14.82</td><td class="n">11.62</td></tr><tr><td>Warning title</td><td><code>--ds-warning-fg</code> on <code>--ds-warning-bg</code></td><td class="n">4.5</td><td class="n">5.91</td><td class="n">8.70</td></tr><tr><td>Warning body</td><td><code>--ds-ink</code> on <code>--ds-warning-bg</code></td><td class="n">4.5</td><td class="n">14.05</td><td class="n">12.49</td></tr><tr><td>Success title</td><td><code>--ds-success-fg</code> on <code>--ds-success-bg</code></td><td class="n">4.5</td><td class="n">6.41</td><td class="n">9.82</td></tr><tr><td>Success body</td><td><code>--ds-ink</code> on <code>--ds-success-bg</code></td><td class="n">4.5</td><td class="n">14.48</td><td class="n">12.72</td></tr><tr><td>Key message</td><td><code>--ds-key-fg</code> on <code>--ds-key-bg</code></td><td class="n">4.5</td><td class="n">15.75</td><td class="n">15.37</td></tr><tr><td>White on solid note</td><td><code>#FFFFFF</code> on <code>--ds-note-solid</code></td><td class="n">4.5</td><td class="n">6.80</td><td class="n">6.80</td></tr><tr><td>White on solid important</td><td><code>#FFFFFF</code> on <code>--ds-important-solid</code></td><td class="n">4.5</td><td class="n">5.00</td><td class="n">5.00</td></tr><tr><td>White on solid warning</td><td><code>#FFFFFF</code> on <code>--ds-warning-solid</code></td><td class="n">4.5</td><td class="n">6.46</td><td class="n">6.46</td></tr><tr><td>White on solid success</td><td><code>#FFFFFF</code> on <code>--ds-success-solid</code></td><td class="n">4.5</td><td class="n">6.80</td><td class="n">6.80</td></tr><tr><td>Text on an inverse block</td><td><code>--ds-ink-inverse</code> on <code>--ds-inverse</code></td><td class="n">4.5</td><td class="n">16.88</td><td class="n">16.88</td></tr></tbody></table></div><p class="r-caption" style="margin-top:8px">62 pairs, all at or above the minimum. Glass is measured over the worst case behind it.</p></section>
+    </div>
+  </main>
+</div>
+
+<template id="p-pane">
+  <div class="p-theme-head"><h2 class="p-theme-name" data-name></h2><span class="p-k" data-note></span></div>
+
+  <div><p class="p-k">Colour roles</p><div class="p-swatches" data-swatches></div></div>
+
+  <div><p class="p-k">Type roles on screen</p>
+    <div class="p-sheet p-type" data-ds-medium="screen">
+      <div class="p-role"><code>hero</code><span style="font-family:var(--ds-type-family-heading);font-size:var(--ds-type-hero-size);line-height:var(--ds-type-hero-leading);font-weight:var(--ds-type-hero-weight);letter-spacing:var(--ds-type-hero-tracking)">Annual report</span></div>
+      <div class="p-role"><code>heading</code><span class="r-heading">Service performance</span></div>
+      <div class="p-role"><code>lead</code><span style="font-size:var(--ds-type-lead-size);line-height:var(--ds-type-lead-leading);color:var(--ds-ink)">Most requests closed within target this year.</span></div>
+      <div class="p-role"><code>body</code><span class="r-body">Figures for the last quarter are provisional until the year-end review is complete.</span></div>
+      <div class="p-role"><code>label</code><span class="r-label" style="color:var(--ds-ink-muted)">Section 02</span></div>
+      <div class="p-role"><code>caption</code><span class="r-caption">Figure 1. Requests closed within target, 2021 to 2026</span></div>
+      <div class="p-role"><code>figure</code><span class="r-figure">92<span class="r-unit">%</span></span></div>
+    </div>
+  </div>
+
+  <div><p class="p-k">A report page (print medium: points and millimetres)</p>
+    <article class="p-sheet p-page gap-4" data-ds-medium="print" aria-label="Report page sample">
+      <div class="p-runhead r-label"><span>Annual report 2026</span><span>2. Service performance</span></div>
+      <div class="gap-3">
+        <div class="p-accent" data-ds-draw></div>
+        <h3 class="r-heading" data-ds-rise style="--ds-i:0">2. Service performance</h3>
+        <p class="r-body" data-ds-rise style="--ds-i:1">Requests are closed faster than a year ago. Two regions still carry most of the delay, and the target is within reach if their backlog clears by the third quarter.</p>
+      </div>
+      <div class="p-facts">
+        <div class="p-fact is-lead"><div class="r-figure">92<span class="r-unit">%</span></div><div class="p-meter" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="92" aria-label="Closed within target, target 95%"><b data-ds-grow="x" style="width:92%"></b><i style="inset-inline-start:95%"></i></div><div class="p-delta r-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>Up 4 points on last year</div><p class="r-caption">Closed within target, target 95%</p></div>
+        <div class="p-fact is-back"><div class="r-figure">5<span class="r-unit">of 7</span></div><div class="p-segs" role="meter" aria-valuemin="0" aria-valuemax="7" aria-valuenow="5" aria-label="Regions reporting"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b></b><b></b></div><p class="r-caption">Regions reporting monthly</p></div>
+        <div class="p-fact is-back is-pending"><div class="r-figure">Not yet known</div><p class="r-caption">Effect of the new intake form</p></div>
+      </div>
+      <div class="p-scroll" tabindex="0" role="region" aria-label="Table 1, requests by region">
+        <table class="p-t r-small">
+          <caption class="r-caption"><b>Table 1.</b> Requests by region, 2026</caption>
+          <thead><tr><th scope="col">Region</th><th scope="col" class="n">Requests</th><th scope="col" class="n">Within target <span style="font-weight:400;color:var(--ds-ink-muted)">(%)</span></th><th scope="col">Status</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Region A</th><td class="n">1,240</td><td class="n">96</td><td><span class="p-status"><svg viewBox="0 0 24 24" fill="none" stroke="var(--ds-success-fg)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.8"/></svg>On target</span></td></tr>
+            <tr><th scope="row">Region B</th><td class="n">980</td><td class="n">91</td><td><span class="p-status"><svg viewBox="0 0 24 24" fill="none" stroke="var(--ds-success-fg)" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5h4"/></svg>On track</span></td></tr>
+            <tr><th scope="row">Region C</th><td class="n">610</td><td class="n">84</td><td><span class="p-status"><svg viewBox="0 0 24 24" fill="none" stroke="var(--ds-important-fg)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17v.01"/></svg>At risk</span></td></tr>
+            <tr><th scope="row">Region D</th><td class="n">420</td><td class="n"><span aria-hidden="true" style="color:var(--ds-ink-muted)">&ndash;</span><span class="sr">No data</span></td><td><span class="p-status"><svg viewBox="0 0 24 24" fill="none" stroke="var(--ds-ink-muted)" stroke-width="1.8" stroke-dasharray="3 3" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg>Pending</span></td></tr>
+          </tbody>
+          <tfoot><tr><th scope="row">Total</th><td class="n">3,250</td><td class="n">92</td><td></td></tr></tfoot>
+        </table>
+      </div>
+      <div class="p-callout note r-small"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></svg><b>Note</b><span>Figures for the last quarter are provisional.</span></div>
+      <div class="p-callout key r-small"><b>Key message</b><span>Two regions carry most of the delay; the rest are on target.</span></div>
+      <figure class="p-quote"><blockquote>Clear numbers let people decide faster than long explanations do.</blockquote><figcaption class="r-small"><b>Speaker name</b><span>Role title</span></figcaption></figure>
+      <figure style="margin:0" class="gap-2">
+        <div class="p-bars" role="img" aria-label="Column chart: 2022 81%, 2023 84%, 2024 86%, 2025 88%, 2026 92%; target 95%">
+          <div class="p-target" style="bottom:calc(95% * .8)"><span>Target 95%</span></div>
+          <div><span>81%</span><i data-ds-grow="y" style="--ds-i:0;height:calc(81% * .8)"></i></div><div><span>84%</span><i data-ds-grow="y" style="--ds-i:1;height:calc(84% * .8)"></i></div><div><span>86%</span><i data-ds-grow="y" style="--ds-i:2;height:calc(86% * .8)"></i></div><div><span>88%</span><i data-ds-grow="y" style="--ds-i:3;height:calc(88% * .8)"></i></div><div class="hl"><span>92%</span><i data-ds-grow="y" style="--ds-i:4;height:calc(92% * .8)"></i></div>
+        </div>
+        <div class="p-axis" aria-hidden="true"><span>2022</span><span>2023</span><span>2024</span><span>2025</span><span>2026</span></div>
+        <figcaption class="r-caption"><b style="color:var(--ds-ink);font-weight:600">Figure 1.</b> Requests closed within target, 2022 to 2026 (%). The latest year in ink, the rest in grey.</figcaption>
+      </figure>
+    </article>
+  </div>
+
+  <div><p class="p-k">A slide (slide medium, 1920 x 1080, scaled)</p>
+    <div class="p-slide-frame p-sheet"><div class="p-slide" data-ds-medium="slide" role="img" aria-label="Slide sample: service performance in three numbers">
+      <div class="p-tick" style="top:48px;inset-inline-start:48px;border-top-width:1px;border-inline-start-width:1px"></div><div class="p-tick" style="top:48px;inset-inline-end:48px;border-top-width:1px;border-inline-end-width:1px"></div><div class="p-tick" style="bottom:48px;inset-inline-start:48px;border-bottom-width:1px;border-inline-start-width:1px"></div><div class="p-tick" style="bottom:48px;inset-inline-end:48px;border-bottom-width:1px;border-inline-end-width:1px"></div>
+      <div class="p-rail r-label"><span>04 / 14</span><i></i><span>Annual report 2026</span></div>
+      <div class="p-slide-body">
+        <div class="p-accent" data-ds-draw></div>
+        <div class="r-label" style="color:var(--ds-ink-muted)">Service performance</div>
+        <div class="r-title" data-ds-rise>Three numbers for the year</div>
+        <div class="p-slide-stats">
+          <div data-ds-rise style="--ds-i:1"><div class="r-figure">92<span class="r-unit">%</span></div><div class="p-meter"><b data-ds-grow="x" style="width:92%"></b><i style="inset-inline-start:95%"></i></div><div class="r-small" style="color:var(--ds-ink-muted)">Closed within target</div></div>
+          <div data-ds-rise style="--ds-i:2"><div class="r-figure" style="color:var(--ds-ink-muted)">5<span class="r-unit">of 7</span></div><div class="p-segs"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b></b><b></b></div><div class="r-small" style="color:var(--ds-ink-muted)">Regions reporting</div></div>
+          <div data-ds-rise style="--ds-i:3"><div class="r-figure" style="color:var(--ds-ink-muted)">3.1<span class="r-unit">days</span></div><div class="p-delta r-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>Down 0.4 days</div><div class="r-small" style="color:var(--ds-ink-muted)">Median time to close</div></div>
+        </div>
+      </div>
+      <div class="p-progress"><b></b></div><div class="p-folio r-label">04</div>
+    </div></div>
+  </div>
+
+  <div><p class="p-k">Depth: grounds inside the page, shadow and glass only on screen</p>
+    <div class="p-desk">
+      <div class="p-sheet">
+        <code class="r-caption">paper + shadow-sheet</code>
+        <div class="p-mat" style="background:var(--ds-plate)"><code>plate</code>: key facts, zebra rows, key message</div>
+        <div class="p-mat" style="background:var(--ds-well);box-shadow:var(--ds-rim)"><code>well</code> + rim: a recessed field</div>
+        <div class="p-mat" style="background:var(--ds-inverse);color:var(--ds-ink-inverse)"><code>inverse</code>: once per page at most</div>
+      </div>
+      <div class="p-under" aria-hidden="true"><i style="height:40%"></i><i style="height:70%"></i><i style="height:55%"></i><i style="height:90%"></i><i style="height:35%"></i><i style="height:80%"></i><i style="height:60%"></i><i style="height:100%"></i><i style="height:45%"></i><i style="height:75%"></i><i style="height:50%"></i><i style="height:85%"></i></div>
+      <div class="p-glassbar" aria-label="Glass toolbar sample" role="group">
+        <button class="p-icon" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+        <span class="p-count">4 / 14</span>
+        <button class="p-icon p-focus-demo" aria-label="Next (shown with its focus ring)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <span class="p-sep" aria-hidden="true"></span>
+        <button class="p-icon" aria-label="Dark theme" aria-pressed="false" data-moon><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <div><p class="p-k">Second script: mirrored, same sizes, open leading, Latin digits</p>
+    <div class="p-sheet gap-3" dir="rtl" lang="ar" data-ds-medium="screen" style="padding:20px">
+      <h3 class="r-heading">التقرير السنوي</h3>
+      <p class="r-body">أُغلقت 92% من الطلبات ضمن المدة المستهدفة هذا العام، وتبقى منطقتان مسؤولتين عن معظم التأخير.</p>
+      <div class="p-callout note r-small"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></svg><b>ملاحظة</b><span>أرقام الربع الأخير مؤقتة.</span></div>
+      <div class="p-hbars" role="img" aria-label="مخطط أشرطة: المنطقة أ 96، المنطقة ب 91، المنطقة ج 84">
+        <div class="p-hbar hl"><span>المنطقة أ</span><i data-ds-grow="x" style="width:96%"></i><b>96%</b></div>
+        <div class="p-hbar"><span>المنطقة ب</span><i data-ds-grow="x" style="--ds-i:1;width:91%"></i><b>91%</b></div>
+        <div class="p-hbar"><span>المنطقة ج</span><i data-ds-grow="x" style="--ds-i:2;width:84%"></i><b>84%</b></div>
+      </div>
+      <ul class="p-list r-body"><li>إغلاق الطلبات المتأخرة قبل نهاية الربع الثالث</li><li>نشر التقرير الشهري لكل منطقة</li></ul>
+    </div>
+  </div>
+</template>
+
+<script>
+(function () {
+  var ROLES = ["ink", "ink-strong", "ink-muted", "ink-inverse", "canvas", "paper", "plate", "well", "inverse", "glass", "scrim", "mark-plate", "hairline", "rule", "rule-strong", "series-1", "series-2", "series-track", "marker", "person", "person-mark", "person-tint", "focus", "note-bg", "note-fg", "note-rule", "important-bg", "important-fg", "important-rule", "warning-bg", "warning-fg", "warning-rule", "success-bg", "success-fg", "success-rule", "key-bg", "key-fg", "key-rule", "note-solid", "important-solid", "warning-solid", "success-solid"];
+  var tpl = document.getElementById('p-pane');
+  document.querySelectorAll('.p-theme').forEach(function (pane) {
+    pane.appendChild(tpl.content.cloneNode(true));
+    var dark = pane.getAttribute('data-ds-theme') === 'dark';
+    pane.querySelector('[data-name]').textContent = dark ? 'Dark' : 'Light';
+    pane.querySelector('[data-note]').textContent = dark ? 'Opt-in: data-ds-theme="dark"' : 'Default';
+    var moon = pane.querySelector('[data-moon]'); if (moon) moon.setAttribute('aria-pressed', dark ? 'true' : 'false');
+    var sw = pane.querySelector('[data-swatches]');
+    ROLES.forEach(function (r) {
+      var el = document.createElement('div'); el.className = 'p-sw';
+      el.innerHTML = '<i style="background:var(--ds-' + r + ')"></i><span>' + r + '</span>';
+      sw.appendChild(el);
+    });
+  });
+  function fit() {
+    document.querySelectorAll('.p-slide-frame').forEach(function (f) { f.style.setProperty('--p-scale', String(f.clientWidth / 1920)); });
+  }
+  fit();
+  if (window.ResizeObserver) new ResizeObserver(fit).observe(document.body); else window.addEventListener('resize', fit);
+  var root = document.documentElement;
+  document.querySelectorAll('[data-density]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      root.setAttribute('data-ds-density', b.getAttribute('data-density'));
+      document.querySelectorAll('[data-density]').forEach(function (x) { x.setAttribute('aria-checked', x === b ? 'true' : 'false'); });
+    });
+  });
+  var motion = document.getElementById('p-motion');
+  motion.addEventListener('click', function () {
+    var off = motion.getAttribute('aria-pressed') !== 'true';
+    motion.setAttribute('aria-pressed', off ? 'true' : 'false');
+    if (off) root.setAttribute('data-ds-motion', 'off'); else root.removeAttribute('data-ds-motion');
+  });
+  document.getElementById('p-replay').addEventListener('click', function () {
+    var sel = '[data-ds-rise],[data-ds-draw],[data-ds-grow]';
+    document.querySelectorAll(sel).forEach(function (el) { el.style.animation = 'none'; });
+    void document.body.offsetWidth;
+    document.querySelectorAll(sel).forEach(function (el) { el.style.animation = ''; });
+  });
+})();
+</script>
+</body>
+</html>

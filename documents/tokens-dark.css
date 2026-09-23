@@ -1,0 +1,111 @@
+/* Documents, dark theme: opt-in. Load after tokens.css and set data-ds-theme="dark" on <html> or on one deck or document.
+   Light stays the default. A deck or document is one theme at a time, never mixed slide by slide or page by page.
+   Every role keeps its name; only the value changes, so components need no dark variants. The mark plate stays white
+   (an organisation mark drawn for white paper keeps its white ground). Print is always light. */
+[data-ds-theme="dark"] {
+  color-scheme: dark;
+  --ds-ink: var(--ds-color-neutral-100); /* Body text */
+  --ds-ink-strong: var(--ds-color-white-50); /* Headings, figures, the one thing read first */
+  --ds-ink-muted: var(--ds-color-neutral-300); /* Captions, labels, metadata */
+  --ds-ink-inverse: var(--ds-color-neutral-900); /* Text on an inverse block */
+  --ds-canvas: var(--ds-color-neutral-950); /* Screen only: the desk a page or slide sits on */
+  --ds-paper: var(--ds-color-neutral-900); /* The page or slide ground */
+  --ds-plate: var(--ds-color-neutral-800); /* A tonal block on the paper: key facts, key message, zebra rows */
+  --ds-well: var(--ds-color-neutral-950); /* A recessed field: section-divider field, appendix wells */
+  --ds-inverse: var(--ds-color-white-50); /* An inverse block, used at most once per page */
+  --ds-glass: rgb(27 29 33 / .86); /* Screen only: viewer chrome floating over content */
+  --ds-scrim: rgb(14 15 18 / .55); /* Photo overlay under text, 30 to 60% black */
+  --ds-mark-plate: var(--ds-color-white-50); /* The white ground an organisation mark keeps in both themes */
+  --ds-hairline: var(--ds-color-neutral-700); /* Row rules, separators, tracks */
+  --ds-rule: var(--ds-color-neutral-600); /* Signing lines, registration ticks, stronger separators */
+  --ds-rule-strong: var(--ds-color-neutral-100); /* Table header and total rules, the accent line */
+  --ds-series-1: var(--ds-color-white-100); /* Series 1, meter fill, current milestone */
+  --ds-series-2: var(--ds-color-neutral-400); /* Series 2, ranges, the rest */
+  --ds-series-track: var(--ds-color-neutral-700); /* Meter and chart tracks */
+  --ds-marker: var(--ds-color-neutral-300); /* List bullets and numbers */
+  --ds-person: var(--ds-color-gold-300); /* A person's name beside their own words */
+  --ds-person-mark: var(--ds-color-gold-400); /* The bar beside a person's words */
+  --ds-person-tint: var(--ds-color-neutral-800); /* Ground under a person's words (a neutral plate in dark) */
+  --ds-focus: var(--ds-color-amber-500); /* Keyboard focus ring, 2px, 2px offset */
+  --ds-note-bg: var(--ds-color-blue-950); /* Note ground */
+  --ds-note-fg: var(--ds-color-blue-300); /* Note title and icon */
+  --ds-note-rule: var(--ds-color-blue-400); /* Note start rule */
+  --ds-important-bg: var(--ds-color-amber-950); /* Important ground */
+  --ds-important-fg: var(--ds-color-amber-300); /* Important title and icon */
+  --ds-important-rule: var(--ds-color-amber-400); /* Important start rule */
+  --ds-warning-bg: var(--ds-color-red-950); /* Warning ground */
+  --ds-warning-fg: var(--ds-color-red-300); /* Warning title and icon */
+  --ds-warning-rule: var(--ds-color-red-400); /* Warning start rule */
+  --ds-success-bg: var(--ds-color-green-950); /* Success ground */
+  --ds-success-fg: var(--ds-color-green-300); /* Success title and icon */
+  --ds-success-rule: var(--ds-color-green-400); /* Success start rule */
+  --ds-key-bg: var(--ds-color-neutral-800); /* Key message ground */
+  --ds-key-fg: var(--ds-color-white-50); /* Key message title */
+  --ds-key-rule: var(--ds-color-neutral-100); /* Key message start rule */
+  --ds-note-solid: var(--ds-color-blue-700); /* Solid note ground */
+  --ds-important-solid: var(--ds-color-amber-700); /* Solid important ground */
+  --ds-warning-solid: var(--ds-color-red-700); /* Solid warning ground */
+  --ds-success-solid: var(--ds-color-green-700); /* Solid success ground */
+  --ds-shadow-sheet: 0 0 0 1px rgb(255 255 255 / .06), 0 18px 48px -12px rgb(0 0 0 / .65);
+  --ds-shadow-float: 0 0 0 1px rgb(255 255 255 / .08), 0 14px 36px -8px rgb(0 0 0 / .6);
+  --ds-rim: inset 0 0 0 1px rgb(255 255 255 / .06);
+  --ds-glass-blur: 16px;
+}
+/* Repeated here so they follow the dark block: solid glass for less transparency or no blur support. */
+@media (prefers-reduced-transparency: reduce) { [data-ds-theme="dark"] { --ds-glass: var(--ds-paper); --ds-glass-blur: 0px; } }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { [data-ds-theme="dark"] { --ds-glass: var(--ds-paper); } }
+@media (prefers-contrast: more) {
+  [data-ds-theme="dark"] { --ds-ink-muted: var(--ds-color-neutral-200); --ds-hairline: var(--ds-color-neutral-500); --ds-series-2: var(--ds-color-neutral-300); }
+}
+/* A dark page never reaches paper. */
+@media print {
+  [data-ds-theme="dark"] {
+    color-scheme: light;
+    --ds-ink: var(--ds-color-neutral-800); /* Body text */
+    --ds-ink-strong: var(--ds-color-neutral-900); /* Headings, figures, the one thing read first */
+    --ds-ink-muted: var(--ds-color-neutral-500); /* Captions, labels, metadata */
+    --ds-ink-inverse: var(--ds-color-white-50); /* Text on an inverse block */
+    --ds-canvas: var(--ds-color-white-300); /* Screen only: the desk a page or slide sits on */
+    --ds-paper: var(--ds-color-white-50); /* The page or slide ground */
+    --ds-plate: var(--ds-color-white-200); /* A tonal block on the paper: key facts, key message, zebra rows */
+    --ds-well: var(--ds-color-white-300); /* A recessed field: section-divider field, appendix wells */
+    --ds-inverse: var(--ds-color-neutral-900); /* An inverse block, used at most once per page */
+    --ds-glass: rgb(255 255 255 / .86); /* Screen only: viewer chrome floating over content */
+    --ds-scrim: rgb(14 15 18 / .45); /* Photo overlay under text, 30 to 60% black */
+    --ds-mark-plate: var(--ds-color-white-50); /* The white ground an organisation mark keeps in both themes */
+    --ds-hairline: var(--ds-color-neutral-100); /* Row rules, separators, tracks */
+    --ds-rule: var(--ds-color-neutral-200); /* Signing lines, registration ticks, stronger separators */
+    --ds-rule-strong: var(--ds-color-neutral-800); /* Table header and total rules, the accent line */
+    --ds-series-1: var(--ds-color-neutral-800); /* Series 1, meter fill, current milestone */
+    --ds-series-2: var(--ds-color-neutral-400); /* Series 2, ranges, the rest */
+    --ds-series-track: var(--ds-color-neutral-100); /* Meter and chart tracks */
+    --ds-marker: var(--ds-color-neutral-500); /* List bullets and numbers */
+    --ds-person: var(--ds-color-gold-700); /* A person's name beside their own words */
+    --ds-person-mark: var(--ds-color-gold-500); /* The bar beside a person's words */
+    --ds-person-tint: var(--ds-color-gold-50); /* Ground under a person's words (a neutral plate in dark) */
+    --ds-focus: var(--ds-color-amber-700); /* Keyboard focus ring, 2px, 2px offset */
+    --ds-note-bg: var(--ds-color-blue-50); /* Note ground */
+    --ds-note-fg: var(--ds-color-blue-700); /* Note title and icon */
+    --ds-note-rule: var(--ds-color-blue-600); /* Note start rule */
+    --ds-important-bg: var(--ds-color-amber-50); /* Important ground */
+    --ds-important-fg: var(--ds-color-amber-700); /* Important title and icon */
+    --ds-important-rule: var(--ds-color-amber-600); /* Important start rule */
+    --ds-warning-bg: var(--ds-color-red-50); /* Warning ground */
+    --ds-warning-fg: var(--ds-color-red-700); /* Warning title and icon */
+    --ds-warning-rule: var(--ds-color-red-600); /* Warning start rule */
+    --ds-success-bg: var(--ds-color-green-50); /* Success ground */
+    --ds-success-fg: var(--ds-color-green-700); /* Success title and icon */
+    --ds-success-rule: var(--ds-color-green-600); /* Success start rule */
+    --ds-key-bg: var(--ds-color-white-200); /* Key message ground */
+    --ds-key-fg: var(--ds-color-neutral-900); /* Key message title */
+    --ds-key-rule: var(--ds-color-neutral-800); /* Key message start rule */
+    --ds-note-solid: var(--ds-color-blue-700); /* Solid note ground */
+    --ds-important-solid: var(--ds-color-amber-700); /* Solid important ground */
+    --ds-warning-solid: var(--ds-color-red-700); /* Solid warning ground */
+    --ds-success-solid: var(--ds-color-green-700); /* Solid success ground */
+    --ds-shadow-sheet: 0 1px 2px rgb(14 15 18 / .06), 0 12px 32px -8px rgb(14 15 18 / .16);
+    --ds-shadow-float: 0 1px 2px rgb(14 15 18 / .06), 0 10px 28px -6px rgb(14 15 18 / .20);
+    --ds-rim: inset 0 0 0 1px rgb(14 15 18 / .06);
+    --ds-glass-blur: 16px;
+  }
+}
