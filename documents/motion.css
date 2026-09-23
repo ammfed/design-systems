@@ -1,0 +1,26 @@
+/* Documents, motion: keyframes and attribute hooks. Load after tokens.css (the durations, easings and the reduced path live there).
+   Hooks: data-ds-rise, data-ds-draw, data-ds-grow="x|y", data-ds-trace, data-ds-enter (slide change; "prev" reverses), data-ds-fade.
+   Stagger with style="--ds-i: 2". Everything runs once; nothing loops. */
+@keyframes ds-rise { from { opacity: 0; transform: translateY(var(--ds-distance)); } to { opacity: 1; transform: none; } }
+@keyframes ds-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ds-draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes ds-grow-y { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes ds-grow-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes ds-trace { from { stroke-dashoffset: var(--ds-trace-len, 2000); } to { stroke-dashoffset: 0; } }
+@keyframes ds-drift { from { opacity: 0; transform: translateX(calc(var(--ds-distance) * var(--ds-dir) * var(--ds-way, 1))); } to { opacity: 1; transform: none; } }
+[data-ds-rise] { animation: ds-rise var(--ds-dur-reveal) var(--ds-ease-enter) both; animation-delay: calc(var(--ds-stagger) * var(--ds-i, 0)); }
+[data-ds-draw] { transform-origin: 0 50%; animation: ds-draw var(--ds-dur-draw) var(--ds-ease-enter) both; }
+[dir="rtl"] [data-ds-draw], [dir="rtl"][data-ds-draw] { transform-origin: 100% 50%; }
+[data-ds-grow="y"] { transform-box: fill-box; transform-origin: 50% 100%; animation: ds-grow-y var(--ds-dur-reveal) var(--ds-ease-enter) both; animation-delay: calc(var(--ds-stagger) * var(--ds-i, 0)); }
+[data-ds-grow="x"] { transform-box: fill-box; transform-origin: 0 50%; animation: ds-grow-x var(--ds-dur-reveal) var(--ds-ease-enter) both; animation-delay: calc(var(--ds-stagger) * var(--ds-i, 0)); }
+[dir="rtl"] [data-ds-grow="x"], [dir="rtl"][data-ds-grow="x"] { transform-origin: 100% 50%; }
+[data-ds-trace] path, [data-ds-trace] polygon, [data-ds-trace] circle[fill="none"], [data-ds-trace] line { stroke-dasharray: var(--ds-trace-len, 2000); animation: ds-trace var(--ds-dur-trace) var(--ds-ease-enter) both; }
+[data-ds-enter] { animation: ds-drift var(--ds-dur-steady) var(--ds-ease-enter) both; }
+[data-ds-enter="prev"] { --ds-way: -1; }
+[data-ds-fade], [data-ds-fade] * { transition: background-color var(--ds-dur-swift) var(--ds-ease-standard), color var(--ds-dur-swift) var(--ds-ease-standard), border-color var(--ds-dur-swift) var(--ds-ease-standard), fill var(--ds-dur-swift) var(--ds-ease-standard), stroke var(--ds-dur-swift) var(--ds-ease-standard); }
+@media (prefers-reduced-motion: reduce) {
+  [data-ds-rise], [data-ds-draw], [data-ds-grow], [data-ds-trace], [data-ds-trace] * { animation: none; stroke-dasharray: none; }
+  [data-ds-enter] { animation-name: ds-fade; }
+}
+[data-ds-motion="off"] [data-ds-rise], [data-ds-motion="off"] [data-ds-draw], [data-ds-motion="off"] [data-ds-grow], [data-ds-motion="off"] [data-ds-trace] *, [data-ds-motion="off"] [data-ds-enter], [data-ds-motion="off"][data-ds-enter] { animation: none !important; stroke-dasharray: none !important; }
+@media print { *, *::before, *::after { animation: none !important; transition: none !important; } [data-ds-trace] * { stroke-dasharray: none !important; } }

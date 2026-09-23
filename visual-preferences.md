@@ -5,7 +5,7 @@ The standing principles all three design systems and the decision-card format in
 ## Visual taste
 
 - **Purposeful minimalism.** Modern, restrained, best-readability, direct and practical — never a templated or generic look. A visual earns its place only when it's the clearest way to show the point; if prose says it just as well, skip the visual.
-- **One accent, used sparingly.** A single accent colour competes for attention on any one page — a title rule, or a table header, or a pull quote, never all three at once. Everything else is neutral.
+- **One accent, reserved for a person.** A single accent colour, and it marks a person: the bar beside their quoted words, their name, a signature. It never colours titles, rules, table headers, bullets, chart series or any other structure. Everything else is neutral.
 - **Real examples over drawn mock-ups.** Where possible, show a real screenshot or a worked example rather than an invented illustration.
 - **No decorative filler.** No taglines, no stock-photo look, no gradient-and-glow treatments, no unnecessary emphasis. If it doesn't carry information, it doesn't belong on the page.
 
