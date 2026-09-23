@@ -86,7 +86,7 @@ code { font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace; f
 .btn.ghost { --bg: transparent; --fg: var(--ds-ink); box-shadow: none; }
 .btn.ghost:hover { --bg: var(--ds-surface-hover); }
 .btn.icon { padding: 0; width: var(--ds-control-height); }
-.btn[aria-pressed="true"] { --bg: var(--ds-user-soft); --fg: var(--ds-ink-strong); --bd: var(--ds-user-line); }
+.btn[aria-pressed="true"], .btn[aria-pressed="true"]:hover { --bg: var(--ds-user-soft); --fg: var(--ds-ink-strong); --bd: var(--ds-user-line); }
 .btn .dot { position: absolute; inset-block-start: 9px; inset-inline-end: 9px; width: 8px; height: 8px; border-radius: 50%; background: var(--ds-error-solid); box-shadow: 0 0 0 2px var(--ds-surface-base); }
 .btn.icon { position: relative; }
 kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20px; padding: 0 6px; border: 1px solid var(--ds-line-strong); border-radius: var(--ds-radius-xs); color: var(--ds-ink-muted); }
@@ -238,7 +238,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
 .dialog .row { justify-content: flex-end; margin-top: 16px; }
 .veil-scroll { position: relative; width: 100%; height: 200px; overflow: auto; border-radius: var(--ds-radius-control); background: var(--ds-surface-base); border: 1px solid var(--ds-line); }
 .veil-bar { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; padding: 0 16px; border-bottom: 1px solid var(--ds-line); font-weight: 600; color: var(--ds-ink-strong); }
-.veil-scroll .content { display: grid; gap: 10px; padding: 16px; margin-top: -40px; }
+.veil-scroll .content { display: grid; gap: 10px; padding: 16px; }
 .veil-scroll .content p { display: flex; justify-content: space-between; gap: 12px; padding: 10px 12px; border-radius: var(--ds-radius-sm); background: var(--ds-surface-sunken); }
 .veil-scroll .content p:nth-child(3n+1) { background: var(--ds-machine-soft); color: var(--ds-machine-ink); }
 .veil-scroll .content p:nth-child(3n+2) { background: var(--ds-user-soft); color: var(--ds-user-ink); }
@@ -603,7 +603,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
   ];
   var graphic = [
     ['line-strong', 'surface-base', 'Control edge'], ['line-strong', 'surface-sunken', 'Control edge in a well'], ['focus', 'surface-base', 'Focus ring'], ['focus', 'surface-sunken', 'Focus in a well'],
-    ['focus', 'user-soft', 'Focus on a chosen item'], ['user', 'surface-base', 'Checked control'], ['user-line', 'user-soft', 'Selection edge'], ['machine', 'surface-base', 'Progress'],
+    ['focus', 'user-soft', 'Focus on a chosen item'], ['focus-inverse', 'surface-inverse', 'Focus on the inverse surface'], ['user', 'surface-base', 'Checked control'], ['user-line', 'user-soft', 'Selection edge'], ['machine', 'surface-base', 'Progress'],
     ['data-1', 'surface-base', 'Series 1'], ['data-2', 'surface-base', 'Series 2'], ['data-3', 'surface-base', 'Series 3'], ['data-4', 'surface-base', 'Series 4'],
     ['data-user', 'surface-base', 'Your own value'], ['data-pos', 'surface-base', 'Positive delta'], ['data-neg', 'surface-base', 'Negative delta']
   ];

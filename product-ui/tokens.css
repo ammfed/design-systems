@@ -84,8 +84,9 @@
   --ds-error-on-inverse: #FAAAA7; /* an error word on the inverse surface */
   --ds-error-solid-hover: #B52520; --ds-error-solid-pressed: #95231F; --ds-error-soft-hover: #FDE4E3;
 
-  /* Focus: one colour for every control, distinct from the user's fill */
+  /* Focus: one ring, matched to the surface it sits on, and distinct from the user's fill */
   --ds-focus: #B2550B;
+  --ds-focus-inverse: #F29F0E;    /* on the inverse surface: the other theme's ring step, so it still clears 3:1 */
   --ds-focus-width: 2px;
   --ds-focus-offset: 2px;          /* 0 on soft controls, -2px (inset) in tables, menus and segments */
 

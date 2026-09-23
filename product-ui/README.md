@@ -37,7 +37,7 @@ Every attribute is optional and works on any region as well as `<html>`: light, 
 
 **Layout.** Content lives in a per-section container, never one page-wide wrapper. Mobile-first: under roughly 1024px the sidebar collapses to its rail and the website navigation collapses to a menu, and panels restack on their own container width.
 
-**Focus, targets, RTL.** One 2px focus ring, distinct from the accent, on `:focus-visible`. 40px targets in every density. Layout uses logical properties only, and every horizontal travel in motion mirrors in RTL through `--ds-dir`.
+**Focus, targets, RTL.** One 2px focus ring, distinct from the accent, on `:focus-visible`, matched to the surface it sits on (the inverse surface takes the other theme's step so the ring still clears 3:1). 40px targets in every density. Layout uses logical properties only, and every horizontal travel in motion mirrors in RTL through `--ds-dir`.
 
 **Backgrounds and imagery.** Flat surfaces. No textures or gradients, except the thin accent bar in the public website header and footer, the machine's working bar, a progress fill and an image overlay. A subtle line pattern may sit behind the public website hero only, under a protection fade. Real, naturally lit photography with a dark overlay under any text; photographs sit back slightly in dark. A small set of fixed aspect ratios, and geometric, solid-colour illustration only, never a photographic collage.
 

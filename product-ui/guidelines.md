@@ -18,7 +18,7 @@ Components read **roles**, never palette steps. A role says what a colour means;
 | Ink action | `--ds-ink-action`, `-hover`, `-on` | Every action that is not the user's one primary step |
 | Machine | `--ds-machine`, `-ink`, `-soft`, `-line`, `-bar` | Content a model produced, progress, activity, data series 1 |
 | Status | `--ds-{success,info,warning,error}-{fg,soft,solid,on,line}` | Status and feedback only, never decoration |
-| Focus | `--ds-focus`, `--ds-focus-width`, `--ds-focus-offset` | One ring colour for every control |
+| Focus | `--ds-focus`, `--ds-focus-inverse`, `--ds-focus-width`, `--ds-focus-offset` | One ring, matched to the surface it sits on |
 | Data | `--ds-data-1` to `-4`, `-user`, `-pos`, `-neg`, `-grid`, `-track` | Charts |
 
 ### The user and the machine
@@ -76,6 +76,7 @@ Controls, focus and charts (needs 3:1)
 | Focus ring | `focus` on `surface-base` | 5.00 | 7.13 |
 | Focus ring in a well | `focus` on `surface-sunken` | 4.67 | 8.89 |
 | Focus ring on a chosen item | `focus` on `user-soft` | 4.66 | 7.21 |
+| Focus ring on the inverse surface | `focus-inverse` on `surface-inverse` | 7.83 | 3.89 |
 | Checked control, selection bar | `user` on `surface-base` | 4.50 | 6.48 |
 | Selection edge | `user-line` on `user-soft` | 4.19 | 6.56 |
 | Progress, activity | `machine` on `surface-base` | 5.20 | 8.05 |
@@ -203,7 +204,8 @@ The six transitions in `motion.css`:
 
 ## Focus and targets
 
-- One focus ring everywhere: 2px solid `--ds-focus`, offset 2px, on `:focus-visible` only. Soft controls use offset 0; rows, menu items and segments draw it inset (-2px) so it is never clipped.
+- One ring, matched to the surface it sits on: 2px solid `--ds-focus`, offset 2px, on `:focus-visible` only. Soft controls use offset 0; rows, menu items and segments draw it inset (-2px) so it is never clipped.
+- On the inverse surface, `.ds-material-float-inverse` re-points the ring to `--ds-focus-inverse`, the other theme's step, so a tooltip and the bulk-action bar get a ring that clears 3:1 (7.83 light, 3.89 dark) without a rule of their own. It is the same ring, one step along the same hue, never a second colour.
 - The ring colour is distinct from the user's accent, so focus is never confused with selection, and passes 3:1 on every surface it can land on (table above).
 - Sticky chrome never covers the focused element: reserve `scroll-padding-top` for the app bar and a sticky table head.
 - **Targets:** 40px for every stand-alone control (`--ds-target-min`) in every density; 24px only for an inline icon button inside a chip or badge, with 8px clear space. Pagination pages and dismiss buttons are 40px.
