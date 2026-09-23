@@ -1,0 +1,29 @@
+/* Agent Chat UI motion, 2.0.0. Optional: the four transitions that earn their place, and the two status loops, as classes a chat framework's slots accept.
+   Reads only the motion tokens in tokens.css, so a reduced-motion setting reaches every one of them.
+     .ds-arrive   a new turn rises by --ds-motion-rise and fades in, once. Never on history loaded from before.
+     .ds-draw     the machine rule beside a new assistant turn draws from the top as the reply starts.
+     .ds-pop      a popover grows from its anchor (the inline-start foot) and fades in.
+     .ds-fade     a tooltip fades in.
+     .ds-dot      one of the three activity dots; stagger them with animation-delay 0, 0.16s, 0.32s.
+     .ds-spin     the spinner.
+   Loops are status only. Nothing decorative loops, and the streaming caret stays still.
+   Reduced motion: nothing travels or scales, loops stop, and colour or opacity keep a 120ms fade so a change is never a hard flash. */
+@keyframes ds-arrive { from { opacity: 0; transform: translateY(var(--ds-motion-rise)); } to { opacity: 1; transform: none; } }
+@keyframes ds-draw { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes ds-pop { from { opacity: 0; transform: translateY(calc(var(--ds-motion-rise) / 2)) scale(var(--ds-motion-pop-scale)); } to { opacity: 1; transform: none; } }
+@keyframes ds-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ds-dot { 0%, 80%, 100% { transform: scale(.5); opacity: .5; } 40% { transform: scale(1); opacity: 1; } }
+@keyframes ds-spin { to { transform: rotate(360deg); } }
+
+.ds-arrive { animation: ds-arrive var(--ds-duration-content) var(--ds-ease) both; }
+.ds-draw { transform-origin: 50% 0; animation: ds-draw var(--ds-duration-content) var(--ds-ease) both; }
+.ds-pop { transform-origin: 0 100%; animation: ds-pop var(--ds-duration-content) var(--ds-ease) both; }
+[dir="rtl"] .ds-pop, .ds-pop[dir="rtl"] { transform-origin: 100% 100%; }
+.ds-fade { animation: ds-fade var(--ds-duration-quick) var(--ds-ease) both; }
+.ds-dot { animation: ds-dot var(--ds-activity-cycle) ease-in-out infinite both; }
+.ds-spin { animation: ds-spin var(--ds-spinner-cycle) linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-draw, .ds-dot, .ds-spin { animation: none; }
+  .ds-dot { opacity: .75; transform: none; }
+}

@@ -4,6 +4,7 @@
 
 - Documents: 42 light and dark colour roles, with the accent kept for people. Adds an opt-in dark theme (`tokens-dark.css`), eleven type roles sized per medium (fluid on screen), density modes, depth and materials, and motion tokens with a reduced path (`motion.css`). Every role pair passes WCAG 2.2 AA in both themes, and a `preview.html` that links those files shows it all.
 - Product UI: colour by role (the accent reserved for the user, a separate machine colour for model output), a complete opt-in dark theme with every pair measured at WCAG 2.2 AA, fluid type roles, density modes, depth and materials, named motion with a reduced-motion path, RTL motion mirroring, filled-in tables, dashboards, navigation and forms, and a preview page that fetches nothing.
+- Agent Chat UI: role tokens, an opt-in dark theme, a type scale with named roles, elevation and a glass material, motion tokens and transitions, density modes, a measured WCAG 2.2 AA contrast table for both themes, five new components including a required surface footer, and a preview page that loads only the system's own stylesheets. 1.x token names stay as aliases.
 
 ## 1.1.0 — 2026-09-17
 
