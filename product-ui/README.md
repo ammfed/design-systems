@@ -29,9 +29,9 @@ Every attribute is optional and works on any region as well as `<html>`: light, 
 
 **Density.** Compact, comfortable and spacious modes change control height, row height and padding, never text size, and never go under the 40px target.
 
-**Depth and materials.** Flat by default, with 1px lines between canvas, wells and cards. Only layers that sit over others get depth: raised, float and overlay, each a two-layer shadow, with a lit rim in dark. Translucency is kept to sticky chrome (a 90% veil with blur), with a solid fallback under reduced transparency and forced colours.
+**Depth and materials.** Flat by default, with 1px lines between canvas, wells and cards. Only layers that sit over others get depth: raised, float and overlay, each a two-layer shadow, with a lit rim in dark. Float comes in a base and an inverse surface, so a tooltip and the bulk-action bar take the same shadow without hand-rolling one. Translucency is kept to sticky chrome (a 90% veil with blur), with a solid fallback under reduced transparency and forced colours.
 
-**Motion.** Six named transitions: feedback, float, panel, glide, settle and sweep. Durations are named by what moves and easings by direction. Nothing animates on page load in product screens. Reduced motion (the OS setting or `data-ds-motion="reduce"`) removes every travel and loop and keeps short fades and colour feedback.
+**Motion.** Six named transitions: feedback, float, panel, glide, settle and sweep. Durations are named by what moves and easings by direction. Nothing animates on page load in product screens. Reduced motion (the OS setting or `data-ds-motion="reduce"`) removes every travel, stops the sweep, and keeps short fades and colour feedback.
 
 **States.** Hover moves a control one step inside its own role, press goes one step further in colour alone, and a disabled control drops to `--ds-ink-disabled`, keeps its surface and takes no interaction. Nothing scales or bounces.
 
@@ -65,8 +65,8 @@ Actions, forms (including a date picker and calendar), navigation (including an 
 ```
 tokens.css        palette, colour roles, type roles, spacing, radii, targets, depth, motion, density, reduced motion
 tokens-dark.css   the opt-in dark theme: re-points the colour roles and depth
-motion.css        the six named transitions and the reduced-motion path for loops
-materials.css     the raised, float, overlay and veil materials, with fallbacks
+motion.css        the six named transitions and the reduced-motion path for the sweep
+materials.css     the raised, float (base and inverse), overlay and veil materials, with fallbacks
 guidelines.md     the rules in full: roles, the contrast table, dark theme, type, density, depth, motion, states, focus, RTL, layout, imagery, components
 preview.html      one page showing every token system and the key components, light and dark side by side; it links the four stylesheets beside it and fetches nothing
 CHANGELOG.md      dated changes to this system, and the 1.x to 2.0 migration

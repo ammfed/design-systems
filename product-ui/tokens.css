@@ -59,8 +59,7 @@
   --ds-user-hover: #7C5E24;       /* one step darker, so text on it gets stronger */
   --ds-user-pressed: #6C4527;
   --ds-user-on: #FFFFFF;          /* text and icons on a user fill */
-  --ds-user-soft: #F9F7ED;        /* a chosen row, chip, segment or day */
-  --ds-user-soft-hover: #F2ECCF;
+  --ds-user-soft: #F9F7ED;        /* a chosen row, chip, segment or day; a choice does not change under the pointer */
   --ds-user-ink: #7C5E24;         /* accent text on soft or base */
   --ds-user-line: #92722A;        /* the selection edge */
 
@@ -103,8 +102,9 @@
   --ds-data-track: #F2F2F2;
 
   /* ===== type ===== */
-  --ds-font-body: "Roboto", sans-serif;
-  --ds-font-heading: "Inter", sans-serif;
+  /* Two families per direction. The direction block at the end of this file points the live role at the matching pair. */
+  --ds-font-body-ltr: "Roboto", sans-serif;
+  --ds-font-heading-ltr: "Inter", sans-serif;
   --ds-font-body-rtl: "Noto Kufi Arabic", sans-serif;
   --ds-font-heading-rtl: "Alexandria", sans-serif;
 
@@ -124,17 +124,18 @@
   --ds-size-body-sm: 14px;
 
   /* Roles. Fluid roles move between two steps from a 360px to a 1280px viewport; the rem term keeps browser zoom working.
-     Nothing is under 16px except meta (14px), which is only for timestamps, table footers, chart ticks and helper text. */
-  --ds-type-display-size: clamp(3rem, 2.3152rem + 3.0435vw, 4.75rem);   --ds-type-display-leading: 1.05; --ds-type-display-weight: 200; --ds-type-display-tracking: -0.02em;
-  --ds-type-headline-size: clamp(2rem, 1.6087rem + 1.7391vw, 3rem);      --ds-type-headline-leading: 1.15; --ds-type-headline-weight: 800; --ds-type-headline-tracking: -0.015em;
-  --ds-type-title-1-size: clamp(1.625rem, 1.4783rem + 0.6522vw, 2rem);   --ds-type-title-1-leading: 1.2; --ds-type-title-1-weight: 700; --ds-type-title-1-tracking: -0.01em;
-  --ds-type-title-2-size: clamp(1.25rem, 1.1033rem + 0.6522vw, 1.625rem); --ds-type-title-2-leading: 1.25; --ds-type-title-2-weight: 700; --ds-type-title-2-tracking: -0.005em;
+     Nothing is under 16px except meta (14px), which is only for timestamps, table footers, chart ticks and helper text.
+     Leading and tracking follow the script, so every role that changes with direction takes them from the direction block below. */
+  --ds-type-display-size: clamp(3rem, 2.3152rem + 3.0435vw, 4.75rem);   --ds-type-display-weight: 200;
+  --ds-type-headline-size: clamp(2rem, 1.6087rem + 1.7391vw, 3rem);      --ds-type-headline-weight: 800;
+  --ds-type-title-1-size: clamp(1.625rem, 1.4783rem + 0.6522vw, 2rem);   --ds-type-title-1-weight: 700;
+  --ds-type-title-2-size: clamp(1.25rem, 1.1033rem + 0.6522vw, 1.625rem); --ds-type-title-2-weight: 700;
   --ds-type-title-3-size: 1.25rem;  --ds-type-title-3-leading: 1.75rem; --ds-type-title-3-weight: 600; --ds-type-title-3-tracking: 0;
-  --ds-type-figure-size: clamp(2rem, 1.8043rem + 0.8696vw, 2.5rem);     --ds-type-figure-leading: 1.1; --ds-type-figure-weight: 700; --ds-type-figure-tracking: -0.02em;
-  --ds-type-lead-size: clamp(1.125rem, 1.0761rem + 0.2174vw, 1.25rem);  --ds-type-lead-leading: 1.6; --ds-type-lead-weight: 400;
-  --ds-type-body-size: 1rem;    --ds-type-body-leading: 1.5rem;  --ds-type-body-weight: 400; --ds-type-body-paragraph-leading: 1.5;
-  --ds-type-label-size: 1rem;   --ds-type-label-leading: 1.5rem; --ds-type-label-weight: 500;
-  --ds-type-meta-size: 0.875rem; --ds-type-meta-leading: 1.25rem; --ds-type-meta-weight: 400;
+  --ds-type-figure-size: clamp(2rem, 1.8043rem + 0.8696vw, 2.5rem);     --ds-type-figure-leading: 1.1; --ds-type-figure-weight: 700;
+  --ds-type-lead-size: clamp(1.125rem, 1.0761rem + 0.2174vw, 1.25rem);  --ds-type-lead-weight: 400;
+  --ds-type-body-size: 1rem;    --ds-type-body-weight: 400;
+  --ds-type-label-size: 1rem;   --ds-type-label-weight: 500;
+  --ds-type-meta-size: 0.875rem; --ds-type-meta-weight: 400;
   --ds-type-numeric: tabular-nums lining-nums;
   --ds-measure: 68ch;
 
@@ -181,7 +182,6 @@
 
   /* ===== motion ===== */
   /* Durations are named by what moves, easings by direction. See motion.css for the transitions that use them. */
-  --ds-duration-instant: 0ms;
   --ds-duration-feedback: 120ms;  /* hover and press recolour */
   --ds-duration-state: 200ms;     /* toggles, checks, the glide of a selection marker */
   --ds-duration-float-in: 240ms;
@@ -190,7 +190,6 @@
   --ds-duration-panel-out: 240ms;
   --ds-duration-data: 640ms;      /* a changed value settles */
   --ds-duration-reveal: 480ms;    /* public website hero only */
-  --ds-duration-spin: 1s;
   --ds-duration-sweep: 2.4s;
   --ds-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
   --ds-ease-enter: cubic-bezier(0.22, 1, 0.36, 1);
@@ -202,8 +201,17 @@
   --ds-stagger: 40ms;             /* at most 6 steps, website hero only */
 }
 
-/* 1 in LTR, -1 in RTL. Multiply every horizontal travel by it. */
-:root, [dir="ltr"] { --ds-dir: 1; }
+/* ===== direction ===== */
+/* Both blocks declare the same set, so a region with its own dir inside a page of the other direction re-points all of it,
+   not some of it. --ds-dir is 1 in LTR and -1 in RTL: multiply every horizontal travel by it. */
+:root, [dir="ltr"] {
+  --ds-dir: 1;
+  --ds-font-heading: var(--ds-font-heading-ltr);
+  --ds-font-body: var(--ds-font-body-ltr);
+  --ds-type-display-tracking: -0.02em; --ds-type-headline-tracking: -0.015em; --ds-type-title-1-tracking: -0.01em; --ds-type-title-2-tracking: -0.005em; --ds-type-figure-tracking: -0.02em;
+  --ds-type-display-leading: 1.05; --ds-type-headline-leading: 1.15; --ds-type-title-1-leading: 1.2; --ds-type-title-2-leading: 1.25;
+  --ds-type-body-leading: 1.5rem; --ds-type-body-paragraph-leading: 1.5; --ds-type-label-leading: 1.5rem; --ds-type-lead-leading: 1.6; --ds-type-meta-leading: 1.25rem;
+}
 [dir="rtl"] {
   --ds-dir: -1;
   --ds-font-heading: var(--ds-font-heading-rtl);

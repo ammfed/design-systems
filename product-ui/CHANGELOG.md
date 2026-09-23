@@ -10,7 +10,7 @@ A new version of the whole system: colour by role, a complete opt-in dark theme,
 - **Contrast table.** Every text, control, focus and chart pair in both themes, with its ratio, in `guidelines.md`. Target moves from WCAG 2.1 AA to 2.2 AA. The focus ring moves one step darker so it passes 3:1 on light wells.
 - **Type roles.** Ten named roles on a fluid scale, built from the existing steps; tabular Latin figures; RTL tracking and leading. The 12px caption size is removed: nothing is under 14px, and only helper text, timestamps, chart ticks and table footers use 14px.
 - **Density.** Compact, comfortable and spacious modes through `data-ds-density`, never under the 40px target.
-- **Depth and materials.** Four levels (flat, raised, float, overlay) with two-layer shadows, a lit rim in dark, and a 90% veil for sticky chrome with solid fallbacks. New `materials.css`.
+- **Depth and materials.** Four levels (flat, raised, float, overlay) with two-layer shadows, a lit rim in dark, and a 90% veil for sticky chrome with solid fallbacks. Float carries a second surface, `.ds-material-float-inverse`, for the tooltip and the bulk-action bar. New `materials.css`.
 - **Motion.** Named durations and easings, six transitions in the new `motion.css`, and a full reduced-motion path through the OS setting or `data-ds-motion="reduce"`. Horizontal travel mirrors in RTL. No page-load animation in product screens.
 - **Components** (inventory and rules in `guidelines.md`). New: app bar, display menu, command menu, segmented control, icon button, chip, filter bar, bulk-action bar, panel, date picker and calendar, chart legend, insight. Rebuilt: table (sticky head, pinned column, row header, mixed select-all, row and bulk actions, loading rows, density), KPI tile (direction, target, narrow layout), charts (round ticks, the user's own value against their own history or target, a summary sentence, a progress ring in place of a donut), dropdown and dialogs (keyboard and focus trapping), steps, combobox, form errors (16px with an icon).
 - **States, layout and imagery.** The 1.x rules for interaction states, disabled controls, per-section containers with the 1024px navigation breakpoint, and imagery are carried into `guidelines.md`, expressed in the 2.0 roles and tokens.
@@ -28,7 +28,8 @@ A new version of the whole system: colour by role, a complete opt-in dark theme,
 | `--ds-ai-chip-bg`, `--ds-ai-chip-fg` | `--ds-machine-soft`, `--ds-machine-ink` |
 | `--ds-dark-*` | Removed. The same role names take dark values under `data-ds-theme="dark"` |
 | `--ds-shadow-sm`, `-xl`, `-modal` | `--ds-elevation-raised`, `-float`, `-overlay` |
-| `--ds-motion-standard` (0.3s), `--ds-motion-toggle` (200ms), `--ds-motion-spinner` | `--ds-duration-*` by what moves; `--ds-duration-state` (200ms); `--ds-duration-spin` |
+| `--ds-motion-standard` (0.3s), `--ds-motion-toggle` (200ms) | `--ds-duration-*` by what moves; `--ds-duration-state` (200ms) |
+| `--ds-motion-spinner` | Removed. The system ships one loop, the sweep (`--ds-duration-sweep`); a product's own spinner or skeleton names its own duration and stops it under reduced motion |
 | `--ds-size-caption` (12px) | Removed; use `--ds-type-meta-size` (14px) |
 | `--ds-size-*`, `--ds-weight-*`, `--ds-font-*`, spacing, grid and radius tokens | Unchanged; prefer the `--ds-type-*` and `--ds-radius-{control,panel,overlay,chip}` roles |
 

@@ -14,7 +14,7 @@ Components read **roles**, never palette steps. A role says what a colour means;
 | Surface states | `--ds-surface-hover`, `-pressed`, `-inverse`, `-veil`, `--ds-scrim` | Row and item states; tooltips and the bulk-action bar; sticky chrome; behind modals |
 | Ink | `--ds-ink`, `-strong`, `-muted`, `-inverse`, `-disabled` | Text and icons. Disabled ink only ever sits with a disabled control |
 | Line | `--ds-line`, `-emphasis`, `-strong`, `-float` | Hairlines (decorative); connectors that must be seen; control edges (3:1); float edges |
-| User | `--ds-user`, `-hover`, `-pressed`, `-on`, `-soft`, `-soft-hover`, `-ink`, `-line` | The user's one primary action, their choices, where they are |
+| User | `--ds-user`, `-hover`, `-pressed`, `-on`, `-soft`, `-ink`, `-line` | The user's one primary action, their choices, where they are |
 | Ink action | `--ds-ink-action`, `-hover`, `-on` | Every action that is not the user's one primary step |
 | Machine | `--ds-machine`, `-ink`, `-soft`, `-line`, `-bar` | Content a model produced, progress, activity, data series 1 |
 | Status | `--ds-{success,info,warning,error}-{fg,soft,solid,on,line}` | Status and feedback only, never decoration |
@@ -143,6 +143,8 @@ Three modes, set with `data-ds-density` on `<html>` or on any region; comfortabl
 
 Compact is for long tables and data-dense views, comfortable for product screens, spacious for public forms, touch and kiosks. The user chooses it from the display menu, as icons.
 
+A control that holds other controls still measures `--ds-control-height` overall: the segmented control gives up its own padding to fit, down to zero in compact, and draws its edge inset so the edge costs no height. The buttons inside it clear the 40px target in every density.
+
 ## Depth and materials
 
 Flat by default: canvas, sunken and base are separated by 1px lines, not shadows. Depth is earned only by layers that sit over others.
@@ -151,10 +153,11 @@ Flat by default: canvas, sunken and base are separated by 1px lines, not shadows
 |---|---|---|---|
 | Flat | none | none | The page, wells, cards and panels at rest |
 | Raised | `.ds-material-raised` | `--ds-elevation-raised` | A hovered interactive card, a sticky table head |
-| Float | `.ds-material-float` | `--ds-elevation-float` | Menus, popovers, tooltips, toasts, pickers, the command menu, the bulk-action bar |
+| Float | `.ds-material-float`, `.ds-material-float-inverse` | `--ds-elevation-float` | Menus, popovers, toasts, pickers, the command menu; the inverse class for a tooltip and the bulk-action bar |
 | Overlay | `.ds-material-overlay` | `--ds-elevation-overlay` | Modal and drawer, over `--ds-scrim` |
 | Veil | `.ds-material-veil` | none | Sticky chrome (app bar, table head) over scrolling content |
 
+- **Float comes in two surfaces.** `.ds-material-float` for anything on the base surface; `.ds-material-float-inverse` for the two components that sit on `--ds-surface-inverse`, a tooltip and the bulk-action bar. It carries the inverse surface with `--ds-ink-inverse` on it (15.75:1 light, 13.12:1 dark) and the same float shadow, so neither component has to hand-roll one, and the inverse fill is its own edge against every page surface in both themes.
 - Shadows are two layers (a tight contact shadow and a soft ambient one) in the darkest neutral, never pure black in light and never tinted with the accent.
 - In dark, shadows deepen and every raised layer gets a lit top rim (`--ds-rim`) and a faint white tint, so depth still reads where a shadow barely shows.
 - Filled controls carry the same 1px lit rim in both themes.
@@ -187,15 +190,15 @@ The six transitions in `motion.css`:
 5. **Settle** (`.ds-settle`): a bar, ring or progress eases to its new value when data changes. The first paint is static.
 6. **Sweep** (`.ds-sweep`): a 2px machine bar while a model is producing content; `.is-done` stops it.
 
-**Reduced motion.** Under `prefers-reduced-motion: reduce`, or `data-ds-motion="reduce"` set by the product, the tokens zero every travel and settle; floats and panels become 120ms fades; loops (sweep, spinners, skeleton shimmer) stop. Colour feedback stays.
+**Reduced motion.** Under `prefers-reduced-motion: reduce`, or `data-ds-motion="reduce"` set by the product, the tokens zero every travel and settle; floats and panels become 120ms fades; the sweep, the one loop here, stops. Colour feedback stays. A product that adds a loop of its own, a spinner or a skeleton shimmer, stops it the same way.
 
 ## Interaction states
 
-- **Hover moves one step inside the same role.** A filled control takes its hover step (`--ds-user-hover`, `--ds-ink-action-hover`, `--ds-error-solid-hover`); a soft control takes `--ds-user-soft-hover` or `--ds-error-soft-hover`; a row, menu item or ghost button takes `--ds-surface-hover`. The fill darkens, so text on it gets stronger rather than weaker (`user-on` on `user-hover` is 6.03 light, 9.08 dark).
+- **Hover moves one step inside the same role.** A filled control takes its hover step (`--ds-user-hover`, `--ds-ink-action-hover`, `--ds-error-solid-hover`); a soft or ghost button, a row and a menu item all take `--ds-surface-hover`, and a soft danger button takes `--ds-error-soft-hover`. The fill darkens, so text on it gets stronger rather than weaker (`user-on` on `user-hover` is 6.03 light, 9.08 dark).
 - **Press is colour only,** one step further again (`--ds-user-pressed`, `--ds-surface-pressed`, `--ds-error-solid-pressed`), over `--ds-duration-feedback`. Nothing scales, lifts or bounces.
 - **Links are ink and underlined at rest.** Hover moves them to `--ds-ink-action-hover` and thickens the underline; the underline never appears or disappears on hover alone.
 - **Disabled:** text and icons drop to `--ds-ink-disabled`, the surface stays, the control takes no pointer or keyboard interaction, and `aria-disabled` carries it. This is the one ink outside the contrast table, because WCAG exempts inactive controls, which is also why a disabled control is never the only explanation: say what would enable it, or leave it enabled and explain on submit.
-- **Chosen is not hovered.** A selected row, chip or segment keeps `--ds-user-soft` and its `--ds-user-line` edge while the pointer is over it, so a choice and a pointer never read as the same state.
+- **Chosen is not hovered.** A selected row, chip or segment keeps `--ds-user-soft` and its `--ds-user-line` edge while the pointer is over it, so a choice and a pointer never read as the same state. That is why the accent soft step has no hover step at all: every surface it can land on is already a chosen one.
 - Every state is announced as well as coloured: `aria-pressed`, `aria-checked`, `aria-current` and `aria-expanded` carry what the colour shows.
 
 ## Focus and targets
@@ -209,7 +212,7 @@ The six transitions in `motion.css`:
 ## RTL and mirroring
 
 - Direction and language switch together at the document root; fonts, tracking and leading follow automatically.
-- A region with its own `dir` inside a page of the other direction needs `font-family: var(--ds-font-body)` on that region (for example `:where([dir]:not(html, bdi)) { font-family: var(--ds-font-body); }`): an inherited font-family keeps the outer value and does not pick up the swapped token.
+- A region with its own `dir` inside a page of the other direction re-points the whole set on itself, in either direction: the two families, every tracking and leading that changes with the script, and `--ds-dir`. It still needs `font-family: var(--ds-font-body)` on that region (for example `:where([dir]:not(html, bdi)) { font-family: var(--ds-font-body); }`): an inherited font-family keeps the outer value and does not pick up the swapped token.
 - Layout uses logical properties only (inline-start/end, block-start/end), never left and right.
 - Motion mirrors too: every horizontal travel (a toggle thumb, a progress fill, a drawer, the tab bar, a segment thumb, an indeterminate bar) multiplies by `--ds-dir` (1 in LTR, -1 in RTL).
 - Directional icons (arrows, chevrons, "next") flip; functional icons (search, user, bell, check) do not.

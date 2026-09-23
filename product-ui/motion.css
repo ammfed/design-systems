@@ -14,8 +14,7 @@
 @keyframes ds-float-in { from { opacity: 0; transform: translateY(var(--ds-float-from, calc(var(--ds-motion-rise) * -1))); } to { opacity: 1; transform: none; } }
 
 .ds-panel-enter { animation: ds-panel-in var(--ds-duration-panel-in) var(--ds-ease-enter) both; }
-.ds-panel-enter.from-start { --ds-panel-sign: -1; }
-@keyframes ds-panel-in { from { transform: translateX(calc(var(--ds-motion-slide) * var(--ds-dir) * var(--ds-panel-sign, 1))); opacity: 0.4; } to { transform: none; opacity: 1; } }
+@keyframes ds-panel-in { from { transform: translateX(calc(var(--ds-motion-slide) * var(--ds-dir))); opacity: 0.4; } to { transform: none; opacity: 1; } }
 
 .ds-modal-enter { animation: ds-modal-in var(--ds-duration-panel-in) var(--ds-ease-enter) both; }
 @keyframes ds-modal-in { from { opacity: 0; transform: translateY(var(--ds-motion-lift)); } to { opacity: 1; transform: none; } }
@@ -39,6 +38,7 @@
 /* Theme change: a short cross-fade when the product switches theme through document.startViewTransition. */
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: var(--ds-duration-state); animation-timing-function: var(--ds-ease-standard); }
 
-/* Loops stop under reduced motion; everything else is already zeroed by the tokens. */
-@media (prefers-reduced-motion: reduce) { .ds-sweep, .ds-spin, .ds-skeleton { animation: none !important; } }
-[data-ds-motion="reduce"] :is(.ds-sweep, .ds-spin, .ds-skeleton) { animation: none !important; }
+/* The sweep is the one loop here, and it stops under reduced motion; everything else is already zeroed by the tokens.
+   A product that builds its own loop stops it the same way. */
+@media (prefers-reduced-motion: reduce) { .ds-sweep { animation: none !important; } }
+[data-ds-motion="reduce"] .ds-sweep { animation: none !important; }

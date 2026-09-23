@@ -41,7 +41,7 @@ button { font: inherit; }
 .t-meta { font-size: var(--ds-type-meta-size); line-height: var(--ds-type-meta-leading); }
 
 /* ----- page chrome ----- */
-.top { position: sticky; top: 0; z-index: var(--ds-z-appbar); display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; min-height: var(--ds-appbar-height); padding: 8px 24px; border-bottom: 1px solid var(--ds-line); }
+.top { position: sticky; top: 0; z-index: var(--ds-z-appbar); display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; min-height: var(--ds-appbar-height); padding: 8px 24px; box-shadow: inset 0 -1px 0 0 var(--ds-line); }
 .top h1 { display: flex; align-items: baseline; gap: 12px; }
 .ver { font-family: var(--ds-font-body); font-size: var(--ds-type-meta-size); font-weight: 500; color: var(--ds-ink-muted); letter-spacing: 0; }
 .tools { display: flex; align-items: center; gap: 12px; margin-inline-start: auto; }
@@ -93,16 +93,16 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
 
 /* ----- app bar ----- */
 .appbar { display: flex; align-items: center; gap: 12px; min-height: var(--ds-appbar-height); padding: 0 12px; border: 1px solid var(--ds-line); border-radius: var(--ds-radius-panel); }
-.mark { display: grid; place-items: center; width: 40px; height: 40px; border-radius: var(--ds-radius-control); background: #FFFFFF; color: #1B1D21; box-shadow: inset 0 0 0 1px #E1E3E5; }
+.mark { display: grid; place-items: center; width: 40px; height: 40px; border-radius: var(--ds-radius-control); background: var(--ds-neutral-0); color: var(--ds-neutral-900); box-shadow: inset 0 0 0 1px var(--ds-neutral-100); }
 .appbar .name { font-family: var(--ds-font-heading); font-weight: 700; color: var(--ds-ink-strong); white-space: nowrap; }
 .search { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; min-height: var(--ds-target-min); padding: 0 8px 0 12px; border: 1px solid var(--ds-line-strong); border-radius: var(--ds-radius-control); background: var(--ds-surface-base); color: var(--ds-ink-muted); cursor: text; }
 .search span { flex: 1; text-align: start; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .avatar { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--ds-surface-sunken); color: var(--ds-ink-strong); font-weight: 600; box-shadow: 0 0 0 2px var(--ds-surface-base), 0 0 0 4px var(--ds-user); flex: none; margin-inline: 4px; }
 
 /* ----- segmented ----- */
-.seg { --pad: 4px; position: relative; display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr; min-width: max-content; padding: var(--pad); border: 1px solid var(--ds-line); border-radius: var(--ds-radius-control); background: var(--ds-surface-sunken); isolation: isolate; }
+.seg { --pad: min(4px, calc((var(--ds-control-height) - var(--ds-target-min)) / 2)); position: relative; display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr; min-width: max-content; height: var(--ds-control-height); padding: var(--pad); border-radius: var(--ds-radius-control); background: var(--ds-surface-sunken); box-shadow: inset 0 0 0 1px var(--ds-line); isolation: isolate; }
 .seg .thumb { position: absolute; z-index: -1; top: var(--pad); bottom: var(--pad); inset-inline-start: calc(var(--pad) + (100% - 2 * var(--pad)) / var(--n) * var(--k)); width: calc((100% - 2 * var(--pad)) / var(--n)); border-radius: calc(var(--ds-radius-control) - var(--pad)); background: var(--ds-user-soft); box-shadow: inset 0 0 0 1px var(--ds-user-line), var(--ds-elevation-raised); }
-.seg button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: var(--ds-target-min); min-height: max(var(--ds-target-min), calc(var(--ds-control-height) - 2 * var(--pad) - 2px)); padding: 0 14px; border: 0; border-radius: calc(var(--ds-radius-control) - var(--pad)); background: none; color: var(--ds-ink-muted); font-weight: 500; white-space: nowrap; cursor: pointer; }
+.seg button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: var(--ds-target-min); min-height: calc(var(--ds-control-height) - 2 * var(--pad)); padding: 0 14px; border: 0; border-radius: calc(var(--ds-radius-control) - var(--pad)); background: none; color: var(--ds-ink-muted); font-weight: 500; white-space: nowrap; cursor: pointer; }
 .seg.icons button { padding: 0 10px; }
 .seg button:hover { color: var(--ds-ink-strong); }
 .seg button[aria-checked="true"] { color: var(--ds-ink-strong); font-weight: 600; }
@@ -163,7 +163,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
 .tbl .c-act .btn { width: 40px; min-height: 40px; opacity: 0; }
 .tbl tr:hover .c-act .btn, .tbl tr:focus-within .c-act .btn { opacity: 1; }
 .tbl-wrap:focus-visible { outline-offset: 2px; }
-.bulk { display: flex; align-items: center; gap: 4px; margin-top: 12px; padding: 6px 6px 6px 16px; padding-inline: 16px 6px; border-radius: var(--ds-radius-control); background: var(--ds-surface-inverse); color: var(--ds-ink-inverse); box-shadow: var(--ds-elevation-float); }
+.bulk { display: flex; align-items: center; gap: 4px; margin-top: 12px; padding: 6px 6px 6px 16px; padding-inline: 16px 6px; border-radius: var(--ds-radius-control); }
 .bulk[hidden] { display: none; }
 .bulk .count { flex: 1; font-weight: 500; font-variant-numeric: var(--ds-type-numeric); }
 .bulk button { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; min-width: 40px; padding: 0 12px; border: 0; border-radius: calc(var(--ds-radius-control) - 2px); background: none; color: inherit; font-weight: 500; cursor: pointer; }
@@ -186,7 +186,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
 .chart { display: grid; grid-template-columns: auto 1fr; gap: 8px 10px; padding-top: 12px; }
 .ticks { position: relative; height: 160px; min-width: 3ch; font-size: var(--ds-type-meta-size); line-height: 1; color: var(--ds-ink-muted); font-variant-numeric: var(--ds-type-numeric); }
 .ticks span { position: absolute; inset-inline-end: 0; top: calc(var(--p) * 1%); transform: translateY(-50%); }
-.plot { position: relative; display: grid; grid-template-columns: repeat(6, 1fr); align-items: end; gap: 14px; height: 160px; padding: 0 6px; border-bottom: 1px solid var(--ds-line-emphasis); background: linear-gradient(var(--ds-data-grid) 1px, transparent 1px) 0 0 / 100% 25%; }
+.plot { position: relative; display: grid; grid-template-columns: repeat(6, 1fr); align-items: end; gap: 14px; height: 160px; padding: 0 6px; border-bottom: 1px solid var(--ds-line-emphasis); background: linear-gradient(var(--ds-data-grid) 1px, transparent 1px) 0 0 / 100% 20%; }
 .plot > i { height: calc(var(--v) * 1%); min-height: 2px; border-radius: 6px 6px 2px 2px; background: var(--ds-data-1); }
 .plot > i.you { background: var(--ds-data-user); }
 .xl { grid-column: 2; display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; padding: 0 6px; text-align: center; font-size: var(--ds-type-meta-size); line-height: var(--ds-type-meta-leading); color: var(--ds-ink-muted); }
@@ -211,7 +211,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
 .toast { display: flex; align-items: center; gap: 12px; padding: 8px 8px 8px 16px; padding-inline: 16px 8px; border-radius: var(--ds-radius-control); }
 .toast .i.m { color: var(--ds-machine); }
 .toast p { flex: 1; min-width: 0; }
-.tip { position: relative; display: inline-block; padding: 6px 10px; border-radius: var(--ds-radius-sm); background: var(--ds-surface-inverse); color: var(--ds-ink-inverse); box-shadow: var(--ds-elevation-float); }
+.tip { position: relative; display: inline-block; padding: 6px 10px; border-radius: var(--ds-radius-sm); }
 .tip::after { content: ""; position: absolute; top: 100%; inset-inline-start: 16px; border: 6px solid transparent; border-top-color: var(--ds-surface-inverse); }
 
 /* ----- depth ----- */
@@ -445,7 +445,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
         </tbody>
       </table>
     </div>
-    <div class="bulk" role="toolbar" aria-label="Bulk actions" data-bulk>
+    <div class="bulk ds-material-float-inverse" role="toolbar" aria-label="Bulk actions" data-bulk>
       <span class="count" aria-live="polite" data-count>1 selected</span>
       <button type="button">Assign</button><button type="button" class="danger">Delete</button>
       <button type="button" aria-label="Clear selection" title="Clear selection" data-clear><svg class="i s20"><use href="#i-x"/></svg></button>
@@ -460,14 +460,14 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
         <div class="meter" role="img" aria-label="43 of your 50 requests closed on time, against a target of 45." style="--v:86;--t:90" data-meter><i class="ds-settle"></i><b></b></div>
         <span class="meta" data-note>86%, against a target of 45 of 50 (90%).</span>
         <p class="t-label" style="margin-top:12px;color:var(--ds-ink-strong)">Last 6 months</p>
-        <svg class="spark" viewBox="0 0 240 56" role="img" aria-label="Closed on time in each of the last six months: 37, 39, 38, 41, 40, then 43 of 50." data-spark><polyline points="4,44.0 50,32.7 96,38.3 142,21.3 188,27.0 234,10.0"/><circle cx="234" cy="10.0" r="5"/></svg>
+        <svg class="spark" viewBox="0 0 240 56" role="img" aria-label="The same six months as a trend line, from 28 to 43 of 50." data-spark><polyline points="4,44.0 50,28.1 96,37.2 142,12.3 188,16.8 234,10.0"/><circle cx="234" cy="10.0" r="5"/></svg>
       </div>
       <div class="panel">
-        <div class="panel-h"><div><p class="t-label" style="color:var(--ds-ink-strong)">Requests you closed</p><p class="meta">By month</p></div></div>
+        <div class="panel-h"><div><p class="t-label" style="color:var(--ds-ink-strong)">Closed on time</p><p class="meta">By month, out of 50 each month</p></div></div>
         <div class="chart">
-          <div class="ticks" aria-hidden="true"><span style="--p:0">100</span><span style="--p:25">75</span><span style="--p:50">50</span><span style="--p:75">25</span></div>
-          <div class="plot" role="img" aria-label="Requests you closed in each of the last six months: 58, 62, 54, 70, 66, then 78 this month." data-plot>
-            <i class="ds-settle" style="--v:58"></i><i class="ds-settle" style="--v:62"></i><i class="ds-settle" style="--v:54"></i><i class="ds-settle" style="--v:70"></i><i class="ds-settle" style="--v:66"></i><i class="ds-settle you" style="--v:78"></i>
+          <div class="ticks" aria-hidden="true"><span style="--p:0">50</span><span style="--p:20">40</span><span style="--p:40">30</span><span style="--p:60">20</span><span style="--p:80">10</span></div>
+          <div class="plot" role="img" aria-label="Requests you closed on time in each of the last six months, out of 50 each month: 28, 35, 31, 42, 40, then 43 this month." data-plot>
+            <i class="ds-settle" style="--v:56"></i><i class="ds-settle" style="--v:70"></i><i class="ds-settle" style="--v:62"></i><i class="ds-settle" style="--v:84"></i><i class="ds-settle" style="--v:80"></i><i class="ds-settle you" style="--v:86"></i>
           </div>
           <div class="xl" aria-hidden="true"><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span class="you">Sep</span></div>
         </div>
@@ -475,7 +475,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
       </div>
     </div>
     <div class="insight" style="margin-top:16px">
-      <div class="ds-sweep" aria-hidden="true"></div>
+      <div class="ds-sweep is-done" aria-hidden="true"></div>
       <span class="disc" aria-hidden="true"><svg class="i"><use href="#i-spark"/></svg></span>
       <div class="body"><span class="mchip"><svg class="i s16"><use href="#i-spark"/></svg>Generated</span><p aria-live="polite">Requests in review rose from 22 to 26 this month, mostly permit renewals waiting on one approver.</p></div>
       <div class="acts"><button type="button" class="btn link">Show the requests</button></div>
@@ -490,7 +490,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
     </div>
     <div class="row" style="margin-top:16px;align-items:flex-end">
       <div class="toast ds-material-float" role="status" style="flex:1;min-width:16rem"><svg class="i m"><use href="#i-spark"/></svg><p>Summary ready</p><button type="button" class="btn link">View</button><button type="button" class="btn ghost icon" aria-label="Dismiss"><svg class="i s20"><use href="#i-x"/></svg></button></div>
-      <span class="tip" role="tooltip">Search, Ctrl K</span>
+      <span class="tip ds-material-float-inverse" role="tooltip">Search, Ctrl K</span>
     </div>
   </section>
 
@@ -524,7 +524,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
     <div class="demos">
       <div class="demo"><p class="t-label">Float</p><p class="meta">rise 6px, ease enter</p><div class="menu ds-material-float ds-float-enter" data-replay aria-hidden="true"><button type="button" tabindex="-1">Assign</button><button type="button" tabindex="-1">Duplicate</button></div></div>
       <div class="demo"><p class="t-label">Panel</p><p class="meta">from the end</p><div class="drawer ds-material-overlay ds-panel-enter" data-replay aria-hidden="true"><p class="t-label">Details</p><div class="bar"></div><div class="bar" style="width:70%"></div></div></div>
-      <div class="demo"><p class="t-label">Settle</p><p class="meta">values ease to new sizes</p><div class="mini-bars" data-mini aria-hidden="true"><i class="ds-settle" style="--v:51"></i><i class="ds-settle" style="--v:60"></i><i class="ds-settle" style="--v:48"></i><i class="ds-settle you" style="--v:63"></i></div></div>
+      <div class="demo"><p class="t-label">Settle</p><p class="meta">values ease to new sizes</p><div class="mini-bars" data-mini aria-hidden="true"><i class="ds-settle" style="--v:82"></i><i class="ds-settle" style="--v:74"></i><i class="ds-settle" style="--v:90"></i><i class="ds-settle you" style="--v:86"></i></div></div>
       <div class="demo"><p class="t-label">Sweep</p><p class="meta">the machine is working</p><div class="ds-sweep" style="margin-top:28px"></div><div class="insight" style="margin-top:0;border-start-start-radius:0;border-start-end-radius:0;padding:14px"><span class="disc" aria-hidden="true"><svg class="i s20"><use href="#i-spark"/></svg></span><p class="meta" style="align-self:center">Writing a summary</p></div></div>
     </div>
   </section>
@@ -666,23 +666,20 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
   });
 
   /* ---- the dashboard: the user's own months and their own target. Every figure, summary and label is written from this one set ---- */
-  var sets = [
-    { bars: [58, 62, 54, 70, 66, 78], on: [37, 39, 38, 41, 40, 43] },
-    { bars: [44, 51, 60, 48, 63, 57], on: [40, 43, 42, 44, 43, 38] },
-    { bars: [70, 52, 66, 62, 68, 77], on: [38, 41, 43, 44, 42, 46] }
-  ];
+  var sets = [[28, 35, 31, 42, 40, 43], [33, 41, 37, 45, 43, 38], [30, 36, 33, 41, 42, 46]];
   var goal = 50, target = 45;
   function points(v) {
     var lo = Math.min.apply(null, v), hi = Math.max.apply(null, v), span = hi - lo || 1;
     return v.map(function (n, i) { return (4 + i * 46) + ',' + (44 - (n - lo) / span * 34).toFixed(1); });
   }
   function paint(k) {
-    var s = sets[k], now = s.on[5], d = now - s.on[4], pct = Math.round(now / goal * 100), pts = points(s.on), end = pts[5].split(',');
+    var s = sets[k], now = s[5], d = now - s[4], pct = Math.round(now / goal * 100), pts = points(s), end = pts[5].split(',');
+    function share(v) { return v / goal * 100; }
     document.querySelectorAll('[data-plot]').forEach(function (p) {
-      Array.prototype.forEach.call(p.children, function (b, i) { b.style.setProperty('--v', s.bars[i]); });
-      p.setAttribute('aria-label', 'Requests you closed in each of the last six months: ' + s.bars.slice(0, 5).join(', ') + ', then ' + s.bars[5] + ' this month.');
+      Array.prototype.forEach.call(p.children, function (b, i) { b.style.setProperty('--v', share(s[i])); });
+      p.setAttribute('aria-label', 'Requests you closed on time in each of the last six months, out of ' + goal + ' each month: ' + s.slice(0, 5).join(', ') + ', then ' + now + ' this month.');
     });
-    document.querySelectorAll('[data-mini]').forEach(function (p) { Array.prototype.forEach.call(p.children, function (b, i) { b.style.setProperty('--v', sets[(k + 1) % 3].bars[i + 1]); }); });
+    document.querySelectorAll('[data-mini]').forEach(function (p) { Array.prototype.forEach.call(p.children, function (b, i) { b.style.setProperty('--v', share(sets[(k + 1) % 3][i + 1])); }); });
     document.querySelectorAll('[data-kpi]').forEach(function (f) { f.textContent = now + ' of ' + goal; });
     document.querySelectorAll('[data-delta]').forEach(function (e) {
       e.className = 'delta' + (d < 0 ? ' down' : '');
@@ -697,7 +694,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
       g.querySelector('polyline').setAttribute('points', pts.join(' '));
       g.querySelector('circle').setAttribute('cx', end[0]);
       g.querySelector('circle').setAttribute('cy', end[1]);
-      g.setAttribute('aria-label', 'Closed on time in each of the last six months: ' + s.on.slice(0, 5).join(', ') + ', then ' + now + ' of ' + goal + '.');
+      g.setAttribute('aria-label', 'The same six months as a trend line, from ' + s[0] + ' to ' + now + ' of ' + goal + '.');
     });
   }
   paint(0);
