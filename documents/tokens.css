@@ -144,7 +144,8 @@
 }
 /* Grounds a control can sit on that the theme's ring cannot hold 3:1 against: set data-ds-surface on that block
    and the one ring re-points to suit it. Solid callout grounds are the 700 shades in both themes, so one light
-   amber step serves both; an inverse block is the opposite of its theme's paper, so it takes the darker step. */
+   amber step serves both; an inverse block and the mark plate are white or near-white in at least one theme,
+   so both take the darker step. */
 [data-ds-surface="solid"] { --ds-focus: var(--ds-color-amber-300); }
 [data-ds-surface="inverse"] { --ds-focus: var(--ds-color-amber-700); }
 

@@ -21,7 +21,7 @@ Load `tokens.css`, then `tokens-dark.css` if you offer dark, then `motion.css` i
 | `data-ds-theme` | `light` (default), `dark` | Colour roles, shadows and glass | The whole deck or document; needs `tokens-dark.css` |
 | `data-ds-density` | `compact` 0.75, `comfortable` 1, `spacious` 1.25 | The multiplier on every space step | A page, a table or a deck |
 | `data-ds-motion` | `off` | Removes all motion | The root, or a view with its own motion control |
-| `data-ds-surface` | `solid`, `inverse` | Re-points the focus ring so it still holds 3:1 on that ground | A solid callout or an inverse block |
+| `data-ds-surface` | `solid`, `inverse` | Re-points the focus ring so it still holds 3:1 on that ground | A solid callout, an inverse block or the mark plate |
 | `dir` | `ltr`, `rtl` | Families, tracking, leading, mirroring and motion direction | `html` or the document root |
 
 ## 3. Colour roles
@@ -250,7 +250,7 @@ Every colour is a role, so a deck turns dark as a whole.
 ## 10. Focus and targets
 
 - **Focus:** a 2px `--ds-focus` outline at 2px offset on every control, link, scroll region and summary. It is never removed and never the accent. Light: 5.00:1 on paper and 3.61:1 on glass in the worst case. Dark: 7.83:1 on paper and 5.05:1 on glass.
-- **Focus on a solid or inverse ground:** the theme's own ring cannot hold 3:1 on a solid callout ground or on an inverse block, so those blocks carry `data-ds-surface="solid"` or `data-ds-surface="inverse"` and the one ring re-points to suit the ground it sits on. Solid grounds are the 700 shades in both themes and take a light amber step: 3.48:1 at the tightest, on solid important. An inverse block is the opposite of its theme paper and takes the darker step: 3.37:1 in light and 5.00:1 in dark. Any block carrying a control, a link or a scroll region on one of those grounds needs the attribute.
+- **Focus on a solid, inverse or mark ground:** the theme's own ring does not hold 3:1 on three kinds of ground, so each carries `data-ds-surface` and the one ring re-points to suit the ground it sits on. A solid callout ground fails in both themes, down to 1.00:1 on solid important in light; it takes `data-ds-surface="solid"`, a light amber step, 3.48:1 at the tightest. An inverse block and the mark plate already hold in light, where the theme ring is the darker step, and fall to 2.16:1 in dark; both take `data-ds-surface="inverse"`, which pins the ring to that darker step in either theme: on an inverse block 3.37:1 in light and 5.00:1 in dark, and on the mark plate 5.00:1 in both, since the plate keeps its white ground. Any block carrying a control, a link or a scroll region on one of those grounds needs the attribute, a mark that is also a link included.
 - **Targets:** viewer controls are 44 x 44px (`--ds-target-min`); WCAG 2.2 SC 2.5.8 asks for 24.
 - **Keyboard:** every control is reachable in reading order. Wide tables scroll inside a focusable, labelled region.
 
@@ -258,7 +258,7 @@ Every colour is a role, so a deck turns dark as a whole.
 
 WCAG 2.2 AA in both themes.
 
-- **Contrast:** text is at least 4.5:1 (SC 1.4.3). Graphics, meters and focus are at least 3:1 (SC 1.4.11, 2.4.13). The focus ring holds that minimum on every ground it can sit on: a solid callout ground and an inverse block carry `data-ds-surface`, which re-points the ring instead of letting it fall below 3:1. Glass is measured over the worst case behind it. The full table is in section 12.
+- **Contrast:** text is at least 4.5:1 (SC 1.4.3). Graphics, meters and focus are at least 3:1 (SC 1.4.11, 2.4.13). The focus ring holds that minimum on every ground it can sit on: a solid callout ground, an inverse block and the mark plate carry `data-ds-surface`, which re-points the ring instead of letting it fall below 3:1. Glass is measured over the worst case behind it. The full table is in section 12.
 - **Meaning without colour:** status cells pair an icon and a word, and the timeline says done, current and next. Charts label values in place and highlight in ink against grey. Meters carry `role="meter"` and their values.
 - **Structure:**
   - One `h1`, with headings in order.
@@ -297,6 +297,7 @@ Computed with the WCAG 2.2 formula for every role pair in both themes; the gener
 | Focus ring on glass, worst case | `--ds-focus` on `--ds-glass` | 3:1 | 3.61 | 5.05 |
 | Focus ring on a solid callout, worst case | `--ds-focus` under `data-ds-surface="solid"` on `--ds-important-solid` | 3:1 | 3.48 | 3.48 |
 | Focus ring on an inverse block | `--ds-focus` under `data-ds-surface="inverse"` on `--ds-inverse` | 3:1 | 3.37 | 5.00 |
+| Focus ring on the mark plate | `--ds-focus` under `data-ds-surface="inverse"` on `--ds-mark-plate` | 3:1 | 5.00 | 5.00 |
 | Note title | `--ds-note-fg` on `--ds-note-bg` | 4.5:1 | 7.73 | 8.21 |
 | Note body | `--ds-ink` on `--ds-note-bg` | 4.5:1 | 13.83 | 12.18 |
 | Important title | `--ds-important-fg` on `--ds-important-bg` | 4.5:1 | 4.82 | 10.39 |
@@ -312,7 +313,7 @@ Computed with the WCAG 2.2 formula for every role pair in both themes; the gener
 | White on solid success | `#FFFFFF` on `--ds-success-solid` | 4.5:1 | 6.80 | 6.80 |
 | Text on an inverse block | `--ds-ink-inverse` on `--ds-inverse` | 4.5:1 | 16.88 | 16.88 |
 
-66 pairs, all pass. Tightest text pair 4.82:1 (important title, light); tightest graphic pair 3.15:1 (quote rule, light).
+34 role pairs, 68 checks, all pass. Tightest text pair 4.82:1 (important title, light); tightest graphic pair 3.15:1 (quote rule, light).
 <!-- CONTRAST:END -->
 
 ## 13. Iconography and imagery
