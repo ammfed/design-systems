@@ -77,7 +77,7 @@ Computed from the token files as shipped (WCAG 2.x relative luminance). Every te
 | Success | `success-ink` on `success-bg` | 6.41 | 8.20 | 4.5 |
 | Done word, settled approval | `success-ink` on `surface` | 6.80 | 10.13 | 4.5 |
 | Message box edge | `user-strong` on `surface` | 4.50 | 7.12 | 3.0 |
-| Off microphone icon | `ink-muted` on `surface-raised` | 5.95 | 6.00 | 3.0 |
+| Off microphone, off live conversation | `ink-muted` on `surface-raised` | 5.95 | 6.00 | 3.0 |
 | Activity dots, spinner | `machine` on `surface` | 5.77 | 7.94 | 3.0 |
 | Voice mark on the user's bubble | `user-mark` on `user-bg` | 4.19 | 4.40 | 3.0 |
 | Focus ring on the ground | `focus` on `surface` | 5.00 | 7.83 | 3.0 |
@@ -223,7 +223,7 @@ One outline icon family at regular weight, 20px glyphs on at least a 32px target
 | header close | x |
 | type | keyboard |
 | speak (push to talk) | microphone; microphone with a slash when off |
-| live conversation | waveform |
+| live conversation | waveform; waveform with a slash when off |
 | mode | one glyph per mode: an open hand, scales, a lightning bolt |
 | activity, spinner | three dots, a spinner |
 | jump to the latest | arrow down |

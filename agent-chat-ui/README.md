@@ -8,7 +8,7 @@ Open `preview.html` to see it: the tokens, light and dark side by side, the moti
 
 ## The rules that make the look
 
-1. **Nothing small unless it earns its place.** No badges, tags, captions, sub-labels, timestamps, system rows or hint lines beyond the few that honesty or meaning keeps. State lives in the control. Everything is body size (16/24) except a footnote role for footer lines.
+1. **Nothing small unless it earns its place.** No badges, tags, captions, sub-labels, timestamps, system rows or hint lines beyond the few that honesty or meaning keeps. State lives in the control. Everything is body size (16/24) except a footnote role, whose standing use is the surface footer.
 2. **The ways to talk are icons inside the message box**: type, speak, live conversation, then send. One row, each icon with one short sentence. Never worded buttons, and no disclaimer line of its own under the box: that line is the surface's footer (rule 9).
 3. **The mode picker is one icon** at the start of the box. Opened, one row per mode with one sentence each, and one fixed line: an act with consequences always waits for the user, in every mode.
 4. **The greeting is four things**: the face, one line, the message box, up to five suggestion chips. No digest, no count, no tagline. The footer below them belongs to the surface.

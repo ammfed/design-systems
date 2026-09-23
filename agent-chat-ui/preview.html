@@ -13,7 +13,6 @@
 * { box-sizing: border-box; }
 html, body { margin: 0; }
 body { background: var(--ds-surface-quiet); color: var(--ds-ink); font: var(--ds-type-body); -webkit-font-smoothing: antialiased; }
-.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 svg.i { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; display: block; }
 svg.i.s16 { width: 16px; height: 16px; } svg.i.s18 { width: 18px; height: 18px; } svg.i.s24 { width: 24px; height: 24px; }
 [dir="rtl"] svg.i.m { transform: scaleX(-1); }
@@ -170,7 +169,6 @@ svg.i.s16 { width: 16px; height: 16px; } svg.i.s18 { width: 18px; height: 18px; 
 .curve .ball { transition: transform var(--ds-duration-travel) var(--e); }
 .durs .bar i { transition: transform var(--d) var(--ds-ease); }
 .noanim, .noanim * { transition: none !important; }
-[dir="rtl"] .durs .bar i { transform-origin: 100% 50%; }
 .demos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-space-4); }
 .demo { background: var(--ds-surface-quiet); border-radius: var(--ds-radius-card); padding: var(--ds-space-4); min-height: 136px; display: flex; flex-direction: column; gap: var(--ds-space-3); justify-content: space-between; min-width: 0; }
 .demo > code { font: var(--ds-type-code); color: var(--ds-ink-muted); }
@@ -207,7 +205,6 @@ table.cr th, table.cr td { text-align: start; padding: var(--ds-space-2) var(--d
 table.cr th { font: var(--ds-type-body-strong); background: var(--ds-surface-quiet); }
 table.cr td.n { font-variant-numeric: tabular-nums; text-align: end; white-space: nowrap; }
 table.cr .chipc { display: inline-flex; align-items: center; justify-content: center; min-width: 2.75rem; height: 2rem; padding: 0 var(--ds-space-2); border-radius: var(--ds-radius-control); font-weight: 500; }
-table.cr .ok { color: var(--ds-success-ink); display: inline-flex; }
 @container (max-width: 560px) { table.cr th:nth-child(2), table.cr td:nth-child(2) { display: none; } }
 
 @media (forced-colors: active) {
@@ -222,7 +219,7 @@ table.cr .ok { color: var(--ds-success-ink); display: inline-flex; }
   <symbol id="type" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h.5M10.75 10h.5M14.5 10h.5M17 10h.01M8 14h8"/></symbol>
   <symbol id="speak" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></symbol>
   <symbol id="speakOff" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M4 4l16 16"/></symbol>
-  <symbol id="live" viewBox="0 0 24 24"><path d="M4 10.5v3M8 7.5v9M12 4.5v15M16 7.5v9M20 10.5v3"/></symbol>
+  <symbol id="liveOff" viewBox="0 0 24 24"><path d="M4 10.5v3M8 7.5v9M12 4.5v15M16 7.5v9M20 10.5v3M4 4l16 16"/></symbol>
   <symbol id="hand" viewBox="0 0 24 24"><path d="M8 13V6.5a1.5 1.5 0 0 1 3 0V11M11 11V5a1.5 1.5 0 0 1 3 0v6M14 11V6.5a1.5 1.5 0 0 1 3 0V14a6 6 0 0 1-6 6h-.5a6 6 0 0 1-4.9-2.5L3.8 15a1.5 1.5 0 0 1 2.4-1.8L8 15"/></symbol>
   <symbol id="scales" viewBox="0 0 24 24"><path d="M12 4v16M8 20h8M4.5 7h15M6.5 7 3.5 13.5a3 3 0 0 0 6 0zM17.5 7l-3 6.5a3 3 0 0 0 6 0z"/></symbol>
   <symbol id="bolt" viewBox="0 0 24 24"><path d="M13.5 3 5 13.5h6.5L10.5 21 19 10.5h-6.5z"/></symbol>
@@ -248,8 +245,8 @@ table.cr .ok { color: var(--ds-success-ink); display: inline-flex; }
 
 <script>
 (() => {
-  const ic = (id, cls = '') => `<svg class="i ${cls}" aria-hidden="true"><use href="#${id}"/></svg>`;
-  const mirror = new Set(['send', 'arrowRight', 'collapse', 'back', 'replay']);
+  const ic = (id, cls) => `<svg class="i ${cls}" aria-hidden="true"><use href="#${id}"/></svg>`;
+  const mirror = new Set(['send', 'arrowRight', 'collapse', 'back']);
   const icon = (id, cls = '') => ic(id, (mirror.has(id) ? 'm ' : '') + cls);
 
   const T = {
@@ -263,7 +260,7 @@ table.cr .ok { color: var(--ds-success-ink); display: inline-flex; }
       say: 'Change the second one to Thursday.', stream: 'Changing the second reply to Thursday', phShort: 'Type what to do', working: 'Working',
       approved: 'Approved', back: 'Sent back for a change', err: 'The reply did not arrive.', retry: 'Retry', sent: 'Sent to 3 people.',
       jump: 'Jump to the latest', ph: 'Type what you want to do', modeName: 'Balanced',
-      tType: 'Type, and I read it.', tSpeak: 'Microphone off. Tap to speak, and I listen.', tLive: 'Live conversation, both of us talking.', send: 'Send',
+      tType: 'Type, and I read it.', tSpeak: 'Microphone off. Tap to speak, and I listen.', tLive: 'Live conversation off. Tap to talk together.', send: 'Send',
       greet: 'What do you want to do?', chips: [['Summarise my open requests', ''], ['Draft a reply', ''], ['Check a date', ''], ['Open the drafts', 'open']],
       modes: [['hand', 'Manual', 'I suggest. You do every step.'], ['scales', 'Balanced', 'I do the small, reversible things and ask before anything that matters.', true], ['bolt', 'Autonomous', 'I do all I am allowed to, then tell you.']],
       fixed: 'Anything with consequences always waits for you, in every mode.', modeLabel: 'Mode', footnote: 'Answers can be wrong. Check what matters.',
@@ -272,23 +269,22 @@ table.cr .ok { color: var(--ds-success-ink); display: inline-flex; }
       dir: 'rtl', name: 'المساعد', helper: 'المراجع', fold: 'طي إلى الجانب',
       hello: 'صباح الخير. ماذا تريد أن تفعل؟',
       ask: 'لخّص الطلبات الثلاثة المفتوحة واكتب مسودة رد لكل منها.',
-      task: 'الصياغة',
       reply: 'هناك 3 طلبات مفتوحة. اثنان يحتاجان تاريخاً، وواحد يحتاج تكلفة. كتبت مسودة رد لكل منها.', link: 'افتح المسودات',
       cardTitle: 'إرسال الردود الثلاثة', fields: [['إلى', '3 أشخاص'], ['متى', 'الآن']], approve: 'موافقة', change: 'تغيير', done: 'تم',
-      say: 'غيّر الثاني إلى يوم الخميس.', stream: 'أغيّر الرد الثاني إلى يوم الخميس', phShort: 'اكتب ما تريد', working: 'قيد العمل',
-      jump: 'انتقل إلى الأحدث', ph: 'اكتب ما تريد أن تفعل', modeName: 'متوازن',
+      say: 'غيّر الثاني إلى يوم الخميس.', stream: 'أغيّر الرد الثاني إلى يوم الخميس', phShort: 'اكتب ما تريد',
+      ph: 'اكتب ما تريد أن تفعل', modeName: 'متوازن',
       footnote: 'قد تكون الإجابات خاطئة. تحقق مما يهم.',
-      tType: 'اكتب، وأنا أقرأ.', tSpeak: 'الميكروفون مغلق. اضغط لتتحدث، وأنا أستمع.', tLive: 'محادثة حيّة، نتحدث معاً.', send: 'إرسال',
+      tType: 'اكتب، وأنا أقرأ.', tSpeak: 'الميكروفون مغلق. اضغط لتتحدث، وأنا أستمع.', tLive: 'المحادثة الحيّة مغلقة. اضغط لنتحدث معاً.', send: 'إرسال',
     },
   };
 
-  const box = (t, { greet = false, focus = '', short = false } = {}) => `
+  const box = (t, { greet = false, focusSpeak = false, short = false } = {}) => `
     <div class="box${greet ? ' greet' : ''}" role="group" aria-label="${t.ph}">
       <button class="ib mode" type="button" aria-label="${t.modeName}" aria-haspopup="dialog">${icon('scales')}</button>
       <input type="text" name="message" aria-label="${t.ph}" placeholder="${short ? t.phShort : t.ph}">
-      <button class="ib${focus === 'type' ? ' focusdemo' : ''}" type="button" aria-label="${t.tType}">${icon('type')}</button>
-      <span class="anchor"><button class="ib off${focus === 'speak' ? ' focusdemo' : ''}" type="button" aria-label="${t.tSpeak}" aria-pressed="false">${icon('speakOff')}</button>${focus === 'speak' ? `<span class="tip glass ds-fade" aria-hidden="true">${t.tSpeak}</span>` : ''}</span>
-      <button class="ib" type="button" aria-label="${t.tLive}" aria-pressed="false">${icon('live')}</button>
+      <button class="ib" type="button" aria-label="${t.tType}">${icon('type')}</button>
+      <span class="anchor"><button class="ib off${focusSpeak ? ' focusdemo' : ''}" type="button" aria-label="${t.tSpeak}" aria-pressed="false">${icon('speakOff')}</button>${focusSpeak ? `<span class="tip glass ds-fade" aria-hidden="true">${t.tSpeak}</span>` : ''}</span>
+      <button class="ib off" type="button" aria-label="${t.tLive}" aria-pressed="false">${icon('liveOff')}</button>
       <button class="send" type="button" aria-label="${t.send}">${icon('send', 's18')}</button>
     </div>`;
 
@@ -307,9 +303,9 @@ table.cr .ok { color: var(--ds-success-ink); display: inline-flex; }
           ${ai(t.hello)}
           <p class="msg me">${t.ask}</p>
           ${handoff(t, 'done')}
-          ${ai(t.link ? `${t.reply} <a href="#" onclick="return false">${t.link}</a>` : t.reply)}
+          ${ai(`${t.reply} <a href="#" onclick="return false">${t.link}</a>`)}
           ${approval(t)}
-          ${t.say ? `<p class="msg me"><span class="mark" aria-hidden="true">${icon('speak', 's16')}</span><span>${t.say}</span></p>` : ''}
+          <p class="msg me"><span class="mark" aria-hidden="true">${icon('speak', 's16')}</span><span>${t.say}</span></p>
           ${ai(`${t.stream}<span class="caret" aria-hidden="true"></span>`, { streaming: true, arrive: true })}
         </div>
       </div>
@@ -325,7 +321,7 @@ table.cr .ok { color: var(--ds-success-ink); display: inline-flex; }
     ["The user's bubble", 'user-ink', 'user-bg', 4.5], ['Send, primary button', 'user-on-strong', 'user-strong', 4.5], ['Primary button, hover', 'user-on-strong', 'user-strong-hover', 4.5],
     ['Outline button, talk icons', 'user-ink', 'surface', 4.5], ['Link, streaming caret', 'machine', 'surface', 4.5], ['Hand-off row', 'ink', 'machine-tint', 4.5],
     ['Error', 'error-ink', 'error-bg', 4.5], ['Success', 'success-ink', 'success-bg', 4.5], ['Done word', 'success-ink', 'surface', 4.5],
-    ['Message box edge', 'user-strong', 'surface', 3], ['Off microphone', 'ink-muted', 'surface-raised', 3], ['Activity', 'machine', 'surface', 3],
+    ['Message box edge', 'user-strong', 'surface', 3], ['Off microphone, off live', 'ink-muted', 'surface-raised', 3], ['Activity', 'machine', 'surface', 3],
     ['Voice mark', 'user-mark', 'user-bg', 3],
     ['Focus on the ground', 'focus', 'surface', 3], ['Focus on a quiet well', 'focus', 'surface-quiet', 3], ["Focus on the user's ground", 'focus', 'user-bg', 3], ['Focus on an overlay', 'focus', 'surface-overlay', 3],
     ['Control edge on the ground', 'line-strong', 'surface', 3], ['Control edge on a quiet well', 'line-strong', 'surface-quiet', 3], ['Control edge on an overlay', 'line-strong', 'surface-overlay', 3],
@@ -334,7 +330,7 @@ table.cr .ok { color: var(--ds-success-ink); display: inline-flex; }
   const SW = ['surface', 'surface-quiet', 'surface-overlay', 'ink', 'ink-muted', 'line-strong', 'user-strong', 'user-bg', 'user-ink', 'machine', 'machine-rule', 'machine-tint', 'error-ink', 'success-ink', 'focus'];
 
   const TYPES = [
-    ['greeting', 'fluid 28 to 34'], ['title', 'fluid 24 to 28'], ['heading', '20/28'], ['name', '17/24'], ['body-strong', '16/24, 500'], ['body', '16/24'], ['code', '15/24 mono'], ['footnote', '14/20, footer only'],
+    ['greeting', 'fluid 28 to 34'], ['title', 'fluid 24 to 28'], ['heading', '20/28'], ['name', '17/24'], ['body-strong', '16/24, 500'], ['body', '16/24'], ['code', '15/24 mono'], ['footnote', '14/20, the standing use is the footer'],
   ];
 
   const EASES = [['ease', 'arrive and settle'], ['ease-exit', 'leave'], ['ease-move', 'change place'], ['ease-spring', 'travel']];
@@ -364,7 +360,7 @@ table.cr .ok { color: var(--ds-success-ink); display: inline-flex; }
       </div></div></section>
 
     <section class="plate"><h3>Tooltip on keyboard focus</h3>
-      <div class="ground" style="padding-top: 5.5rem">${box(en, { focus: 'speak' })}</div></section>
+      <div class="ground" style="padding-top: 5.5rem">${box(en, { focusSpeak: true })}</div></section>
 
     <section class="plate"><h3>States</h3>
       <div class="states">
@@ -388,7 +384,7 @@ table.cr .ok { color: var(--ds-success-ink); display: inline-flex; }
       <div class="curves">${EASES.map(([k, j]) => `<div class="curve" data-ease="${k}"><svg viewBox="-4 -14 108 128" aria-hidden="true"><path class="axis" d="M0 0V100H100"/><path class="path" d=""/></svg><div class="track"><span class="ball" style="--e: var(--ds-${k})"></span></div><b>${k.replace('ease-', '')}</b><span>${j}</span></div>`).join('')}</div>
       <div class="durs">${DURS.map(([k, ms]) => `<span>${k}</span><span class="bar" style="width: ${(ms / 700 * 100).toFixed(1)}%"><i style="--d: var(--ds-duration-${k})"></i></span><span>${ms}ms</span>`).join('')}</div>
       <div class="demos">
-        <div class="demo"><code>.ds-arrive</code><p class="msg me ds-arrive" data-replay>${en.say || en.ask}</p></div>
+        <div class="demo"><code>.ds-arrive</code><p class="msg me ds-arrive" data-replay>${en.say}</p></div>
         <div class="demo"><code>.ds-draw</code>${ai(en.hello, { streaming: true, arrive: true })}</div>
         <div class="demo"><code>.ds-pop</code><div class="card ds-pop" data-replay style="box-shadow: var(--ds-elevation-3); padding: var(--ds-space-3)"><b>${en.modeName}</b></div></div>
         <div class="demo"><code>.ds-fade</code><span class="glass ds-fade" data-replay style="align-self:flex-start; padding: var(--ds-space-2) var(--ds-space-3); border-radius: var(--ds-radius-control); box-shadow: var(--ds-elevation-2)">${en.tType}</span></div>
@@ -415,21 +411,13 @@ table.cr .ok { color: var(--ds-success-ink); display: inline-flex; }
 
   const lum = (hex) => { const n = parseInt(hex.slice(1), 16); return [n >> 16 & 255, n >> 8 & 255, n & 255].map((c) => { c /= 255; return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; }).reduce((a, c, i) => a + c * [0.2126, 0.7152, 0.0722][i], 0); };
   const ratio = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
-  const hexOf = (el, name) => {
-    const v = getComputedStyle(el).getPropertyValue(`--ds-${name}`).trim();
-    if (/^#[0-9a-f]{6}$/i.test(v)) return v.toUpperCase();
-    const probe = document.createElement('span'); probe.style.color = `var(--ds-${name})`; el.appendChild(probe);
-    const m = getComputedStyle(probe).color.match(/\d+(\.\d+)?/g); probe.remove();
-    return '#' + m.slice(0, 3).map((c) => (+c).toString(16).padStart(2, '0')).join('').toUpperCase();
-  };
+  const hexOf = (el, name) => getComputedStyle(el).getPropertyValue(`--ds-${name}`).trim().toUpperCase();
 
   const bezier = (x1, y1, x2, y2) => { const pts = []; for (let i = 0; i <= 60; i++) { const t = i / 60, u = 1 - t; pts.push([3 * u * u * t * x1 + 3 * u * t * t * x2 + t ** 3, 3 * u * u * t * y1 + 3 * u * t * t * y2 + t ** 3]); } return pts; };
   const curvePoints = (v) => {
-    let m = v.match(/cubic-bezier\(([^)]+)\)/);
-    if (m) { const [a, b, c, d] = m[1].split(',').map(Number); return bezier(a, b, c, d); }
-    m = v.match(/linear\(([^)]+)\)/);
-    if (m) return m[1].split(',').map((s, i, all) => { const [y, x] = s.trim().split(/\s+/); return [x ? parseFloat(x) / 100 : i / (all.length - 1), +y]; });
-    return bezier(.25, .1, .25, 1);
+    const cb = v.match(/cubic-bezier\(([^)]+)\)/);
+    if (cb) { const [a, b, c, d] = cb[1].split(',').map(Number); return bezier(a, b, c, d); }
+    return v.match(/linear\(([^)]+)\)/)[1].split(',').map((s, i, all) => { const [y, x] = s.trim().split(/\s+/); return [x ? parseFloat(x) / 100 : i / (all.length - 1), +y]; });
   };
 
   document.querySelectorAll('.stage').forEach((st) => {
