@@ -50,8 +50,7 @@
 
   /* Lines */
   --ds-line: #E1E3E5;             /* hairlines, card and table borders (decorative) */
-  --ds-line-emphasis: #797E86;    /* chart axes, connectors, tracks and dividers that must be seen (needs 3:1) */
-  --ds-line-strong: #797E86;      /* control boundaries (needs 3:1) */
+  --ds-line-strong: #797E86;      /* control boundaries, chart axes, connectors and tracks that must be seen (needs 3:1) */
   --ds-line-float: #E1E3E5;       /* edges of float materials */
 
   /* The user: their one primary action, their choices, where they are, their own value in a chart. Never structure. */
@@ -255,4 +254,10 @@
 [data-ds-motion="reduce"] {
   --ds-duration-state: 0ms; --ds-duration-float-in: 120ms; --ds-duration-float-out: 0ms; --ds-duration-panel-in: 120ms; --ds-duration-panel-out: 0ms;
   --ds-duration-data: 0ms; --ds-duration-reveal: 0ms; --ds-motion-rise: 0px; --ds-motion-lift: 0px; --ds-motion-slide: 0%; --ds-stagger: 0ms;
+}
+
+/* ===== higher contrast ===== */
+/* On request, the decorative line roles take the control-edge step and muted text goes to full ink. tokens-dark.css carries the dark pair. */
+@media (prefers-contrast: more) {
+  :root { --ds-line: #797E86; --ds-line-float: #797E86; --ds-ink-muted: #232528; }
 }

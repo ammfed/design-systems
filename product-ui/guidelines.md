@@ -13,7 +13,7 @@ Components read **roles**, never palette steps. A role says what a colour means;
 | Surface | `--ds-surface-canvas`, `-sunken`, `-base`, `-raised`, `-float`, `-overlay` | The page, wells (sidebar, table head), cards and panels, then the three materials under Depth |
 | Surface states | `--ds-surface-hover`, `-pressed`, `-inverse`, `-veil`, `--ds-scrim` | Row and item states; tooltips and the bulk-action bar; sticky chrome; behind modals |
 | Ink | `--ds-ink`, `-strong`, `-muted`, `-inverse`, `-disabled` | Text and icons. Disabled ink only ever sits with a disabled control |
-| Line | `--ds-line`, `-emphasis`, `-strong`, `-float` | Hairlines (decorative); chart axes, connectors and tracks that must be seen (3:1); control edges (3:1); float edges |
+| Line | `--ds-line`, `-strong`, `-float` | Hairlines (decorative); control edges, chart axes, connectors and tracks that must be seen (3:1); float edges |
 | User | `--ds-user`, `-hover`, `-pressed`, `-on`, `-soft`, `-ink`, `-line` | The user's one primary action, their choices, where they are |
 | Ink action | `--ds-ink-action`, `-hover`, `-on` | Every action that is not the user's one primary step |
 | Machine | `--ds-machine`, `-ink`, `-soft`, `-line`, `-bar` | Content a model produced, progress, activity, data series 1 |
@@ -71,10 +71,8 @@ Controls, focus and charts (needs 3:1)
 
 | Use | Pair | Light | Dark |
 |---|---|---|---|
-| Control edge | `line-strong` on `surface-base` | 4.08 | 3.76 |
-| Control edge in a well | `line-strong` on `surface-sunken` | 3.81 | 4.69 |
-| Chart axis, connector, track | `line-emphasis` on `surface-base` | 4.08 | 3.76 |
-| Chart axis in a well | `line-emphasis` on `surface-sunken` | 3.81 | 4.69 |
+| Control edge, chart axis | `line-strong` on `surface-base` | 4.08 | 3.76 |
+| Control edge, chart axis in a well | `line-strong` on `surface-sunken` | 3.81 | 4.69 |
 | Focus ring | `focus` on `surface-base` | 5.00 | 7.13 |
 | Focus ring in a well | `focus` on `surface-sunken` | 4.67 | 8.89 |
 | Focus ring on a chosen item | `focus` on `user-soft` | 4.66 | 7.21 |
@@ -90,7 +88,16 @@ Controls, focus and charts (needs 3:1)
 | Positive delta | `data-pos` on `surface-base` | 4.04 | 6.53 |
 | Negative delta | `data-neg` on `surface-base` | 4.66 | 5.77 |
 
-`--ds-line` (1.29:1 light, 1.48:1 dark) is decorative: it separates things that are already distinct by position or content. Anything a user has to find to operate (an input's edge, a checkbox, a toggle track) uses `--ds-line-strong`.
+`--ds-line` (1.29:1 light, 1.48:1 dark) and `--ds-line-float` (1.29:1 light, 1.66:1 dark) are decorative: they separate things that are already distinct by position or content. Anything a user has to find to operate or to read off a chart (an input's edge, a checkbox, a toggle track, an axis, a connector) uses `--ds-line-strong`.
+
+Under `prefers-contrast: more`, both themes take the two decorative line roles to the control-edge step and muted text to full ink, so every separator reads as strongly as a control edge.
+
+| Use | Pair | Light | Dark |
+|---|---|---|---|
+| Hairline | `line` on `surface-base` | 4.08 | 3.76 |
+| Hairline in a well | `line` on `surface-sunken` | 3.81 | 4.69 |
+| Float edge | `line-float` on `surface-float` | 4.08 | 3.34 |
+| Secondary text | `ink-muted` on `surface-base` | 15.37 | 11.94 |
 
 ## Dark theme
 
@@ -99,7 +106,6 @@ Controls, focus and charts (needs 3:1)
 - **Palette steps only.** Surfaces keep near-black values; floating layers lift with a faint white tint and a lit top rim rather than a lighter swatch. Status grounds use each hue's darkest step and its text a light step.
 - **The accent moves to a lighter step** and text on it turns dark, so a primary button stays 7.12:1.
 - **Photographs sit back** a little on dark (about 92% brightness). A logo or mark is never dimmed and always sits on a white patch, never directly on a dark surface.
-- `prefers-contrast: more` strengthens lines and muted text in dark.
 
 ## Type
 
@@ -209,7 +215,7 @@ The six transitions in `motion.css`:
 - One ring, matched to the surface it sits on: 2px solid `--ds-focus`, offset 2px, on `:focus-visible` only. Soft controls use offset 0; rows, menu items and segments draw it inset (-2px) so it is never clipped.
 - On the inverse surface, `.ds-material-float-inverse` re-points the ring to `--ds-focus-inverse`, the other theme's step, so a tooltip and the bulk-action bar get a ring that clears 3:1 (7.83 light, 3.89 dark) without a rule of their own. It is the same ring, one step along the same hue, never a second colour.
 - The ring colour is distinct from the user's accent, so focus is never confused with selection, and passes 3:1 on every surface it can land on (table above).
-- Sticky chrome never covers the focused element: reserve `scroll-padding-top` for the app bar and a sticky table head.
+- Sticky chrome never covers the focused element or its ring: `scroll-padding-top` reserves the app bar or a sticky table head, plus the ring's width and offset. A table that scrolls inside its own frame needs this on the frame; a value on the page does not reach it.
 - **Targets:** 40px for every stand-alone control (`--ds-target-min`) in every density; 24px only for an inline icon button inside a chip or badge, with 8px clear space. Pagination pages and dismiss buttons are 40px.
 - Dialogs and drawers trap focus, close on Esc and return focus to what opened them.
 
@@ -258,7 +264,7 @@ Radius roles: 8 for controls, 12 for panels and overlays, full for chips, segmen
 - Row height follows density. The head is sticky under the veil when the table scrolls inside its own frame; the frame is focusable and labelled so keyboard users can scroll it.
 - The first column can be pinned, with an edge that appears only while content scrolls beneath it. The first plain column is a row header for screen readers.
 - Sortable columns announce their sort. Selection uses a checkbox column with a mixed select-all state; chosen rows take `--ds-user-soft` and an inline-start edge in `--ds-user-line`.
-- Row actions appear on hover and on focus within the row, never hover only. With a selection, the bulk-action bar appears on the inverse surface with a count read out politely and a clear action.
+- Row actions appear on hover and on focus within the row, never hover only, and stay visible where the pointer cannot hover (`hover: none` or a coarse pointer), so a touch user sees the target they can already hit. With a selection, the bulk-action bar appears on the inverse surface with a count read out politely and a clear action.
 - Loading shows skeleton rows at the current row height; empty states say what will appear and how to add it.
 
 ### Dashboards

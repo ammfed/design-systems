@@ -114,7 +114,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
 .chip[aria-pressed="true"] { background: var(--ds-user-soft); border-color: var(--ds-user-line); color: var(--ds-ink-strong); }
 .chip[aria-pressed="false"] .i { display: none; }
 .chip.applied { cursor: default; padding-inline-end: 8px; background: var(--ds-surface-sunken); border-color: var(--ds-line); }
-.chip .x { display: grid; place-items: center; width: 24px; height: 24px; margin-inline-start: 4px; border: 0; border-radius: 50%; background: none; color: inherit; cursor: pointer; }
+.chip .x { display: grid; place-items: center; width: 24px; height: 24px; border: 0; border-radius: 50%; background: none; color: inherit; cursor: pointer; }
 .chip .x:hover { background: var(--ds-surface-pressed); }
 .badge { --b: var(--ds-surface-sunken); --f: var(--ds-ink); --l: var(--ds-ink-muted); display: inline-flex; align-items: center; gap: 8px; min-height: 28px; padding: 2px 10px; border-radius: var(--ds-radius-xs); background: var(--b); color: var(--f); font-weight: 500; white-space: nowrap; }
 .badge::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--l); }
@@ -146,7 +146,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
 .toggle:checked::before { background: var(--ds-user-on); transform: translateX(calc(20px * var(--ds-dir))); }
 
 /* ----- table ----- */
-.tbl-wrap { --head-h: 48px; max-height: calc(var(--ds-row-height) * 5.5); overflow: auto; scroll-padding-top: var(--head-h); border: 1px solid var(--ds-line); border-radius: var(--ds-radius-panel); background: var(--ds-surface-base); }
+.tbl-wrap { --head-h: 48px; max-height: calc(var(--ds-row-height) * 5.5); overflow: auto; scroll-padding-top: calc(var(--head-h) + var(--ds-focus-width) + var(--ds-focus-offset)); border: 1px solid var(--ds-line); border-radius: var(--ds-radius-panel); background: var(--ds-surface-base); }
 .tbl { width: 100%; border-collapse: separate; border-spacing: 0; font-variant-numeric: var(--ds-type-numeric); }
 .tbl th, .tbl td { height: var(--ds-row-height); padding: 0 var(--ds-cell-pad-x); border-bottom: 1px solid var(--ds-line); text-align: start; white-space: nowrap; }
 .tbl thead th { position: sticky; top: 0; z-index: 1; height: var(--head-h); font-weight: 500; color: var(--ds-ink-muted); }
@@ -162,6 +162,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
 .tbl .c-act { width: 56px; padding: 0 8px; text-align: end; }
 .tbl .c-act .btn { width: 40px; min-height: 40px; opacity: 0; }
 .tbl tr:hover .c-act .btn, .tbl tr:focus-within .c-act .btn { opacity: 1; }
+@media (hover: none), (pointer: coarse) { .tbl .c-act .btn { opacity: 1; } }
 .tbl-wrap:focus-visible { outline-offset: 2px; }
 .bulk { display: flex; align-items: center; gap: 4px; margin-top: 12px; padding: 6px 6px 6px 16px; padding-inline: 16px 6px; border-radius: var(--ds-radius-control); }
 .bulk[hidden] { display: none; }
@@ -186,7 +187,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
 .chart { display: grid; grid-template-columns: auto 1fr; gap: 8px 10px; padding-top: 12px; }
 .ticks { position: relative; height: 160px; min-width: 3ch; font-size: var(--ds-type-meta-size); line-height: 1; color: var(--ds-ink-muted); font-variant-numeric: var(--ds-type-numeric); }
 .ticks span { position: absolute; inset-inline-end: 0; top: calc(var(--p) * 1%); transform: translateY(-50%); }
-.plot { position: relative; display: grid; grid-template-columns: repeat(6, 1fr); align-items: end; gap: 14px; height: 160px; padding: 0 6px; border-bottom: 1px solid var(--ds-line-emphasis); background: linear-gradient(var(--ds-data-grid) 1px, transparent 1px) 0 0 / 100% 20%; }
+.plot { position: relative; display: grid; grid-template-columns: repeat(6, 1fr); align-items: end; gap: 14px; height: 160px; padding: 0 6px; border-bottom: 1px solid var(--ds-line-strong); background: linear-gradient(var(--ds-data-grid) 1px, transparent 1px) 0 0 / 100% 20%; }
 .plot > i { height: calc(var(--v) * 1%); min-height: 2px; border-radius: 6px 6px 2px 2px; background: var(--ds-data-1); }
 .plot > i.you { background: var(--ds-data-user); }
 .xl { grid-column: 2; display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; padding: 0 6px; text-align: center; font-size: var(--ds-type-meta-size); line-height: var(--ds-type-meta-leading); color: var(--ds-ink-muted); }
@@ -230,7 +231,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
 .menu .danger { color: var(--ds-error-text); }
 .menu hr { height: 1px; margin: 6px 0; border: 0; background: var(--ds-line); }
 .scene { position: absolute; inset: 0; padding: 20px; display: grid; gap: 10px; align-content: start; }
-.scene i { display: block; height: 12px; border-radius: 999px; background: var(--ds-line-emphasis); }
+.scene i { display: block; height: 12px; border-radius: 999px; background: var(--ds-data-track); }
 .scene i:nth-child(2n) { width: 70%; }
 .scrim { position: absolute; inset: 0; background: var(--ds-scrim); }
 .dialog { position: relative; width: 100%; max-width: 17rem; padding: 20px; border-radius: var(--ds-radius-overlay); }
@@ -248,7 +249,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
 .dur code { color: var(--ds-ink); }
 .track { position: relative; height: 24px; }
 .track::before { content: ""; position: absolute; inset-inline: 0; top: 11px; height: 2px; border-radius: 2px; background: var(--ds-line); }
-.track > s { position: absolute; top: 11px; height: 2px; inset-inline-start: 0; width: calc(var(--w) * 1%); background: var(--ds-line-emphasis); border-radius: 2px; }
+.track > s { position: absolute; top: 11px; height: 2px; inset-inline-start: 0; width: calc(var(--w) * 1%); background: var(--ds-line-strong); border-radius: 2px; }
 .track > b { position: absolute; top: 4px; inset-inline-start: 0; width: 16px; height: 16px; margin-inline-start: -8px; border-radius: 50%; background: var(--ds-machine); box-shadow: 0 0 0 3px var(--ds-surface-canvas); transition-property: inset-inline-start; transition-duration: var(--d); transition-timing-function: var(--e); }
 .dur.go .track > b { inset-inline-start: calc(var(--w) * 1%); }
 .demos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 16px; margin-top: 24px; }
@@ -256,7 +257,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
 .demo .menu { position: absolute; top: 72px; inset-inline-start: 16px; max-width: 12rem; }
 .drawer { position: absolute; inset-block: 0; inset-inline-end: 0; width: 54%; padding: 16px; border-start-start-radius: var(--ds-radius-overlay); border-end-start-radius: var(--ds-radius-overlay); }
 .drawer .bar { height: 10px; margin-top: 12px; border-radius: 999px; background: var(--ds-data-track); }
-.mini-bars { display: flex; align-items: flex-end; gap: 10px; height: 110px; margin-top: 12px; border-bottom: 1px solid var(--ds-line-emphasis); }
+.mini-bars { display: flex; align-items: flex-end; gap: 10px; height: 110px; margin-top: 12px; border-bottom: 1px solid var(--ds-line-strong); }
 .mini-bars i { flex: 1; height: calc(var(--v) * 1%); border-radius: 5px 5px 2px 2px; background: var(--ds-data-1); }
 .mini-bars i.you { background: var(--ds-data-user); }
 
@@ -601,7 +602,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
     ['error-text', 'surface-base', 'Error message'], ['error-on-inverse', 'surface-inverse', 'Error on inverse']
   ];
   var graphic = [
-    ['line-strong', 'surface-base', 'Control edge'], ['line-strong', 'surface-sunken', 'Control edge in a well'], ['line-emphasis', 'surface-base', 'Chart axis, connector, track'], ['line-emphasis', 'surface-sunken', 'Chart axis in a well'], ['focus', 'surface-base', 'Focus ring'], ['focus', 'surface-sunken', 'Focus in a well'],
+    ['line-strong', 'surface-base', 'Control edge, chart axis'], ['line-strong', 'surface-sunken', 'Control edge, chart axis in a well'], ['focus', 'surface-base', 'Focus ring'], ['focus', 'surface-sunken', 'Focus in a well'],
     ['focus', 'user-soft', 'Focus on a chosen item'], ['focus-inverse', 'surface-inverse', 'Focus on the inverse surface'], ['user', 'surface-base', 'Checked control'], ['user-line', 'user-soft', 'Selection edge'], ['machine', 'surface-base', 'Progress'],
     ['data-1', 'surface-base', 'Series 1'], ['data-2', 'surface-base', 'Series 2'], ['data-3', 'surface-base', 'Series 3'], ['data-4', 'surface-base', 'Series 4'],
     ['data-user', 'surface-base', 'Your own value'], ['data-pos', 'surface-base', 'Positive delta'], ['data-neg', 'surface-base', 'Negative delta']

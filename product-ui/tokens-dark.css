@@ -27,7 +27,6 @@
 
   /* Lines */
   --ds-line: #3E4046;
-  --ds-line-emphasis: #797E86;
   --ds-line-strong: #797E86;
   --ds-line-float: #4B4F58;
 
@@ -85,7 +84,7 @@
   --ds-tint-float: #FFFFFF0A;      /* a float surface reads #2C2E31 */
 }
 
-/* Higher contrast on request: stronger lines and muted text */
+/* Higher contrast on request, the dark half of the pair in tokens.css */
 @media (prefers-contrast: more) {
   [data-ds-theme="dark"] { --ds-line: #797E86; --ds-line-float: #797E86; --ds-ink-muted: #E1E3E5; }
 }
