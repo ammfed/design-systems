@@ -1,0 +1,15 @@
+/* Product UI materials, 2.0.0. Four levels of depth, built on the depth tokens in tokens.css; the same classes work in both themes.
+     flat     canvas, sunken and base: separated by 1px lines, no shadow (no class needed)
+     raised   a hovered interactive card, a sticky table head
+     float    menus, popovers, toasts, pickers, the command menu; -inverse for a tooltip or the bulk-action bar, which carry the inverse surface
+     overlay  modal and drawer, over the scrim
+     veil     translucent with blur, for sticky chrome over scrolling content only; solid wherever blur or transparency is unavailable or unwanted
+   Screens use these classes rather than hand-rolled shadows. */
+.ds-material-raised { background-color: var(--ds-surface-raised); background-image: linear-gradient(var(--ds-tint-raised), var(--ds-tint-raised)); box-shadow: var(--ds-elevation-raised); }
+.ds-material-float { background-color: var(--ds-surface-float); background-image: linear-gradient(var(--ds-tint-float), var(--ds-tint-float)); border: 1px solid var(--ds-line-float); box-shadow: var(--ds-elevation-float); }
+.ds-material-float-inverse { background-color: var(--ds-surface-inverse); color: var(--ds-ink-inverse); border: 1px solid var(--ds-surface-inverse); box-shadow: var(--ds-elevation-float); --ds-focus: var(--ds-focus-inverse); }
+.ds-material-overlay { background-color: var(--ds-surface-overlay); background-image: linear-gradient(var(--ds-tint-float), var(--ds-tint-float)); box-shadow: var(--ds-elevation-overlay); }
+.ds-material-veil { background-color: var(--ds-surface-veil); -webkit-backdrop-filter: blur(var(--ds-veil-blur)); backdrop-filter: blur(var(--ds-veil-blur)); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .ds-material-veil { background-color: var(--ds-surface-canvas); } }
+@media (prefers-reduced-transparency: reduce) { .ds-material-veil { background-color: var(--ds-surface-canvas); -webkit-backdrop-filter: none; backdrop-filter: none; } }
+@media (forced-colors: active) { .ds-material-raised, .ds-material-float, .ds-material-float-inverse, .ds-material-overlay, .ds-material-veil { background: Canvas; border: 1px solid CanvasText; box-shadow: none; } }

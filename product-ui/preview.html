@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Product UI preview</title>
+<link rel="icon" href="data:,">
+<!-- Nothing is fetched from the network: the four stylesheets below sit beside this file, icons are inline SVG, and the
+     fonts are the token families with their system fallbacks. Every number on this page is read back from these files. -->
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="tokens-dark.css">
+<link rel="stylesheet" href="motion.css">
+<link rel="stylesheet" href="materials.css">
+<style id="preview-css">
+/* ===== Preview only. Every colour, size and duration below is a token. ===== */
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--ds-surface-canvas); color: var(--ds-ink); -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--ds-appbar-height) + 64px); }
+body { margin: 0; font-family: var(--ds-font-body); font-size: var(--ds-type-body-size); line-height: var(--ds-type-body-leading); }
+:where([dir]:not(html, bdi)) { font-family: var(--ds-font-body); } /* a nested dir region re-resolves the swapped family */
+h1, h2, h3, h4, p { margin: 0; }
+button { font: inherit; }
+.i { width: var(--ds-icon-size); height: var(--ds-icon-size); flex: none; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.i.s20 { width: 20px; height: 20px; }
+.i.s16 { width: 16px; height: 16px; }
+.i.fill { fill: currentColor; stroke: none; }
+[dir="rtl"] .flip { transform: scaleX(-1); }
+:focus-visible { outline: var(--ds-focus-width) solid var(--ds-focus); outline-offset: var(--ds-focus-offset); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+.meta { font-size: var(--ds-type-meta-size); line-height: var(--ds-type-meta-leading); color: var(--ds-ink-muted); }
+.num { font-variant-numeric: var(--ds-type-numeric); }
+.t-display, .t-headline, .t-title-1, .t-title-2, .t-title-3, .t-figure { font-family: var(--ds-font-heading); color: var(--ds-ink-strong); }
+.t-display { font-size: var(--ds-type-display-size); line-height: var(--ds-type-display-leading); font-weight: var(--ds-type-display-weight); letter-spacing: var(--ds-type-display-tracking); }
+.t-headline { font-size: var(--ds-type-headline-size); line-height: var(--ds-type-headline-leading); font-weight: var(--ds-type-headline-weight); letter-spacing: var(--ds-type-headline-tracking); }
+.t-title-1 { font-size: var(--ds-type-title-1-size); line-height: var(--ds-type-title-1-leading); font-weight: var(--ds-type-title-1-weight); letter-spacing: var(--ds-type-title-1-tracking); }
+.t-title-2 { font-size: var(--ds-type-title-2-size); line-height: var(--ds-type-title-2-leading); font-weight: var(--ds-type-title-2-weight); letter-spacing: var(--ds-type-title-2-tracking); }
+.t-title-3 { font-size: var(--ds-type-title-3-size); line-height: var(--ds-type-title-3-leading); font-weight: var(--ds-type-title-3-weight); }
+.t-figure { font-size: var(--ds-type-figure-size); line-height: var(--ds-type-figure-leading); font-weight: var(--ds-type-figure-weight); letter-spacing: var(--ds-type-figure-tracking); font-variant-numeric: var(--ds-type-numeric); }
+.t-lead { font-size: var(--ds-type-lead-size); line-height: var(--ds-type-lead-leading); font-weight: var(--ds-type-lead-weight); }
+.t-body { font-size: var(--ds-type-body-size); line-height: var(--ds-type-body-paragraph-leading); }
+.t-label { font-size: var(--ds-type-label-size); line-height: var(--ds-type-label-leading); font-weight: var(--ds-type-label-weight); }
+.t-meta { font-size: var(--ds-type-meta-size); line-height: var(--ds-type-meta-leading); }
+
+/* ----- page chrome ----- */
+.top { position: sticky; top: 0; z-index: var(--ds-z-appbar); display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; min-height: var(--ds-appbar-height); padding: 8px 24px; box-shadow: inset 0 -1px 0 0 var(--ds-line); }
+.top h1 { display: flex; align-items: baseline; gap: 12px; }
+.ver { font-family: var(--ds-font-body); font-size: var(--ds-type-meta-size); font-weight: 500; color: var(--ds-ink-muted); letter-spacing: 0; }
+.tools { display: flex; align-items: center; gap: 12px; margin-inline-start: auto; }
+.panes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 36rem), 1fr)); }
+.pane { min-width: 0; background: var(--ds-surface-canvas); color: var(--ds-ink); }
+.pane + .pane { border-inline-start: 1px solid var(--ds-line); }
+.pane-head { position: sticky; top: var(--ds-appbar-height); z-index: var(--ds-z-sticky); display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 32px; border-bottom: 1px solid var(--ds-line); color: var(--ds-ink-strong); }
+.pane-head code { margin-inline-start: auto; }
+code { font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace; font-size: var(--ds-type-meta-size); color: var(--ds-ink-muted); }
+.sec { padding: 40px 32px 8px; }
+.sec-h { display: flex; align-items: baseline; gap: 12px; margin-bottom: 20px; }
+.sec-h .n { font-size: var(--ds-type-meta-size); color: var(--ds-ink-muted); font-variant-numeric: var(--ds-type-numeric); }
+.sec-h::after { content: ""; flex: 1; height: 1px; background: var(--ds-line); align-self: center; }
+.sub { margin: 28px 0 12px; font-weight: 600; color: var(--ds-ink-strong); }
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ds-cluster-gap); }
+.stack { display: grid; gap: var(--ds-stack-gap); }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 16px; }
+.panel { background: var(--ds-surface-base); border: 1px solid var(--ds-line); border-radius: var(--ds-radius-panel); padding: var(--ds-panel-pad); min-width: 0; }
+.panel-h { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+
+/* ----- roles ----- */
+.sw { display: grid; grid-template-columns: repeat(auto-fill, minmax(9.25rem, 1fr)); gap: 12px; }
+.swatch { display: grid; grid-template-rows: 64px auto; border: 1px solid var(--ds-line); border-radius: var(--ds-radius-panel); background: var(--ds-surface-base); overflow: hidden; }
+.swatch > i { display: grid; place-items: center; background: var(--c); border-bottom: 1px solid var(--ds-line); font-style: normal; font-weight: 600; color: var(--on, transparent); }
+.swatch > span { display: grid; padding: 8px 12px 10px; }
+.swatch b { font-weight: 500; }
+
+/* ----- actions ----- */
+.btn { --bg: var(--ds-ink-action); --fg: var(--ds-ink-action-on); --bd: transparent; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: var(--ds-control-height); min-width: var(--ds-target-min); padding: 0 var(--ds-control-pad-x); border: 1px solid var(--bd); border-radius: var(--ds-radius-control); background: var(--bg); color: var(--fg); font-size: var(--ds-type-label-size); font-weight: var(--ds-type-label-weight); line-height: 1; white-space: nowrap; cursor: pointer; box-shadow: var(--ds-rim); text-decoration: none; }
+.btn:hover { --bg: var(--ds-ink-action-hover); }
+.btn.user { --bg: var(--ds-user); --fg: var(--ds-user-on); }
+.btn.user:hover { --bg: var(--ds-user-hover); }
+.btn.user:active { --bg: var(--ds-user-pressed); }
+.btn.soft { --bg: var(--ds-surface-sunken); --fg: var(--ds-ink); box-shadow: none; }
+.btn.soft:hover { --bg: var(--ds-surface-hover); }
+.btn.outline { --bg: transparent; --fg: var(--ds-ink); --bd: var(--ds-line-strong); box-shadow: none; }
+.btn.outline:hover { --bg: var(--ds-surface-hover); }
+.btn.link { --bg: transparent; --fg: var(--ds-ink); box-shadow: none; padding: 0 8px; text-decoration: underline; text-underline-offset: 4px; }
+.btn.link:hover { --bg: transparent; text-decoration-thickness: 2px; }
+.btn.danger { --bg: var(--ds-error-solid); --fg: var(--ds-error-on); }
+.btn.danger:hover { --bg: var(--ds-error-solid-hover); }
+.btn.ghost { --bg: transparent; --fg: var(--ds-ink); box-shadow: none; }
+.btn.ghost:hover { --bg: var(--ds-surface-hover); }
+.btn.icon { padding: 0; width: var(--ds-control-height); }
+.btn[aria-pressed="true"], .btn[aria-pressed="true"]:hover { --bg: var(--ds-user-soft); --fg: var(--ds-ink-strong); --bd: var(--ds-user-line); }
+.btn .dot { position: absolute; inset-block-start: 9px; inset-inline-end: 9px; width: 8px; height: 8px; border-radius: 50%; background: var(--ds-error-solid); box-shadow: 0 0 0 2px var(--ds-surface-base); }
+.btn.icon { position: relative; }
+kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20px; padding: 0 6px; border: 1px solid var(--ds-line-strong); border-radius: var(--ds-radius-xs); color: var(--ds-ink-muted); }
+
+/* ----- app bar ----- */
+.appbar { display: flex; align-items: center; gap: 12px; min-height: var(--ds-appbar-height); padding: 0 12px; border: 1px solid var(--ds-line); border-radius: var(--ds-radius-panel); }
+.mark { display: grid; place-items: center; width: 40px; height: 40px; border-radius: var(--ds-radius-control); background: var(--ds-neutral-0); color: var(--ds-neutral-900); box-shadow: inset 0 0 0 1px var(--ds-neutral-100); }
+.appbar .name { font-family: var(--ds-font-heading); font-weight: 700; color: var(--ds-ink-strong); white-space: nowrap; }
+.search { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; min-height: var(--ds-target-min); padding: 0 8px 0 12px; border: 1px solid var(--ds-line-strong); border-radius: var(--ds-radius-control); background: var(--ds-surface-base); color: var(--ds-ink-muted); cursor: text; }
+.search span { flex: 1; text-align: start; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.avatar { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--ds-surface-sunken); color: var(--ds-ink-strong); font-weight: 600; box-shadow: 0 0 0 2px var(--ds-surface-base), 0 0 0 4px var(--ds-user); flex: none; margin-inline: 4px; }
+
+/* ----- segmented ----- */
+.seg { --pad: min(4px, calc((var(--ds-control-height) - var(--ds-target-min)) / 2)); position: relative; display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr; min-width: max-content; height: var(--ds-control-height); padding: var(--pad); border-radius: var(--ds-radius-control); background: var(--ds-surface-sunken); box-shadow: inset 0 0 0 1px var(--ds-line); isolation: isolate; }
+.seg .thumb { position: absolute; z-index: -1; top: var(--pad); bottom: var(--pad); inset-inline-start: calc(var(--pad) + (100% - 2 * var(--pad)) / var(--n) * var(--k)); width: calc((100% - 2 * var(--pad)) / var(--n)); border-radius: calc(var(--ds-radius-control) - var(--pad)); background: var(--ds-user-soft); box-shadow: inset 0 0 0 1px var(--ds-user-line), var(--ds-elevation-raised); }
+.seg button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: var(--ds-target-min); min-height: calc(var(--ds-control-height) - 2 * var(--pad)); padding: 0 14px; border: 0; border-radius: calc(var(--ds-radius-control) - var(--pad)); background: none; color: var(--ds-ink-muted); font-weight: 500; white-space: nowrap; cursor: pointer; }
+.seg.icons button { padding: 0 10px; }
+.seg button:hover { color: var(--ds-ink-strong); }
+.seg button[aria-checked="true"] { color: var(--ds-ink-strong); font-weight: 600; }
+.seg button:focus-visible { outline-offset: -2px; }
+
+/* ----- chips, badges ----- */
+.chip { display: inline-flex; align-items: center; gap: 8px; min-height: var(--ds-target-min); padding: 0 16px; border: 1px solid var(--ds-line-strong); border-radius: var(--ds-radius-chip); background: var(--ds-surface-base); color: var(--ds-ink); font-weight: 500; cursor: pointer; }
+.chip:hover { background: var(--ds-surface-hover); }
+.chip[aria-pressed="true"] { background: var(--ds-user-soft); border-color: var(--ds-user-line); color: var(--ds-ink-strong); }
+.chip[aria-pressed="false"] .i { display: none; }
+.chip.applied { cursor: default; padding-inline-end: 8px; background: var(--ds-surface-sunken); border-color: var(--ds-line); }
+.chip .x { display: grid; place-items: center; width: 24px; height: 24px; border: 0; border-radius: 50%; background: none; color: inherit; cursor: pointer; }
+.chip .x:hover { background: var(--ds-surface-pressed); }
+.badge { --b: var(--ds-surface-sunken); --f: var(--ds-ink); --l: var(--ds-ink-muted); display: inline-flex; align-items: center; gap: 8px; min-height: 28px; padding: 2px 10px; border-radius: var(--ds-radius-xs); background: var(--b); color: var(--f); font-weight: 500; white-space: nowrap; }
+.badge::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--l); }
+.badge.success { --b: var(--ds-success-soft); --f: var(--ds-success-fg); --l: var(--ds-success-line); }
+.badge.info { --b: var(--ds-info-soft); --f: var(--ds-info-fg); --l: var(--ds-info-line); }
+.badge.warning { --b: var(--ds-warning-soft); --f: var(--ds-warning-fg); --l: var(--ds-warning-line); }
+.badge.error { --b: var(--ds-error-soft); --f: var(--ds-error-fg); --l: var(--ds-error-line); }
+.mchip { display: inline-flex; align-items: center; gap: 6px; min-height: 28px; padding: 2px 10px; border-radius: var(--ds-radius-chip); background: var(--ds-machine-soft); color: var(--ds-machine-ink); font-weight: 500; white-space: nowrap; }
+
+/* ----- forms ----- */
+.field { display: grid; gap: 6px; align-content: start; min-width: 0; }
+.field > label, .field > .lbl { font-weight: var(--ds-type-label-weight); color: var(--ds-ink-strong); }
+.input { width: 100%; min-height: var(--ds-control-height); padding: 0 var(--ds-field-pad-x); border: 1px solid var(--ds-line-strong); border-radius: var(--ds-radius-control); background: var(--ds-surface-base); color: var(--ds-ink); font: inherit; }
+.input::placeholder { color: var(--ds-ink-muted); }
+.input:focus-visible { outline-offset: 0; }
+.input[aria-invalid="true"] { border-color: var(--ds-error-line); box-shadow: inset 0 0 0 1px var(--ds-error-line); }
+.err { display: flex; align-items: flex-start; gap: 8px; color: var(--ds-error-text); }
+.err .i { margin-top: 2px; }
+.check { display: inline-flex; align-items: center; gap: 12px; min-height: var(--ds-target-min); cursor: pointer; }
+.cbx { appearance: none; -webkit-appearance: none; display: grid; place-content: center; flex: none; width: var(--ds-check-size); height: var(--ds-check-size); margin: 0; border: 1.5px solid var(--ds-line-strong); border-radius: var(--ds-radius-xs); background: var(--ds-surface-base); cursor: pointer; }
+.cbx::before { content: ""; width: 12px; height: 12px; background: var(--ds-user-on); clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%); transform: scale(0); transition: transform var(--ds-duration-state) var(--ds-ease-standard); }
+.cbx:checked, .cbx:indeterminate { background: var(--ds-user); border-color: var(--ds-user); }
+.cbx:checked::before { transform: scale(1); }
+.cbx:indeterminate::before { clip-path: inset(40% 8%); transform: scale(1); }
+.cbx:focus-visible { outline-offset: 2px; }
+.toggle { appearance: none; -webkit-appearance: none; position: relative; flex: none; width: 44px; height: 24px; margin: 0; border: 1.5px solid var(--ds-line-strong); border-radius: 999px; background: var(--ds-surface-base); cursor: pointer; transition: background-color var(--ds-duration-state) var(--ds-ease-standard), border-color var(--ds-duration-state) var(--ds-ease-standard); }
+.toggle::before { content: ""; position: absolute; top: 3px; inset-inline-start: 3px; width: 15px; height: 15px; border-radius: 50%; background: var(--ds-line-strong); transition: transform var(--ds-duration-state) var(--ds-ease-standard), background-color var(--ds-duration-state) var(--ds-ease-standard); }
+.toggle:checked { background: var(--ds-user); border-color: var(--ds-user); }
+.toggle:checked::before { background: var(--ds-user-on); transform: translateX(calc(20px * var(--ds-dir))); }
+
+/* ----- table ----- */
+.tbl-wrap { --head-h: 48px; max-height: calc(var(--ds-row-height) * 5.5); overflow: auto; scroll-padding-top: calc(var(--head-h) + var(--ds-focus-width) + var(--ds-focus-offset)); border: 1px solid var(--ds-line); border-radius: var(--ds-radius-panel); background: var(--ds-surface-base); }
+.tbl { width: 100%; border-collapse: separate; border-spacing: 0; font-variant-numeric: var(--ds-type-numeric); }
+.tbl th, .tbl td { height: var(--ds-row-height); padding: 0 var(--ds-cell-pad-x); border-bottom: 1px solid var(--ds-line); text-align: start; white-space: nowrap; }
+.tbl thead th { position: sticky; top: 0; z-index: 1; height: var(--head-h); font-weight: 500; color: var(--ds-ink-muted); }
+.tbl tbody th { font-weight: 500; color: var(--ds-ink-strong); }
+.tbl tbody tr:hover > * { background: var(--ds-surface-hover); }
+.tbl tbody tr.is-chosen > * { background: var(--ds-user-soft); }
+.tbl tbody tr.is-chosen > :first-child { box-shadow: inset calc(3px * var(--ds-dir)) 0 0 var(--ds-user-line); }
+.tbl tr:last-child > * { border-bottom: 0; }
+.tbl .c-sel { width: 48px; padding-inline-end: 0; }
+.tbl .c-sel .cbx { position: relative; }
+.tbl .c-sel .cbx::after { content: ""; position: absolute; inset-block-start: 50%; inset-inline-start: 50%; width: var(--ds-target-min); height: var(--ds-target-min); transform: translate(calc(-50% * var(--ds-dir)), -50%); }
+.tbl .c-num { text-align: end; }
+.tbl .c-act { width: 56px; padding: 0 8px; text-align: end; }
+.tbl .c-act .btn { width: 40px; min-height: 40px; opacity: 0; }
+.tbl tr:hover .c-act .btn, .tbl tr:focus-within .c-act .btn { opacity: 1; }
+@media (hover: none), (pointer: coarse) { .tbl .c-act .btn { opacity: 1; } }
+.tbl-wrap:focus-visible { outline-offset: 2px; }
+.bulk { display: flex; align-items: center; gap: 4px; margin-top: 12px; padding: 6px 6px 6px 16px; padding-inline: 16px 6px; border-radius: var(--ds-radius-control); }
+.bulk[hidden] { display: none; }
+.bulk .count { flex: 1; font-weight: 500; font-variant-numeric: var(--ds-type-numeric); }
+.bulk button { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; min-width: 40px; padding: 0 12px; border: 0; border-radius: calc(var(--ds-radius-control) - 2px); background: none; color: inherit; font-weight: 500; cursor: pointer; }
+.bulk button:hover { background: color-mix(in srgb, var(--ds-ink-inverse) 14%, transparent); }
+.bulk .danger { color: var(--ds-error-on-inverse); }
+
+/* ----- dashboard ----- */
+.kpi { display: grid; gap: 8px; align-content: start; }
+.kpi .lbl { font-weight: 500; color: var(--ds-ink-muted); }
+.delta { display: inline-flex; align-items: center; gap: 6px; color: var(--ds-success-fg); font-weight: 500; }
+.delta .i { color: var(--ds-data-pos); }
+.delta.down { color: var(--ds-error-fg); }
+.delta.down .i { color: var(--ds-data-neg); transform: rotate(180deg); }
+.spark { width: 100%; height: auto; overflow: visible; }
+.spark polyline { fill: none; stroke: var(--ds-machine); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
+.spark circle { fill: var(--ds-machine); stroke: var(--ds-surface-base); stroke-width: 3; }
+.meter { position: relative; height: 8px; margin-top: 8px; border-radius: 999px; background: var(--ds-data-track); }
+.meter > i { position: absolute; inset-block: 0; inset-inline-start: 0; width: calc(var(--v) * 1%); border-radius: inherit; background: var(--ds-machine); }
+.meter > b { position: absolute; top: -4px; bottom: -4px; inset-inline-start: calc(var(--t) * 1%); width: 2px; background: var(--ds-data-4); border-radius: 1px; }
+.chart { display: grid; grid-template-columns: auto 1fr; gap: 8px 10px; padding-top: 12px; }
+.ticks { position: relative; height: 160px; min-width: 3ch; font-size: var(--ds-type-meta-size); line-height: 1; color: var(--ds-ink-muted); font-variant-numeric: var(--ds-type-numeric); }
+.ticks span { position: absolute; inset-inline-end: 0; top: calc(var(--p) * 1%); transform: translateY(-50%); }
+.plot { position: relative; display: grid; grid-template-columns: repeat(6, 1fr); align-items: end; gap: 14px; height: 160px; padding: 0 6px; border-bottom: 1px solid var(--ds-line-strong); background: linear-gradient(var(--ds-data-grid) 1px, transparent 1px) 0 0 / 100% 20%; }
+.plot > i { height: calc(var(--v) * 1%); min-height: 2px; border-radius: 6px 6px 2px 2px; background: var(--ds-data-1); }
+.plot > i.you { background: var(--ds-data-user); }
+.xl { grid-column: 2; display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; padding: 0 6px; text-align: center; font-size: var(--ds-type-meta-size); line-height: var(--ds-type-meta-leading); color: var(--ds-ink-muted); }
+.xl .you { color: var(--ds-ink-strong); font-weight: 600; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 16px; }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.key { width: 12px; height: 12px; border-radius: 3px 3px 2px 2px; background: var(--k); }
+.insight { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px 16px; padding: 20px var(--ds-panel-pad) var(--ds-panel-pad); border: 1px solid var(--ds-line); border-radius: var(--ds-radius-panel); background: var(--ds-surface-base); overflow: hidden; }
+.insight .ds-sweep { position: absolute; inset-inline: 0; top: 0; }
+.disc { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--ds-machine-soft); color: var(--ds-machine-ink); }
+.insight .body { display: grid; gap: 8px; }
+.insight .acts { grid-column: 2; display: flex; flex-wrap: wrap; gap: 8px; margin-inline-start: -8px; }
+
+/* ----- feedback ----- */
+.alert { --b: var(--ds-info-soft); --f: var(--ds-info-fg); --l: var(--ds-info-line); display: flex; gap: 12px; padding: 12px 16px; border-radius: var(--ds-radius-control); background: var(--b); color: var(--ds-ink); box-shadow: inset calc(4px * var(--ds-dir)) 0 0 var(--l); }
+.alert .i { color: var(--f); margin-top: 0; }
+.alert b { color: var(--f); font-weight: 600; }
+.alert.success { --b: var(--ds-success-soft); --f: var(--ds-success-fg); --l: var(--ds-success-line); }
+.alert.warning { --b: var(--ds-warning-soft); --f: var(--ds-warning-fg); --l: var(--ds-warning-line); }
+.alert.error { --b: var(--ds-error-soft); --f: var(--ds-error-fg); --l: var(--ds-error-line); }
+.toast { display: flex; align-items: center; gap: 12px; padding: 8px 8px 8px 16px; padding-inline: 16px 8px; border-radius: var(--ds-radius-control); }
+.toast .i.m { color: var(--ds-machine); }
+.toast p { flex: 1; min-width: 0; }
+.tip { position: relative; display: inline-block; padding: 6px 10px; border-radius: var(--ds-radius-sm); }
+.tip::after { content: ""; position: absolute; top: 100%; inset-inline-start: 16px; border: 6px solid transparent; border-top-color: var(--ds-surface-inverse); }
+
+/* ----- depth ----- */
+.depth { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 16px; }
+.stage { position: relative; display: grid; place-items: center; min-height: 200px; padding: 24px; border-radius: var(--ds-radius-panel); background: var(--ds-surface-sunken); overflow: hidden; }
+.wide { grid-column: 1 / -1; }
+.cap { display: flex; justify-content: space-between; gap: 8px; margin-top: 10px; }
+.cap b { font-weight: 600; color: var(--ds-ink-strong); }
+.card { width: 100%; max-width: 15rem; padding: 16px 18px; border-radius: var(--ds-radius-panel); }
+.card.flat { background: var(--ds-surface-base); border: 1px solid var(--ds-line); }
+.card .bar { height: 10px; margin-top: 10px; border-radius: 999px; background: var(--ds-data-track); }
+.card .bar.w2 { width: 70%; }
+.menu { width: 100%; max-width: 15rem; padding: 6px; border-radius: var(--ds-radius-control); }
+.menu button { display: flex; align-items: center; gap: 12px; width: 100%; min-height: var(--ds-target-min); padding: 0 12px; border: 0; border-radius: calc(var(--ds-radius-control) - 4px); background: none; color: var(--ds-ink); text-align: start; cursor: pointer; }
+.menu button:hover, .menu button.is-hover { background: var(--ds-surface-hover); }
+.menu button:focus-visible { outline-offset: -2px; }
+.menu .danger { color: var(--ds-error-text); }
+.menu hr { height: 1px; margin: 6px 0; border: 0; background: var(--ds-line); }
+.scene { position: absolute; inset: 0; padding: 20px; display: grid; gap: 10px; align-content: start; }
+.scene i { display: block; height: 12px; border-radius: 999px; background: var(--ds-data-track); }
+.scene i:nth-child(2n) { width: 70%; }
+.scrim { position: absolute; inset: 0; background: var(--ds-scrim); }
+.dialog { position: relative; width: 100%; max-width: 17rem; padding: 20px; border-radius: var(--ds-radius-overlay); }
+.dialog .row { justify-content: flex-end; margin-top: 16px; }
+.veil-scroll { position: relative; width: 100%; height: 200px; overflow: auto; border-radius: var(--ds-radius-control); background: var(--ds-surface-base); border: 1px solid var(--ds-line); }
+.veil-bar { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; padding: 0 16px; border-bottom: 1px solid var(--ds-line); font-weight: 600; color: var(--ds-ink-strong); }
+.veil-scroll .content { display: grid; gap: 10px; padding: 16px; }
+.veil-scroll .content p { display: flex; justify-content: space-between; gap: 12px; padding: 10px 12px; border-radius: var(--ds-radius-sm); background: var(--ds-surface-sunken); }
+.veil-scroll .content p:nth-child(3n+1) { background: var(--ds-machine-soft); color: var(--ds-machine-ink); }
+.veil-scroll .content p:nth-child(3n+2) { background: var(--ds-user-soft); color: var(--ds-user-ink); }
+
+/* ----- motion ----- */
+.dur { display: grid; gap: 10px; }
+.dur > div { display: grid; grid-template-columns: 11rem minmax(0, 1fr) 4.5rem; align-items: center; gap: 12px; }
+.dur code { color: var(--ds-ink); }
+.track { position: relative; height: 24px; }
+.track::before { content: ""; position: absolute; inset-inline: 0; top: 11px; height: 2px; border-radius: 2px; background: var(--ds-line); }
+.track > s { position: absolute; top: 11px; height: 2px; inset-inline-start: 0; width: calc(var(--w) * 1%); background: var(--ds-line-strong); border-radius: 2px; }
+.track > b { position: absolute; top: 4px; inset-inline-start: 0; width: 16px; height: 16px; margin-inline-start: -8px; border-radius: 50%; background: var(--ds-machine); box-shadow: 0 0 0 3px var(--ds-surface-canvas); transition-property: inset-inline-start; transition-duration: var(--d); transition-timing-function: var(--e); }
+.dur.go .track > b { inset-inline-start: calc(var(--w) * 1%); }
+.demos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 16px; margin-top: 24px; }
+.demo { position: relative; min-height: 180px; padding: 16px; border-radius: var(--ds-radius-panel); background: var(--ds-surface-sunken); overflow: hidden; }
+.demo .menu { position: absolute; top: 72px; inset-inline-start: 16px; max-width: 12rem; }
+.drawer { position: absolute; inset-block: 0; inset-inline-end: 0; width: 54%; padding: 16px; border-start-start-radius: var(--ds-radius-overlay); border-end-start-radius: var(--ds-radius-overlay); }
+.drawer .bar { height: 10px; margin-top: 12px; border-radius: 999px; background: var(--ds-data-track); }
+.mini-bars { display: flex; align-items: flex-end; gap: 10px; height: 110px; margin-top: 12px; border-bottom: 1px solid var(--ds-line-strong); }
+.mini-bars i { flex: 1; height: calc(var(--v) * 1%); border-radius: 5px 5px 2px 2px; background: var(--ds-data-1); }
+.mini-bars i.you { background: var(--ds-data-user); }
+
+/* ----- focus and targets ----- */
+.ring { outline: var(--ds-focus-width) solid var(--ds-focus); outline-offset: var(--ds-focus-offset); }
+.ring.o0 { outline-offset: 0; }
+.ring.in { outline-offset: -2px; }
+.focus-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); gap: 20px; align-items: end; }
+.focus-grid > div { display: grid; gap: 10px; justify-items: start; }
+.hit { position: relative; display: inline-grid; place-items: center; }
+.hit::after { content: ""; position: absolute; inset: 0; border: 1.5px dashed var(--ds-focus); border-radius: 4px; pointer-events: none; }
+.hit.clear::before { content: ""; position: absolute; inset: -8px; border: 1px dotted var(--ds-line-strong); border-radius: 6px; pointer-events: none; }
+
+/* ----- RTL ----- */
+.rtl-demo { display: grid; gap: 16px; }
+.progress { height: 8px; border-radius: 999px; background: var(--ds-data-track); overflow: hidden; }
+.progress > i { display: block; width: 72%; height: 100%; border-radius: inherit; background: var(--ds-machine); }
+
+/* ----- contrast ----- */
+.cr { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); gap: 0 20px; }
+.cr > div { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; align-items: center; gap: 12px; min-height: 56px; padding: 6px 0; border-bottom: 1px solid var(--ds-line); line-height: 1.35; }
+.cr .aa { display: grid; place-items: center; width: 44px; height: 32px; border-radius: var(--ds-radius-sm); font-weight: 700; box-shadow: inset 0 0 0 1px var(--ds-line); }
+.cr .aa.g { font-size: 0; }
+.cr .aa.g::before { content: ""; width: 20px; height: 20px; border-radius: 4px; background: var(--fg); }
+.cr .v { font-weight: 600; color: var(--ds-ink-strong); font-variant-numeric: var(--ds-type-numeric); }
+.cr .fail { color: var(--ds-error-text); }
+.cr-note { margin-top: 12px; }
+
+/* ----- fonts ----- */
+.fonts { padding: 40px 32px 56px; border-top: 1px solid var(--ds-line); }
+.fonts table { width: 100%; border-collapse: collapse; }
+.fonts th, .fonts td { padding: 12px 16px 12px 0; padding-inline: 0 16px; border-bottom: 1px solid var(--ds-line); text-align: start; vertical-align: baseline; }
+.fonts thead th { font-weight: 500; color: var(--ds-ink-muted); }
+.fonts .sample { font-size: 1.25rem; color: var(--ds-ink-strong); }
+
+@media (max-width: 40rem) {
+  .top { padding: 8px 16px; }
+  .pane-head, .sec, .fonts { padding-inline: 16px; }
+  .pane-head { top: 0; position: relative; }
+  .dur > div { grid-template-columns: minmax(0, 1fr) 4rem; }
+  .dur > div > .track { grid-column: 1 / -1; grid-row: 2; }
+  .appbar .name, .appbar kbd { display: none; }
+  .fonts table { display: block; overflow-x: auto; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20.5 20.5-4.5-4.5"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 1.5h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5.5" cy="12" r="1.25" fill="currentColor"/><circle cx="12" cy="12" r="1.25" fill="currentColor"/><circle cx="18.5" cy="12" r="1.25" fill="currentColor"/></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24"><path d="m9 5.5 6.5 6.5L9 18.5"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5.5M6 11l6-6 6 6"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><circle cx="12" cy="7.75" r=".6" fill="currentColor"/></symbol>
+  <symbol id="i-ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3.5 2.8 19.5h18.4z"/><path d="M12 9.5v4.5"/><circle cx="12" cy="16.75" r=".6" fill="currentColor"/></symbol>
+  <symbol id="i-err" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><circle cx="12" cy="16.25" r=".6" fill="currentColor"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 2.5c.7 4.9 3.1 7.3 8 8-4.9.7-7.3 3.1-8 8-.7-4.9-3.1-7.3-8-8 4.9-.7 7.3-3.1 8-8zM19 15.5c.3 1.9 1.1 2.7 3 3-1.9.3-2.7 1.1-3 3-.3-1.9-1.1-2.7-3-3 1.9-.3 2.7-1.1 3-3z"/></symbol>
+  <symbol id="i-mark" viewBox="0 0 24 24"><path d="M12 3 20 7.5v9L12 21l-8-4.5v-9z"/><path d="M12 12 20 7.5M12 12v9M12 12 4 7.5"/></symbol>
+  <symbol id="i-compact" viewBox="0 0 24 24"><path d="M4 5h16M4 9.7h16M4 14.3h16M4 19h16"/></symbol>
+  <symbol id="i-comfy" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  <symbol id="i-spacious" viewBox="0 0 24 24"><rect x="4" y="4.5" width="16" height="6" rx="1.5"/><rect x="4" y="13.5" width="16" height="6" rx="1.5"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></symbol>
+  <symbol id="i-still" viewBox="0 0 24 24"><path d="M3 8h6M2 12h6M3 16h6"/><circle cx="15.5" cy="12" r="5.5"/><path d="M13.5 10v4M17.5 10v4"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+</svg>
+
+<header class="top ds-material-veil">
+  <h1 class="t-title-2">Product UI <span class="ver">2.0.0</span></h1>
+  <div class="tools">
+    <div class="seg icons" role="radiogroup" aria-label="Density" id="density" style="--n:3;--k:1">
+      <span class="thumb ds-glide" aria-hidden="true"></span>
+      <button type="button" role="radio" aria-checked="false" tabindex="-1" data-v="compact" aria-label="Compact" title="Compact"><svg class="i s20"><use href="#i-compact"/></svg></button>
+      <button type="button" role="radio" aria-checked="true" tabindex="0" data-v="comfortable" aria-label="Comfortable" title="Comfortable"><svg class="i s20"><use href="#i-comfy"/></svg></button>
+      <button type="button" role="radio" aria-checked="false" tabindex="-1" data-v="spacious" aria-label="Spacious" title="Spacious"><svg class="i s20"><use href="#i-spacious"/></svg></button>
+    </div>
+    <button type="button" class="btn outline icon" id="reduce" aria-pressed="false" aria-label="Reduce motion" title="Reduce motion"><svg class="i"><use href="#i-still"/></svg></button>
+    <button type="button" class="btn user icon" id="replay" aria-label="Replay motion" title="Replay motion"><svg class="i"><use href="#i-play"/></svg></button>
+  </div>
+</header>
+
+<main class="panes">
+  <section class="pane" id="pane-light" aria-labelledby="h-l"></section>
+  <section class="pane" id="pane-dark" data-ds-theme="dark" aria-labelledby="h-d"></section>
+</main>
+
+<section class="fonts" aria-labelledby="h-fonts">
+  <div class="sec-h"><h2 class="t-title-3" id="h-fonts">Families and fallbacks</h2></div>
+  <table>
+    <thead><tr><th>Family</th><th>Role</th><th>On this device</th><th>Sample</th></tr></thead>
+    <tbody id="font-rows"></tbody>
+  </table>
+</section>
+
+<template id="pane-tpl">
+  <div class="pane-head ds-material-veil">
+    <svg class="i"><use href="#i-{icon}"/></svg><h2 class="t-title-3" id="h-{p}">{name}</h2><code>{attr}</code>
+  </div>
+
+  <section class="sec" aria-labelledby="{p}-roles">
+    <div class="sec-h"><span class="n">01</span><h3 class="t-title-3" id="{p}-roles">Colour roles</h3></div>
+    <div class="sw" data-swatches></div>
+  </section>
+
+  <section class="sec" aria-labelledby="{p}-type">
+    <div class="sec-h"><span class="n">02</span><h3 class="t-title-3" id="{p}-type">Type roles</h3></div>
+    <div class="stack" style="gap:18px">
+      <div><p class="meta">display, 48 to 76</p><p class="t-display">Requests</p></div>
+      <div><p class="meta">headline, 32 to 48</p><p class="t-headline">Overview</p></div>
+      <div class="two" style="align-items:end">
+        <div><p class="meta">title-1, 26 to 32</p><p class="t-title-1">Open requests</p></div>
+        <div><p class="meta">figure, 32 to 40</p><p class="t-figure">1,284</p></div>
+      </div>
+      <div class="two">
+        <div><p class="meta">title-2, 20 to 26</p><p class="t-title-2">This month</p></div>
+        <div><p class="meta">title-3, 20</p><p class="t-title-3">Site inspection</p></div>
+      </div>
+      <div><p class="meta">lead, 18 to 20</p><p class="t-lead">Everything waiting on you, in the order it is due.</p></div>
+      <div><p class="meta">body, 16 / paragraph 1.5</p><p class="t-body" style="max-width:var(--ds-measure)">Requests you submit appear here with their status and the next step. We tell you when anything needs your answer.</p></div>
+      <div class="two">
+        <div><p class="meta">label, 16 / 500</p><p class="t-label">Save draft</p></div>
+        <div><p class="meta">meta, 14</p><p class="t-meta">Updated 09:42</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="{p}-comp">
+    <div class="sec-h"><span class="n">03</span><h3 class="t-title-3" id="{p}-comp">Components</h3></div>
+
+    <div class="appbar ds-material-veil">
+      <span class="mark" aria-hidden="true"><svg class="i"><use href="#i-mark"/></svg></span>
+      <span class="name">Product UI</span>
+      <button type="button" class="search"><svg class="i s20"><use href="#i-search"/></svg><span>Search</span><kbd>Ctrl K</kbd></button>
+      <button type="button" class="btn ghost icon" aria-label="Notifications, 3 new" title="Notifications"><svg class="i"><use href="#i-bell"/></svg><span class="dot"></span></button>
+      <span class="avatar" aria-label="Your account" role="img">AK</span>
+    </div>
+
+    <h4 class="sub">Actions</h4>
+    <div class="row">
+      <button type="button" class="btn user">Submit</button>
+      <button type="button" class="btn">Save draft</button>
+      <button type="button" class="btn soft">Export</button>
+      <button type="button" class="btn outline">Cancel</button>
+      <button type="button" class="btn link">View all</button>
+    </div>
+
+    <h4 class="sub">Selection</h4>
+    <div class="row">
+      <div class="seg" role="radiogroup" aria-label="Period" data-seg style="--n:3;--k:1">
+        <span class="thumb ds-glide" aria-hidden="true"></span>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1">Day</button>
+        <button type="button" role="radio" aria-checked="true" tabindex="0">Week</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1">Month</button>
+      </div>
+      <button type="button" class="chip" aria-pressed="true" data-chip><svg class="i s20"><use href="#i-check"/></svg>Mine</button>
+      <button type="button" class="chip" aria-pressed="false" data-chip><svg class="i s20"><use href="#i-check"/></svg>Overdue</button>
+      <span class="chip applied">Status: open<button type="button" class="x" aria-label="Remove status: open"><svg class="i s16"><use href="#i-x"/></svg></button></span>
+    </div>
+
+    <h4 class="sub">Forms</h4>
+    <div class="two">
+      <div class="field"><label for="{p}-ref">Reference</label><input class="input" id="{p}-ref" value="REQ-2041"></div>
+      <div class="field"><label for="{p}-due">Due date</label><input class="input" id="{p}-due" value="31/02/2026" aria-invalid="true" aria-describedby="{p}-due-e"><p class="err" id="{p}-due-e"><svg class="i s20"><use href="#i-err"/></svg>Enter a real date, as DD/MM/YYYY</p></div>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <label class="check"><input type="checkbox" class="cbx" checked>Email me updates</label>
+      <label class="check"><input type="checkbox" class="toggle" role="switch" checked>Notifications</label>
+    </div>
+
+    <h4 class="sub" id="{p}-cap">Work queue</h4>
+    <div class="tbl-wrap" tabindex="0" role="region" aria-labelledby="{p}-cap">
+      <table class="tbl" aria-labelledby="{p}-cap">
+        <thead><tr><th class="c-sel ds-material-veil"><input type="checkbox" class="cbx" aria-label="Select all" data-all></th><th scope="col" class="ds-material-veil">Request</th><th scope="col" class="ds-material-veil">Status</th><th scope="col" class="c-num ds-material-veil">Days open</th><th class="c-act ds-material-veil"><span class="sr">Actions</span></th></tr></thead>
+        <tbody data-rows>
+          <tr><td class="c-sel"><input type="checkbox" class="cbx" aria-label="Select Site inspection"></td><th scope="row">Site inspection</th><td><span class="badge success">On track</span></td><td class="c-num">3</td><td class="c-act"><button type="button" class="btn ghost icon" aria-label="More for Site inspection"><svg class="i s20"><use href="#i-more"/></svg></button></td></tr>
+          <tr class="is-chosen"><td class="c-sel"><input type="checkbox" class="cbx" aria-label="Select Permit renewal" checked></td><th scope="row">Permit renewal</th><td><span class="badge warning">At risk</span></td><td class="c-num">12</td><td class="c-act"><button type="button" class="btn ghost icon" aria-label="More for Permit renewal"><svg class="i s20"><use href="#i-more"/></svg></button></td></tr>
+          <tr><td class="c-sel"><input type="checkbox" class="cbx" aria-label="Select Budget review"></td><th scope="row">Budget review</th><td><span class="badge info">In review</span></td><td class="c-num">5</td><td class="c-act"><button type="button" class="btn ghost icon" aria-label="More for Budget review"><svg class="i s20"><use href="#i-more"/></svg></button></td></tr>
+          <tr><td class="c-sel"><input type="checkbox" class="cbx" aria-label="Select Asset transfer"></td><th scope="row">Asset transfer</th><td><span class="badge error">Overdue</span></td><td class="c-num">21</td><td class="c-act"><button type="button" class="btn ghost icon" aria-label="More for Asset transfer"><svg class="i s20"><use href="#i-more"/></svg></button></td></tr>
+          <tr><td class="c-sel"><input type="checkbox" class="cbx" aria-label="Select Contract change"></td><th scope="row">Contract change</th><td><span class="badge">Draft</span></td><td class="c-num">1</td><td class="c-act"><button type="button" class="btn ghost icon" aria-label="More for Contract change"><svg class="i s20"><use href="#i-more"/></svg></button></td></tr>
+          <tr><td class="c-sel"><input type="checkbox" class="cbx" aria-label="Select Access request"></td><th scope="row">Access request</th><td><span class="badge success">On track</span></td><td class="c-num">2</td><td class="c-act"><button type="button" class="btn ghost icon" aria-label="More for Access request"><svg class="i s20"><use href="#i-more"/></svg></button></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="bulk ds-material-float-inverse" role="toolbar" aria-label="Bulk actions" data-bulk>
+      <span class="count" aria-live="polite" data-count>1 selected</span>
+      <button type="button">Assign</button><button type="button" class="danger">Delete</button>
+      <button type="button" aria-label="Clear selection" title="Clear selection" data-clear><svg class="i s20"><use href="#i-x"/></svg></button>
+    </div>
+
+    <h4 class="sub">Dashboard</h4>
+    <div class="two">
+      <div class="panel kpi">
+        <span class="lbl">Your requests closed on time</span>
+        <span class="t-figure" data-kpi>43 of 50</span>
+        <span class="delta" data-delta><svg class="i s20"><use href="#i-up"/></svg><bdi dir="ltr">+3</bdi> against last month, better</span>
+        <div class="meter" role="img" aria-label="43 of your 50 requests closed on time, against a target of 45." style="--v:86;--t:90" data-meter><i class="ds-settle"></i><b></b></div>
+        <span class="meta" data-note>86%, against a target of 45 of 50 (90%).</span>
+        <p class="t-label" style="margin-top:12px;color:var(--ds-ink-strong)">Last 6 months</p>
+        <svg class="spark" viewBox="0 0 240 56" role="img" aria-label="The same six months as a trend line, from 28 to 43 of 50." data-spark><polyline points="4,44.0 50,28.1 96,37.2 142,12.3 188,16.8 234,10.0"/><circle cx="234" cy="10.0" r="5"/></svg>
+      </div>
+      <div class="panel">
+        <div class="panel-h"><div><p class="t-label" style="color:var(--ds-ink-strong)">Closed on time</p><p class="meta">By month, out of 50 each month</p></div></div>
+        <div class="chart">
+          <div class="ticks" aria-hidden="true"><span style="--p:0">50</span><span style="--p:20">40</span><span style="--p:40">30</span><span style="--p:60">20</span><span style="--p:80">10</span></div>
+          <div class="plot" role="img" aria-label="Requests you closed on time in each of the last six months, out of 50 each month: 28, 35, 31, 42, 40, then 43 this month." data-plot>
+            <i class="ds-settle" style="--v:56"></i><i class="ds-settle" style="--v:70"></i><i class="ds-settle" style="--v:62"></i><i class="ds-settle" style="--v:84"></i><i class="ds-settle" style="--v:80"></i><i class="ds-settle you" style="--v:86"></i>
+          </div>
+          <div class="xl" aria-hidden="true"><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span class="you">Sep</span></div>
+        </div>
+        <div class="legend"><span><i class="key" style="--k:var(--ds-data-1)"></i>Earlier months</span><span><i class="key" style="--k:var(--ds-data-user)"></i>This month</span></div>
+      </div>
+    </div>
+    <div class="insight" style="margin-top:16px">
+      <div class="ds-sweep is-done" aria-hidden="true"></div>
+      <span class="disc" aria-hidden="true"><svg class="i"><use href="#i-spark"/></svg></span>
+      <div class="body"><span class="mchip"><svg class="i s16"><use href="#i-spark"/></svg>Generated</span><p aria-live="polite">Requests in review rose from 22 to 26 this month, mostly permit renewals waiting on one approver.</p></div>
+      <div class="acts"><button type="button" class="btn link">Show the requests</button></div>
+    </div>
+
+    <h4 class="sub">Feedback</h4>
+    <div class="stack" style="gap:10px">
+      <div class="alert" role="status"><svg class="i"><use href="#i-info"/></svg><p><b>Maintenance</b> on Sunday, 06:00 to 08:00.</p></div>
+      <div class="alert success" role="status"><svg class="i"><use href="#i-ok"/></svg><p><b>Request sent.</b> We will reply within 2 days.</p></div>
+      <div class="alert warning" role="status"><svg class="i"><use href="#i-warn"/></svg><p><b>2 requests</b> are due tomorrow.</p></div>
+      <div class="alert error" role="alert"><svg class="i"><use href="#i-err"/></svg><p><b>We could not upload the file.</b> Try a PDF under 10 MB.</p></div>
+    </div>
+    <div class="row" style="margin-top:16px;align-items:flex-end">
+      <div class="toast ds-material-float" role="status" style="flex:1;min-width:16rem"><svg class="i m"><use href="#i-spark"/></svg><p>Summary ready</p><button type="button" class="btn link">View</button><button type="button" class="btn ghost icon" aria-label="Dismiss"><svg class="i s20"><use href="#i-x"/></svg></button></div>
+      <span class="tip ds-material-float-inverse" role="tooltip">Search, Ctrl K</span>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="{p}-depth">
+    <div class="sec-h"><span class="n">04</span><h3 class="t-title-3" id="{p}-depth">Depth and materials</h3></div>
+    <div class="depth">
+      <div><div class="stage"><div class="card flat"><p class="t-label">Flat</p><div class="bar"></div><div class="bar w2"></div></div></div><p class="cap"><b>Flat</b><code>line, no shadow</code></p></div>
+      <div><div class="stage"><div class="card ds-material-raised"><p class="t-label">Raised</p><div class="bar"></div><div class="bar w2"></div></div></div><p class="cap"><b>Raised</b><code>elevation-raised</code></p></div>
+      <div><div class="stage"><div class="menu ds-material-float" role="menu" aria-label="Row actions"><button type="button" role="menuitem" class="is-hover">Assign</button><button type="button" role="menuitem">Duplicate</button><hr><button type="button" role="menuitem" class="danger">Delete</button></div></div><p class="cap"><b>Float</b><code>elevation-float</code></p></div>
+      <div><div class="stage"><div class="scene" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="scrim"></div><div class="dialog ds-material-overlay" role="dialog" aria-label="Delete 1 request?"><p class="t-title-3">Delete 1 request?</p><p class="meta" style="margin-top:4px">You cannot undo this.</p><div class="row"><button type="button" class="btn outline">Keep</button><button type="button" class="btn danger">Delete</button></div></div></div><p class="cap"><b>Overlay</b><code>elevation-overlay, scrim</code></p></div>
+      <div class="wide">
+        <div class="veil-scroll" tabindex="0" role="region" aria-label="Veil example">
+          <div class="veil-bar ds-material-veil">Sticky bar<code>surface-veil, blur 16</code></div>
+          <div class="content"><p><span>Machine summary</span><span class="num">09:10</span></p><p><span>Your choice</span><span class="num">09:12</span></p><p><span>Budget review</span><span class="num">09:20</span></p><p><span>Machine summary</span><span class="num">09:31</span></p><p><span>Your choice</span><span class="num">09:40</span></p><p><span>Access request</span><span class="num">09:52</span></p></div>
+        </div>
+        <p class="cap"><b>Veil</b><code>sticky chrome only</code></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="{p}-motion">
+    <div class="sec-h"><span class="n">05</span><h3 class="t-title-3" id="{p}-motion">Motion</h3></div>
+    <div class="dur" data-dur>
+      <div style="--w:18.75;--d:var(--ds-duration-feedback);--e:var(--ds-ease-standard)"><code>feedback</code><span class="track"><s></s><b></b></span><span class="meta num" data-ms="--ds-duration-feedback"></span></div>
+      <div style="--w:31.25;--d:var(--ds-duration-state);--e:var(--ds-ease-standard)"><code>state, glide</code><span class="track"><s></s><b></b></span><span class="meta num" data-ms="--ds-duration-state"></span></div>
+      <div style="--w:37.5;--d:var(--ds-duration-float-in);--e:var(--ds-ease-enter)"><code>float in</code><span class="track"><s></s><b></b></span><span class="meta num" data-ms="--ds-duration-float-in"></span></div>
+      <div style="--w:25;--d:var(--ds-duration-float-out);--e:var(--ds-ease-exit)"><code>float out</code><span class="track"><s></s><b></b></span><span class="meta num" data-ms="--ds-duration-float-out"></span></div>
+      <div style="--w:56.25;--d:var(--ds-duration-panel-in);--e:var(--ds-ease-enter)"><code>panel in</code><span class="track"><s></s><b></b></span><span class="meta num" data-ms="--ds-duration-panel-in"></span></div>
+      <div style="--w:100;--d:var(--ds-duration-data);--e:var(--ds-ease-data)"><code>settle</code><span class="track"><s></s><b></b></span><span class="meta num" data-ms="--ds-duration-data"></span></div>
+    </div>
+    <div class="demos">
+      <div class="demo"><p class="t-label">Float</p><p class="meta">rise 6px, ease enter</p><div class="menu ds-material-float ds-float-enter" data-replay aria-hidden="true"><button type="button" tabindex="-1">Assign</button><button type="button" tabindex="-1">Duplicate</button></div></div>
+      <div class="demo"><p class="t-label">Panel</p><p class="meta">from the end</p><div class="drawer ds-material-overlay ds-panel-enter" data-replay aria-hidden="true"><p class="t-label">Details</p><div class="bar"></div><div class="bar" style="width:70%"></div></div></div>
+      <div class="demo"><p class="t-label">Settle</p><p class="meta">values ease to new sizes</p><div class="mini-bars" data-mini aria-hidden="true"><i class="ds-settle" style="--v:82"></i><i class="ds-settle" style="--v:74"></i><i class="ds-settle" style="--v:90"></i><i class="ds-settle you" style="--v:86"></i></div></div>
+      <div class="demo"><p class="t-label">Sweep</p><p class="meta">the machine is working</p><div class="ds-sweep" style="margin-top:28px"></div><div class="insight" style="margin-top:0;border-start-start-radius:0;border-start-end-radius:0;padding:14px"><span class="disc" aria-hidden="true"><svg class="i s20"><use href="#i-spark"/></svg></span><p class="meta" style="align-self:center">Writing a summary</p></div></div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="{p}-focus">
+    <div class="sec-h"><span class="n">06</span><h3 class="t-title-3" id="{p}-focus">Focus and targets</h3></div>
+    <div class="focus-grid">
+      <div><span class="btn user ring">Submit</span><code>offset 2</code></div>
+      <div><span class="chip ring o0" style="border-color:var(--ds-user-line);background:var(--ds-user-soft)">Mine</span><code>offset 0</code></div>
+      <div><span class="menu ds-material-float" style="display:block;max-width:10rem"><span class="btn ghost ring in" style="width:100%;justify-content:flex-start">Assign</span></span><code>inset -2</code></div>
+      <div><span class="hit"><span class="btn outline icon" aria-hidden="true"><svg class="i"><use href="#i-bell"/></svg></span></span><code>target 40</code></div>
+      <div><span class="chip applied" style="padding-inline-end:8px">Open<span class="hit clear" style="margin-inline-start:8px"><span class="x" style="display:grid;place-items:center;width:24px;height:24px"><svg class="i s16"><use href="#i-x"/></svg></span></span></span><code>floor 24, clear 8</code></div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="{p}-rtl">
+    <div class="sec-h"><span class="n">07</span><h3 class="t-title-3" id="{p}-rtl">RTL mirroring</h3></div>
+    <div class="panel rtl-demo" dir="rtl" lang="ar">
+      <div class="panel-h"><div><p class="t-label" style="color:var(--ds-ink-strong)">الطلبات المفتوحة</p><p class="t-figure">1,284</p></div><span class="delta"><svg class="i s20"><use href="#i-up"/></svg><bdi dir="ltr">+9</bdi> هذا الأسبوع</span></div>
+      <div class="progress" role="img" aria-label="72%"><i></i></div>
+      <div class="row" style="justify-content:space-between">
+        <label class="check"><input type="checkbox" class="toggle" role="switch" checked>الإشعارات</label>
+        <div class="seg" role="radiogroup" aria-label="الفترة" data-seg style="--n:2;--k:0"><span class="thumb ds-glide" aria-hidden="true"></span><button type="button" role="radio" aria-checked="true" tabindex="0">أسبوع</button><button type="button" role="radio" aria-checked="false" tabindex="-1">شهر</button></div>
+        <button type="button" class="btn outline">التالي<svg class="i s20 flip"><use href="#i-next"/></svg></button>
+      </div>
+    </div>
+    <p class="meta" style="margin-top:10px">Start is on the right: the progress fill, toggle thumb, segment thumb and "next" arrow mirror; the signed number stays <bdi dir="ltr">+9</bdi>.</p>
+  </section>
+
+  <section class="sec" aria-labelledby="{p}-cr" style="padding-bottom:48px">
+    <div class="sec-h"><span class="n">08</span><h3 class="t-title-3" id="{p}-cr">Contrast, measured here</h3></div>
+    <div class="cr" data-cr></div>
+    <p class="meta cr-note" data-cr-note></p>
+  </section>
+</template>
+
+<script>
+(function () {
+  var panes = [
+    { el: document.getElementById('pane-light'), p: 'l', name: 'Light', icon: 'sun', attr: 'default' },
+    { el: document.getElementById('pane-dark'), p: 'd', name: 'Dark', icon: 'moon', attr: 'data-ds-theme="dark"' }
+  ];
+  var tpl = document.getElementById('pane-tpl').innerHTML;
+  panes.forEach(function (x) {
+    x.el.innerHTML = tpl.replace(/\{p\}/g, x.p).replace(/\{name\}/g, x.name).replace(/\{icon\}/g, x.icon).replace(/\{attr\}/g, x.attr.replace(/"/g, '&quot;'));
+  });
+
+  /* ---- colour maths: resolve a role in a pane, composite translucent values, WCAG ratio ---- */
+  function tok(el, name) { return getComputedStyle(el).getPropertyValue('--ds-' + name).trim(); }
+  function rgb(h) { h = h.replace('#', ''); return [0, 2, 4, 6].map(function (i) { return i < h.length ? parseInt(h.substr(i, 2), 16) : 255; }); }
+  function over(fg, bg) { var f = rgb(fg), b = rgb(bg), a = f[3] / 255; return '#' + [0, 1, 2].map(function (i) { return ('0' + Math.round(f[i] * a + b[i] * (1 - a)).toString(16)).slice(-2); }).join('').toUpperCase(); }
+  function lum(h) { return rgb(h).slice(0, 3).map(function (c) { c /= 255; return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }).reduce(function (s, c, i) { return s + c * [0.2126, 0.7152, 0.0722][i]; }, 0); }
+  function ratio(a, b) { var x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); }
+  function solid(el, name) {
+    var v = tok(el, name);
+    if (name === 'surface-float') return over(tok(el, 'tint-float'), v);
+    return v.length > 7 ? over(v, tok(el, 'surface-base')) : v;
+  }
+
+  var swatches = [
+    ['surface-canvas'], ['surface-sunken'], ['surface-base'], ['surface-float'], ['surface-inverse', 'ink-inverse'],
+    ['surface-hover'], ['ink'], ['ink-strong'], ['ink-muted'], ['line'], ['line-strong'], ['ink-action', 'ink-action-on'],
+    ['user', 'user-on'], ['user-soft', 'user-ink'], ['machine'], ['machine-soft', 'machine-ink'], ['focus'],
+    ['success-soft', 'success-fg'], ['info-soft', 'info-fg'], ['warning-soft', 'warning-fg'], ['error-soft', 'error-fg'],
+    ['data-1'], ['data-2'], ['data-3'], ['data-4'], ['data-user'], ['data-pos'], ['data-neg']
+  ];
+  var text = [
+    ['ink', 'surface-base', 'Body text'], ['ink', 'surface-canvas', 'Body on the page'], ['ink', 'surface-sunken', 'Body in a well'], ['ink-strong', 'surface-base', 'Headings'],
+    ['ink-muted', 'surface-base', 'Secondary text'], ['ink-muted', 'surface-sunken', 'Secondary in a well'], ['ink-muted', 'surface-hover', 'Secondary, hovered row'], ['ink-muted', 'surface-pressed', 'Secondary, pressed row'],
+    ['ink-muted', 'surface-float', 'Secondary in a menu'], ['ink', 'user-soft', 'Body on a chosen row'], ['ink-muted', 'user-soft', 'Secondary, chosen row'], ['ink-inverse', 'surface-inverse', 'Tooltip'],
+    ['user-on', 'user', 'Primary button'], ['user-on', 'user-hover', 'Primary, hover'], ['user-ink', 'surface-base', 'Accent text'], ['user-ink', 'user-soft', 'Text on a chosen item'],
+    ['ink-action-on', 'ink-action', 'Secondary button'], ['machine-ink', 'surface-base', 'Machine text'], ['machine-ink', 'machine-soft', 'Machine chip'],
+    ['success-fg', 'success-soft', 'Success, soft'], ['success-on', 'success-solid', 'Success, solid'], ['info-fg', 'info-soft', 'Info, soft'], ['info-on', 'info-solid', 'Info, solid'],
+    ['warning-fg', 'warning-soft', 'Warning, soft'], ['warning-on', 'warning-solid', 'Warning, solid'], ['error-fg', 'error-soft', 'Error, soft'], ['error-on', 'error-solid', 'Error, solid'],
+    ['error-text', 'surface-base', 'Error message'], ['error-on-inverse', 'surface-inverse', 'Error on inverse']
+  ];
+  var graphic = [
+    ['line-strong', 'surface-base', 'Control edge, chart axis'], ['line-strong', 'surface-sunken', 'Control edge, chart axis in a well'], ['focus', 'surface-base', 'Focus ring'], ['focus', 'surface-sunken', 'Focus in a well'],
+    ['focus', 'user-soft', 'Focus on a chosen item'], ['focus-inverse', 'surface-inverse', 'Focus on the inverse surface'], ['user', 'surface-base', 'Checked control'], ['user-line', 'user-soft', 'Selection edge'], ['machine', 'surface-base', 'Progress'],
+    ['data-1', 'surface-base', 'Series 1'], ['data-2', 'surface-base', 'Series 2'], ['data-3', 'surface-base', 'Series 3'], ['data-4', 'surface-base', 'Series 4'],
+    ['data-user', 'surface-base', 'Your own value'], ['data-pos', 'surface-base', 'Positive delta'], ['data-neg', 'surface-base', 'Negative delta']
+  ];
+
+  function fill(pane) {
+    var el = pane.el, base = solid(el, 'surface-base');
+    el.querySelector('[data-swatches]').innerHTML = swatches.map(function (s) {
+      var c = solid(el, s[0]), on = s[1] ? solid(el, s[1]) : null;
+      var note = on ? on + ' on it, ' + ratio(on, c).toFixed(2) : (s[0].indexOf('surface') === 0 ? c : c + ', ' + ratio(c, base).toFixed(2) + ' on base');
+      return '<div class="swatch"><i style="--c:' + c + (on ? ';--on:' + on : '') + '">' + (on ? 'Aa' : '') + '</i><span><b>' + s[0] + '</b><span class="meta num">' + note + '</span></span></div>';
+    }).join('');
+    var lo = [99, 99], fails = 0;
+    var rows = text.map(function (r) { return [r, 4.5, false]; }).concat(graphic.map(function (r) { return [r, 3, true]; })).map(function (x) {
+      var r = x[0], bg = solid(el, r[1]), fg = tok(el, r[0]).length > 7 ? over(tok(el, r[0]), bg) : tok(el, r[0]);
+      var v = ratio(fg, bg), i = x[2] ? 1 : 0; lo[i] = Math.min(lo[i], v); if (v < x[1]) fails++;
+      return '<div><span class="aa' + (x[2] ? ' g' : '') + '" style="background:' + bg + ';color:' + fg + ';--fg:' + fg + '" aria-hidden="true">Aa</span><span>' + r[2] + '<br><span class="meta">' + r[0] + ' on ' + r[1].replace('surface-', '') + '</span></span><span class="v' + (v < x[1] ? ' fail' : '') + '">' + v.toFixed(2) + '</span></div>';
+    });
+    el.querySelector('[data-cr]').innerHTML = rows.join('');
+    el.querySelector('[data-cr-note]').textContent = (fails ? fails + ' pairs fail. ' : 'All ' + rows.length + ' pairs pass WCAG 2.2 AA. ') + 'Lowest text pair ' + lo[0].toFixed(2) + ' (needs 4.5); lowest control, focus or chart pair ' + lo[1].toFixed(2) + ' (needs 3). Computed in this browser from the tokens.';
+    el.querySelectorAll('[data-ms]').forEach(function (s) { s.textContent = tok(el, s.getAttribute('data-ms').slice(5)); });
+  }
+  panes.forEach(fill);
+
+  /* ---- segmented controls: click and arrow keys, the thumb glides ---- */
+  function wireSeg(seg, onPick) {
+    var btns = Array.prototype.slice.call(seg.querySelectorAll('button'));
+    function pick(i, focus) {
+      btns.forEach(function (b, j) { b.setAttribute('aria-checked', j === i ? 'true' : 'false'); b.tabIndex = j === i ? 0 : -1; });
+      seg.style.setProperty('--k', i); if (focus) btns[i].focus(); if (onPick) onPick(btns[i], i);
+    }
+    btns.forEach(function (b, i) {
+      b.addEventListener('click', function () { pick(i); });
+      b.addEventListener('keydown', function (e) {
+        var rtl = getComputedStyle(seg).direction === 'rtl', k = e.key, n = btns.length, j = null;
+        if (k === 'ArrowRight') j = rtl ? i - 1 : i + 1; else if (k === 'ArrowLeft') j = rtl ? i + 1 : i - 1; else if (k === 'Home') j = 0; else if (k === 'End') j = n - 1;
+        if (j !== null) { e.preventDefault(); pick((j + n) % n, true); }
+      });
+    });
+    return pick;
+  }
+  document.querySelectorAll('[data-seg]').forEach(function (s) { wireSeg(s); });
+  wireSeg(document.getElementById('density'), function (b) { document.documentElement.setAttribute('data-ds-density', b.getAttribute('data-v')); });
+
+  document.querySelectorAll('[data-chip]').forEach(function (c) { c.addEventListener('click', function () { c.setAttribute('aria-pressed', c.getAttribute('aria-pressed') === 'true' ? 'false' : 'true'); }); });
+
+  /* ---- table selection and the bulk-action bar ---- */
+  panes.forEach(function (pane) {
+    var el = pane.el, all = el.querySelector('[data-all]'), bulk = el.querySelector('[data-bulk]'), count = el.querySelector('[data-count]');
+    var boxes = Array.prototype.slice.call(el.querySelectorAll('[data-rows] .cbx'));
+    function sync() {
+      var n = boxes.filter(function (b) { return b.checked; }).length;
+      boxes.forEach(function (b) { b.closest('tr').classList.toggle('is-chosen', b.checked); });
+      all.checked = n === boxes.length; all.indeterminate = n > 0 && n < boxes.length;
+      bulk.hidden = n === 0; count.textContent = n + ' selected';
+    }
+    boxes.forEach(function (b) { b.addEventListener('change', sync); });
+    all.addEventListener('change', function () { boxes.forEach(function (b) { b.checked = all.checked; }); sync(); });
+    el.querySelector('[data-clear]').addEventListener('click', function () { boxes.forEach(function (b) { b.checked = false; }); sync(); all.focus(); });
+    sync();
+  });
+
+  /* ---- the dashboard: the user's own months and their own target. Every figure, summary and label is written from this one set ---- */
+  var sets = [[28, 35, 31, 42, 40, 43], [33, 41, 37, 45, 43, 38], [30, 36, 33, 41, 42, 46]];
+  var goal = 50, target = 45;
+  function points(v) {
+    var lo = Math.min.apply(null, v), hi = Math.max.apply(null, v), span = hi - lo || 1;
+    return v.map(function (n, i) { return (4 + i * 46) + ',' + (44 - (n - lo) / span * 34).toFixed(1); });
+  }
+  function paint(k) {
+    var s = sets[k], now = s[5], d = now - s[4], pct = Math.round(now / goal * 100), pts = points(s), end = pts[5].split(',');
+    function share(v) { return v / goal * 100; }
+    document.querySelectorAll('[data-plot]').forEach(function (p) {
+      Array.prototype.forEach.call(p.children, function (b, i) { b.style.setProperty('--v', share(s[i])); });
+      p.setAttribute('aria-label', 'Requests you closed on time in each of the last six months, out of ' + goal + ' each month: ' + s.slice(0, 5).join(', ') + ', then ' + now + ' this month.');
+    });
+    document.querySelectorAll('[data-mini]').forEach(function (p) { Array.prototype.forEach.call(p.children, function (b, i) { b.style.setProperty('--v', share(sets[(k + 1) % 3][i + 1])); }); });
+    document.querySelectorAll('[data-kpi]').forEach(function (f) { f.textContent = now + ' of ' + goal; });
+    document.querySelectorAll('[data-delta]').forEach(function (e) {
+      e.className = 'delta' + (d < 0 ? ' down' : '');
+      e.innerHTML = '<svg class="i s20"><use href="#i-up"/></svg><bdi dir="ltr">' + (d < 0 ? '' : '+') + d + '</bdi> against last month, ' + (d < 0 ? 'worse' : 'better');
+    });
+    document.querySelectorAll('[data-meter]').forEach(function (m) {
+      m.style.setProperty('--v', pct);
+      m.setAttribute('aria-label', now + ' of your ' + goal + ' requests closed on time, against a target of ' + target + '.');
+    });
+    document.querySelectorAll('[data-note]').forEach(function (t) { t.textContent = pct + '%, against a target of ' + target + ' of ' + goal + ' (' + Math.round(target / goal * 100) + '%).'; });
+    document.querySelectorAll('[data-spark]').forEach(function (g) {
+      g.querySelector('polyline').setAttribute('points', pts.join(' '));
+      g.querySelector('circle').setAttribute('cx', end[0]);
+      g.querySelector('circle').setAttribute('cy', end[1]);
+      g.setAttribute('aria-label', 'The same six months as a trend line, from ' + s[0] + ' to ' + now + ' of ' + goal + '.');
+    });
+  }
+  paint(0);
+
+  /* ---- motion: replay every demo; reduce motion ---- */
+  var turn = 0;
+  function replay() {
+    turn++;
+    document.querySelectorAll('[data-dur]').forEach(function (d) { d.classList.remove('go'); void d.offsetWidth; d.classList.add('go'); });
+    document.querySelectorAll('[data-replay]').forEach(function (m) { var c = m.className; m.className = c.replace(/ ds-(float|panel)-enter/, ''); void m.offsetWidth; m.className = c; });
+    paint(turn % 3);
+    document.querySelectorAll('.pane [data-seg]').forEach(function (s) { var n = +getComputedStyle(s).getPropertyValue('--n'), k = (+getComputedStyle(s).getPropertyValue('--k') + 1) % n; s.querySelectorAll('button')[k].click(); });
+  }
+  document.getElementById('replay').addEventListener('click', replay);
+  var reduce = document.getElementById('reduce');
+  reduce.addEventListener('click', function () {
+    var on = reduce.getAttribute('aria-pressed') !== 'true';
+    reduce.setAttribute('aria-pressed', on ? 'true' : 'false');
+    if (on) document.documentElement.setAttribute('data-ds-motion', 'reduce'); else document.documentElement.removeAttribute('data-ds-motion');
+    panes.forEach(function (p) { p.el.querySelectorAll('[data-ms]').forEach(function (s) { s.textContent = tok(p.el, s.getAttribute('data-ms').slice(5)); }); });
+  });
+  requestAnimationFrame(function () { document.querySelectorAll('[data-dur]').forEach(function (d) { d.classList.add('go'); }); });
+
+  /* ---- families: is each one installed here, or is the system fallback showing? ---- */
+  var fams = [['Inter', 'Headings', 'LTR', 'Open requests 1,284'], ['Roboto', 'Body', 'LTR', 'Requests you submit appear here.'], ['Alexandria', 'Headings', 'RTL', 'الطلبات المفتوحة'], ['Noto Kufi Arabic', 'Body', 'RTL', 'تظهر هنا الطلبات التي ترسلها.']];
+  var cv = document.createElement('canvas').getContext('2d');
+  function has(f) { return ['monospace', 'serif'].some(function (g) { cv.font = '32px ' + g; var a = cv.measureText('mmmmwwwwiiil 0123 الطلب').width; cv.font = '32px "' + f + '", ' + g; return cv.measureText('mmmmwwwwiiil 0123 الطلب').width !== a; }); }
+  document.getElementById('font-rows').innerHTML = fams.map(function (f) {
+    var ok = has(f[0]);
+    return '<tr><td><b>' + f[0] + '</b></td><td>' + f[1] + ', ' + f[2] + '</td><td>' + (ok ? 'Installed' : 'Not installed: the system sans-serif is showing') + '</td><td class="sample" style="font-family:&quot;' + f[0] + '&quot;, sans-serif"' + (f[2] === 'RTL' ? ' dir="rtl" lang="ar"' : '') + '>' + f[3] + '</td></tr>';
+  }).join('');
+})();
+</script>
+</body>
+</html>

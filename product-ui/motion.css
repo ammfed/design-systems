@@ -1,0 +1,43 @@
+/* Product UI motion, 2.0.0. The six transitions that earn their place, built on the motion tokens in tokens.css.
+     feedback  hover and press recolour a control; never scale
+     float     menus, popovers, tooltips and pickers fade in and rise 6px from their anchor, and leave faster than they came
+     panel     drawers slide in from the inline-end edge (mirrored in RTL), modals rise 12px, the scrim fades
+     glide     the user's marker (tab bar, segment thumb, sidebar bar) travels to the new choice
+     settle    a value that changes (bar, ring, progress) eases to its new size; the first paint is static
+     sweep     the machine is working: a 2px bar under the content it is producing
+   Nothing animates on page load in product screens. Under reduced motion the tokens zero every travel; the loops below stop. */
+
+.ds-t-feedback { transition-property: color, background-color, border-color, box-shadow, text-decoration-color; transition-duration: var(--ds-duration-feedback); transition-timing-function: var(--ds-ease-standard); }
+
+.ds-float-enter { animation: ds-float-in var(--ds-duration-float-in) var(--ds-ease-enter) both; }
+@keyframes ds-float-in { from { opacity: 0; transform: translateY(var(--ds-motion-rise)); } to { opacity: 1; transform: none; } }
+
+.ds-panel-enter { animation: ds-panel-in var(--ds-duration-panel-in) var(--ds-ease-enter) both; }
+@keyframes ds-panel-in { from { transform: translateX(calc(var(--ds-motion-slide) * var(--ds-dir))); opacity: 0.4; } to { transform: none; opacity: 1; } }
+
+.ds-modal-enter { animation: ds-modal-in var(--ds-duration-panel-in) var(--ds-ease-enter) both; }
+@keyframes ds-modal-in { from { opacity: 0; transform: translateY(var(--ds-motion-lift)); } to { opacity: 1; transform: none; } }
+
+.ds-scrim-enter { animation: ds-fade-in var(--ds-duration-panel-in) var(--ds-ease-standard) both; }
+@keyframes ds-fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+.ds-glide { transition-property: inset-inline-start, inset-block-start, width, height, transform; transition-duration: var(--ds-duration-state); transition-timing-function: var(--ds-ease-standard); }
+
+.ds-settle { transition-property: width, height, stroke-dasharray, stroke-dashoffset, transform; transition-duration: var(--ds-duration-data); transition-timing-function: var(--ds-ease-data); }
+
+.ds-sweep { height: 2px; background: var(--ds-machine-bar); background-size: 200% 100%; transform: scaleX(var(--ds-dir)); animation: ds-sweep var(--ds-duration-sweep) var(--ds-ease-data) infinite; }
+.ds-sweep.is-done { animation: none; background: var(--ds-machine-line); }
+@keyframes ds-sweep { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+
+/* Native popover and dialog elements get the same float and exit with no script. */
+.ds-native-float { opacity: 0; translate: 0 var(--ds-motion-rise); transition: opacity var(--ds-duration-float-out) var(--ds-ease-exit), translate var(--ds-duration-float-out) var(--ds-ease-exit), overlay var(--ds-duration-float-out) allow-discrete, display var(--ds-duration-float-out) allow-discrete; }
+.ds-native-float:popover-open, .ds-native-float[open] { opacity: 1; translate: 0 0; transition-duration: var(--ds-duration-float-in); transition-timing-function: var(--ds-ease-enter); }
+@starting-style { .ds-native-float:popover-open, .ds-native-float[open] { opacity: 0; translate: 0 var(--ds-motion-rise); } }
+
+/* Theme change: a short cross-fade when the product switches theme through document.startViewTransition. */
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: var(--ds-duration-state); animation-timing-function: var(--ds-ease-standard); }
+
+/* The sweep is the one loop here, and it stops under reduced motion; everything else is already zeroed by the tokens.
+   A product that builds its own loop stops it the same way. */
+@media (prefers-reduced-motion: reduce) { .ds-sweep { animation: none !important; } }
+[data-ds-motion="reduce"] .ds-sweep { animation: none !important; }
