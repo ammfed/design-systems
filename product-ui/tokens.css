@@ -50,7 +50,7 @@
 
   /* Lines */
   --ds-line: #E1E3E5;             /* hairlines, card and table borders (decorative) */
-  --ds-line-emphasis: #C3C6CB;    /* connectors, tracks, dividers that must be seen */
+  --ds-line-emphasis: #797E86;    /* chart axes, connectors, tracks and dividers that must be seen (needs 3:1) */
   --ds-line-strong: #797E86;      /* control boundaries (needs 3:1) */
   --ds-line-float: #E1E3E5;       /* edges of float materials */
 

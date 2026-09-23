@@ -146,10 +146,10 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
 .toggle:checked::before { background: var(--ds-user-on); transform: translateX(calc(20px * var(--ds-dir))); }
 
 /* ----- table ----- */
-.tbl-wrap { max-height: calc(var(--ds-row-height) * 5.5); overflow: auto; border: 1px solid var(--ds-line); border-radius: var(--ds-radius-panel); background: var(--ds-surface-base); }
+.tbl-wrap { --head-h: 48px; max-height: calc(var(--ds-row-height) * 5.5); overflow: auto; scroll-padding-top: var(--head-h); border: 1px solid var(--ds-line); border-radius: var(--ds-radius-panel); background: var(--ds-surface-base); }
 .tbl { width: 100%; border-collapse: separate; border-spacing: 0; font-variant-numeric: var(--ds-type-numeric); }
 .tbl th, .tbl td { height: var(--ds-row-height); padding: 0 var(--ds-cell-pad-x); border-bottom: 1px solid var(--ds-line); text-align: start; white-space: nowrap; }
-.tbl thead th { position: sticky; top: 0; z-index: 1; height: 48px; font-weight: 500; color: var(--ds-ink-muted); }
+.tbl thead th { position: sticky; top: 0; z-index: 1; height: var(--head-h); font-weight: 500; color: var(--ds-ink-muted); }
 .tbl tbody th { font-weight: 500; color: var(--ds-ink-strong); }
 .tbl tbody tr:hover > * { background: var(--ds-surface-hover); }
 .tbl tbody tr.is-chosen > * { background: var(--ds-user-soft); }
@@ -193,8 +193,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
 .xl .you { color: var(--ds-ink-strong); font-weight: 600; }
 .legend { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 16px; }
 .legend span { display: inline-flex; align-items: center; gap: 8px; }
-.key { width: 12px; height: 12px; border-radius: 3px; background: var(--k); }
-.key.diamond { width: 11px; height: 11px; border-radius: 2px; transform: rotate(45deg); }
+.key { width: 12px; height: 12px; border-radius: 3px 3px 2px 2px; background: var(--k); }
 .insight { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px 16px; padding: 20px var(--ds-panel-pad) var(--ds-panel-pad); border: 1px solid var(--ds-line); border-radius: var(--ds-radius-panel); background: var(--ds-surface-base); overflow: hidden; }
 .insight .ds-sweep { position: absolute; inset-inline: 0; top: 0; }
 .disc { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--ds-machine-soft); color: var(--ds-machine-ink); }
@@ -471,7 +470,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
           </div>
           <div class="xl" aria-hidden="true"><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span class="you">Sep</span></div>
         </div>
-        <div class="legend"><span><i class="key" style="--k:var(--ds-data-1)"></i>Earlier months</span><span><i class="key diamond" style="--k:var(--ds-data-user)"></i>This month</span></div>
+        <div class="legend"><span><i class="key" style="--k:var(--ds-data-1)"></i>Earlier months</span><span><i class="key" style="--k:var(--ds-data-user)"></i>This month</span></div>
       </div>
     </div>
     <div class="insight" style="margin-top:16px">
@@ -602,7 +601,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
     ['error-text', 'surface-base', 'Error message'], ['error-on-inverse', 'surface-inverse', 'Error on inverse']
   ];
   var graphic = [
-    ['line-strong', 'surface-base', 'Control edge'], ['line-strong', 'surface-sunken', 'Control edge in a well'], ['focus', 'surface-base', 'Focus ring'], ['focus', 'surface-sunken', 'Focus in a well'],
+    ['line-strong', 'surface-base', 'Control edge'], ['line-strong', 'surface-sunken', 'Control edge in a well'], ['line-emphasis', 'surface-base', 'Chart axis, connector, track'], ['line-emphasis', 'surface-sunken', 'Chart axis in a well'], ['focus', 'surface-base', 'Focus ring'], ['focus', 'surface-sunken', 'Focus in a well'],
     ['focus', 'user-soft', 'Focus on a chosen item'], ['focus-inverse', 'surface-inverse', 'Focus on the inverse surface'], ['user', 'surface-base', 'Checked control'], ['user-line', 'user-soft', 'Selection edge'], ['machine', 'surface-base', 'Progress'],
     ['data-1', 'surface-base', 'Series 1'], ['data-2', 'surface-base', 'Series 2'], ['data-3', 'surface-base', 'Series 3'], ['data-4', 'surface-base', 'Series 4'],
     ['data-user', 'surface-base', 'Your own value'], ['data-pos', 'surface-base', 'Positive delta'], ['data-neg', 'surface-base', 'Negative delta']

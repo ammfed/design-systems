@@ -13,7 +13,7 @@ Components read **roles**, never palette steps. A role says what a colour means;
 | Surface | `--ds-surface-canvas`, `-sunken`, `-base`, `-raised`, `-float`, `-overlay` | The page, wells (sidebar, table head), cards and panels, then the three materials under Depth |
 | Surface states | `--ds-surface-hover`, `-pressed`, `-inverse`, `-veil`, `--ds-scrim` | Row and item states; tooltips and the bulk-action bar; sticky chrome; behind modals |
 | Ink | `--ds-ink`, `-strong`, `-muted`, `-inverse`, `-disabled` | Text and icons. Disabled ink only ever sits with a disabled control |
-| Line | `--ds-line`, `-emphasis`, `-strong`, `-float` | Hairlines (decorative); connectors that must be seen; control edges (3:1); float edges |
+| Line | `--ds-line`, `-emphasis`, `-strong`, `-float` | Hairlines (decorative); chart axes, connectors and tracks that must be seen (3:1); control edges (3:1); float edges |
 | User | `--ds-user`, `-hover`, `-pressed`, `-on`, `-soft`, `-ink`, `-line` | The user's one primary action, their choices, where they are |
 | Ink action | `--ds-ink-action`, `-hover`, `-on` | Every action that is not the user's one primary step |
 | Machine | `--ds-machine`, `-ink`, `-soft`, `-line`, `-bar` | Content a model produced, progress, activity, data series 1 |
@@ -73,6 +73,8 @@ Controls, focus and charts (needs 3:1)
 |---|---|---|---|
 | Control edge | `line-strong` on `surface-base` | 4.08 | 3.76 |
 | Control edge in a well | `line-strong` on `surface-sunken` | 3.81 | 4.69 |
+| Chart axis, connector, track | `line-emphasis` on `surface-base` | 4.08 | 3.76 |
+| Chart axis in a well | `line-emphasis` on `surface-sunken` | 3.81 | 4.69 |
 | Focus ring | `focus` on `surface-base` | 5.00 | 7.13 |
 | Focus ring in a well | `focus` on `surface-sunken` | 4.67 | 8.89 |
 | Focus ring on a chosen item | `focus` on `user-soft` | 4.66 | 7.21 |
@@ -262,7 +264,7 @@ Radius roles: 8 for controls, 12 for panels and overlays, full for chips, segmen
 ### Dashboards
 
 - A KPI tile says what moved, by how much, and whether that is good: the value in `figure`, a signed delta isolated for RTL, a direction that can be good or bad, and an optional target meter. Tiles stack their parts in narrow containers (a container query, not the viewport).
-- Charts: ticks at round values, a legend with colour and shape, a one-sentence summary for screen readers, and values that settle when they change. The accent marks the user's own value: their own series over time, or their own reading against their own target.
+- Charts: ticks at round values, a one-sentence summary for screen readers, and values that settle when they change. A legend key repeats the mark it labels in the same shape, so a reader can match the two, and whatever the colour separates carries a second cue on the chart itself: the user's own bar is named by its own axis label. The accent marks the user's own value: their own series over time, or their own reading against their own target.
 - **Never a comparison across people.** Progress and state are self-referential. A chart does not rank one person, or one team, against another, and a target is the user's own, not someone else's result.
 - **A progress ring, never a donut or a pie.** The ring carries one value closing toward its goal with the number in the middle. Length on a shared baseline is read accurately and angle is not, so a comparison across categories is labelled horizontal bars, every time. No gauges.
 - The insight block holds the machine's reading, marked with the machine rule and disc, with its actions beside it; its text is announced when it finishes.
