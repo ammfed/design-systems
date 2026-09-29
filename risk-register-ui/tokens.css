@@ -1,0 +1,294 @@
+/* Risk Register UI design tokens, 1.0.0. Generic, unbranded, values-only. Light only.
+   Three complete styles share one set of names. A style is the whole look (grounds, panels, lines, ink,
+   both speech boxes, cue and status colours, corners, depth and title type); it never changes an element,
+   a concept, a behaviour or the layout. The page picks one with data-ds-style on <html>; style 1 is the
+   default. The same attribute on any element paints only that element, which is how a setup screen shows
+   a sample of each style.
+
+   Shared by all three styles and set once below: the one accent, a white top bar, the four level colours
+   (soft fills with dark words), the type families and sizes, spacing, control sizes and the chat panel's
+   measurements. Contrast for every text and control pair, in each style, is listed in guidelines.md. */
+
+/* ===== shared: the same in every style ===== */
+:root {
+  /* The accent: the one main action per view, what the person chose, where they are, their own words. */
+  --ds-accent: #92722A;           /* main button fill, the current question's edge, a chosen item's edge */
+  --ds-accent-hover: #7C5E24;     /* one step darker, so the white words on it get stronger */
+  --ds-accent-on: #FFFFFF;        /* words and icons on an accent fill */
+  --ds-accent-soft: #F9F7ED;      /* a chosen row, filter, month or option */
+  --ds-accent-soft-line: #D7BC6D; /* the edge of a soft accent tag (decorative) */
+  --ds-accent-ink: #7C5E24;       /* accent words on white or on the soft fill */
+  --ds-accent-deep: #6C4527;      /* words on a chosen filter or tag */
+  --ds-accent-bright: #B68A35;    /* decorative only: the panel's top line, a follow-up rule, the listening wave */
+
+  /* The top bar: white in every style. */
+  --ds-topbar: #FFFFFF;
+  --ds-topbar-height: 83px;
+
+  /* The four levels. Colour means level and nothing else. A level is a chip with its score: the soft fill,
+     the dark words, and the full colour as a thin edge. */
+  --ds-level-low: #22A080;      --ds-level-low-soft: #CDEEE4;      --ds-level-low-ink: #12604C;
+  --ds-level-medium: #FFD932;   --ds-level-medium-soft: #FFF5BD;   --ds-level-medium-ink: #6B5A00;
+  --ds-level-high: #FA8727;     --ds-level-high-soft: #FDE3CC;     --ds-level-high-ink: #9A4A08;
+  --ds-level-critical: #B42A23; --ds-level-critical-soft: #F6D7D5; --ds-level-critical-ink: #8E1F1A;
+
+  /* Type. Families are named, never shipped. */
+  --ds-font-body: "Roboto", ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", sans-serif;
+  --ds-font-heading: "Inter", "Helvetica Neue", ui-sans-serif, system-ui, sans-serif;
+  --ds-font-body-rtl: "Noto Kufi Arabic", ui-sans-serif, "Helvetica Neue", sans-serif;
+  --ds-font-heading-rtl: "Alexandria", "Noto Kufi Arabic", ui-sans-serif, system-ui, sans-serif;
+  --ds-text-sm: 0.875rem;       /* 14px, the floor: labels, notes, chips. Nothing is smaller */
+  --ds-text-base: 1rem;         /* 16px, reading text and the chat */
+  --ds-text-lg: 1.125rem;       /* 18px, the app name, a typed answer */
+  --ds-text-title: 1.25rem;     /* 20px, a screen title, the current question's label */
+  --ds-text-display: 2rem;      /* 32px, the welcome line only */
+  --ds-leading-sm: 1.5rem;
+  --ds-leading-base: 1.5rem;
+  --ds-leading-title: 1.75rem;
+  --ds-leading-rtl-extra: 0.25rem; /* Arabic lines open by this much */
+
+  /* Space, on a 4px step. */
+  --ds-space-1: 0.25rem; --ds-space-2: 0.5rem; --ds-space-3: 0.75rem; --ds-space-4: 1rem;
+  --ds-space-5: 1.25rem; --ds-space-6: 1.5rem; --ds-space-7: 1.75rem; --ds-space-8: 2rem;
+
+  /* Control sizes. */
+  --ds-control-sm: 2.25rem;     /* 36px: filters, dropdowns, the message box's tools */
+  --ds-control-md: 2.5rem;      /* 40px: a small button, send */
+  --ds-control-lg: 3rem;        /* 48px: a button */
+  --ds-choice-height: 2.75rem;  /* 44px: an answer choice */
+  --ds-icon-sm: 20px;
+  --ds-icon-md: 24px;
+
+  /* The frame: fixed regions that never move between tabs or roles. */
+  --ds-frame-tabs: 3.25rem;     /* the tab bar */
+  --ds-frame-title: 3.5rem;     /* the title row, with filters at its end */
+  --ds-frame-actions: 4.5rem;   /* the action row, main action last */
+  --ds-frame-gutter: 1.75rem;   /* the work column's side padding */
+
+  /* The chat panel at the reading start. */
+  --ds-panel-width: 400px;      /* where it opens */
+  --ds-panel-min: 360px;        /* drag limits; the width is the person's own and is kept */
+  --ds-panel-max: 520px;
+  --ds-panel-step: 16px;        /* one arrow key press on the resize bar */
+  --ds-panel-folded: 3.5rem;    /* folded to a rail */
+  --ds-panel-head: 64px;
+  --ds-input-lines-max: 6;      /* the message box grows from one line to six, then scrolls inside */
+
+  /* Tables: readable by default, compact by the person's own switch. */
+  --ds-row: 3rem;               /* 48px rows */
+  --ds-row-compact: 2.25rem;    /* 36px rows, 14px words */
+
+  /* Focus: one ring, 2px. */
+  --ds-focus-width: 2px;
+  --ds-focus-offset: 2px;
+
+  /* Motion: only while a state is happening. */
+  --ds-duration-state: 200ms;
+  --ds-duration-wave: 900ms;    /* the listening wave's cycle */
+  --ds-ease: ease-in-out;
+}
+
+:root, [dir="ltr"] { --ds-family-body: var(--ds-font-body); --ds-family-heading: var(--ds-font-heading); }
+[dir="rtl"] { --ds-family-body: var(--ds-font-body-rtl); --ds-family-heading: var(--ds-font-heading-rtl); }
+
+/* ===== style 1, Plain: the default ===== */
+/* Flat white, thin grey lines, no shadow, a thin accent stripe over the top bar. */
+:root, [data-ds-style="1"] {
+  --ds-ground: #FFFFFF;           /* the page behind everything */
+  --ds-panel: #FFFFFF;            /* cards, tables, the chat panel */
+  --ds-inset: #F7F7F7;            /* a second tone inside a panel: table head, a quiet question */
+  --ds-hover: #F7F7F7;
+  --ds-quiet: transparent;        /* a quiet button's fill */
+  --ds-topbar-line: #E1E3E5;
+  --ds-topbar-stripe: linear-gradient(to bottom, #CBA344, #92722A);
+  --ds-topbar-stripe-height: 0.5rem;
+
+  --ds-line: #E1E3E5;             /* hairlines between rows and regions (decorative) */
+  --ds-line-strong: #797E86;      /* control edges that must be seen (3:1) */
+  --ds-edge: #E1E3E5;             /* the edge of a card or table */
+
+  /* Islands: none. The chat panel and the work area touch, split by one hairline. */
+  --ds-island-gap: 0px;           /* space between the two regions, and around them */
+  --ds-island-radius: 0px;
+  --ds-island-edge: #E1E3E5;      /* the one line between the chat panel and the work area */
+  --ds-island-shadow: none;
+
+  --ds-ink: #1B1D21;              /* titles, values */
+  --ds-text: #232528;             /* reading text */
+  --ds-ink-2: #3E4046;            /* notes */
+  --ds-ink-3: #4B4F58;            /* labels */
+  --ds-muted: #5F646D;            /* the quietest words */
+
+  --ds-assistant-box: transparent; /* the assistant's lines: plain words, no box */
+  --ds-assistant-edge: transparent;
+  --ds-person-box: #F9F7ED;        /* the person's lines */
+  --ds-person-edge: transparent;
+  --ds-person-ink: #7C5E24;
+  --ds-input-edge: #92722A;        /* the message box's edge */
+
+  --ds-rule: #043DFF;              /* a rule's cue: a checked value that breaks a rule */
+  --ds-rule-ink: #002DC2;
+
+  /* Status pills: never a level's colour. Grey: being written. Blue: with the other side.
+     Amber: asks the reader to act. Green: closed. */
+  --ds-status-grey-soft: #F8FAFC;  --ds-status-grey-line: #94A3B8;  --ds-status-grey-ink: #334155;
+  --ds-status-blue-soft: #E7F5FF;  --ds-status-blue-line: #4F98FF;  --ds-status-blue-ink: #0B32A4;
+  --ds-status-amber-soft: #FFFBEB; --ds-status-amber-line: #D67907; --ds-status-amber-ink: #904110;
+  --ds-status-green-soft: #F3FAF4; --ds-status-green-line: #4A9D5C; --ds-status-green-ink: #2A5133;
+  --ds-cue-empty: #64748B;         /* the dashed edge of an empty answer */
+  --ds-cue-empty-ink: #475569;
+
+  --ds-focus: #1B1D21;
+
+  --ds-radius-sm: 0.25rem;
+  --ds-radius: 0.5rem;            /* controls, question rows, lists, the message box */
+  --ds-radius-lg: 0.75rem;        /* the sign-in card */
+  --ds-radius-button: 0.375rem;
+  --ds-radius-pill: 9999px;       /* status pills, filters, counts */
+  --ds-radius-chip: 0.25rem;      /* level chips */
+
+  --ds-shadow-card: none;
+  --ds-shadow-float: none;
+  --ds-shadow-button: none;
+
+  --ds-title-weight: 600;
+  --ds-title-track: 0;
+  --ds-question-size: 1.125rem;
+  --ds-table-size: 15px;
+}
+
+/* ===== style 2, Porcelain ===== */
+/* White panels on a warm paper ground, a soft warm depth, a firmer warm edge, rounder corners and capsules,
+   titles with a little negative tracking, the assistant's lines in a cool grey box, calmer blues. */
+[data-ds-style="2"] {
+  --ds-ground: #ECE6D8;
+  --ds-panel: #FFFFFF;
+  --ds-inset: #F6F3EC;
+  --ds-hover: #F5F1E8;
+  --ds-quiet: #FFFFFF;
+  --ds-topbar-line: #C6B99E;
+  --ds-topbar-stripe: none;
+  --ds-topbar-stripe-height: 0px;
+
+  --ds-line: #ECE6D9;
+  --ds-line-strong: #847C6A;
+  --ds-edge: #C6B99E;
+
+  /* Islands: the chat panel and the work area float on the paper as two lit panels, 16px apart and 16px
+     from the screen's edges, with large corners, a firm warm edge, a bright top rim and a soft warm lift. */
+  --ds-island-gap: 1rem;
+  --ds-island-radius: 1.375rem;
+  --ds-island-edge: #C6B99E;
+  --ds-island-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 1px 2px rgba(54, 30, 18, 0.05), 0 12px 30px -14px rgba(54, 30, 18, 0.2), 0 32px 64px -34px rgba(54, 30, 18, 0.18);
+
+  --ds-ink: #1F2126;
+  --ds-text: #1F2126;
+  --ds-ink-2: #5E5A52;
+  --ds-ink-3: #5E5A52;
+  --ds-muted: #5B564C;
+
+  --ds-assistant-box: #EDEEF0;
+  --ds-assistant-edge: #D5D8DE;
+  --ds-person-box: #F5EFD6;
+  --ds-person-edge: #D7BC6D;
+  --ds-person-ink: #6C4527;
+  --ds-input-edge: #92722A;
+
+  --ds-rule: #2C6A9B;
+  --ds-rule-ink: #235A86;
+
+  --ds-status-grey-soft: #F6F3EC;  --ds-status-grey-line: #C6B99E;  --ds-status-grey-ink: #5E5A52;
+  --ds-status-blue-soft: #EEF5FB;  --ds-status-blue-line: #9FC0DA;  --ds-status-blue-ink: #1A4468;
+  --ds-status-amber-soft: #FFF4E0; --ds-status-amber-line: #D67909; --ds-status-amber-ink: #B2550B;
+  --ds-status-green-soft: #E9F5EC; --ds-status-green-line: #3F8E50; --ds-status-green-ink: #2F663C;
+  --ds-cue-empty: #847C6A;
+  --ds-cue-empty-ink: #5E5A52;
+
+  --ds-focus: #2C6A9B;
+
+  --ds-radius-sm: 0.5rem;
+  --ds-radius: 0.75rem;
+  --ds-radius-lg: 1rem;
+  --ds-radius-button: 0.75rem;
+  --ds-radius-pill: 999px;
+  --ds-radius-chip: 999px;
+
+  --ds-shadow-card: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 1px 2px rgba(54, 30, 18, 0.06), 0 2px 8px -3px rgba(54, 30, 18, 0.08);
+  --ds-shadow-float: 0 1px 2px rgba(54, 30, 18, 0.05), 0 12px 30px -14px rgba(54, 30, 18, 0.2), 0 32px 64px -34px rgba(54, 30, 18, 0.18);
+  --ds-shadow-button: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+
+  --ds-title-weight: 600;
+  --ds-title-track: -0.01em;
+  --ds-question-size: 1.25rem;
+  --ds-table-size: 16px;
+}
+
+/* ===== style 3, Paper ===== */
+/* White panels on a warm paper ground, one warm line and no shadow, 8px corners on everything and no
+   capsules, bold titles, the assistant's lines in a warm grey box with no edge. */
+[data-ds-style="3"] {
+  --ds-ground: #ECE6D8;
+  --ds-panel: #FFFFFF;
+  --ds-inset: #F4F1EA;
+  --ds-hover: #F4F1EA;
+  --ds-quiet: #FFFFFF;
+  --ds-topbar-line: #D9D1BE;
+  --ds-topbar-stripe: none;
+  --ds-topbar-stripe-height: 0px;
+
+  --ds-line: #E4DFD3;
+  --ds-line-strong: #827C70;
+  --ds-edge: #D9D1BE;
+
+  /* Islands: the chat panel and the work area sit on the paper as two flat panels, 16px apart and 16px
+     from the screen's edges, with 12px corners, one warm edge and no shadow. */
+  --ds-island-gap: 1rem;
+  --ds-island-radius: 0.75rem;
+  --ds-island-edge: #D9D1BE;
+  --ds-island-shadow: none;
+
+  --ds-ink: #232528;
+  --ds-text: #232528;
+  --ds-ink-2: #5F646D;
+  --ds-ink-3: #5F646D;
+  --ds-muted: #5F646D;
+
+  --ds-assistant-box: #EEEDEA;
+  --ds-assistant-edge: transparent;
+  --ds-person-box: #F6EBD3;
+  --ds-person-edge: #D9C48B;
+  --ds-person-ink: #3A2E0C;
+  --ds-input-edge: #827C70;
+
+  --ds-rule: #2C6A9B;
+  --ds-rule-ink: #235A86;
+
+  --ds-status-grey-soft: #F4F1EA;  --ds-status-grey-line: #C9C2B4;  --ds-status-grey-ink: #5F646D;
+  --ds-status-blue-soft: #DFECF7;  --ds-status-blue-line: #9FC0DA;  --ds-status-blue-ink: #1A4468;
+  --ds-status-amber-soft: #FFF4E0; --ds-status-amber-line: #D67909; --ds-status-amber-ink: #B2550B;
+  --ds-status-green-soft: #E9F5EC; --ds-status-green-line: #3F8E50; --ds-status-green-ink: #2F663C;
+  --ds-cue-empty: #827C70;
+  --ds-cue-empty-ink: #5F646D;
+
+  --ds-focus: #B2550B;
+
+  --ds-radius-sm: 0.5rem;
+  --ds-radius: 0.5rem;
+  --ds-radius-lg: 0.75rem;
+  --ds-radius-button: 0.5rem;
+  --ds-radius-pill: 0.5rem;
+  --ds-radius-chip: 0.5rem;
+
+  --ds-shadow-card: none;
+  --ds-shadow-float: 0 12px 40px rgba(20, 18, 12, 0.14);
+  --ds-shadow-button: none;
+
+  --ds-title-weight: 700;
+  --ds-title-track: 0;
+  --ds-question-size: 1.25rem;
+  --ds-table-size: 16px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --ds-duration-state: 0ms; }
+}

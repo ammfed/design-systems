@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Risk Register UI preview</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px 16px 48px; background: #F2F2F2; color: #232528; font-family: var(--ds-family-body); font-size: 16px; line-height: 1.5; }
+  .page-head { max-width: 1400px; margin: 0 auto 20px; }
+  .page-head h1 { margin: 0 0 4px; font-family: var(--ds-family-heading); font-size: 1.5rem; }
+  .page-head p { margin: 0; color: #4B4F58; }
+  .grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 560px), 1fr)); gap: 20px; }
+  .label { margin: 0 0 8px; font-weight: 600; font-family: var(--ds-family-heading); }
+  .label span { font-weight: 400; color: #4B4F58; }
+  h2.section { max-width: 1400px; margin: 36px auto 12px; font-family: var(--ds-family-heading); font-size: 1.25rem; }
+
+  /* A small app frame, painted by whichever data-ds-style it carries. */
+  .app { border: 1px solid #C3C6CB; border-radius: 8px; overflow: hidden; background: var(--ds-ground); color: var(--ds-text); font-size: var(--ds-text-sm); line-height: var(--ds-leading-sm); }
+  .bar { position: relative; display: flex; align-items: center; gap: 12px; height: 56px; padding: var(--ds-topbar-stripe-height) 16px 0; background: var(--ds-topbar); border-bottom: 1px solid var(--ds-topbar-line); }
+  .bar::before { content: ""; position: absolute; inset: 0 0 auto 0; height: var(--ds-topbar-stripe-height); background: var(--ds-topbar-stripe); }
+  .mark { width: 28px; height: 28px; border-radius: 6px; border: 2px solid var(--ds-ink); }
+  .titles { padding-inline-start: 12px; border-inline-start: 1px solid var(--ds-line-strong); line-height: 1.2; }
+  .titles small { display: block; color: var(--ds-muted); font-size: var(--ds-text-sm); }
+  .titles b { font-family: var(--ds-family-heading); letter-spacing: var(--ds-title-track); font-size: var(--ds-text-base); color: var(--ds-ink); }
+  .who { margin-inline-start: auto; font-weight: 600; color: var(--ds-ink); }
+  .who a { margin-inline-start: 10px; color: var(--ds-accent-ink); text-decoration: none; }
+  .body { display: flex; min-height: 420px; gap: var(--ds-island-gap); padding: var(--ds-island-gap); background: var(--ds-ground); }
+  .chat, .work { background: var(--ds-panel); border: 1px solid var(--ds-island-edge); border-radius: var(--ds-island-radius); box-shadow: var(--ds-island-shadow); overflow: hidden; }
+  [data-ds-style="1"] .chat, [data-ds-style="1"] .work { border: 0; }
+  [data-ds-style="1"] .chat { border-inline-end: 1px solid var(--ds-island-edge); }
+  .chat { flex: 0 0 36%; display: flex; flex-direction: column; }
+  .chat-head { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 12px; border-top: 2px solid var(--ds-accent-bright); border-bottom: 1px solid var(--ds-line); font-family: var(--ds-family-heading); font-weight: var(--ds-title-weight); letter-spacing: var(--ds-title-track); color: var(--ds-ink); }
+  .dot { width: 22px; height: 22px; border-radius: 50%; background: var(--ds-accent-soft); border: 1px solid var(--ds-line-strong); }
+  .msgs { flex: 1; display: flex; flex-direction: column; gap: 8px; padding: 10px 12px; }
+  .m-a { border-radius: var(--ds-radius); background: var(--ds-assistant-box); box-shadow: inset 0 0 0 1px var(--ds-assistant-edge); }
+  [data-ds-style="2"] .m-a, [data-ds-style="3"] .m-a { padding: 6px 10px; }
+  .m-a.follow { border-inline-start: 2px solid var(--ds-accent-bright); border-radius: 0; padding-inline-start: 8px; }
+  .m-p { align-self: flex-end; max-width: 85%; padding: 6px 10px; border-radius: var(--ds-radius); background: var(--ds-person-box); box-shadow: inset 0 0 0 1px var(--ds-person-edge); color: var(--ds-person-ink); }
+  .input { margin: 0 12px 6px; padding: 6px 8px; border: 2px solid var(--ds-input-edge); border-radius: var(--ds-radius); background: var(--ds-panel); }
+  .input .ph { color: var(--ds-muted); }
+  .tools { display: flex; align-items: center; gap: 4px; margin-top: 4px; }
+  .tool { width: 26px; height: 26px; border-radius: 6px; display: grid; place-items: center; color: var(--ds-accent); }
+  .send { margin-inline-start: auto; width: 28px; height: 28px; border-radius: 6px; background: var(--ds-accent); color: var(--ds-accent-on); display: grid; place-items: center; }
+  .note { margin: 0 12px 8px; text-align: center; color: var(--ds-muted); }
+  .work { flex: 1; min-width: 0; display: flex; flex-direction: column; padding: 0 14px; }
+  .tabs { display: flex; gap: 18px; height: 40px; align-items: flex-end; border-bottom: 1px solid var(--ds-line); }
+  .tab { padding-bottom: 8px; color: var(--ds-ink-2); border-bottom: 2px solid transparent; }
+  .tab.on { color: var(--ds-accent-ink); border-bottom-color: var(--ds-accent-bright); font-weight: 600; }
+  .title { display: flex; align-items: center; justify-content: space-between; height: 44px; border-bottom: 1px solid var(--ds-line); }
+  .title b { font-family: var(--ds-family-heading); font-weight: var(--ds-title-weight); letter-spacing: var(--ds-title-track); font-size: var(--ds-text-base); color: var(--ds-ink); }
+  .filters { display: flex; gap: 6px; }
+  .filter { padding: 0 10px; min-height: 26px; display: inline-flex; align-items: center; border: 1px solid var(--ds-line-strong); border-radius: var(--ds-radius-pill); background: var(--ds-panel); box-shadow: var(--ds-shadow-button); }
+  .filter.on { border-color: var(--ds-accent); background: var(--ds-accent-soft); color: var(--ds-accent-deep); font-weight: 600; }
+  .content { flex: 1; display: flex; flex-direction: column; gap: 10px; padding: 10px 0; }
+  table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--ds-edge); border-radius: var(--ds-radius); overflow: hidden; background: var(--ds-panel); box-shadow: var(--ds-shadow-card); font-size: var(--ds-text-sm); }
+  th, td { padding: 6px 8px; text-align: start; vertical-align: middle; border-bottom: 1px solid var(--ds-line); height: 36px; }
+  thead th { background: var(--ds-inset); font-weight: 600; color: var(--ds-text); }
+  tbody tr:last-child td { border-bottom: 0; }
+  .num { color: var(--ds-ink-3); width: 28px; }
+  .lvl { display: inline-flex; padding: 0 8px; border-radius: var(--ds-radius-chip); font-weight: 700; white-space: nowrap; }
+  .low { background: var(--ds-level-low-soft); color: var(--ds-level-low-ink); box-shadow: inset 0 0 0 1px var(--ds-level-low); }
+  .medium { background: var(--ds-level-medium-soft); color: var(--ds-level-medium-ink); box-shadow: inset 0 0 0 1px var(--ds-level-medium); }
+  .high { background: var(--ds-level-high-soft); color: var(--ds-level-high-ink); box-shadow: inset 0 0 0 1px var(--ds-level-high); }
+  .critical { background: var(--ds-level-critical-soft); color: var(--ds-level-critical-ink); box-shadow: inset 0 0 0 1px var(--ds-level-critical); }
+  .pill { display: inline-flex; align-items: center; gap: 4px; padding: 0 8px 0 6px; border: 1px solid; border-radius: var(--ds-radius-pill); font-weight: 600; white-space: nowrap; }
+  .p-grey { border-color: var(--ds-status-grey-line); background: var(--ds-status-grey-soft); color: var(--ds-status-grey-ink); }
+  .p-blue { border-color: var(--ds-status-blue-line); background: var(--ds-status-blue-soft); color: var(--ds-status-blue-ink); }
+  .p-amber { border-color: var(--ds-status-amber-line); background: var(--ds-status-amber-soft); color: var(--ds-status-amber-ink); }
+  .p-green { border-color: var(--ds-status-green-line); background: var(--ds-status-green-soft); color: var(--ds-status-green-ink); }
+  .q { padding: 10px 12px; border: 2px solid var(--ds-accent); border-radius: var(--ds-radius); background: var(--ds-panel); box-shadow: var(--ds-shadow-card); }
+  .q-label { font-family: var(--ds-family-heading); font-weight: 600; font-size: var(--ds-text-base); color: var(--ds-ink); margin-bottom: 8px; }
+  .opts { display: flex; flex-wrap: wrap; gap: 6px; }
+  .opt { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 0 10px 0 6px; border: 1px solid var(--ds-line-strong); border-radius: var(--ds-radius); background: var(--ds-panel); box-shadow: var(--ds-shadow-card); }
+  .opt.on { outline: 2px solid var(--ds-accent); outline-offset: -2px; background: var(--ds-accent-soft); }
+  .key { display: inline-grid; place-items: center; width: 22px; height: 22px; border: 1px solid var(--ds-line-strong); border-radius: 4px; font-size: 14px; font-weight: 600; color: var(--ds-ink-2); background: var(--ds-panel); }
+  .quiet { display: flex; justify-content: space-between; padding: 6px 12px; border-radius: var(--ds-radius); background: var(--ds-inset); color: var(--ds-muted); }
+  .missing { display: flex; justify-content: space-between; padding: 6px 12px; border: 2px dashed var(--ds-cue-empty); border-radius: var(--ds-radius); background: var(--ds-panel); }
+  .missing em { font-style: normal; font-weight: 600; color: var(--ds-cue-empty-ink); }
+  .actions { display: flex; justify-content: flex-end; align-items: center; gap: 8px; height: 52px; border-top: 1px solid var(--ds-line); }
+  .btn { display: inline-flex; align-items: center; min-height: 34px; padding: 0 14px; border-radius: var(--ds-radius-button); font-weight: 600; box-shadow: var(--ds-shadow-button); }
+  .btn-main { background: var(--ds-accent); color: var(--ds-accent-on); }
+  .btn-line { border: 1px solid var(--ds-accent); color: var(--ds-accent-ink); background: var(--ds-quiet); box-shadow: none; }
+  svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .swatches { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 14px; background: var(--ds-panel); border-top: 1px solid var(--ds-line); }
+  .sw { width: 28px; height: 28px; border-radius: 6px; border: 1px solid rgba(0,0,0,.12); }
+  .rtl { font-family: var(--ds-family-body); }
+</style>
+</head>
+<body>
+  <header class="page-head">
+    <h1>Risk Register UI</h1>
+    <p>Three styles on the same screen. Only the look changes; every region and element sits in the same place. Sample data is invented.</p>
+  </header>
+
+  <div class="grid" id="styles"></div>
+
+  <h2 class="section">Right to left, style 1</h2>
+  <div class="grid" id="rtl"></div>
+
+  <template id="frame">
+    <div>
+      <p class="label"></p>
+      <div class="app">
+        <div class="bar">
+          <span class="mark" aria-hidden="true"></span>
+          <div class="titles"><small data-t="unit">Unit A</small><b data-t="app">Risk register</b></div>
+          <span class="who"><span data-t="name">Coordinator</span><a href="#" data-t="lang">عربي</a></span>
+        </div>
+        <div class="body">
+          <aside class="chat">
+            <div class="chat-head"><span class="dot"></span><span data-t="assistant">Assistant</span></div>
+            <div class="msgs">
+              <div class="m-a" data-t="a1">Checking last year's risks first.</div>
+              <div class="m-p" data-t="p1">Supplier delay is still valid.</div>
+              <div class="m-a follow" data-t="a2">How likely is it this year?</div>
+            </div>
+            <div class="input">
+              <div class="ph" data-t="ph">Answer here</div>
+              <div class="tools">
+                <span class="tool" title="Mode"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h6"/></svg></span>
+                <span class="tool" title="Microphone"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span>
+                <span class="tool" title="Live voice"><svg viewBox="0 0 24 24"><path d="M4 12h2M8 8v8M12 5v14M16 8v8M20 12h0"/></svg></span>
+                <span class="send"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </div>
+            </div>
+            <p class="note" data-t="note">Answers can be wrong. Check before sending.</p>
+          </aside>
+          <main class="work">
+            <div class="tabs"><span class="tab" data-t="entry">Entry</span><span class="tab on" data-t="register">Register</span><span class="tab" data-t="pending">Pending</span></div>
+            <div class="title"><b data-t="register">Register</b>
+              <span class="filters"><span class="filter on" data-t="summary">Summary</span><span class="filter" data-t="rating">Rating</span></span>
+            </div>
+            <div class="content">
+              <table>
+                <thead><tr><th>#</th><th data-t="risk">Risk</th><th data-t="level">Level</th><th data-t="status">Status</th></tr></thead>
+                <tbody>
+                  <tr><td class="num">1</td><td data-t="r1">Supplier delay</td><td><span class="lvl high" data-t="l1">12 High</span></td><td><span class="pill p-amber"><svg viewBox="0 0 24 24"><path d="M9 14l-5-5 5-5M4 9h11a5 5 0 0 1 0 10h-3"/></svg><span data-t="s1">Returned</span></span></td></tr>
+                  <tr><td class="num">2</td><td data-t="r2">Data loss</td><td><span class="lvl critical" data-t="l2">20 Critical</span></td><td><span class="pill p-blue"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-t="s2">Sent</span></span></td></tr>
+                  <tr><td class="num">3</td><td data-t="r3">Staff turnover</td><td><span class="lvl medium" data-t="l3">6 Medium</span></td><td><span class="pill p-grey"><span data-t="s3">Draft</span></span></td></tr>
+                  <tr><td class="num">4</td><td data-t="r4">Late permit</td><td><span class="lvl low" data-t="l4">3 Low</span></td><td><span class="pill p-green"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg><span data-t="s4">Accepted</span></span></td></tr>
+                </tbody>
+              </table>
+              <div class="q">
+                <div class="q-label" data-t="q">Likelihood</div>
+                <div class="opts"><span class="opt"><span class="key">1</span><span data-t="o1">Rare</span></span><span class="opt on"><span class="key">2</span><span data-t="o2">Possible</span></span><span class="opt"><span class="key">3</span><span data-t="o3">Likely</span></span></div>
+              </div>
+              <div class="missing"><span data-t="impact">Impact</span><em data-t="miss">Missing</em></div>
+              <div class="quiet"><span data-t="owner">Owner</span><span data-t="next">Next</span></div>
+            </div>
+            <div class="actions"><span class="btn btn-line" data-t="export">Export</span><span class="btn btn-main" data-t="send">Send register</span></div>
+          </main>
+        </div>
+        <div class="swatches" aria-label="Palette"></div>
+      </div>
+    </div>
+  </template>
+
+<script>
+  const styles = [
+    ["1", "Style 1", "Plain, the default"],
+    ["2", "Style 2", "Porcelain"],
+    ["3", "Style 3", "Paper"],
+  ];
+  const ar = {
+    unit: "الوحدة أ", app: "سجل المخاطر", name: "المنسق", lang: "English", assistant: "المساعد",
+    a1: "مراجعة مخاطر العام الماضي أولا.", p1: "تأخر المورد ما زال قائما.", a2: "ما احتمال حدوثه هذا العام؟",
+    ph: "اكتب إجابتك", note: "قد تكون الإجابات خاطئة. راجعها قبل الإرسال.", entry: "الإدخال", register: "السجل",
+    pending: "المعلق", summary: "الملخص", rating: "التقييم", risk: "الخطر", level: "المستوى", status: "الحالة",
+    r1: "تأخر المورد", r2: "فقدان البيانات", r3: "دوران الموظفين", r4: "تأخر التصريح",
+    l1: "12 مرتفع", l2: "20 حرج", l3: "6 متوسط", l4: "3 منخفض",
+    s1: "معاد", s2: "مرسل", s3: "مسودة", s4: "مقبول", q: "الاحتمالية", o1: "نادر", o2: "ممكن", o3: "مرجح",
+    impact: "الأثر", miss: "ناقص", owner: "المالك", next: "لاحقا", export: "تصدير", send: "إرسال السجل",
+  };
+  const swatchVars = ["ground", "panel", "inset", "line", "island-edge", "ink", "muted", "accent", "accent-soft", "assistant-box", "person-box", "rule", "focus"];
+  const tpl = document.getElementById("frame");
+  function frame(style, label, sub, rtl) {
+    const node = tpl.content.firstElementChild.cloneNode(true);
+    node.querySelector(".label").innerHTML = label + " <span>" + sub + "</span>";
+    const app = node.querySelector(".app");
+    app.setAttribute("data-ds-style", style);
+    if (rtl) {
+      app.setAttribute("dir", "rtl");
+      app.setAttribute("lang", "ar");
+      app.classList.add("rtl");
+      node.querySelectorAll("[data-t]").forEach(el => { if (ar[el.dataset.t]) el.textContent = ar[el.dataset.t]; });
+    }
+    const box = node.querySelector(".swatches");
+    swatchVars.forEach(v => {
+      const s = document.createElement("span");
+      s.className = "sw";
+      s.title = "--ds-" + v;
+      s.style.background = "var(--ds-" + v + ")";
+      box.appendChild(s);
+    });
+    return node;
+  }
+  const grid = document.getElementById("styles");
+  styles.forEach(([s, l, sub]) => grid.appendChild(frame(s, l, sub, false)));
+  document.getElementById("rtl").appendChild(frame("1", "Style 1", "right to left", true));
+</script>
+</body>
+</html>

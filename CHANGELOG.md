@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.0 - 2026-09-29
+
+- Risk Register UI 1.0.0: a new system for a risk register workspace. Three complete styles on one set of token names (Plain, the default; Porcelain and Paper, which set the chat panel and the work area as islands on a paper ground) that change the look only, a shared accent and top bar, four level colours used for level alone, status pills that never read as a level, rules for the register table, the entry interview, the setup wizard and the assistant panel at the reading start in both directions, content readable at 13, a measured WCAG 2.2 AA contrast table for each style, and a preview page.
+
 ## 2.1.0 - 2026-09-29
 
 - Documents: content rules for writing the argument before the layout, one term per label, no em dashes, no internal codes or speaker notes in anything sent out, and visuals only where they are the clearest way to show the point. Tokens unchanged.
