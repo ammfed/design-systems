@@ -1,5 +1,9 @@
 # Changelog: Documents
 
+## 2.1.0 - 2026-09-29
+
+- **Content rules.** Write the argument first and choose visuals as its evidence; lead with the point; one term per label with no slash-joined alternatives; no em dashes; no internal codes, drafting notes or source-type tags in the body; no speaker notes in a deck sent to others; a visual only when it is the clearest way to show the point. Tokens and components are unchanged.
+
 ## 2.0.0 - 2026-09-23
 
 - **Colour roles.** Added 42 roles for text, grounds, materials, rules, chart series, the person accent, focus and callouts, each with a light and a dark value. Components use roles instead of ramps.

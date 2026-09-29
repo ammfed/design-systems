@@ -1,5 +1,13 @@
 # Changelog — Product UI
 
+## 2.1.0 — 2026-09-29
+
+- **Screens and flows**, a new section in `guidelines.md`: readable by a thirteen-year-old with specialist terms explained, one fixed frame of boxes, the fewest steps, the right control for each choice (at most five, pictures for fixed options where they help), the current step lit, space that follows content, status and level that never look alike, and progress shown as small wins only.
+- **Tables:** cells centred up and down; words and phrases aligned to the start (mirroring in right to left), small numbers centred, large summed figures aligned to the end. The table design is otherwise unchanged.
+- **A second look:** the rule that a look changes the whole skin and never the layout, and that a tint alone is not a look.
+- **Content:** one term per label, no slash-joined alternatives, no needless quotation marks or brackets, no em dashes.
+- **Preview:** the days-open column in the table is centred, and the status column shows each status as an outlined pill with an icon and a word.
+
 ## 2.0.0 — 2026-09-23
 
 A new version of the whole system: colour by role, a complete opt-in dark theme, type roles, density, depth, motion, and the thin component groups filled in.

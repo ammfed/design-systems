@@ -108,7 +108,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
 .seg button[aria-checked="true"] { color: var(--ds-ink-strong); font-weight: 600; }
 .seg button:focus-visible { outline-offset: -2px; }
 
-/* ----- chips, badges ----- */
+/* ----- chips, status pills ----- */
 .chip { display: inline-flex; align-items: center; gap: 8px; min-height: var(--ds-target-min); padding: 0 16px; border: 1px solid var(--ds-line-strong); border-radius: var(--ds-radius-chip); background: var(--ds-surface-base); color: var(--ds-ink); font-weight: 500; cursor: pointer; }
 .chip:hover { background: var(--ds-surface-hover); }
 .chip[aria-pressed="true"] { background: var(--ds-user-soft); border-color: var(--ds-user-line); color: var(--ds-ink-strong); }
@@ -116,12 +116,11 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
 .chip.applied { cursor: default; padding-inline-end: 8px; background: var(--ds-surface-sunken); border-color: var(--ds-line); }
 .chip .x { display: grid; place-items: center; width: 24px; height: 24px; border: 0; border-radius: 50%; background: none; color: inherit; cursor: pointer; }
 .chip .x:hover { background: var(--ds-surface-pressed); }
-.badge { --b: var(--ds-surface-sunken); --f: var(--ds-ink); --l: var(--ds-ink-muted); display: inline-flex; align-items: center; gap: 8px; min-height: 28px; padding: 2px 10px; border-radius: var(--ds-radius-xs); background: var(--b); color: var(--f); font-weight: 500; white-space: nowrap; }
-.badge::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--l); }
-.badge.success { --b: var(--ds-success-soft); --f: var(--ds-success-fg); --l: var(--ds-success-line); }
-.badge.info { --b: var(--ds-info-soft); --f: var(--ds-info-fg); --l: var(--ds-info-line); }
-.badge.warning { --b: var(--ds-warning-soft); --f: var(--ds-warning-fg); --l: var(--ds-warning-line); }
-.badge.error { --b: var(--ds-error-soft); --f: var(--ds-error-fg); --l: var(--ds-error-line); }
+.pill { --f: var(--ds-ink); --l: var(--ds-line-strong); display: inline-flex; align-items: center; gap: 6px; min-height: 28px; padding: 1px 10px; border: 1px solid var(--l); border-radius: var(--ds-radius-chip); background: var(--ds-surface-base); color: var(--f); font-weight: 500; white-space: nowrap; }
+.pill.success { --f: var(--ds-success-fg); --l: var(--ds-success-line); }
+.pill.info { --f: var(--ds-info-fg); --l: var(--ds-info-line); }
+.pill.warning { --f: var(--ds-warning-fg); --l: var(--ds-warning-line); }
+.pill.error { --f: var(--ds-error-fg); --l: var(--ds-error-line); }
 .mchip { display: inline-flex; align-items: center; gap: 6px; min-height: 28px; padding: 2px 10px; border-radius: var(--ds-radius-chip); background: var(--ds-machine-soft); color: var(--ds-machine-ink); font-weight: 500; white-space: nowrap; }
 
 /* ----- forms ----- */
@@ -158,7 +157,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
 .tbl .c-sel { width: 48px; padding-inline-end: 0; }
 .tbl .c-sel .cbx { position: relative; }
 .tbl .c-sel .cbx::after { content: ""; position: absolute; inset-block-start: 50%; inset-inline-start: 50%; width: var(--ds-target-min); height: var(--ds-target-min); transform: translate(calc(-50% * var(--ds-dir)), -50%); }
-.tbl .c-num { text-align: end; }
+.tbl .c-num { text-align: center; }
 .tbl .c-act { width: 56px; padding: 0 8px; text-align: end; }
 .tbl .c-act .btn { width: 40px; min-height: 40px; opacity: 0; }
 .tbl tr:hover .c-act .btn, .tbl tr:focus-within .c-act .btn { opacity: 1; }
@@ -326,11 +325,12 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
   <symbol id="i-spacious" viewBox="0 0 24 24"><rect x="4" y="4.5" width="16" height="6" rx="1.5"/><rect x="4" y="13.5" width="16" height="6" rx="1.5"/></symbol>
   <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></symbol>
   <symbol id="i-still" viewBox="0 0 24 24"><path d="M3 8h6M2 12h6M3 16h6"/><circle cx="15.5" cy="12" r="5.5"/><path d="M13.5 10v4M17.5 10v4"/></symbol>
+  <symbol id="i-draft" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13 7 4 4"/></symbol>
   <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
 </svg>
 
 <header class="top ds-material-veil">
-  <h1 class="t-title-2">Product UI <span class="ver">2.0.0</span></h1>
+  <h1 class="t-title-2">Product UI <span class="ver">2.1.0</span></h1>
   <div class="tools">
     <div class="seg icons" role="radiogroup" aria-label="Density" id="density" style="--n:3;--k:1">
       <span class="thumb ds-glide" aria-hidden="true"></span>
@@ -436,12 +436,12 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
       <table class="tbl" aria-labelledby="{p}-cap">
         <thead><tr><th class="c-sel ds-material-veil"><input type="checkbox" class="cbx" aria-label="Select all" data-all></th><th scope="col" class="ds-material-veil">Request</th><th scope="col" class="ds-material-veil">Status</th><th scope="col" class="c-num ds-material-veil">Days open</th><th class="c-act ds-material-veil"><span class="sr">Actions</span></th></tr></thead>
         <tbody data-rows>
-          <tr><td class="c-sel"><input type="checkbox" class="cbx" aria-label="Select Site inspection"></td><th scope="row">Site inspection</th><td><span class="badge success">On track</span></td><td class="c-num">3</td><td class="c-act"><button type="button" class="btn ghost icon" aria-label="More for Site inspection"><svg class="i s20"><use href="#i-more"/></svg></button></td></tr>
-          <tr class="is-chosen"><td class="c-sel"><input type="checkbox" class="cbx" aria-label="Select Permit renewal" checked></td><th scope="row">Permit renewal</th><td><span class="badge warning">At risk</span></td><td class="c-num">12</td><td class="c-act"><button type="button" class="btn ghost icon" aria-label="More for Permit renewal"><svg class="i s20"><use href="#i-more"/></svg></button></td></tr>
-          <tr><td class="c-sel"><input type="checkbox" class="cbx" aria-label="Select Budget review"></td><th scope="row">Budget review</th><td><span class="badge info">In review</span></td><td class="c-num">5</td><td class="c-act"><button type="button" class="btn ghost icon" aria-label="More for Budget review"><svg class="i s20"><use href="#i-more"/></svg></button></td></tr>
-          <tr><td class="c-sel"><input type="checkbox" class="cbx" aria-label="Select Asset transfer"></td><th scope="row">Asset transfer</th><td><span class="badge error">Overdue</span></td><td class="c-num">21</td><td class="c-act"><button type="button" class="btn ghost icon" aria-label="More for Asset transfer"><svg class="i s20"><use href="#i-more"/></svg></button></td></tr>
-          <tr><td class="c-sel"><input type="checkbox" class="cbx" aria-label="Select Contract change"></td><th scope="row">Contract change</th><td><span class="badge">Draft</span></td><td class="c-num">1</td><td class="c-act"><button type="button" class="btn ghost icon" aria-label="More for Contract change"><svg class="i s20"><use href="#i-more"/></svg></button></td></tr>
-          <tr><td class="c-sel"><input type="checkbox" class="cbx" aria-label="Select Access request"></td><th scope="row">Access request</th><td><span class="badge success">On track</span></td><td class="c-num">2</td><td class="c-act"><button type="button" class="btn ghost icon" aria-label="More for Access request"><svg class="i s20"><use href="#i-more"/></svg></button></td></tr>
+          <tr><td class="c-sel"><input type="checkbox" class="cbx" aria-label="Select Site inspection"></td><th scope="row">Site inspection</th><td><span class="pill success"><svg class="i s16"><use href="#i-ok"/></svg>On track</span></td><td class="c-num">3</td><td class="c-act"><button type="button" class="btn ghost icon" aria-label="More for Site inspection"><svg class="i s20"><use href="#i-more"/></svg></button></td></tr>
+          <tr class="is-chosen"><td class="c-sel"><input type="checkbox" class="cbx" aria-label="Select Permit renewal" checked></td><th scope="row">Permit renewal</th><td><span class="pill warning"><svg class="i s16"><use href="#i-warn"/></svg>At risk</span></td><td class="c-num">12</td><td class="c-act"><button type="button" class="btn ghost icon" aria-label="More for Permit renewal"><svg class="i s20"><use href="#i-more"/></svg></button></td></tr>
+          <tr><td class="c-sel"><input type="checkbox" class="cbx" aria-label="Select Budget review"></td><th scope="row">Budget review</th><td><span class="pill info"><svg class="i s16"><use href="#i-info"/></svg>In review</span></td><td class="c-num">5</td><td class="c-act"><button type="button" class="btn ghost icon" aria-label="More for Budget review"><svg class="i s20"><use href="#i-more"/></svg></button></td></tr>
+          <tr><td class="c-sel"><input type="checkbox" class="cbx" aria-label="Select Asset transfer"></td><th scope="row">Asset transfer</th><td><span class="pill error"><svg class="i s16"><use href="#i-err"/></svg>Overdue</span></td><td class="c-num">21</td><td class="c-act"><button type="button" class="btn ghost icon" aria-label="More for Asset transfer"><svg class="i s20"><use href="#i-more"/></svg></button></td></tr>
+          <tr><td class="c-sel"><input type="checkbox" class="cbx" aria-label="Select Contract change"></td><th scope="row">Contract change</th><td><span class="pill"><svg class="i s16"><use href="#i-draft"/></svg>Draft</span></td><td class="c-num">1</td><td class="c-act"><button type="button" class="btn ghost icon" aria-label="More for Contract change"><svg class="i s20"><use href="#i-more"/></svg></button></td></tr>
+          <tr><td class="c-sel"><input type="checkbox" class="cbx" aria-label="Select Access request"></td><th scope="row">Access request</th><td><span class="pill success"><svg class="i s16"><use href="#i-ok"/></svg>On track</span></td><td class="c-num">2</td><td class="c-act"><button type="button" class="btn ghost icon" aria-label="More for Access request"><svg class="i s20"><use href="#i-more"/></svg></button></td></tr>
         </tbody>
       </table>
     </div>

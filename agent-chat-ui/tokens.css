@@ -1,4 +1,4 @@
-/* Agent Chat UI design tokens, 2.0.0. Generic, unbranded, values-only.
+/* Agent Chat UI design tokens, 2.1.0. Generic, unbranded, values-only.
    Scope: any element with a data-ds-theme attribute. Light is the default; load tokens-dark.css and set data-ds-theme="dark" for the opt-in dark theme.
    Components read ROLES (surface, ink, line, user, machine, status, focus), never palette steps, so one set of names serves both themes.
    Contrast for every role pair, light and dark, is in guidelines.md. */
@@ -110,6 +110,9 @@
   --ds-focus-width: 2px;
   --ds-focus-offset: 2px;
   --ds-rail-width: 56px;
+  --ds-dock-min-width: 360px;    /* the user can drag the dock between these two widths */
+  --ds-dock-max-width: 520px;
+  --ds-input-max-lines: 6;        /* the message box grows to this many lines, then scrolls inside */
   --ds-face: 2.5rem;
   --ds-face-greeting: 7.5rem;
   --ds-greeting-width: 600px;

@@ -24,6 +24,14 @@ Patterns observed while studying comparable public case-management and project-t
 
 **Plain line-item breakdowns for cost/budget summaries.** A short list of labelled amounts, right-aligned, with a total row, reads faster than a chart when there are only a handful of components — a chart doesn't earn its place at eight line items.
 
+**Status and severity drawn differently.** A status (draft, sent, returned, done) is an outlined pill with an icon and a word; a severity or level is a solid chip with its value and a word. Keeping the two shapes apart, and their shades from overlapping, stops a reader mistaking "returned" for "high".
+
+**A live count on an action chip.** A chip that names the action and carries a live count ("Answer 2 requests") tells the user what is waiting and takes them straight to it, in one control.
+
+**Choosing on the same page.** Where a flow asks the user to pick one of a few things (an account, a unit, a period), a dropdown or a row of cards on the current page beats sending them to a second page to choose. Every extra page is friction.
+
+**A fixed layout frame.** The strongest tools keep one set of boxes on screen (header, tabs, side panel, work area, action row) and change only what is inside them. When content moves around between tabs, the user has to find everything again.
+
 ## Patterns to avoid
 
 **Donut or pie charts for outcome summaries.** Position and length beat angle and area for comparison — a chart viewer can compare bar lengths accurately but not wedge angles. Use labelled horizontal bars instead, every time.
@@ -37,6 +45,10 @@ Patterns observed while studying comparable public case-management and project-t
 **Mixed-language number formatting.** If a sentence is in one language, its numbers and their unit words should be too — literally switching languages mid-word inside a translated sentence, or trailing an English unit noun onto an otherwise-translated sentence, is a common and avoidable failure. A full mirror (layout, panel position, and phrasing all switching together) reads far better than a partial one.
 
 **Two-dimensional heatmaps at growing scale.** A small matrix (say, under ten rows by under ten columns) with each cell carrying its value as text, not colour alone, can work. The same idiom breaks down once the grid grows — plan to page or group before it does, rather than after.
+
+**A theme switch that only tints.** Offering a second look that changes only the background colour or the corner radius reads as a bug, not a choice. A look either changes the whole skin or is not offered.
+
+**Command-centre styling for everyday work.** A dark hero, gauges and glowing charts look impressive in a demo and tire people who use the screen all day. Borrow the interaction and labelling patterns of such products, not their look.
 
 ## The throughline
 

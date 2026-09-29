@@ -2,7 +2,7 @@
 
 A UI system for product dashboards, work queues and public service websites: flat, quiet surfaces, one warm accent that belongs to the user, a separate colour for what a model produced, full bilingual LTR/RTL support, and WCAG 2.2 AA in both a light theme (the default) and an opt-in dark theme. It shares its visual language with the other two systems here, expressed as tokens and rules for reusable components.
 
-Version 2.0.0. See `CHANGELOG.md` for what changed and how to move from 1.x.
+Version 2.1.0. See `CHANGELOG.md` for what changed and how to move from 1.x.
 
 ## Use it
 
@@ -35,6 +35,10 @@ Every attribute is optional and works on any region as well as `<html>`: light, 
 
 **States.** Hover moves a control one step inside its own role, press goes one step further in colour alone, and a disabled control drops to `--ds-ink-disabled`, keeps its surface and takes no interaction. Nothing scales or bounces.
 
+**Screens and flows.** Every screen should be easy for a thirteen-year-old to follow, with specialist terms kept and explained where they appear. A screen is one fixed frame of boxes that never shift between tabs; flows take the fewest steps; each choice gets the control that fits it, at most five at a time; status and level never look alike; progress shows as small wins, never points or rankings. Table cells put words at the start and small numbers in the middle. The rules are in `guidelines.md`.
+
+**A second look.** A product may offer another look, but a look changes the whole skin and never the layout. A tint alone is not a look.
+
 **Layout.** Content lives in a per-section container, never one page-wide wrapper. Mobile-first: under roughly 1024px the sidebar collapses to its rail and the website navigation collapses to a menu, and panels restack on their own container width.
 
 **Focus, targets, RTL.** One 2px focus ring, distinct from the accent, on `:focus-visible`, matched to the surface it sits on (the inverse surface takes the other theme's step so the ring still clears 3:1). 40px targets in every density. Layout uses logical properties only, and every horizontal travel in motion mirrors in RTL through `--ds-dir`.
@@ -46,6 +50,7 @@ Every attribute is optional and works on any region as well as `<html>`: light, 
 - Voice: professional, accessible, plain, speaking to the user directly, not at them.
 - "You/your" for the user, "we" for the product or organisation. Example: *"We sent a confirmation to your email."*
 - Sentence case everywhere: headings, buttons, labels, navigation.
+- One term per title or label: no slash-joined alternatives, no needless quotation marks or brackets, no em dashes.
 - Buttons use actionable verbs, under four words: *Submit application*, *Save draft*, *Start*. One solid accent button per view, the rest ink.
 - Mark optional fields, never required ones. Error copy states what to do next, not just what went wrong.
 - Errors and empty states in plain language, no error codes, no blame: *"No requests yet. Requests you submit will appear here."*
