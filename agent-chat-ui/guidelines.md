@@ -182,7 +182,7 @@ Only status loops: the three activity dots (`.ds-dot`) and the spinner (`.ds-spi
 
 **Calm speed, reading order.** Motion never feels fast. When a reply brings several things at once (a line, a card, a hand-off row), they arrive one after another in the order the user reads them, not all together.
 
-**Reduced motion** (`prefers-reduced-motion: reduce`): nothing travels or scales (rise 0, scale 1, card and travel 0ms), the draw and both loops stop, and colour and opacity keep a 120ms fade. A hard flash on every state change is its own discomfort; the ask is for no motion, not no change.
+**Reduced motion** (`prefers-reduced-motion: reduce`): nothing travels or scales (rise 0, scale 1, card and travel 0ms), the draw stops, every status loop stops including the listening wave, and colour and opacity keep a 120ms fade. A hard flash on every state change is its own discomfort; the ask is for no motion, not no change.
 
 ## Accessibility
 
@@ -206,7 +206,7 @@ WCAG 2.2 AA in both themes.
 
 ## Layout
 
-- **The dock:** `--ds-dock-width` (400px by default) on the inline-start side, with the designed edge. The user can drag its inner edge to resize it between `--ds-dock-min-width` (360px) and `--ds-dock-max-width` (520px), in both text directions; the handle is the edge itself, with a resize cursor and arrow-key support, and the width is remembered. It folds to a 56px rail (`--ds-rail-width`) over the card duration with the move easing; the rail keeps the assistant's face and one open control.
+- **The dock:** `--ds-dock-width` (400px by default) on the inline-start side, with the designed edge. The user can resize it between `--ds-dock-min-width` (360px) and `--ds-dock-max-width` (520px), in both text directions. The handle is the inner edge itself, with a resize cursor: drag it, use the arrow keys, or click or tap it to step through 360, 400 and 520px, so no one has to drag (2.5.7). The width is remembered. It folds to a 56px rail (`--ds-rail-width`) over the card duration with the move easing; the rail keeps the assistant's face and one open control.
 - **The greeting:** four things only. The face (`--ds-face-greeting`, 120px), one line in the greeting role, the message box at `--ds-greeting-width` (600px), and up to five chips. No digest, no count, no tagline. The footer below them is the surface's, not a fifth thing.
 - **The popup:** about 24rem by 600px, window elevation, radius 16. **The sidebar:** about 28rem, full height. Both keep a fixed header (64px), a pinned message box, and a scrolling thread between.
 - **A calm thread (optional):** for long working sessions, the thread shows only the latest exchange and one line per helper. Earlier messages sit behind one button at the top of the thread ("Show earlier messages"). Nothing is deleted; it is only out of the way.
@@ -261,7 +261,7 @@ A themed mirror of the framework's pieces, for design work only. Every one reads
 - **Surface footer (new):** required on every chat surface (dock, rail's opened panel, inline panel, sidebar, popup, greeting). One line in `--ds-type-footnote`, muted ink, centred, saying plainly that answers can be wrong and what matters is worth checking. It belongs to the surface, not to the message box, so the box keeps no line of its own and the sentence is never repeated inside the thread. One sentence, no link, no icon, no accent; of the footnote role's three uses it is the only standing one.
 - **Several assistants in one thread:** one lead assistant talks to the user; helpers each own one subject.
   - The lead hands over in one short line, then a hand-off row.
-  - A helper speaks for its own subject only, behind the same 2px rule as the lead, in its own quiet tint. No bubble, no wash, no second shape. The tint appears nowhere else.
+  - A helper speaks for its own subject only, behind the same 2px machine rule as the lead. It uses the machine colours like the lead and is told apart by its name and icon, never by a colour of its own. No bubble, no wash, no second shape.
   - The user can call a helper by name, which brings the same hand-off row.
   - Off its subject, a helper steps back: a hand-off row back to the lead, marked done.
   - Anything that needs a decision comes back through the lead as an approval card. A helper never shows a control.

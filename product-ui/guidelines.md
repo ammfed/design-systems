@@ -26,7 +26,7 @@ Components read **roles**, never palette steps. A role says what a colour means;
 - **The accent is the user's colour, never structure.** It marks their one primary action per view, what they chose (a selected row, a checked box, the current step, a chosen chip, segment or day), where they are (the current nav item, the tab bar, the current page) and their own value in a chart. Links, borders, rules, counts, card edges, charts in general and activity are ink or the machine.
 - **The machine has its own colour.** Anything a model produced carries the machine rule and chip, so it is never mistaken for the user's choice or for something a user entered. While it is working, a 2px bar sweeps under the content.
 - **Secondary actions are ink.** Solid, soft, outline and link buttons all come in ink; links are ink and underlined. One solid accent button per view.
-- **Status colours are for status.** Success, info, warning and error each come as soft (a ground plus text) and solid (a fill plus text), with a line colour for the inline-start bar of an alert.
+- **Status colours are for status.** Success, info, warning and error each come as soft (a ground plus text), solid (a fill plus text) and a line. A status is an outlined pill on the base surface: the line as its edge, with an icon and a word in the status text. A level or severity is a solid chip. An alert takes the soft ground, with the line as its inline-start bar.
 - **Data: four series, then "other".** Series 1 is the machine colour; series 4 is the neutral used for comparison, previous period and target. The accent marks the user's own value or series: their own reading over time, or against their own target, never a place in a ranking. Positive and negative colours are for signed deltas only, and always sit with a sign and a word or icon, never colour alone.
 
 ### Contrast
@@ -64,6 +64,10 @@ Text (needs 4.5:1)
 | Warning, solid | `warning-on` on `warning-solid` | 5.30 | 10.09 |
 | Error, soft | `error-fg` on `error-soft` | 5.91 | 8.70 |
 | Error, solid | `error-on` on `error-solid` | 4.66 | 6.34 |
+| Success pill | `success-fg` on `surface-base` | 6.80 | 9.22 |
+| Info pill | `info-fg` on `surface-base` | 6.80 | 8.05 |
+| Warning pill | `warning-fg` on `surface-base` | 5.00 | 10.68 |
+| Error pill | `error-fg` on `surface-base` | 6.46 | 8.32 |
 | Error message | `error-text` on `surface-base` | 6.46 | 5.77 |
 | Error word on the inverse surface | `error-on-inverse` on `surface-inverse` | 9.14 | 5.02 |
 
@@ -302,7 +306,7 @@ Radius roles: 8 for controls, 12 for panels and overlays, full for chips, segmen
 - **Where you are, lit.** In a multi-step flow the current step is clearly lit and the others step back. A step with nothing changed since last time says "No change".
 - **Space follows content.** A card is no bigger than its content needs, and cards that pile up stay small. Where a visual sits beside text, the visual gets the largest box. A bigger screen shows more at once, never more scrolling.
 - **Status and level never look alike.** A status (draft, sent, returned, done) is an outlined pill with an icon and a word. A level or severity is a solid chip with its value and a word. Their shades never overlap, so one is never read as the other.
-- **Progress and small wins only.** A progress bar, a finished tick, a short done moment and a clear next step. No points, streaks, badges or rankings.
+- **Progress and small wins only.** A progress bar, a finished tick, a short done moment and a clear next step. No points, streaks, reward badges or rankings.
 
 ## Content
 

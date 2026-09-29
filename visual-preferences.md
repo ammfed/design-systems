@@ -22,7 +22,7 @@ The standing principles all three design systems and the decision-card format in
 - **Progress as a verifiable count with a visible sense of how close to done** — a fill that closes toward the goal, not just a number.
 - **Never colour alone.** A word always carries the same meaning a colour is trying to add. Status words are consistent across every screen they appear on ("On track", not "Good" in one place and "Fine" in another).
 - **No comparisons across people.** Progress and state are self-referential, never a leaderboard.
-- **Progress and small wins, nothing more.** A progress bar, a finished tick, a short done moment and a clear next step. No points, streaks or badges.
+- **Progress and small wins, nothing more.** A progress bar, a finished tick, a short done moment and a clear next step. No points, streaks or reward badges.
 - **Charts default to bars or small multiples.** Never a radar chart, never a gauge — see the chart rules in `decision-cards/README.md` and the pattern notes in `patterns/ux-patterns.md` for why.
 
 ## Screens and flows

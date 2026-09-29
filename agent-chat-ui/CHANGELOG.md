@@ -3,12 +3,12 @@
 ## 2.1.0 - 2026-09-29
 
 - Message box: the keyboard icon is gone, because the field is where you type. The ways to talk are speak and live conversation. The field grows from one line to six, then scrolls inside, so text is never cut off (`--ds-input-max-lines`).
-- Dock: the user can resize it between 360 and 520px in both text directions (`--ds-dock-min-width`, `--ds-dock-max-width`). It still opens at 400px.
+- Dock: the user can resize it between 360 and 520px in both text directions (`--ds-dock-min-width`, `--ds-dock-max-width`) by dragging its edge, with the arrow keys, or with a click or tap on the edge that steps through 360, 400 and 520px. It still opens at 400px.
 - Speaking rules: the assistant never says "I", one short line per message, reasons behind a "Why", one term per label with no slash-joined alternatives.
 - Several assistants in one thread: how a lead assistant hands over to a helper and takes the work back, with decisions always returning through the lead.
 - A calm thread option that shows only the latest exchange, with earlier messages behind one button.
 - Motion: calm speed, things arrive in reading order, status loops run only while their state lasts, and nothing moves on an idle screen.
-- `preview.html`: the box without the keyboard icon, a growing box, a resizable dock, and example copy that never says "I".
+- `preview.html`: the box without the keyboard icon, a growing box, a dock resized from its edge by drag, click or arrow keys, and example copy that never says "I".
 
 ## 2.0.0 - 2026-09-23
 

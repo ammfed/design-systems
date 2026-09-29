@@ -6,7 +6,7 @@
 - **Tables:** cells centred up and down; words and phrases aligned to the start (mirroring in right to left), small numbers centred, large summed figures aligned to the end. The table design is otherwise unchanged.
 - **A second look:** the rule that a look changes the whole skin and never the layout, and that a tint alone is not a look.
 - **Content:** one term per label, no slash-joined alternatives, no needless quotation marks or brackets, no em dashes.
-- **Preview:** the days-open column in the table is centred.
+- **Preview:** the days-open column in the table is centred, and the status column shows each status as an outlined pill with an icon and a word.
 
 ## 2.0.0 — 2026-09-23
 

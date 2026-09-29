@@ -16,7 +16,7 @@ A review-page format for putting a visual decision in front of someone: one open
 
 Minimal text: no filler, no small helper text, no explanation of the obvious. Visuals carry the point; prose only states what a visual can't.
 
-- Plain, friendly words, as a colleague would say them. No jargon, no internal codes, no arrow shorthand in place of a sentence.
+- Plain, friendly words, as a colleague would say them. No jargon, no internal codes in a card's question or options, no arrow shorthand in place of a sentence. The card's own short number stays.
 - One term per label. No slash-joined alternatives, no needless quotation marks or brackets.
 - The page header spans the full width with a large title, so the page reads at a glance.
 - The last card lists anything still open, each with a recommendation.

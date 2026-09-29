@@ -44,8 +44,11 @@ svg.i.s16 { width: 16px; height: 16px; } svg.i.s18 { width: 18px; height: 18px; 
 .screen { background: var(--ds-surface-quiet); border-radius: var(--ds-radius-card); overflow: hidden; display: flex; min-width: 0; }
 .screen.main { flex: 1; } .screen.side { width: 7rem; flex: none; }
 @container (max-width: 560px) { .screen.side { display: none; } }
-.dock { position: relative; width: min(100%, var(--ds-dock-width)); min-width: min(100%, var(--ds-dock-min-width)); max-width: min(100%, var(--ds-dock-max-width)); resize: horizontal; height: 700px; display: flex; flex-direction: column; background: var(--ds-surface); box-shadow: var(--ds-dock-edge); overflow: hidden; flex: none; }
+.dock { position: relative; width: min(100%, var(--ds-dock-width)); min-width: min(100%, var(--ds-dock-min-width)); max-width: min(100%, var(--ds-dock-max-width)); height: 700px; display: flex; flex-direction: column; background: var(--ds-surface); box-shadow: var(--ds-dock-edge); overflow: hidden; flex: none; }
 [dir="rtl"] .dock, [dir="rtl"] .rail, .dock[dir="rtl"], .rail[dir="rtl"] { box-shadow: var(--ds-dock-edge-rtl); }
+.grip { position: relative; z-index: 1; flex: none; width: var(--ds-target-min); margin-inline-start: calc(var(--ds-target-min) / -2); cursor: ew-resize; touch-action: none; }
+.grip::before { content: ""; position: absolute; inset-block: 0; inset-inline-start: calc(50% - 1px); width: 2px; background: var(--ds-line-bold); opacity: 0; transition: opacity var(--ds-duration-quick) var(--ds-ease); }
+.grip:hover::before, .grip:focus-visible::before { opacity: 1; }
 .dock .head { height: var(--ds-header-height); flex: none; display: flex; align-items: center; gap: var(--ds-space-3); padding-inline: var(--ds-panel-padding); border-bottom: 1px solid var(--ds-line); }
 .dock .head b { font: var(--ds-type-name); flex: 1; }
 .rail { width: var(--ds-rail-width); flex: none; background: var(--ds-surface-side); box-shadow: var(--ds-dock-edge); display: flex; flex-direction: column; align-items: center; gap: var(--ds-space-3); padding-block: var(--ds-space-3); }
@@ -234,7 +237,7 @@ table.cr .chipc { display: inline-flex; align-items: center; justify-content: ce
 </svg>
 
 <header class="top">
-  <h1>Agent Chat UI</h1><span class="ver">2.0.0</span><span class="grow"></span>
+  <h1>Agent Chat UI</h1><span class="ver">2.1.0</span><span class="grow"></span>
   <button class="btn" type="button" id="replay-btn"><svg class="i"><use href="#replay"/></svg>Replay motion</button>
 </header>
 <main class="pair">
@@ -259,11 +262,11 @@ table.cr .chipc { display: inline-flex; align-items: center; justify-content: ce
       say: 'Change the second one to Thursday.', stream: 'Changing the second reply to Thursday', phShort: 'Type what to do', working: 'Working',
       approved: 'Approved', back: 'Sent back for a change', err: 'The reply did not arrive.', retry: 'Retry', sent: 'Sent to 3 people.',
       jump: 'Jump to the latest', ph: 'Type what you want to do', modeName: 'Balanced',
-      tSpeak: 'Microphone', tLive: 'Live conversation', send: 'Send', tip: 'Microphone',
+      tSpeak: 'Microphone', tLive: 'Live conversation', send: 'Send', resize: 'Dock width',
       long: 'Change the second reply to Thursday, keep the first as it is, and add a line to the third saying the cost will follow once the quote arrives next week.',
       greet: 'What do you want to do?', chips: [['Summarise my open requests', ''], ['Draft a reply', ''], ['Check a date', ''], ['Open the drafts', 'open']],
-      modes: [['hand', 'Manual', 'You do every step.'], ['scales', 'Balanced', 'Small steps run alone. Big ones wait for you.', true], ['bolt', 'Autonomous', 'Runs all it may, then reports.']],
-      fixed: 'Anything with consequences waits for you.', modeLabel: 'Mode', footnote: 'Answers can be wrong. Check what matters.',
+      modes: [['hand', 'Manual', 'You do every step.'], ['scales', 'Balanced', 'Small steps run on their own and big ones wait for you.', true], ['bolt', 'Autonomous', 'Every allowed step runs, then you get a summary.']],
+      fixed: 'In every mode, anything with consequences waits for you.', modeLabel: 'Mode', footnote: 'Answers can be wrong. Check what matters.',
     },
     ar: {
       dir: 'rtl', name: 'المساعد', helper: 'المراجع', fold: 'طي إلى الجانب',
@@ -274,7 +277,7 @@ table.cr .chipc { display: inline-flex; align-items: center; justify-content: ce
       say: 'غيّر الثاني إلى يوم الخميس.', stream: 'تغيير الرد الثاني إلى يوم الخميس', phShort: 'اكتب ما تريد',
       ph: 'اكتب ما تريد أن تفعل', modeName: 'متوازن',
       footnote: 'قد تكون الإجابات خاطئة. تحقق مما يهم.',
-      tSpeak: 'الميكروفون', tLive: 'المحادثة الحيّة', send: 'إرسال',
+      tSpeak: 'الميكروفون', tLive: 'المحادثة الحيّة', send: 'إرسال', resize: 'عرض اللوحة',
     },
   };
 
@@ -310,7 +313,7 @@ table.cr .chipc { display: inline-flex; align-items: center; justify-content: ce
       </div>
       <div class="foot">${box(t, { short: true })}</div>
       <p class="pagefoot">${t.footnote}</p>
-    </div>`;
+    </div><div class="grip" role="separator" tabindex="0" aria-orientation="vertical" aria-label="${t.resize}"></div>`;
 
   const rail = (t) => `<div class="rail" dir="${t.dir}"><span class="face" aria-hidden="true"></span><button class="ib" type="button" aria-label="${t.name}">${icon('open')}</button></div>`;
 
@@ -389,7 +392,7 @@ table.cr .chipc { display: inline-flex; align-items: center; justify-content: ce
         <div class="demo"><code>.ds-arrive</code><p class="msg me ds-arrive" data-replay>${en.say}</p></div>
         <div class="demo"><code>.ds-draw</code>${ai(en.hello, { streaming: true, arrive: true })}</div>
         <div class="demo"><code>.ds-pop</code><div class="card ds-pop" data-replay style="box-shadow: var(--ds-elevation-3); padding: var(--ds-space-3)"><b>${en.modeName}</b></div></div>
-        <div class="demo"><code>.ds-fade</code><span class="glass ds-fade" data-replay style="align-self:flex-start; padding: var(--ds-space-2) var(--ds-space-3); border-radius: var(--ds-radius-control); box-shadow: var(--ds-elevation-2)">${en.tip}</span></div>
+        <div class="demo"><code>.ds-fade</code><span class="glass ds-fade" data-replay style="align-self:flex-start; padding: var(--ds-space-2) var(--ds-space-3); border-radius: var(--ds-radius-control); box-shadow: var(--ds-elevation-2)">${en.tSpeak}</span></div>
       </div>
       <div class="status"><span class="dots" role="status" aria-label="Working"><i class="ds-dot"></i><i class="ds-dot"></i><i class="ds-dot"></i></span><span class="spin">${icon('spinner', 'ds-spin s24')}</span></div></section>
 
@@ -443,6 +446,29 @@ table.cr .chipc { display: inline-flex; align-items: center; justify-content: ce
         else return;
         if (i < 0) return;
         e.preventDefault(); pick(i);
+      });
+    });
+    st.querySelectorAll('.grip').forEach((grip) => {
+      const dock = grip.previousElementSibling, cs = getComputedStyle(dock);
+      const stops = ['min-width', 'width', 'max-width'].map((k) => parseFloat(cs.getPropertyValue(`--ds-dock-${k}`)));
+      const sign = () => (getComputedStyle(grip).direction === 'rtl' ? -1 : 1);
+      const set = (w) => { dock.style.width = `${Math.min(stops[2], Math.max(stops[0], Math.round(w)))}px`; grip.setAttribute('aria-valuenow', dock.offsetWidth); };
+      const next = () => { const w = dock.offsetWidth; set(stops.find((s) => s > w) ?? stops[0]); if (dock.offsetWidth === w) set(stops[0]); };
+      grip.setAttribute('aria-valuemin', stops[0]); grip.setAttribute('aria-valuemax', stops[2]); grip.setAttribute('aria-valuenow', dock.offsetWidth);
+      let drag = null;
+      grip.addEventListener('pointerdown', (e) => { if (e.button !== 0) return; drag = { x: e.clientX, w: dock.offsetWidth, moved: false }; grip.setPointerCapture(e.pointerId); });
+      grip.addEventListener('pointermove', (e) => {
+        if (!drag) return;
+        const dx = (e.clientX - drag.x) * sign();
+        if (Math.abs(dx) > 4) drag.moved = true;
+        if (drag.moved) set(drag.w + dx);
+      });
+      grip.addEventListener('pointerup', () => { if (drag && !drag.moved) next(); drag = null; });
+      grip.addEventListener('pointercancel', () => { drag = null; });
+      grip.addEventListener('keydown', (e) => {
+        const step = { ArrowRight: 20, ArrowLeft: -20 };
+        if (!(e.key in step)) return;
+        e.preventDefault(); set(dock.offsetWidth + step[e.key] * sign());
       });
     });
     st.querySelectorAll('[data-hex]').forEach((c) => { c.textContent = hexOf(st, c.dataset.hex); });
