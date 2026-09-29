@@ -1,6 +1,6 @@
 # Visual and communication preferences
 
-The standing principles all three design systems and the decision-card format in this repo are built to. These aren't tied to any one product — they're how to make something clear rather than merely decorated.
+The standing principles all the design systems and the decision-card format in this repo are built to. These aren't tied to any one product — they're how to make something clear rather than merely decorated.
 
 ## Visual taste
 
