@@ -74,7 +74,7 @@
   --ds-machine-line: #B6EAFF;     /* the rule beside machine content (decorative) */
   --ds-machine-bar: linear-gradient(90deg, #00ABEB, #0073AB); /* 2px "working" bar */
 
-  /* Status. fg = text on soft; solid + on = filled badges and solid alerts; line = the inline-start bar */
+  /* Status. fg = text on soft and in a status pill; solid + on = solid fills and solid alerts; line = a status pill's edge and an alert's inline-start bar */
   --ds-success-fg: #2F663C; --ds-success-soft: #F3FAF4; --ds-success-solid: #2F663C; --ds-success-on: #FFFFFF; --ds-success-line: #3F8E50;
   --ds-info-fg: #003CFF;    --ds-info-soft: #E7F5FF;    --ds-info-solid: #043DFF;    --ds-info-on: #FFFFFF;    --ds-info-line: #043DFF;
   --ds-warning-fg: #B2550B; --ds-warning-soft: #FFFBEB; --ds-warning-solid: #D67909; --ds-warning-on: #1B1D21; --ds-warning-line: #D67909;

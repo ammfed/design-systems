@@ -47,8 +47,6 @@ svg.i.s16 { width: 16px; height: 16px; } svg.i.s18 { width: 18px; height: 18px; 
 .dock { position: relative; width: min(100%, var(--ds-dock-width)); min-width: min(100%, var(--ds-dock-min-width)); max-width: min(100%, var(--ds-dock-max-width)); height: 700px; display: flex; flex-direction: column; background: var(--ds-surface); box-shadow: var(--ds-dock-edge); overflow: hidden; flex: none; }
 [dir="rtl"] .dock, [dir="rtl"] .rail, .dock[dir="rtl"], .rail[dir="rtl"] { box-shadow: var(--ds-dock-edge-rtl); }
 .grip { position: relative; z-index: 1; flex: none; width: var(--ds-target-min); margin-inline-start: calc(var(--ds-target-min) / -2); cursor: ew-resize; touch-action: none; }
-.grip::before { content: ""; position: absolute; inset-block: 0; inset-inline-start: calc(50% - 1px); width: 2px; background: var(--ds-line-bold); opacity: 0; transition: opacity var(--ds-duration-quick) var(--ds-ease); }
-.grip:hover::before, .grip:focus-visible::before { opacity: 1; }
 .dock .head { height: var(--ds-header-height); flex: none; display: flex; align-items: center; gap: var(--ds-space-3); padding-inline: var(--ds-panel-padding); border-bottom: 1px solid var(--ds-line); }
 .dock .head b { font: var(--ds-type-name); flex: 1; }
 .rail { width: var(--ds-rail-width); flex: none; background: var(--ds-surface-side); box-shadow: var(--ds-dock-edge); display: flex; flex-direction: column; align-items: center; gap: var(--ds-space-3); padding-block: var(--ds-space-3); }
@@ -313,7 +311,7 @@ table.cr .chipc { display: inline-flex; align-items: center; justify-content: ce
       </div>
       <div class="foot">${box(t, { short: true })}</div>
       <p class="pagefoot">${t.footnote}</p>
-    </div><div class="grip" role="separator" tabindex="0" aria-orientation="vertical" aria-label="${t.resize}"></div>`;
+    </div><div class="grip" role="separator" tabindex="0" aria-orientation="vertical" lang="${t.dir === 'rtl' ? 'ar' : 'en'}" aria-label="${t.resize}"></div>`;
 
   const rail = (t) => `<div class="rail" dir="${t.dir}"><span class="face" aria-hidden="true"></span><button class="ib" type="button" aria-label="${t.name}">${icon('open')}</button></div>`;
 

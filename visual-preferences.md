@@ -39,7 +39,7 @@ The standing principles all three design systems and the decision-card format in
 - **Natural and friendly.** Write like a capable colleague talking: full sentences, warm but professional, never robotic.
 - **One term per label.** Never two alternatives joined by a slash. No quotation marks or brackets unless they are really needed.
 - **An assistant never says "I".** The action is the subject: "Checking the dates".
-- **No internal codes** (reference numbers, decision ids, drafting notes) in anything a reader sees.
+- **No internal codes** (reference numbers, decision ids, drafting notes) in anything a reader sees. A decision card's own short number is fine.
 - **A claim carries its evidence.** State uncertainty plainly rather than faking certainty; never a bare assertion without its mechanism or its tradeoff.
 - **No em dashes.** Periods, commas, or a plain conjunction instead.
 - **Sentence case everywhere**, no unnecessary capitalisation, no all-caps in running text.
