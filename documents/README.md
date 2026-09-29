@@ -2,7 +2,7 @@
 
 A design system for reports, decks and briefs, and for reading them on screen. It is not a web UI kit. Its building blocks are page furniture (covers, contents, dividers, running headers, tables, callouts, key facts, captions, signature blocks), slide masters for a 16:9 deck, and two screen viewers: a deck viewer and a reading view.
 
-Version 2.0.0. Open `preview.html` to see the tokens and components in light and dark side by side.
+Version 2.1.0. Open `preview.html` to see the tokens and components in light and dark side by side.
 
 ## Design direction
 
@@ -10,12 +10,18 @@ Structure in ink, generous space, one strong rule where a page needs one, and th
 
 ## Content rules
 
+- Write the argument first. Say the whole case out loud in plain words, as one line of reasoning, before choosing a layout. Then pick only the visuals that are its evidence. A layout chosen first produces a generic document.
+- Lead with the point, then the evidence. A claim carries its reason or its tradeoff; uncertainty is stated plainly.
 - Sentence case everywhere: headings, table headers, labels. No all-caps in running text.
 - A plain, formal voice. The document speaks as the organisation, not "we" or "I"; the reader is addressed directly only in correspondence.
 - Numbers: Latin digits in both languages, thousands separators, the unit after the value, and numbers spelled out when they open a sentence. An unknown value reads "Not yet known"; a forecast is shown as a range.
 - Single quotation marks, the Oxford comma, and "and" written out rather than "&".
 - Bold at most once or twice per paragraph. Italics for emphasis, citations and defined terms. Underline only for links.
-- No emoji, decorative Unicode, exclamation marks, taglines or filler.
+- No emoji, decorative Unicode, exclamation marks, taglines or filler. No em dashes: a full stop, a comma or a plain conjunction instead.
+- Pick one term for each title, header or label. Never two alternatives joined by a slash, and no quotation marks or brackets unless they are really needed.
+- Nothing internal in the body: no reference codes, decision numbers, source-type tags or drafting notes. Sources go in the references section.
+- A deck sent to others has no speaker notes. Each slide reads on its own.
+- A visual earns its place only when it is the clearest way to show the point. A real screenshot or a worked example beats a drawn mock-up.
 - Slides: one idea per slide, at most six bullets, text capped at about 60% of the slide width when there is no supporting graphic.
 - Every table has a header row and a caption above it, every figure has a caption below it, and every image has alt text.
 

@@ -16,7 +16,7 @@ Each system is self-contained: a `README.md` explaining its intent and rules, a 
 
 - [`patterns/ux-patterns.md`](patterns/ux-patterns.md) — general UX patterns observed while studying comparable public dashboards, written as reusable patterns with no product or vendor names attached.
 - [`decision-cards/`](decision-cards/) — a review-page format for presenting visual decisions one at a time, with a live visual preview per option.
-- [`visual-preferences.md`](visual-preferences.md) — the standing visual and communication principles all three systems and the decision-card format are built to.
+- [`visual-preferences.md`](visual-preferences.md) — the standing visual, screen-flow and writing principles all three systems and the decision-card format are built to.
 
 ## Using this from an online design tool
 

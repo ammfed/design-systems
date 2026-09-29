@@ -1,5 +1,15 @@
 # Changelog — Agent Chat UI
 
+## 2.1.0 - 2026-09-29
+
+- Message box: the keyboard icon is gone, because the field is where you type. The ways to talk are speak and live conversation. The field grows from one line to six, then scrolls inside, so text is never cut off (`--ds-input-max-lines`).
+- Dock: the user can resize it between 360 and 520px in both text directions (`--ds-dock-min-width`, `--ds-dock-max-width`). It still opens at 400px.
+- Speaking rules: the assistant never says "I", one short line per message, reasons behind a "Why", one term per label with no slash-joined alternatives.
+- Several assistants in one thread: how a lead assistant hands over to a helper and takes the work back, with decisions always returning through the lead.
+- A calm thread option that shows only the latest exchange, with earlier messages behind one button.
+- Motion: calm speed, things arrive in reading order, status loops run only while their state lasts, and nothing moves on an idle screen.
+- `preview.html`: the box without the keyboard icon, a growing box, a resizable dock, and example copy that never says "I".
+
 ## 2.0.0 - 2026-09-23
 
 Components now read role tokens instead of palette steps. Every 1.x token name still resolves, as an alias of its 2.0 role (`--ds-color-focus` to `--ds-focus`, `--ds-shadow-*` to `--ds-elevation-*`, `--ds-size-chat-text` to the body role), for this major version. Check the units first: the spacing, radius, control-height, text-size and leading tokens that 1.x wrote in absolute px are rem in 2.0, so a page whose root font size is not 16px (the `html { font-size: 62.5% }` idiom) rescales all of them silently, with no error. Of those, only `--ds-space-unit`, `--ds-header-height`, `--ds-popup-height` and the pill radius are still px. The values that changed: the focus ring colour; the whole shadow ramp, since `--ds-shadow-sm|md|lg|window` now alias the two-layer `--ds-elevation-1|2|3|4` instead of their 1.x single-layer values; `--ds-ease-standard`, now the 2.0 enter-and-settle curve rather than `cubic-bezier(0.4, 0, 0.2, 1)`; `--ds-radius-pill` 999px to 9999px; and the comfortable spacing (panel padding 24 to 18px, message gap 16 to 14px, bubble padding 8/12 to 8/16px).

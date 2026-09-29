@@ -325,12 +325,17 @@ Computed with the WCAG 2.2 formula for every role pair in both themes; the gener
 
 See the README for the condensed version. In full:
 
+- Write the argument first, as one line of reasoning in plain words, then choose the visuals that are its evidence.
+- Lead with the point; a claim carries its reason or tradeoff; uncertainty is stated plainly.
 - Sentence case everywhere.
 - A formal third-person voice for the organisation; second person only in direct correspondence.
 - Consistent digit and unit formatting across both language versions.
 - Single quotation marks, the Oxford comma, and conjunctions spelled out in running copy.
 - Restrained emphasis.
-- No emoji or exclamation marks.
+- No emoji or exclamation marks, and no em dashes in running text.
+- One term per title, header or label: no slash-joined alternatives, no needless quotation marks or brackets.
+- No reference codes, decision numbers, source-type tags or drafting notes in the body; sources go in the references section.
+- No speaker notes in a deck sent to others.
 - Slides are capped at six bullets and one idea.
 - Every table, figure and image carries its caption or alt text.
 - A forecast is shown as a range, and an unknown reads "Not yet known".
@@ -349,6 +354,7 @@ See the README for the condensed version. In full:
 - Justify, underline non-links, indent first lines, set all-caps headings, or go below the floors in section 4.
 - Use donuts for parts of a whole, loop or bounce motion, or animate in print.
 - Use worded toggles for modes, emoji, taglines or filler text.
+- Put internal codes, drafting notes or speaker notes in anything sent to others.
 
 ## 16. Moving from 1.x
 

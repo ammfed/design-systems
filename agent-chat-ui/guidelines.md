@@ -1,6 +1,6 @@
 # Agent Chat UI guidelines
 
-Version 2.0.0. The rules behind `tokens.css`, `tokens-dark.css` and `motion.css`. `preview.html` shows every one of them on one page.
+Version 2.1.0. The rules behind `tokens.css`, `tokens-dark.css` and `motion.css`. `preview.html` shows every one of them on one page.
 
 ## Set up
 
@@ -134,7 +134,7 @@ Density changes space and targets, never type.
 | `--ds-icon-button-dock` | 32px | 32px | 44px |
 | `--ds-row-height` | 40px | 48px | 52px |
 
-- `--ds-icon-button` is every icon button the user aims at inside the message box: mode, type, speak, live and send, all one size in a row. `--ds-icon-button-dock` is dock chrome only, the header and the rail, which sit quieter than the box.
+- `--ds-icon-button` is every icon button the user aims at inside the message box: mode, speak, live and send, all one size in a row. `--ds-icon-button-dock` is dock chrome only, the header and the rail, which sit quieter than the box.
 - No target is ever under 32px (WCAG 2.2 asks for 24; 2.5.8). Touch gives every target 44px (2.5.5).
 - Compact is for long desk sessions, touch for tablets. Neither ever becomes a reason to shrink text.
 
@@ -178,7 +178,9 @@ One calm tempo.
 - `.ds-pop`: a popover grows from its anchor (scale 0.98 to 1) and fades in. The origin mirrors in right to left.
 - `.ds-fade`: a tooltip fades in.
 
-Only status loops: the three activity dots (`.ds-dot`) and the spinner (`.ds-spin`). Nothing decorative loops.
+Only status loops: the three activity dots (`.ds-dot`) and the spinner (`.ds-spin`), plus the listening wave while the microphone is on. Each runs only while its state lasts and stops the moment it ends. Nothing decorative loops, and nothing moves on an idle screen.
+
+**Calm speed, reading order.** Motion never feels fast. When a reply brings several things at once (a line, a card, a hand-off row), they arrive one after another in the order the user reads them, not all together.
 
 **Reduced motion** (`prefers-reduced-motion: reduce`): nothing travels or scales (rise 0, scale 1, card and travel 0ms), the draw and both loops stop, and colour and opacity keep a 120ms fade. A hard flash on every state change is its own discomfort; the ask is for no motion, not no change.
 
@@ -204,9 +206,10 @@ WCAG 2.2 AA in both themes.
 
 ## Layout
 
-- **The dock:** `--ds-dock-width` (400px by default) on the inline-start side, with the designed edge. It folds to a 56px rail (`--ds-rail-width`) over the card duration with the move easing; the rail keeps the assistant's face and one open control.
+- **The dock:** `--ds-dock-width` (400px by default) on the inline-start side, with the designed edge. The user can drag its inner edge to resize it between `--ds-dock-min-width` (360px) and `--ds-dock-max-width` (520px), in both text directions; the handle is the edge itself, with a resize cursor and arrow-key support, and the width is remembered. It folds to a 56px rail (`--ds-rail-width`) over the card duration with the move easing; the rail keeps the assistant's face and one open control.
 - **The greeting:** four things only. The face (`--ds-face-greeting`, 120px), one line in the greeting role, the message box at `--ds-greeting-width` (600px), and up to five chips. No digest, no count, no tagline. The footer below them is the surface's, not a fifth thing.
 - **The popup:** about 24rem by 600px, window elevation, radius 16. **The sidebar:** about 28rem, full height. Both keep a fixed header (64px), a pinned message box, and a scrolling thread between.
+- **A calm thread (optional):** for long working sessions, the thread shows only the latest exchange and one line per helper. Earlier messages sit behind one button at the top of the thread ("Show earlier messages"). Nothing is deleted; it is only out of the way.
 - **The footer:** the last row of every chat surface, below the message box and outside it, holding the honesty line and nothing else. It is pinned with the box, not scrolled with the thread, and it is the only standing use of the footnote role.
 
 ## Icon role mapping
@@ -221,7 +224,6 @@ One outline icon family at regular weight, 20px glyphs on at least a 32px target
 | open | chat bubble |
 | close (collapse) | caret toward the inline start (mirrors) |
 | header close | x |
-| type | keyboard |
 | speak (push to talk) | microphone; microphone with a slash when off |
 | voice mark | microphone at 16px, never flips |
 | live conversation | waveform; waveform with a slash when off |
@@ -241,7 +243,7 @@ A chat framework's theming layer typically exposes:
 
 - **Slots:** message view, scroll view, input, suggestion view, welcome screen, header, footer, toggle button; nested assistant message, user message, toolbar, copy button. Apply the motion classes through the slots' class props. Where a framework has no footer slot, the footer is rendered once beneath the input slot, still outside the input.
 - **Labels:** header title, welcome message, input placeholder, the footer's honesty line, every icon's words. Always from the framework's label props in both languages, never hard-coded in CSS or DOM overrides.
-- **Icon props:** a name-to-glyph map matching the table above, including type, speak, live, mode, jump, hand-off and approve.
+- **Icon props:** a name-to-glyph map matching the table above, including speak, live, mode, jump, hand-off and approve.
 
 Theme through these contracts only. Every value here is reachable through custom properties on the framework's own theming attribute, plus the slot, label and icon props. Never fork the framework's DOM or class names to apply a colour.
 
@@ -249,7 +251,7 @@ Theme through these contracts only. Every value here is reachable through custom
 
 A themed mirror of the framework's pieces, for design work only. Every one reads roles, so it follows the theme, the density and the direction.
 
-- **Message box:** one row. The mode icon at the start, the field, then inside the box at its end the three ways to talk as icons (type, speak, live) and send. Never worded buttons. A 2px edge in `--ds-user-strong`, raised elevation. Every icon in the row is one size (`--ds-icon-button`), send included. No disclaimer line of its own: the honesty line belongs to the surface footer below it.
+- **Message box:** one row. The mode icon at the start, the field, then inside the box at its end the two ways to talk as icons (speak, live) and send. No keyboard icon: the field is where you type. Never worded buttons. The field starts at one line and grows with the text up to `--ds-input-max-lines` (six), then scrolls inside; text is never cut off, and the icons stay on the last line. A 2px edge in `--ds-user-strong`, raised elevation. Every icon in the row is one size (`--ds-icon-button`), send included. No disclaimer line of its own: the honesty line belongs to the surface footer below it.
 - **Mode picker:** one icon at the start of the box; opened, a glass popover at the overlay level with one row per mode (icon, name, one sentence, a tick on the current one) and one fixed line saying that an act with consequences always waits for the user, in every mode. The tick and the current row are ink, not the accent.
 - **Message:** the user's turn is a bubble at the inline end in `--ds-user-bg` with `--ds-user-edge`; the assistant's turn has no bubble and a 2px machine rule at the inline start. A turn the user spoke opens with the voice mark in `--ds-user-mark`. No toolbar, no timestamps, no system rows.
 - **Thread:** one gap, no dividers, no date rows; a polite log.
@@ -257,6 +259,12 @@ A themed mirror of the framework's pieces, for design work only. Every one reads
 - **Hand-off row (new):** one pill in the machine tint with a machine-soft edge: two faces at 24px, the two names, an arrow that mirrors, optionally the task and "working" (the spinner) or "done" (a tick and the done word in the success ink). The machine talking about itself, so no accent.
 - **Approval card (new):** the one shape for an act that waits for the user. Waiting: a title saying what will happen, the fields, and two actions only, Approve (primary) and Change (outline). No third button, no countdown. Decided: it settles to one row in ink (a tick and "Approved", or a back arrow and "Sent back for a change"), announced once as a status. Nothing accented after the decision.
 - **Surface footer (new):** required on every chat surface (dock, rail's opened panel, inline panel, sidebar, popup, greeting). One line in `--ds-type-footnote`, muted ink, centred, saying plainly that answers can be wrong and what matters is worth checking. It belongs to the surface, not to the message box, so the box keeps no line of its own and the sentence is never repeated inside the thread. One sentence, no link, no icon, no accent; of the footnote role's three uses it is the only standing one.
+- **Several assistants in one thread:** one lead assistant talks to the user; helpers each own one subject.
+  - The lead hands over in one short line, then a hand-off row.
+  - A helper speaks for its own subject only, behind the same 2px rule as the lead, in its own quiet tint. No bubble, no wash, no second shape. The tint appears nowhere else.
+  - The user can call a helper by name, which brings the same hand-off row.
+  - Off its subject, a helper steps back: a hand-off row back to the lead, marked done.
+  - Anything that needs a decision comes back through the lead as an approval card. A helper never shows a control.
 - **Tooltip (new):** body size in ink on the glass material, radius 8, floating elevation. Never small, never accented.
 - **Suggestions:** up to five chips, two kinds only (outline and filled), never a written kind.
 - **Welcome screen:** the greeting (see Layout).

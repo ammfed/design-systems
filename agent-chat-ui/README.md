@@ -2,20 +2,20 @@
 
 A theme for an AI chat assistant surface: a docked panel that folds to a rail, an inline panel, a sidebar, and a floating popup. It is framework-agnostic: colour, type, space, depth and motion tokens, plus the slot and label conventions a typical chat-framework theming layer expects. It themes a chat framework's own components; it does not replace them.
 
-Version 2.0.0 adds a principled type scale, an opt-in dark theme, motion, depth and materials, density modes, a measured WCAG 2.2 AA pass in both themes, and five components the system was missing. Everything works in both text directions.
+Version 2.1.0 refines the message box, the dock, how the assistant speaks and how several assistants share one thread (see below). Version 2.0.0 added a principled type scale, an opt-in dark theme, motion, depth and materials, density modes, a measured WCAG 2.2 AA pass in both themes, and five components the system was missing. Everything works in both text directions.
 
 Open `preview.html` to see it: the tokens, light and dark side by side, the motion and depth in use, and the key components. It loads the three stylesheets beside it and nothing else, so there are no external requests and no build step.
 
 ## The rules that make the look
 
 1. **Nothing small unless it earns its place.** No badges, tags, captions, sub-labels, timestamps, system rows or hint lines beyond the few that honesty or meaning keeps. State lives in the control. Everything is body size (16/24) except a footnote role, whose standing use is the surface footer.
-2. **The ways to talk are icons inside the message box**: type, speak, live conversation, then send. One row, each icon with a short label: a sentence for an action, the control's name for a toggle. Never worded buttons, and no disclaimer line of its own under the box: that line is the surface's footer (rule 9).
+2. **The ways to talk are icons inside the message box**: speak, live conversation, then send. Typing needs no icon, because the field itself is where you type, so there is no keyboard button. One row, each icon with a short label: a sentence for an action, the control's name for a toggle. Never worded buttons, and no disclaimer line of its own under the box: that line is the surface's footer (rule 9). The box starts at one line, grows with the text up to six lines, then scrolls inside. Text is never cut off.
 3. **The mode picker is one icon** at the start of the box. Opened, one row per mode with one sentence each, and one fixed line: an act with consequences always waits for the user, in every mode.
 4. **The greeting is four things**: the face, one line, the message box, up to five suggestion chips. No digest, no count, no tagline. The footer below them belongs to the surface.
-5. **The dock has a designed edge**, never a plain border, and folds to a 56px rail.
+5. **The dock has a designed edge**, never a plain border, and folds to a 56px rail. It opens 400px wide and the user can drag it between 360 and 520px, in both text directions, because the default is too narrow for some readers.
 6. **The accent marks the user and nothing else**: their bubble, the message box, their avatar, where they are, their choice, their own action. Never chips in general, counts, stripes, rules, links or activity. Structure is ink; the machine is a quiet blue tint.
 7. **Full mirror in right to left.** Logical properties throughout; digits stay Latin; faces never flip.
-8. **Generous space, calm motion.** Nothing decorative moves and nothing decorative loops.
+8. **Generous space, calm motion.** Nothing decorative moves and nothing decorative loops. Motion runs at a calm speed, never fast, and only while something is happening: a wave while listening, dots while working. Nothing moves on an idle screen. When several things appear, they arrive one after another in the order the user will read them.
 9. **One honesty line, in the surface footer.** Every chat surface ends with a single footnote line saying answers can be wrong and what matters is worth checking. It belongs to the surface, not the message box, and it is the only standing use of a size below body.
 
 ## Content rules
@@ -24,6 +24,19 @@ Open `preview.html` to see it: the tokens, light and dark side by side, the moti
 - Sentence case everywhere.
 - Every string exists in both languages and comes through the framework's label and slot props, never hard-coded in CSS or DOM overrides. Every icon's label is its accessible name and its tooltip.
 - Labels are short imperatives: Send, Retry, Approve, Change.
+- The assistant never says "I". The action is the subject: "Checking the dates", not "I am checking the dates". The same in both languages.
+- One short line per chat message, the most important thing first. Reasons sit behind a "Why" the user can open, not in the message.
+- Pick one term for each label. Never two alternatives joined by a slash, and no quotation marks or brackets unless they are really needed.
+
+## What 2.1.0 changes
+
+- **No keyboard icon.** The ways to talk are speak and live conversation. The field is where you type.
+- **A message box that grows** from one line to six, then scrolls inside (`--ds-input-max-lines`).
+- **A dock the user can resize** between `--ds-dock-min-width` (360px) and `--ds-dock-max-width` (520px).
+- **Speaking rules:** no "I", one short line per message, reasons behind a "Why".
+- **Several assistants, one thread:** how a lead assistant hands work to a helper and takes it back. See `guidelines.md`.
+- **A calm thread option:** only the latest exchange shows, and earlier messages sit behind one button.
+- **Motion speed:** calm, in reading order, and still on an idle screen.
 
 ## What 2.0.0 adds
 

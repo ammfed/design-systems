@@ -1,6 +1,6 @@
 # Product UI: guidelines
 
-Version 2.0.0. The rules behind `tokens.css`, `tokens-dark.css`, `motion.css` and `materials.css`. `preview.html` shows every system here working in both themes.
+Version 2.1.0. The rules behind `tokens.css`, `tokens-dark.css`, `motion.css` and `materials.css`. `preview.html` shows every system here working in both themes.
 
 ## Colour
 
@@ -106,6 +106,10 @@ Under `prefers-contrast: more`, both themes take the two decorative line roles t
 - **Palette steps only.** Surfaces keep near-black values; floating layers lift with a faint white tint and a lit top rim rather than a lighter swatch. Status grounds use each hue's darkest step and its text a light step.
 - **The accent moves to a lighter step** and text on it turns dark, so a primary button stays 7.12:1.
 - **Photographs sit back** a little on dark (about 92% brightness). A logo or mark is never dimmed and always sits on a white patch, never directly on a dark surface.
+
+### A second look
+
+A product may offer more than one look, such as a flat look and one with floating panels on a tinted ground. A look is a whole skin: ground, panels, lines, corners, shadows, type, speech boxes and state colours all change together, on every screen, in every state and in both directions. The layout, the elements and what they do stay identical. If the only difference between two looks is a background tint or a corner radius, it is not a second look, and it should not be offered as one. Build every look on the same roles, so a switch re-points roles and nothing else.
 
 ## Type
 
@@ -260,7 +264,8 @@ Radius roles: 8 for controls, 12 for panels and overlays, full for chips, segmen
 
 ### Tables
 
-- A caption (visible or not), one line per row by default with opt-in wrapping, tabular figures, numbers aligned to the end.
+- A caption (visible or not), one line per row by default with opt-in wrapping, tabular figures.
+- **Cell alignment.** Every cell is centred up and down. Across, words and phrases (a name, a status, a label) align to the start: left in English, right in Arabic. Small numbers (a count, days open) are centred. Large figures added up down a column align to the end so their digits line up.
 - Row height follows density. The head is sticky under the veil when the table scrolls inside its own frame; the frame is focusable and labelled so keyboard users can scroll it.
 - The first column can be pinned, with an edge that appears only while content scrolls beneath it. The first plain column is a row header for screen readers.
 - Sortable columns announce their sort. Selection uses a checkbox column with a mixed select-all state; chosen rows take `--ds-user-soft` and an inline-start edge in `--ds-user-line`.
@@ -288,10 +293,23 @@ Radius roles: 8 for controls, 12 for panels and overlays, full for chips, segmen
 - Errors sit under the field at 16px with an icon, say what to do next, and are tied to the field for screen readers.
 - Mark optional fields, never required ones.
 
+## Screens and flows
+
+- **Readable at 13.** Someone around thirteen should be able to follow every screen. Specialist terms keep their proper names and are explained where they first appear, never swapped for simpler words.
+- **One fixed frame.** A screen is a fixed set of boxes: header, tab bar, side panel, work area, action row. Switching tabs or roles changes only what is inside the boxes. Nothing moves to a new place.
+- **The fewest steps.** Count the steps between the user and what they came for, and remove every one that is not needed. A choice that fits on the current page is made there (a picker on the sign-in page, not a second page).
+- **The right control for the choice.** At most five choices on a screen. Two to five fixed options are shown as buttons or cards the user can see at once; a long list is a searchable dropdown; a yes or no is a toggle. A fixed set of options that people pick often gets a small picture per option where a picture reads faster than a word.
+- **Where you are, lit.** In a multi-step flow the current step is clearly lit and the others step back. A step with nothing changed since last time says "No change".
+- **Space follows content.** A card is no bigger than its content needs, and cards that pile up stay small. Where a visual sits beside text, the visual gets the largest box. A bigger screen shows more at once, never more scrolling.
+- **Status and level never look alike.** A status (draft, sent, returned, done) is an outlined pill with an icon and a word. A level or severity is a solid chip with its value and a word. Their shades never overlap, so one is never read as the other.
+- **Progress and small wins only.** A progress bar, a finished tick, a short done moment and a clear next step. No points, streaks, badges or rankings.
+
 ## Content
 
 - Voice: professional, accessible, plain; speak to the user, not at them. "You/your" for the user, "we" for the product or organisation.
 - Sentence case everywhere. Buttons use a verb, under four words.
+- Pick one term for each title or label. Never two alternatives joined by a slash, and no quotation marks or brackets unless they are really needed.
+- No em dashes. A full stop, a comma or a plain conjunction instead.
 - **Rates as a natural frequency first:** "43 of 50" before "86%". Give the percentage after it, never instead of it: a count the reader can verify is read correctly far more often than a bare rate.
 - Errors and empty states in plain language, no codes, no blame.
 - Full, natural translation for the second language, not transliteration.
