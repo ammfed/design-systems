@@ -1,6 +1,6 @@
 # Design Systems
 
-Four small design systems for building formal, trust-sensitive software: long-form documents and decks, an AI chat assistant surface, a product/website UI kit, and a risk register workspace. They share one visual language (a restrained palette with a single accent reserved for a person, generous white space, bilingual LTR/RTL support) expressed through different token sets, because a report, a chat panel, a dashboard and a register each need different defaults.
+Five small design systems for building formal, trust-sensitive software: long-form documents and decks, an AI chat assistant surface, a product/website UI kit, a risk register workspace, and a Material 3 kit for a staff tool with an assistant beside the work. They share one visual language (a restrained palette with a single accent reserved for a person, generous white space, bilingual LTR/RTL support) expressed through different token sets, because a report, a chat panel, a dashboard, a register and a Material 3 product each need different defaults.
 
 Each system is self-contained: a `README.md` explaining its intent and rules, a `tokens.css` with the raw design tokens, a `guidelines.md` with the visual and content rules, and a `CHANGELOG.md`. Where a system has them, it also ships an opt-in dark token file, a motion token file, and a `preview.html` that shows the whole system on one page.
 
@@ -12,6 +12,7 @@ Each system is self-contained: a `README.md` explaining its intent and rules, a 
 | **Agent Chat UI** | A themed AI chat assistant surface (panel, sidebar, popup) | [`agent-chat-ui/`](agent-chat-ui/) |
 | **Product UI** | Websites and product/dashboard UI components | [`product-ui/`](product-ui/) |
 | **Risk Register UI** | A risk register workspace: register table, guided entry, setup wizard and an assistant panel, in three styles | [`risk-register-ui/`](risk-register-ui/) |
+| **Material Agent Chat** | A Material 3 product kit with an AI assistant beside data-heavy screens: tables, forms, approvals and drafts, in light and dark | [`material-agent-chat/`](material-agent-chat/) |
 
 ## Also here
 

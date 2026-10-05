@@ -1,0 +1,252 @@
+/* Material Agent Chat design tokens, 1.0.0. Generic, unbranded, values-only.
+   Material 3 colour roles, type roles, shape, elevation, state layers, layout and motion, filled from one
+   restrained palette with a single warm accent. Light is the default; load tokens-dark.css and set
+   data-ds-theme="dark" (or a .dark class) on <html> or any ancestor for the opt-in dark theme.
+   Components read the --md-sys-* roles, never the --ds-ref-* palette steps, so one set of names serves both themes.
+   Contrast for every role pair, light and dark, is in guidelines.md. */
+
+:root, [data-ds-theme="light"] {
+  /* ===== reference palette (light) ===== */
+  /* The accent: warm, used for the one main action, the person's own message and draft marks. */
+  --ds-ref-accent-50: #F9F7ED;
+  --ds-ref-accent-100: #F2ECCF;
+  --ds-ref-accent-200: #E6D7A2;
+  --ds-ref-accent-300: #D7BC6D;
+  --ds-ref-accent-400: #CBA344;
+  --ds-ref-accent-500: #B68A35;   /* edges, icons and large text only: white on it is 3.15:1 */
+  --ds-ref-accent-600: #92722A;   /* white on it is 4.50:1 */
+  --ds-ref-accent-700: #7C5E24;
+  --ds-ref-accent-800: #6C4527;
+  --ds-ref-accent-900: #5D3B26;
+  --ds-ref-accent-950: #361E12;
+
+  /* Neutrals: everything structural. */
+  --ds-ref-neutral-0: #FFFFFF;
+  --ds-ref-neutral-10: #FCFCFC;
+  --ds-ref-neutral-20: #F7F7F7;
+  --ds-ref-neutral-30: #F2F2F2;
+  --ds-ref-neutral-100: #E1E3E5;
+  --ds-ref-neutral-200: #C3C6CB;
+  --ds-ref-neutral-300: #9EA2A9;
+  --ds-ref-neutral-400: #797E86;
+  --ds-ref-neutral-500: #5F646D;
+  --ds-ref-neutral-600: #4B4F58;
+  --ds-ref-neutral-700: #3E4046;
+  --ds-ref-neutral-800: #232528;
+  --ds-ref-neutral-900: #1B1D21;
+  --ds-ref-neutral-950: #0E0F12;
+
+  /* Blue: the tertiary role, sparing contrasting accents. */
+  --ds-ref-blue-100: #DEF3FF;
+  --ds-ref-blue-300: #76DBFF;
+  --ds-ref-blue-700: #0173AB;
+  --ds-ref-blue-900: #065074;
+  --ds-ref-blue-950: #04334D;
+
+  /* Red: errors. Green: success. */
+  --ds-ref-red-100: #FDE4E3;
+  --ds-ref-red-400: #F47A75;
+  --ds-ref-red-600: #D83731;
+  --ds-ref-red-900: #7C2320;
+  --ds-ref-red-950: #430E0C;
+  --ds-ref-green-100: #E4F4E7;
+  --ds-ref-green-300: #A0D5AB;
+  --ds-ref-green-700: #2F663C;
+  --ds-ref-green-900: #24432B;
+  --ds-ref-green-950: #0F2415;
+
+  /* ===== colour roles (light) ===== */
+  color-scheme: light;
+  --md-sys-color-primary: var(--ds-ref-accent-600);
+  --md-sys-color-on-primary: var(--ds-ref-neutral-0);
+  --md-sys-color-primary-container: var(--ds-ref-accent-100);
+  --md-sys-color-on-primary-container: var(--ds-ref-accent-900);
+  --md-sys-color-primary-accent: var(--ds-ref-accent-500);      /* an edge, an icon or large text; never a fill under white words */
+  --md-sys-color-secondary: var(--ds-ref-neutral-700);
+  --md-sys-color-on-secondary: var(--ds-ref-neutral-0);
+  --md-sys-color-secondary-container: var(--ds-ref-neutral-100); /* selected states: nav indicator, filter chip, tonal button */
+  --md-sys-color-on-secondary-container: var(--ds-ref-neutral-900);
+  --md-sys-color-tertiary: var(--ds-ref-blue-700);
+  --md-sys-color-on-tertiary: var(--ds-ref-neutral-0);
+  --md-sys-color-tertiary-container: var(--ds-ref-blue-100);
+  --md-sys-color-on-tertiary-container: var(--ds-ref-blue-900);
+  --md-sys-color-error: var(--ds-ref-red-600);
+  --md-sys-color-on-error: var(--ds-ref-neutral-0);
+  --md-sys-color-error-container: var(--ds-ref-red-100);
+  --md-sys-color-on-error-container: var(--ds-ref-red-900);
+  --md-sys-color-success: var(--ds-ref-green-700);              /* an extra role on the error role's four-colour pattern */
+  --md-sys-color-on-success: var(--ds-ref-neutral-0);
+  --md-sys-color-success-container: var(--ds-ref-green-100);
+  --md-sys-color-on-success-container: var(--ds-ref-green-900);
+
+  --md-sys-color-surface: var(--ds-ref-neutral-0);
+  --md-sys-color-surface-dim: var(--ds-ref-neutral-100);
+  --md-sys-color-surface-bright: var(--ds-ref-neutral-0);
+  --md-sys-color-surface-container-lowest: var(--ds-ref-neutral-0);
+  --md-sys-color-surface-container-low: var(--ds-ref-neutral-10);
+  --md-sys-color-surface-container: var(--ds-ref-neutral-20);
+  --md-sys-color-surface-container-high: var(--ds-ref-neutral-30);
+  --md-sys-color-surface-container-highest: var(--ds-ref-neutral-100);
+  --md-sys-color-surface-variant: var(--ds-ref-neutral-100);
+  --md-sys-color-on-surface: var(--ds-ref-neutral-900);
+  --md-sys-color-on-surface-variant: var(--ds-ref-neutral-600);
+  --md-sys-color-outline: var(--ds-ref-neutral-400);            /* control edges: 3:1 or better on surface up to container-high */
+  --md-sys-color-outline-variant: var(--ds-ref-neutral-200);    /* dividers and card edges, decorative */
+  --md-sys-color-inverse-surface: var(--ds-ref-neutral-900);
+  --md-sys-color-inverse-on-surface: var(--ds-ref-neutral-10);
+  --md-sys-color-inverse-primary: var(--ds-ref-accent-300);
+  --md-sys-color-scrim: #000000;
+  --md-sys-color-shadow: #000000;
+
+  /* Agent roles: what the assistant filled and the person has not yet confirmed. */
+  --md-sys-color-draft-container: var(--ds-ref-accent-50);
+  --md-sys-color-draft-outline: var(--ds-ref-accent-600);      /* dashed: 4.19:1 on the draft tint */
+
+  /* Chart series, in this order. Every series also carries a label or a legend word. */
+  --md-sys-color-chart-1: #0190D4;
+  --md-sys-color-chart-2: #296CFF;
+  --md-sys-color-chart-3: #D67907;
+  --md-sys-color-chart-4: #EB5F24;
+  --md-sys-color-chart-5: #D946EF;
+  --md-sys-color-chart-6: #64748B;
+
+  /* ===== type ===== */
+  /* Families are named, never shipped. Every stack ends in a system fallback. */
+  --ds-font-heading-ltr: "Inter", "Helvetica Neue", ui-sans-serif, system-ui, sans-serif;
+  --ds-font-body-ltr: "Roboto", ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", sans-serif;
+  --ds-font-heading-rtl: "Alexandria", "Helvetica Neue", ui-sans-serif, system-ui, sans-serif;
+  --ds-font-body-rtl: "Noto Kufi Arabic", ui-sans-serif, "Helvetica Neue", sans-serif;
+  --ds-font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --ds-font-heading: var(--ds-font-heading-ltr);
+  --ds-font-body: var(--ds-font-body-ltr);
+
+  /* ===== shape: the Material 3 scale and each component's corner ===== */
+  --md-sys-shape-corner-none: 0px;
+  --md-sys-shape-corner-extra-small: 4px;   /* text fields, menus, snackbars, plain tooltips */
+  --md-sys-shape-corner-small: 8px;         /* chips */
+  --md-sys-shape-corner-medium: 12px;       /* cards, rich tooltips */
+  --md-sys-shape-corner-large: 16px;        /* FAB, navigation drawer, side sheet, chat bubbles */
+  --md-sys-shape-corner-extra-large: 28px;  /* dialogs, bottom sheets, the chat input */
+  --md-sys-shape-corner-full: 9999px;       /* buttons, search bars, badges */
+  --ds-bubble-tail: 4px;                    /* the bubble corner nearest the sender */
+
+  /* ===== elevation: levels 0 to 5, mainly as tonal surfaces, with light two-layer shadows ===== */
+  --md-sys-elevation-level0: none;
+  --md-sys-elevation-level1: 0 1px 2px 0 rgba(0, 0, 0, 0.30), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+  --md-sys-elevation-level2: 0 1px 2px 0 rgba(0, 0, 0, 0.30), 0 2px 6px 2px rgba(0, 0, 0, 0.15);
+  --md-sys-elevation-level3: 0 1px 3px 0 rgba(0, 0, 0, 0.30), 0 4px 8px 3px rgba(0, 0, 0, 0.15);
+  --md-sys-elevation-level4: 0 2px 3px 0 rgba(0, 0, 0, 0.30), 0 6px 10px 4px rgba(0, 0, 0, 0.15);
+  --md-sys-elevation-level5: 0 4px 4px 0 rgba(0, 0, 0, 0.30), 0 8px 12px 6px rgba(0, 0, 0, 0.15);
+
+  /* ===== states: layers in the content colour ===== */
+  --md-sys-state-hover-opacity: 0.08;
+  --md-sys-state-focus-opacity: 0.10;
+  --md-sys-state-pressed-opacity: 0.10;
+  --md-sys-state-dragged-opacity: 0.16;
+  --md-sys-state-disabled-content-opacity: 0.38;
+  --md-sys-state-disabled-container-opacity: 0.12;
+  --md-sys-state-focus-ring-width: 3px;
+  --md-sys-state-focus-ring-offset: 2px;
+  --md-sys-state-focus-ring-color: var(--md-sys-color-secondary);
+
+  /* ===== space and layout ===== */
+  --md-sys-spacing-1: 4px;  --md-sys-spacing-2: 8px;   --md-sys-spacing-3: 12px;  --md-sys-spacing-4: 16px;
+  --md-sys-spacing-5: 20px; --md-sys-spacing-6: 24px;  --md-sys-spacing-8: 32px;  --md-sys-spacing-10: 40px;
+  --md-sys-spacing-12: 48px; --md-sys-spacing-16: 64px; --md-sys-spacing-20: 80px; --md-sys-spacing-24: 96px;
+  /* Window size classes, for media queries: compact under 600, medium 600 to 839, expanded 840 to 1199,
+     large 1200 to 1599, extra-large 1600 and up. */
+  --md-sys-layout-breakpoint-medium: 600px;
+  --md-sys-layout-breakpoint-expanded: 840px;
+  --md-sys-layout-breakpoint-large: 1200px;
+  --md-sys-layout-breakpoint-extra-large: 1600px;
+  --md-sys-layout-margin-compact: 16px;
+  --md-sys-layout-margin: 24px;
+  --md-sys-layout-pane-spacing: 24px;
+  --md-sys-layout-navigation-rail-width: 80px;
+  --md-sys-layout-navigation-drawer-width: 360px;
+  --md-sys-layout-side-sheet-width: 400px;      /* the chat sidebar */
+  --md-sys-layout-top-app-bar-height: 64px;
+  --md-sys-layout-chat-column: 768px;           /* the full-page chat's reading column */
+  --md-sys-layout-touch-target: 48px;
+  --md-sys-layout-touch-target-dense: 40px;     /* dense tables only */
+
+  /* ===== icons ===== */
+  --md-sys-icon-size: 24px;
+  --md-sys-icon-size-small: 20px;
+  --md-sys-icon-size-inline: 18px;              /* beside a button's words */
+  --md-sys-icon-size-large: 28px;
+  --md-sys-icon-size-state: 48px;
+  --md-sys-icon-size-empty-page: 80px;
+
+  /* ===== motion: the Material 3 standard scheme, no overshoot or bounce ===== */
+  --md-sys-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --md-sys-motion-easing-standard-decelerate: cubic-bezier(0, 0, 0, 1);
+  --md-sys-motion-easing-standard-accelerate: cubic-bezier(0.3, 0, 1, 1);
+  --md-sys-motion-easing-emphasized-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1); /* things entering */
+  --md-sys-motion-easing-emphasized-accelerate: cubic-bezier(0.3, 0, 0.8, 0.15); /* things leaving */
+  --md-sys-motion-duration-short1: 50ms;
+  --md-sys-motion-duration-short2: 100ms;
+  --md-sys-motion-duration-short3: 150ms;   /* state layers */
+  --md-sys-motion-duration-short4: 200ms;   /* toggles */
+  --md-sys-motion-duration-medium1: 250ms;
+  --md-sys-motion-duration-medium2: 300ms;  /* menus */
+  --md-sys-motion-duration-medium3: 350ms;
+  --md-sys-motion-duration-medium4: 400ms;  /* sheets and dialogs */
+  --md-sys-motion-duration-long1: 450ms;
+  --md-sys-motion-duration-long2: 500ms;    /* large layout changes */
+  --md-sys-motion-duration-long3: 550ms;
+  --md-sys-motion-duration-long4: 600ms;
+  --md-sys-motion-duration-spin: 1000ms;
+}
+
+/* An inverse surface (a snackbar) is near-black in light and near-white in dark, where the secondary ring cannot
+   hold 3:1: set data-ds-surface="inverse" on it and the ring takes the inverse ink of whichever theme is on. */
+[data-ds-surface="inverse"] { --md-sys-state-focus-ring-color: var(--md-sys-color-inverse-on-surface); }
+
+[dir="ltr"] {
+  --ds-font-heading: var(--ds-font-heading-ltr);
+  --ds-font-body: var(--ds-font-body-ltr);
+}
+
+[dir="rtl"] {
+  --ds-font-heading: var(--ds-font-heading-rtl);
+  --ds-font-body: var(--ds-font-body-rtl);
+}
+
+/* The type roles are declared again on any element that sets dir, so a right-to-left block inside a
+   left-to-right page takes the right-to-left families. */
+:root, [dir] {
+  /* Material 3 type roles. Headings heavy and tight, body roomy. Nothing below 12px. */
+  --md-sys-typescale-display-large: 600 76px/1.1 var(--ds-font-heading);
+  --md-sys-typescale-display-medium: 800 62px/1.1 var(--ds-font-heading);
+  --md-sys-typescale-display-small: 800 48px/1.2 var(--ds-font-heading);
+  --md-sys-typescale-headline-large: 800 40px/1.2 var(--ds-font-heading);
+  --md-sys-typescale-headline-medium: 700 32px/38px var(--ds-font-heading);
+  --md-sys-typescale-headline-small: 700 26px/34px var(--ds-font-heading);
+  --md-sys-typescale-title-large: 600 20px/28px var(--ds-font-heading);
+  --md-sys-typescale-title-medium: 600 18px/24px var(--ds-font-heading);
+  --md-sys-typescale-title-small: 600 16px/24px var(--ds-font-heading);
+  --md-sys-typescale-body-large: 400 16px/24px var(--ds-font-body);
+  --md-sys-typescale-body-medium: 400 14px/20px var(--ds-font-body);
+  --md-sys-typescale-body-small: 400 12px/16px var(--ds-font-body);
+  --md-sys-typescale-label-large: 500 14px/20px var(--ds-font-body);
+  --md-sys-typescale-label-medium: 500 12px/16px var(--ds-font-body);
+  --md-sys-typescale-label-small: 500 12px/16px var(--ds-font-body);
+  --md-sys-typescale-code: 400 13px/20px var(--ds-font-mono);
+  /* Tracking: slightly tight on display, slightly open on labels, neutral elsewhere. */
+  --md-sys-typescale-display-tracking: -0.02em;
+  --md-sys-typescale-headline-large-tracking: -0.01em;
+  --md-sys-typescale-label-large-tracking: 0.01em;
+  --md-sys-typescale-label-small-tracking: 0.02em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --md-sys-motion-duration-short1: 1ms;  --md-sys-motion-duration-short2: 1ms;
+    --md-sys-motion-duration-short3: 1ms;  --md-sys-motion-duration-short4: 1ms;
+    --md-sys-motion-duration-medium1: 1ms; --md-sys-motion-duration-medium2: 1ms;
+    --md-sys-motion-duration-medium3: 1ms; --md-sys-motion-duration-medium4: 1ms;
+    --md-sys-motion-duration-long1: 1ms;   --md-sys-motion-duration-long2: 1ms;
+    --md-sys-motion-duration-long3: 1ms;   --md-sys-motion-duration-long4: 1ms;
+  }
+}

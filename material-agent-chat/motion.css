@@ -1,0 +1,39 @@
+/* Material Agent Chat, optional motion and state classes, 1.0.0. Load after tokens.css.
+   Fades and short slides only. Under reduced motion every duration in tokens.css drops to 1ms and the
+   spinner stops. */
+
+/* A state layer in the content colour: add .md-state to any interactive element. */
+.md-state { position: relative; isolation: isolate; -webkit-tap-highlight-color: transparent; }
+.md-state::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; background: currentColor;
+  opacity: 0; pointer-events: none;
+  transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+.md-state:hover::before { opacity: var(--md-sys-state-hover-opacity); }
+.md-state:focus-visible::before { opacity: var(--md-sys-state-focus-opacity); }
+.md-state:active::before { opacity: var(--md-sys-state-pressed-opacity); }
+.md-state[data-dragged="true"]::before { opacity: var(--md-sys-state-dragged-opacity); }
+.md-state:disabled::before, .md-state[aria-disabled="true"]::before { opacity: 0; }
+
+/* The focus ring: keyboard focus only, always visible. Inset where a ring outside would be covered. */
+.md-state:focus-visible, .md-focus:focus-visible {
+  outline: var(--md-sys-state-focus-ring-width) solid var(--md-sys-state-focus-ring-color);
+  outline-offset: var(--md-sys-state-focus-ring-offset);
+}
+.md-focus-inset:focus-visible { outline-offset: calc(-1 * var(--md-sys-state-focus-ring-width)); }
+
+/* Entering: a new message or card rises 8px and fades in. */
+@keyframes md-rise { from { transform: translateY(8px); opacity: 0; } to { transform: none; opacity: 1; } }
+.md-rise { animation: md-rise var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized-decelerate) both; }
+
+/* A plain fade, for tooltips and the jump to the latest. */
+@keyframes md-fade-in { from { opacity: 0; } to { opacity: 1; } }
+.md-fade-in { animation: md-fade-in var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard) both; }
+
+/* A running step. Runs only while its state lasts. */
+@keyframes md-spin { to { transform: rotate(360deg); } }
+.md-spin { animation: md-spin var(--md-sys-motion-duration-spin) linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .md-spin, .md-rise, .md-fade-in { animation: none !important; }
+}
