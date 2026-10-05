@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Material Agent Chat preview</title>
+<!-- The three stylesheets are the ones this system ships, loaded from this directory. Nothing else is fetched: no external requests, no build step. Fonts are named in the tokens and fall back to the system. Icons are drawn inline. -->
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="tokens-dark.css">
+<link rel="stylesheet" href="motion.css">
+<style>
+/* Preview only: how the components are drawn from the roles. Nothing here is a token. */
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: #E9EAEC; color: #1B1D21; font: var(--md-sys-typescale-body-large); -webkit-font-smoothing: antialiased; }
+@media (prefers-color-scheme: dark) { body { background: #000; color: #F1F5F9; } }
+svg.i { width: 24px; height: 24px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; display: block; }
+svg.i.s18 { width: 18px; height: 18px; } svg.i.s20 { width: 20px; height: 20px; }
+[dir="rtl"] svg.i.m { transform: scaleX(-1); }
+
+.top { display: flex; align-items: center; gap: 16px; padding: 24px clamp(16px, 3vw, 40px) 16px; flex-wrap: wrap; }
+.top h1 { font: var(--md-sys-typescale-headline-small); margin: 0; }
+.top .grow { flex: 1; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2vw, 32px); padding: 0 clamp(16px, 3vw, 40px) 48px; align-items: start; }
+@media (max-width: 1240px) { .pair { grid-template-columns: 1fr; } }
+.stage { background: var(--md-sys-color-surface); color: var(--md-sys-color-on-surface); border-radius: var(--md-sys-shape-corner-extra-large); box-shadow: var(--md-sys-elevation-level1); padding: clamp(16px, 2.5vw, 32px); min-width: 0; display: flex; flex-direction: column; gap: 40px; }
+.stage > header h2 { font: var(--md-sys-typescale-title-large); margin: 0; }
+.stage > header p { margin: 4px 0 0; color: var(--md-sys-color-on-surface-variant); font: var(--md-sys-typescale-body-medium); }
+.plate { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.plate > h3 { font: var(--md-sys-typescale-title-small); color: var(--md-sys-color-on-surface-variant); margin: 0; }
+.row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+/* roles */
+.roles { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.role { border-radius: var(--md-sys-shape-corner-medium); padding: 12px; min-height: 64px; font: var(--md-sys-typescale-label-large); display: flex; flex-direction: column; justify-content: space-between; gap: 8px; border: 1px solid var(--md-sys-color-outline-variant); }
+.role small { font: var(--md-sys-typescale-body-small); opacity: .9; }
+
+/* type */
+.type div { display: flex; gap: 16px; align-items: baseline; border-bottom: 1px solid var(--md-sys-color-outline-variant); padding-block: 8px; }
+.type span { color: var(--md-sys-color-on-surface-variant); font: var(--md-sys-typescale-body-small); width: 120px; flex: none; }
+
+/* buttons */
+.btn { font: var(--md-sys-typescale-label-large); letter-spacing: var(--md-sys-typescale-label-large-tracking); height: 40px; padding: 0 24px; border-radius: var(--md-sys-shape-corner-full); border: 0; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; background: transparent; color: var(--md-sys-color-primary); }
+.btn.filled { background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
+.btn.tonal { background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); }
+.btn.outlined { border: 1px solid var(--md-sys-color-outline); color: var(--md-sys-color-primary); }
+.btn.text { padding: 0 12px; }
+.btn.error { background: var(--md-sys-color-error); color: var(--md-sys-color-on-error); }
+.btn[disabled] { background: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent); color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent); cursor: not-allowed; }
+.ib { width: 40px; height: 40px; border: 0; border-radius: var(--md-sys-shape-corner-full); background: transparent; color: var(--md-sys-color-on-surface-variant); display: inline-grid; place-items: center; padding: 0; cursor: pointer; }
+.ib.filled { background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
+.fab { height: 56px; padding: 0 20px 0 16px; border: 0; border-radius: var(--md-sys-shape-corner-large); background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); box-shadow: var(--md-sys-elevation-level3); display: inline-flex; align-items: center; gap: 12px; font: var(--md-sys-typescale-label-large); cursor: pointer; }
+
+/* chips */
+.chip { height: 32px; padding: 0 16px; border-radius: var(--md-sys-shape-corner-small); border: 1px solid var(--md-sys-color-outline); background: transparent; color: var(--md-sys-color-on-surface-variant); font: var(--md-sys-typescale-label-large); display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.chip.sel { background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); border-color: transparent; padding-inline-start: 8px; }
+.chip.sug { color: var(--md-sys-color-on-surface); }
+
+/* fields */
+.fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.tf { position: relative; }
+.tf input { width: 100%; height: 56px; border: 1px solid var(--md-sys-color-outline); border-radius: var(--md-sys-shape-corner-extra-small); background: transparent; color: var(--md-sys-color-on-surface); font: var(--md-sys-typescale-body-large); padding: 18px 16px 0; }
+.tf input:focus { outline: none; border: 2px solid var(--md-sys-color-primary); padding-inline-start: 15px; }
+.tf .lab { position: absolute; inset-inline-start: 16px; top: 6px; font: var(--md-sys-typescale-body-small); color: var(--md-sys-color-on-surface-variant); pointer-events: none; }
+.tf .help { font: var(--md-sys-typescale-body-small); color: var(--md-sys-color-on-surface-variant); margin: 4px 16px 0; display: flex; gap: 4px; align-items: center; }
+.tf.draft input { border: 1px dashed var(--md-sys-color-draft-outline); background: var(--md-sys-color-draft-container); }
+.tf.draft .spark { position: absolute; inset-inline-end: 12px; top: 16px; color: var(--md-sys-color-on-primary-container); }
+.tf.err input { border: 2px solid var(--md-sys-color-error); }
+.tf.err .help { color: var(--md-sys-color-error); }
+
+/* the dashboard with the chat sidebar */
+.app { display: flex; border: 1px solid var(--md-sys-color-outline-variant); border-radius: var(--md-sys-shape-corner-medium); overflow: hidden; min-height: 640px; background: var(--md-sys-color-surface); }
+.side { width: min(400px, 52%); flex: none; display: flex; flex-direction: column; border-inline-end: 1px solid var(--md-sys-color-outline-variant); min-width: 0; }
+.side .head { height: 64px; display: flex; align-items: center; padding-inline: 8px; gap: 4px; }
+.side .head b { flex: 1; text-align: center; font: var(--md-sys-typescale-title-medium); }
+.thread { flex: 1; overflow: auto; padding: 8px 16px 16px; display: flex; flex-direction: column; gap: 16px; }
+.msg-user { align-self: flex-end; max-width: 80%; background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); padding: 10px 16px; border-radius: var(--md-sys-shape-corner-large); border-end-end-radius: var(--ds-bubble-tail); }
+.msg-ai { display: flex; gap: 12px; align-items: flex-start; }
+.msg-ai .mark { width: 28px; height: 28px; border-radius: 50%; background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); display: grid; place-items: center; flex: none; }
+.msg-ai .body { display: flex; flex-direction: column; gap: 12px; min-width: 0; flex: 1; }
+.card { border: 1px solid var(--md-sys-color-outline-variant); border-radius: var(--md-sys-shape-corner-medium); overflow: hidden; background: var(--md-sys-color-surface); }
+.card.approval { border-color: var(--md-sys-color-primary-accent); }
+.card .ch { display: flex; gap: 8px; align-items: center; padding: 12px 16px; background: var(--md-sys-color-surface-container-low); font: var(--md-sys-typescale-title-small); }
+.card .cb { padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; font: var(--md-sys-typescale-body-medium); }
+.card table { border-collapse: collapse; width: 100%; font: var(--md-sys-typescale-body-medium); }
+.card th { text-align: start; font: var(--md-sys-typescale-label-medium); color: var(--md-sys-color-on-surface-variant); padding: 4px 8px 4px 0; }
+.card td { padding: 4px 8px 4px 0; border-top: 1px solid var(--md-sys-color-outline-variant); }
+.card .note { color: var(--md-sys-color-on-surface-variant); display: flex; gap: 6px; align-items: center; }
+.card .acts { display: flex; justify-content: flex-end; gap: 8px; padding: 0 12px 12px; flex-wrap: wrap; }
+.steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.steps li { display: flex; gap: 12px; align-items: center; padding-block: 6px; position: relative; font: var(--md-sys-typescale-body-medium); }
+.steps li::before { content: ""; position: absolute; inset-inline-start: 9px; top: 26px; bottom: -6px; width: 2px; background: var(--md-sys-color-outline-variant); }
+.steps li:last-child::before { display: none; }
+.dot { width: 20px; height: 20px; border-radius: 50%; flex: none; display: grid; place-items: center; background: var(--md-sys-color-surface); position: relative; z-index: 1; }
+.dot.done { background: var(--md-sys-color-success); color: var(--md-sys-color-on-success); }
+.dot.run { border: 2px solid var(--md-sys-color-outline-variant); border-top-color: var(--md-sys-color-primary); }
+.dot.wait { border: 2px solid var(--md-sys-color-outline); }
+.steps .w { color: var(--md-sys-color-on-surface-variant); }
+.foot { padding: 8px 16px 12px; display: flex; flex-direction: column; gap: 8px; }
+.sugs { display: flex; flex-wrap: wrap; gap: 8px; }
+.input { display: flex; align-items: center; gap: 4px; background: var(--md-sys-color-surface-container-high); border-radius: var(--md-sys-shape-corner-extra-large); padding: 4px; min-height: 56px; }
+.input span { flex: 1; color: var(--md-sys-color-on-surface-variant); padding-inline: 4px; }
+.disc { font: var(--md-sys-typescale-body-small); color: var(--md-sys-color-on-surface-variant); text-align: center; margin: 0; }
+.work { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.bar { height: 64px; display: flex; align-items: center; gap: 8px; padding-inline: 16px; }
+.bar b { font: var(--md-sys-typescale-title-large); flex: 1; }
+.tabs { display: flex; gap: 0; border-bottom: 1px solid var(--md-sys-color-outline-variant); padding-inline: 16px; }
+.tab { height: 48px; padding: 0 16px; display: grid; place-items: center; font: var(--md-sys-typescale-title-small); color: var(--md-sys-color-on-surface-variant); position: relative; }
+.tab.on { color: var(--md-sys-color-primary); }
+.tab.on::after { content: ""; position: absolute; inset-inline: 12px; bottom: 0; height: 3px; border-radius: 3px 3px 0 0; background: var(--md-sys-color-primary); }
+.filters { display: flex; gap: 8px; padding: 12px 16px; flex-wrap: wrap; }
+.dt { overflow: auto; }
+.dt table { border-collapse: collapse; width: 100%; font: var(--md-sys-typescale-body-medium); min-width: 420px; }
+.dt th { height: 56px; text-align: start; font: var(--md-sys-typescale-label-large); color: var(--md-sys-color-on-surface-variant); padding: 0 16px; border-bottom: 1px solid var(--md-sys-color-outline-variant); }
+.dt td { height: 52px; padding: 0 16px; border-bottom: 1px solid var(--md-sys-color-outline-variant); }
+.dt .num { text-align: end; font-variant-numeric: tabular-nums; }
+.dt tr.sel td { background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); }
+.pill { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border-radius: var(--md-sys-shape-corner-small); font: var(--md-sys-typescale-label-medium); border: 1px solid var(--md-sys-color-outline); color: var(--md-sys-color-on-surface-variant); }
+.pill.ok { border-color: transparent; background: var(--md-sys-color-success-container); color: var(--md-sys-color-on-success-container); }
+.snack { background: var(--md-sys-color-inverse-surface); color: var(--md-sys-color-inverse-on-surface); border-radius: var(--md-sys-shape-corner-extra-small); box-shadow: var(--md-sys-elevation-level3); min-height: 48px; display: flex; align-items: center; gap: 8px; padding: 0 8px 0 16px; font: var(--md-sys-typescale-body-medium); max-width: 560px; }
+.snack button { background: transparent; border: 0; color: var(--md-sys-color-inverse-primary); font: var(--md-sys-typescale-label-large); height: 40px; padding: 0 12px; cursor: pointer; }
+@media (max-width: 720px) { .app { flex-direction: column; } .side { width: auto; border-inline-end: 0; border-bottom: 1px solid var(--md-sys-color-outline-variant); } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M12 7l1.6 3.4L17 12l-3.4 1.6L12 17l-1.6-3.4L7 12l3.4-1.6z"/></symbol>
+  <symbol id="send" viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-2.5-6.5z"/><path d="M11.5 13.5L20 4"/></symbol>
+  <symbol id="mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
+  <symbol id="plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="list" viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h14"/></symbol>
+  <symbol id="shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/></symbol>
+  <symbol id="lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></symbol>
+  <symbol id="bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15zM10 20.5h4"/></symbol>
+  <symbol id="caret" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5"/></symbol>
+</svg>
+
+<div class="top">
+  <h1>Material Agent Chat</h1>
+  <span>1.0.0</span>
+  <span class="grow"></span>
+  <button class="btn outlined" type="button" id="dir" aria-pressed="false">Right to left</button>
+</div>
+
+<div class="pair">
+  <section class="stage" data-ds-theme="light" aria-label="Light">
+    <header><h2>Light</h2><p>The default.</p></header>
+    <div class="slot"></div>
+  </section>
+  <section class="stage" data-ds-theme="dark" aria-label="Dark">
+    <header><h2>Dark</h2><p>Opt in with data-ds-theme="dark".</p></header>
+    <div class="slot"></div>
+  </section>
+</div>
+
+<template id="body">
+  <div class="plate">
+    <h3>Colour roles</h3>
+    <div class="roles">
+      <div class="role" style="background:var(--md-sys-color-primary);color:var(--md-sys-color-on-primary)">Primary<small>The one main action</small></div>
+      <div class="role" style="background:var(--md-sys-color-primary-container);color:var(--md-sys-color-on-primary-container)">Primary container<small>The person's message</small></div>
+      <div class="role" style="background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container)">Secondary container<small>Selected states</small></div>
+      <div class="role" style="background:var(--md-sys-color-tertiary-container);color:var(--md-sys-color-on-tertiary-container)">Tertiary container<small>Sparing accents</small></div>
+      <div class="role" style="background:var(--md-sys-color-error-container);color:var(--md-sys-color-on-error-container)">Error container<small>Errors</small></div>
+      <div class="role" style="background:var(--md-sys-color-success-container);color:var(--md-sys-color-on-success-container)">Success container<small>Done and saved</small></div>
+      <div class="role" style="background:var(--md-sys-color-surface-container-high);color:var(--md-sys-color-on-surface)">Container high<small>The chat input</small></div>
+      <div class="role" style="background:var(--md-sys-color-draft-container);color:var(--md-sys-color-on-primary-container);border:1px dashed var(--md-sys-color-draft-outline)">Draft<small>Filled, not confirmed</small></div>
+    </div>
+  </div>
+
+  <div class="plate type">
+    <h3>Type roles</h3>
+    <div><span>Headline medium</span><b style="font:var(--md-sys-typescale-headline-medium)">Approvals</b></div>
+    <div><span>Title large</span><b style="font:var(--md-sys-typescale-title-large)">Requests waiting</b></div>
+    <div><span>Body large</span><span style="font:var(--md-sys-typescale-body-large);width:auto;color:inherit">Filled 4 fields from the request. Check them and confirm.</span></div>
+    <div><span>Body medium</span><span style="font:var(--md-sys-typescale-body-medium);width:auto;color:inherit">Supporting text and table cells.</span></div>
+    <div><span>Label large</span><span style="font:var(--md-sys-typescale-label-large);width:auto;color:inherit">Approve request</span></div>
+  </div>
+
+  <div class="plate">
+    <h3>Actions</h3>
+    <div class="row">
+      <button class="btn filled md-state" type="button"><svg class="i s18"><use href="#check"/></svg>Approve</button>
+      <button class="btn tonal md-state" type="button">Edit</button>
+      <button class="btn outlined md-state" type="button">Reject</button>
+      <button class="btn text md-state" type="button">Open record<svg class="i s18 m"><use href="#arrow"/></svg></button>
+      <button class="btn" type="button" disabled>Send</button>
+    </div>
+    <div class="row">
+      <button class="fab md-state" type="button"><svg class="i"><use href="#spark"/></svg>Ask the assistant</button>
+      <button class="chip md-state" type="button">Status<svg class="i s18"><use href="#caret"/></svg></button>
+      <button class="chip sel md-state" type="button" role="checkbox" aria-checked="true"><svg class="i s18"><use href="#check"/></svg>Waiting</button>
+      <button class="chip sug md-state" type="button"><svg class="i s18"><use href="#spark"/></svg>Summarise this request</button>
+    </div>
+  </div>
+
+  <div class="plate">
+    <h3>Fields</h3>
+    <div class="fields">
+      <div class="tf"><label><span class="lab">Project name</span><input value="North site upgrade" name="project"></label><p class="help">As it appears on the licence</p></div>
+      <div class="tf draft"><label><span class="lab">Budget line</span><input value="4,800,000" name="budget"></label><svg class="i s20 spark" aria-hidden="true"><use href="#spark"/></svg><p class="help">Filled by the assistant from the request</p></div>
+      <div class="tf err"><label><span class="lab">Email</span><input value="name@" name="email" aria-invalid="true"></label><p class="help">Enter a full address.</p></div>
+    </div>
+  </div>
+
+  <div class="plate">
+    <h3>A dashboard with the chat sidebar</h3>
+    <div class="app">
+      <aside class="side" aria-label="Assistant">
+        <div class="head">
+          <button class="ib md-state" type="button" aria-label="Conversations"><svg class="i"><use href="#list"/></svg></button>
+          <b>Assistant</b>
+          <button class="ib md-state" type="button" aria-label="Close"><svg class="i"><use href="#x"/></svg></button>
+        </div>
+        <div class="thread" role="log">
+          <div class="msg-user">Approve the request for the north site</div>
+          <div class="msg-ai">
+            <span class="mark" aria-hidden="true"><svg class="i s18"><use href="#spark"/></svg></span>
+            <div class="body">
+              <ul class="steps" aria-label="Plan">
+                <li><span class="dot done"><svg class="i s18"><use href="#check"/></svg></span>Read the request letter</li>
+                <li><span class="dot run md-spin" aria-label="Running"></span>Check the budget line</li>
+                <li><span class="dot wait"></span><span class="w">Draft the approval letter</span></li>
+              </ul>
+              <span>Ready to approve the request. Nothing is saved until you confirm.</span>
+              <div class="card approval">
+                <div class="ch"><svg class="i s20"><use href="#shield"/></svg>Approve this request?</div>
+                <div class="cb">
+                  <span>Capacity and budget line were filled from the request letter.</span>
+                  <table><thead><tr><th>Field</th><th>Current</th><th>Proposed</th></tr></thead>
+                  <tbody><tr><td>Status</td><td>Under review</td><td>Approved</td></tr><tr><td>Capacity</td><td>Not set</td><td>120</td></tr></tbody></table>
+                  <span class="note"><svg class="i s18"><use href="#lock"/></svg>Nothing is saved until you approve.</span>
+                </div>
+                <div class="acts"><button class="btn text md-state" type="button">Reject</button><button class="btn outlined md-state" type="button">Edit</button><button class="btn filled md-state" type="button">Approve</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="foot">
+          <div class="sugs"><button class="chip sug md-state" type="button"><svg class="i s18"><use href="#spark"/></svg>Check the budget line</button></div>
+          <div class="input">
+            <button class="ib md-state" type="button" aria-label="Add"><svg class="i"><use href="#plus"/></svg></button>
+            <span>Ask the assistant</span>
+            <button class="ib md-state" type="button" aria-label="Speak"><svg class="i"><use href="#mic"/></svg></button>
+            <button class="ib filled md-state" type="button" aria-label="Send"><svg class="i s20 m"><use href="#send"/></svg></button>
+          </div>
+          <p class="disc">The assistant can make mistakes. Check important information before you save.</p>
+        </div>
+      </aside>
+      <main class="work">
+        <div class="bar"><b>Approvals</b>
+          <button class="ib md-state" type="button" aria-label="Search"><svg class="i"><use href="#search"/></svg></button>
+          <button class="ib md-state" type="button" aria-label="Notifications"><svg class="i"><use href="#bell"/></svg></button>
+        </div>
+        <div class="tabs" role="tablist"><span class="tab on" role="tab" aria-selected="true">Waiting</span><span class="tab" role="tab" aria-selected="false">Done</span></div>
+        <div class="filters"><button class="chip sel md-state" type="button" role="checkbox" aria-checked="true"><svg class="i s18"><use href="#check"/></svg>This month</button><button class="chip md-state" type="button">Unit<svg class="i s18"><use href="#caret"/></svg></button></div>
+        <div class="dt">
+          <table>
+            <thead><tr><th>Reference</th><th>Project</th><th class="num">Amount</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr class="sel"><td>1187</td><td>North site upgrade</td><td class="num">4,800,000</td><td><span class="pill">Waiting</span></td></tr>
+              <tr><td>1186</td><td>Depot roof</td><td class="num">320,000</td><td><span class="pill ok">Approved</span></td></tr>
+              <tr><td>1185</td><td>Road lighting</td><td class="num">1,150,000</td><td><span class="pill">Waiting</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="plate">
+    <h3>Snackbar</h3>
+    <div class="snack" role="status"><span style="flex:1">Request approved.</span><button type="button">Undo</button></div>
+  </div>
+</template>
+
+<script>
+  const tpl = document.getElementById('body');
+  document.querySelectorAll('.slot').forEach(s => s.replaceWith(tpl.content.cloneNode(true)));
+  const b = document.getElementById('dir');
+  b.addEventListener('click', () => {
+    const rtl = document.documentElement.dir !== 'rtl';
+    document.documentElement.dir = rtl ? 'rtl' : 'ltr';
+    b.setAttribute('aria-pressed', String(rtl));
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+/* Material Agent Chat, opt-in dark theme, 1.0.0. Load after tokens.css and set data-ds-theme="dark"
+   (or a .dark class) on <html> or any ancestor. The same role names take dark values; components need no
+   extra rules. The structure follows the Material 3 dark scheme: the accent lightens and carries dark ink,
+   surfaces step lighter as they rise, and every white on-colour becomes the darkest step of its own hue.
+   Contrast for every pair is in guidelines.md. */
+
+[data-ds-theme="dark"], .dark {
+  color-scheme: dark;
+  --md-sys-color-primary: #CBA344;
+  --md-sys-color-on-primary: #361E12;              /* 6.56:1 */
+  --md-sys-color-primary-container: #5D3B26;
+  --md-sys-color-on-primary-container: #F2ECCF;
+  --md-sys-color-primary-accent: #B68A35;
+  --md-sys-color-secondary: #D1D5DC;
+  --md-sys-color-on-secondary: #030712;
+  --md-sys-color-secondary-container: #364153;     /* a lighter step than in light, so a selected state still shows on the near-black ground */
+  --md-sys-color-on-secondary-container: #F1F5F9;
+  --md-sys-color-tertiary: #76DBFF;
+  --md-sys-color-on-tertiary: #04334D;
+  --md-sys-color-tertiary-container: #065074;
+  --md-sys-color-on-tertiary-container: #DEF3FF;
+  --md-sys-color-error: #F47A75;
+  --md-sys-color-on-error: #430E0C;
+  --md-sys-color-error-container: #7C2320;
+  --md-sys-color-on-error-container: #FDE4E3;
+  --md-sys-color-success: #A0D5AB;
+  --md-sys-color-on-success: #0F2415;
+  --md-sys-color-success-container: #24432B;
+  --md-sys-color-on-success-container: #E4F4E7;
+
+  --md-sys-color-surface: #030712;
+  --md-sys-color-surface-dim: #030712;
+  --md-sys-color-surface-bright: #364153;
+  --md-sys-color-surface-container-lowest: #030712;
+  --md-sys-color-surface-container-low: #0E0F12;
+  --md-sys-color-surface-container: #101828;
+  --md-sys-color-surface-container-high: #1E2939;
+  --md-sys-color-surface-container-highest: #364153;
+  --md-sys-color-surface-variant: #364153;
+  --md-sys-color-on-surface: #F1F5F9;
+  --md-sys-color-on-surface-variant: #D1D5DC;      /* a lighter step than the mirror of light, so it holds 4.5:1 on the highest container */
+  --md-sys-color-outline: #6A7282;
+  --md-sys-color-outline-variant: #1E2939;
+  --md-sys-color-inverse-surface: #F1F5F9;
+  --md-sys-color-inverse-on-surface: #101828;
+  --md-sys-color-inverse-primary: #7C5E24;
+  --md-sys-color-scrim: #000000;
+  --md-sys-color-shadow: #000000;
+
+  --md-sys-color-draft-container: #361E12;
+  --md-sys-color-draft-outline: #B68A35;
+
+  --md-sys-color-chart-1: #2BCAFF;
+  --md-sys-color-chart-2: #81C1FF;
+  --md-sys-color-chart-3: #FAD44F;
+  --md-sys-color-chart-4: #F5AC7C;
+  --md-sys-color-chart-5: #F0ABFC;
+  --md-sys-color-chart-6: #94A3B8;
+
+  /* Deeper shadows, because light shadows vanish on a dark ground. */
+  --md-sys-elevation-level1: 0 1px 2px 0 rgba(0, 0, 0, 0.45), 0 1px 3px 1px rgba(0, 0, 0, 0.30);
+  --md-sys-elevation-level2: 0 1px 2px 0 rgba(0, 0, 0, 0.45), 0 2px 6px 2px rgba(0, 0, 0, 0.30);
+  --md-sys-elevation-level3: 0 1px 3px 0 rgba(0, 0, 0, 0.45), 0 4px 8px 3px rgba(0, 0, 0, 0.30);
+  --md-sys-elevation-level4: 0 2px 3px 0 rgba(0, 0, 0, 0.45), 0 6px 10px 4px rgba(0, 0, 0, 0.30);
+  --md-sys-elevation-level5: 0 4px 4px 0 rgba(0, 0, 0, 0.45), 0 8px 12px 6px rgba(0, 0, 0, 0.30);
+
+  --md-sys-state-focus-ring-color: var(--md-sys-color-secondary);
+}

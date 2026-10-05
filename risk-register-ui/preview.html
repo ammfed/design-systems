@@ -30,18 +30,19 @@
   .chat, .work { background: var(--ds-panel); border: 1px solid var(--ds-island-edge); border-radius: var(--ds-island-radius); box-shadow: var(--ds-island-shadow); overflow: hidden; }
   [data-ds-style="1"] .chat, [data-ds-style="1"] .work { border: 0; }
   [data-ds-style="1"] .chat { border-inline-end: 1px solid var(--ds-island-edge); }
-  .chat { flex: 0 0 36%; display: flex; flex-direction: column; }
-  .chat-head { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 12px; border-top: 2px solid var(--ds-accent-bright); border-bottom: 1px solid var(--ds-line); font-family: var(--ds-family-heading); font-weight: var(--ds-title-weight); letter-spacing: var(--ds-title-track); color: var(--ds-ink); }
+  .chat { flex: 0 0 36%; display: flex; flex-direction: column; background: var(--ds-dock); }
+  .chat-head { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 12px; border-bottom: 1px solid var(--ds-line); font-family: var(--ds-family-heading); font-weight: var(--ds-title-weight); letter-spacing: var(--ds-title-track); color: var(--ds-ink); }
   .dot { width: 22px; height: 22px; border-radius: 50%; background: var(--ds-accent-soft); border: 1px solid var(--ds-line-strong); }
   .msgs { flex: 1; display: flex; flex-direction: column; gap: 8px; padding: 10px 12px; }
-  .m-a { border-radius: var(--ds-radius); background: var(--ds-assistant-box); box-shadow: inset 0 0 0 1px var(--ds-assistant-edge); }
-  [data-ds-style="2"] .m-a, [data-ds-style="3"] .m-a { padding: 6px 10px; }
-  .m-a.follow { border-inline-start: 2px solid var(--ds-accent-bright); border-radius: 0; padding-inline-start: 8px; }
-  .m-p { align-self: flex-end; max-width: 85%; padding: 6px 10px; border-radius: var(--ds-radius); background: var(--ds-person-box); box-shadow: inset 0 0 0 1px var(--ds-person-edge); color: var(--ds-person-ink); }
+  /* The person's lines at the reading start, the assistant's plain words at the reading end. */
+  .m-a { align-self: flex-end; max-width: 85%; color: var(--ds-text); }
+  .m-a.busy { color: var(--ds-ink-2); }
+  .m-p { align-self: flex-start; max-width: 85%; padding: 6px 10px; border-radius: var(--ds-radius); background: var(--ds-person-box); box-shadow: inset 0 0 0 1px var(--ds-person-edge); color: var(--ds-person-ink); }
   .input { margin: 0 12px 6px; padding: 6px 8px; border: 2px solid var(--ds-input-edge); border-radius: var(--ds-radius); background: var(--ds-panel); }
   .input .ph { color: var(--ds-muted); }
   .tools { display: flex; align-items: center; gap: 4px; margin-top: 4px; }
-  .tool { width: 26px; height: 26px; border-radius: 6px; display: grid; place-items: center; color: var(--ds-accent); }
+  .tool { width: 26px; height: 26px; border-radius: 6px; display: grid; place-items: center; color: var(--ds-accent-ink); }
+  .tool.off { color: var(--ds-off-ink); }
   .send { margin-inline-start: auto; width: 28px; height: 28px; border-radius: 6px; background: var(--ds-accent); color: var(--ds-accent-on); display: grid; place-items: center; }
   .note { margin: 0 12px 8px; text-align: center; color: var(--ds-muted); }
   .work { flex: 1; min-width: 0; display: flex; flex-direction: column; padding: 0 14px; }
@@ -52,14 +53,17 @@
   .title b { font-family: var(--ds-family-heading); font-weight: var(--ds-title-weight); letter-spacing: var(--ds-title-track); font-size: var(--ds-text-base); color: var(--ds-ink); }
   .filters { display: flex; gap: 6px; }
   .filter { padding: 0 10px; min-height: 26px; display: inline-flex; align-items: center; border: 1px solid var(--ds-line-strong); border-radius: var(--ds-radius-pill); background: var(--ds-panel); box-shadow: var(--ds-shadow-button); }
-  .filter.on { border-color: var(--ds-accent); background: var(--ds-accent-soft); color: var(--ds-accent-deep); font-weight: 600; }
+  .filter.on { border-color: var(--ds-picked-edge); background: var(--ds-picked); color: var(--ds-picked-ink); font-weight: 600; }
   .content { flex: 1; display: flex; flex-direction: column; gap: 10px; padding: 10px 0; }
   table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--ds-edge); border-radius: var(--ds-radius); overflow: hidden; background: var(--ds-panel); box-shadow: var(--ds-shadow-card); font-size: var(--ds-text-sm); }
   th, td { padding: 6px 8px; text-align: start; vertical-align: middle; border-bottom: 1px solid var(--ds-line); height: 36px; }
   thead th { background: var(--ds-inset); font-weight: 600; color: var(--ds-text); }
   tbody tr:last-child td { border-bottom: 0; }
   .num { color: var(--ds-ink-3); width: 28px; }
-  .lvl { display: inline-flex; padding: 0 8px; border-radius: var(--ds-radius-chip); font-weight: 700; white-space: nowrap; }
+  .lvl { display: inline-flex; align-items: stretch; overflow: hidden; padding-inline-end: 8px; gap: 6px; border-radius: var(--ds-radius-chip); font-weight: 700; white-space: nowrap; }
+  .lvl b { padding: 0 6px; color: var(--ds-ink); }
+  .low b { background: var(--ds-level-low); } .medium b { background: var(--ds-level-medium); } .high b { background: var(--ds-level-high); }
+  .critical b { background: var(--ds-level-critical); color: var(--ds-accent-on); }
   .low { background: var(--ds-level-low-soft); color: var(--ds-level-low-ink); box-shadow: inset 0 0 0 1px var(--ds-level-low); }
   .medium { background: var(--ds-level-medium-soft); color: var(--ds-level-medium-ink); box-shadow: inset 0 0 0 1px var(--ds-level-medium); }
   .high { background: var(--ds-level-high-soft); color: var(--ds-level-high-ink); box-shadow: inset 0 0 0 1px var(--ds-level-high); }
@@ -70,22 +74,67 @@
   .p-amber { border-color: var(--ds-status-amber-line); background: var(--ds-status-amber-soft); color: var(--ds-status-amber-ink); }
   .p-green { border-color: var(--ds-status-green-line); background: var(--ds-status-green-soft); color: var(--ds-status-green-ink); }
   .q { padding: 10px 12px; border: 2px solid var(--ds-accent); border-radius: var(--ds-radius); background: var(--ds-panel); box-shadow: var(--ds-shadow-card); }
+  .q-title { color: var(--ds-ink-3); margin-bottom: 2px; }
+  .answered { display: flex; gap: 12px; padding: 6px 12px; border: 1px solid var(--ds-line); border-radius: var(--ds-radius); background: var(--ds-panel); }
+  .answered span:first-child, .quiet span:first-child, .missing span:first-child { color: var(--ds-ink-3); min-width: 30%; }
   .q-label { font-family: var(--ds-family-heading); font-weight: 600; font-size: var(--ds-text-base); color: var(--ds-ink); margin-bottom: 8px; }
   .opts { display: flex; flex-wrap: wrap; gap: 6px; }
   .opt { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 0 10px 0 6px; border: 1px solid var(--ds-line-strong); border-radius: var(--ds-radius); background: var(--ds-panel); box-shadow: var(--ds-shadow-card); }
-  .opt.on { outline: 2px solid var(--ds-accent); outline-offset: -2px; background: var(--ds-accent-soft); }
+  .opt.on { outline: 2px solid var(--ds-picked-edge); outline-offset: -2px; background: var(--ds-picked); color: var(--ds-picked-ink); }
   .key { display: inline-grid; place-items: center; width: 22px; height: 22px; border: 1px solid var(--ds-line-strong); border-radius: 4px; font-size: 14px; font-weight: 600; color: var(--ds-ink-2); background: var(--ds-panel); }
-  .quiet { display: flex; justify-content: space-between; padding: 6px 12px; border-radius: var(--ds-radius); background: var(--ds-inset); color: var(--ds-muted); }
-  .missing { display: flex; justify-content: space-between; padding: 6px 12px; border: 2px dashed var(--ds-cue-empty); border-radius: var(--ds-radius); background: var(--ds-panel); }
+  .quiet { display: flex; gap: 12px; padding: 6px 12px; border-radius: var(--ds-radius); background: var(--ds-inset); color: var(--ds-muted); }
+  .missing { display: flex; gap: 12px; padding: 6px 12px; border: 2px dashed var(--ds-cue-empty); border-radius: var(--ds-radius); background: var(--ds-panel); }
   .missing em { font-style: normal; font-weight: 600; color: var(--ds-cue-empty-ink); }
   .actions { display: flex; justify-content: flex-end; align-items: center; gap: 8px; height: 52px; border-top: 1px solid var(--ds-line); }
-  .btn { display: inline-flex; align-items: center; min-height: 34px; padding: 0 14px; border-radius: var(--ds-radius-button); font-weight: 600; box-shadow: var(--ds-shadow-button); }
+  .undo { margin-inline-end: auto; flex: none; white-space: nowrap; display: inline-flex; align-items: center; gap: 10px; min-height: 34px; padding: 0 6px 0 12px; border-radius: var(--ds-radius-button); background: var(--ds-bar); color: var(--ds-bar-ink); position: relative; overflow: hidden; }
+  .undo b { color: var(--ds-bar-act); padding: 0 6px; }
+  .undo::after { content: ""; position: absolute; inset-inline-start: 0; bottom: 0; height: 2px; width: 60%; background: var(--ds-bar-act); }
+  .btn { display: inline-flex; align-items: center; white-space: nowrap; min-height: 34px; padding: 0 14px; border-radius: var(--ds-radius-button); font-weight: 600; box-shadow: var(--ds-shadow-button); }
   .btn-main { background: var(--ds-accent); color: var(--ds-accent-on); }
-  .btn-line { border: 1px solid var(--ds-accent); color: var(--ds-accent-ink); background: var(--ds-quiet); box-shadow: none; }
+  .btn-line { border: 1px solid var(--ds-second-edge); color: var(--ds-ink); background: var(--ds-quiet); box-shadow: none; }
+  .btn-off { background: var(--ds-off); color: var(--ds-off-ink); box-shadow: none; }
+  [dir="rtl"] svg.m { transform: scaleX(-1); }
   svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .swatches { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 14px; background: var(--ds-panel); border-top: 1px solid var(--ds-line); }
   .sw { width: 28px; height: 28px; border-radius: 6px; border: 1px solid rgba(0,0,0,.12); }
   .rtl { font-family: var(--ds-family-body); }
+
+  /* On a laptop: the work takes the whole width and the chat is an island at the bottom edge. */
+  .lap { position: relative; display: flex; flex-direction: column; min-height: 520px; padding: var(--ds-island-gap); padding-bottom: 60px; background: var(--ds-ground); }
+  .lap .work { flex: 1; }
+  .ticks { display: flex; flex-direction: column; border: 1px solid var(--ds-edge); border-radius: var(--ds-radius); background: var(--ds-panel); overflow: hidden; }
+  .ticks label { display: flex; align-items: center; gap: 10px; min-height: 40px; padding: 0 12px; border-bottom: 1px solid var(--ds-line); }
+  .ticks label:last-child { border-bottom: 0; }
+  .ticks input { width: 16px; height: 16px; margin: 0; accent-color: var(--ds-accent); }
+  .ticks .gap { width: 16px; }
+  .ticks .who2 { margin-inline-start: auto; color: var(--ds-ink-3); }
+  .bulk { display: flex; align-items: center; gap: 10px; min-height: 40px; padding: 0 10px; border: 1px solid var(--ds-picked-edge); border-radius: var(--ds-radius); background: var(--ds-picked); color: var(--ds-picked-ink); }
+  .bulk strong { margin-inline-end: auto; font-weight: 600; }
+  .bulk .btn { min-height: 28px; }
+  .float { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: max(300px, 54%); display: flex; flex-direction: column; gap: 8px; padding: 6px 14px 10px; border: 1px solid var(--ds-edge); border-bottom: 0; border-radius: 22px 22px 0 0; background: var(--ds-dock); box-shadow: var(--ds-shadow-float); }
+  .f-top { display: flex; align-items: center; gap: 8px; min-height: 30px; font-family: var(--ds-family-heading); font-weight: var(--ds-title-weight); color: var(--ds-ink); }
+  .f-top .q2 { margin-inline-start: auto; font-family: var(--ds-family-body); font-weight: 500; color: var(--ds-ink-2); }
+  .f-line { display: flex; gap: 10px; align-items: flex-start; }
+  .f-line .say { flex: 1; font-size: var(--ds-text-base); }
+  .f-line .face { flex: none; width: 40px; height: 40px; border-radius: 50%; background: var(--ds-accent-soft); border: 1px solid var(--ds-line-strong); }
+  .filled { border: 1px solid var(--ds-edge); border-radius: var(--ds-radius); background: var(--ds-panel); box-shadow: var(--ds-shadow-card); padding: 8px 10px; }
+  .filled .cn { margin: 0 0 6px; color: var(--ds-ink-2); }
+  .fv { display: grid; grid-template-columns: 1fr auto; column-gap: 8px; padding: 4px 0; border-top: 1px solid var(--ds-line); }
+  .fv dt { grid-column: 1; color: var(--ds-ink-3); }
+  .fv .was, .fv .new { grid-column: 1; display: flex; gap: 8px; }
+  .fv .was { color: var(--ds-ink-3); }
+  .fv .new { font-weight: 500; }
+  .fv .w { flex: 0 0 64px; font-weight: 500; }
+  .fv .x { grid-column: 2; grid-row: 1 / span 3; align-self: center; color: var(--ds-ink-2); }
+  dl, dd { margin: 0; }
+  .under { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  .chip { display: inline-flex; align-items: center; min-height: 28px; padding: 0 10px; border: 1px solid var(--ds-line-strong); border-radius: var(--ds-radius-pill); background: var(--ds-panel); box-shadow: var(--ds-shadow-button); font-weight: 500; }
+  .under .why { font-weight: 600; color: var(--ds-ink); }
+  .thumbs { margin-inline-start: auto; display: inline-flex; gap: 2px; color: var(--ds-ink-2); }
+  .file { display: inline-flex; align-items: center; gap: 6px; min-height: 26px; padding: 0 6px; border: 1px solid var(--ds-line-strong); border-radius: var(--ds-radius-sm, 4px); background: var(--ds-inset); color: var(--ds-ink); }
+  .file svg:first-child { color: var(--ds-ink-3); }
+  .stop { margin-inline-start: auto; width: 28px; height: 28px; border-radius: 6px; background: var(--ds-text); color: var(--ds-panel); display: grid; place-items: center; }
+  .float .input { margin: 0; }
 </style>
 </head>
 <body>
@@ -98,6 +147,57 @@
 
   <h2 class="section">Right to left, style 1</h2>
   <div class="grid" id="rtl"></div>
+
+  <h2 class="section">On a laptop, under 1600px</h2>
+  <div class="grid" id="laps"></div>
+
+  <template id="lap">
+    <div>
+      <p class="label"></p>
+      <div class="app">
+        <div class="bar">
+          <span class="mark" aria-hidden="true"></span>
+          <div class="titles"><small>Unit A</small><b>Risk register</b></div>
+          <span class="who"><span>Coordinator</span><a href="#">عربي</a></span>
+        </div>
+        <div class="lap">
+          <main class="work">
+            <div class="tabs"><span class="tab">Entry</span><span class="tab">Register</span><span class="tab on">Pending</span></div>
+            <div class="title"><b>Pending</b></div>
+            <div class="content">
+              <div class="bulk"><strong>2 ticked</strong><span class="btn btn-line">Remind</span><span class="btn btn-main">Accept both</span></div>
+              <div class="ticks">
+                <label><input type="checkbox" name="t1" checked> Unit B register <span class="who2">Sent</span></label>
+                <label><input type="checkbox" name="t2" checked> Unit C register <span class="who2">Sent</span></label>
+                <label><span class="gap"></span> Unit D register <span class="who2">Draft</span></label>
+              </div>
+            </div>
+          </main>
+          <aside class="float" aria-label="Assistant">
+            <div class="f-top"><span>Assistant</span><span class="q2">Earlier</span><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div>
+            <div class="f-line"><span class="say">Filled 2 values from the file. Nothing is saved yet.</span><span class="face" aria-hidden="true"></span></div>
+            <div class="filled">
+              <p class="cn">From the attached file</p>
+              <dl>
+                <div class="fv"><dt>Owner</dt><dd class="was"><span class="w">Now</span>Not set</dd><dd class="new"><span class="w">Proposed</span>Supply lead</dd><span class="x" aria-label="Leave out"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span></div>
+                <div class="fv"><dt>Impact</dt><dd class="was"><span class="w">Now</span>2 Minor</dd><dd class="new"><span class="w">Proposed</span>3 Moderate</dd><span class="x" aria-label="Leave out"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span></div>
+              </dl>
+            </div>
+            <div class="under"><span class="chip">Confirm both</span><span class="chip">Open the risk</span><span class="why">Why</span>
+              <span class="thumbs"><svg viewBox="0 0 24 24"><path d="M7 11v9H4v-9zM7 11l4-7a2 2 0 0 1 3 2l-1 4h6a2 2 0 0 1 2 2l-2 7a2 2 0 0 1-2 1H7"/></svg><svg viewBox="0 0 24 24" style="transform:scaleY(-1)"><path d="M7 11v9H4v-9zM7 11l4-7a2 2 0 0 1 3 2l-1 4h6a2 2 0 0 1 2 2l-2 7a2 2 0 0 1-2 1H7"/></svg></span></div>
+            <div class="input">
+              <span class="file"><svg viewBox="0 0 24 24"><path d="M14 3H6v18h12V7z"/></svg>supplier-notes.csv<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+              <div class="tools">
+                <span class="tool" aria-label="Attach"><svg viewBox="0 0 24 24"><path d="M20 11l-8 8a5 5 0 0 1-7-7l8-8a3 3 0 0 1 4 4l-8 8a1 1 0 0 1-2-2l7-7"/></svg></span>
+                <span class="tool" aria-label="Microphone"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span>
+                <span class="stop" aria-label="Stop"><svg viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1" fill="currentColor"/></svg></span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </template>
 
   <template id="frame">
     <div>
@@ -114,15 +214,15 @@
             <div class="msgs">
               <div class="m-a" data-t="a1">Checking last year's risks first.</div>
               <div class="m-p" data-t="p1">Supplier delay is still valid.</div>
-              <div class="m-a follow" data-t="a2">How likely is it this year?</div>
+              <div class="m-a busy" data-t="a2">Asking the likelihood.</div>
             </div>
             <div class="input">
               <div class="ph" data-t="ph">Answer here</div>
               <div class="tools">
-                <span class="tool" title="Mode"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h6"/></svg></span>
-                <span class="tool" title="Microphone"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span>
-                <span class="tool" title="Live voice"><svg viewBox="0 0 24 24"><path d="M4 12h2M8 8v8M12 5v14M16 8v8M20 12h0"/></svg></span>
-                <span class="send"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                <span class="tool off" aria-label="Live voice"><svg viewBox="0 0 24 24"><path d="M4 12h2M8 8v8M12 5v14M16 8v8M20 12h0"/></svg></span>
+                <span class="tool" aria-label="Microphone"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span>
+                <span class="tool" aria-label="Mode"><svg viewBox="0 0 24 24"><path d="M5 16a7 7 0 1 1 14 0M12 16l3-4"/></svg></span>
+                <span class="send" aria-label="Send"><svg viewBox="0 0 24 24" class="m"><path d="M4 12l16-8-6 16-2.5-6.5z"/></svg></span>
               </div>
             </div>
             <p class="note" data-t="note">Answers can be wrong. Check before sending.</p>
@@ -136,20 +236,22 @@
               <table>
                 <thead><tr><th>#</th><th data-t="risk">Risk</th><th data-t="level">Level</th><th data-t="status">Status</th></tr></thead>
                 <tbody>
-                  <tr><td class="num">1</td><td data-t="r1">Supplier delay</td><td><span class="lvl high" data-t="l1">12 High</span></td><td><span class="pill p-amber"><svg viewBox="0 0 24 24"><path d="M9 14l-5-5 5-5M4 9h11a5 5 0 0 1 0 10h-3"/></svg><span data-t="s1">Returned</span></span></td></tr>
-                  <tr><td class="num">2</td><td data-t="r2">Data loss</td><td><span class="lvl critical" data-t="l2">20 Critical</span></td><td><span class="pill p-blue"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-t="s2">Sent</span></span></td></tr>
-                  <tr><td class="num">3</td><td data-t="r3">Staff turnover</td><td><span class="lvl medium" data-t="l3">6 Medium</span></td><td><span class="pill p-grey"><span data-t="s3">Draft</span></span></td></tr>
-                  <tr><td class="num">4</td><td data-t="r4">Late permit</td><td><span class="lvl low" data-t="l4">3 Low</span></td><td><span class="pill p-green"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg><span data-t="s4">Accepted</span></span></td></tr>
+                  <tr><td class="num">1</td><td data-t="r1">Supplier delay</td><td><span class="lvl high"><b>12</b><span data-t="l1">High</span></span></td><td><span class="pill p-amber"><svg viewBox="0 0 24 24"><path d="M9 14l-5-5 5-5M4 9h11a5 5 0 0 1 0 10h-3"/></svg><span data-t="s1">Returned</span></span></td></tr>
+                  <tr><td class="num">2</td><td data-t="r2">Data loss</td><td><span class="lvl critical"><b>20</b><span data-t="l2">Critical</span></span></td><td><span class="pill p-blue"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-t="s2">Sent</span></span></td></tr>
+                  <tr><td class="num">3</td><td data-t="r3">Staff turnover</td><td><span class="lvl medium"><b>6</b><span data-t="l3">Medium</span></span></td><td><span class="pill p-grey"><span data-t="s3">Draft</span></span></td></tr>
+                  <tr><td class="num">4</td><td data-t="r4">Late permit</td><td><span class="lvl low"><b>3</b><span data-t="l4">Low</span></span></td><td><span class="pill p-green"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg><span data-t="s4">Accepted</span></span></td></tr>
                 </tbody>
               </table>
+              <div class="answered"><span data-t="cause">Cause</span><span data-t="causev">One supplier only</span></div>
               <div class="q">
-                <div class="q-label" data-t="q">Likelihood</div>
+                <div class="q-title" data-t="q">Likelihood</div>
+                <div class="q-label" data-t="qq">How likely is it this year?</div>
                 <div class="opts"><span class="opt"><span class="key">1</span><span data-t="o1">Rare</span></span><span class="opt on"><span class="key">2</span><span data-t="o2">Possible</span></span><span class="opt"><span class="key">3</span><span data-t="o3">Likely</span></span></div>
               </div>
               <div class="missing"><span data-t="impact">Impact</span><em data-t="miss">Missing</em></div>
               <div class="quiet"><span data-t="owner">Owner</span><span data-t="next">Next</span></div>
             </div>
-            <div class="actions"><span class="btn btn-line" data-t="export">Export</span><span class="btn btn-main" data-t="send">Send register</span></div>
+            <div class="actions"><span class="undo"><span data-t="removed">Risk removed</span><b data-t="undo">Undo</b></span><span class="btn btn-line" data-t="back">Back</span><span class="btn btn-main" data-t="send">Send register</span></div>
           </main>
         </div>
         <div class="swatches" aria-label="Palette"></div>
@@ -165,15 +267,16 @@
   ];
   const ar = {
     unit: "الوحدة أ", app: "سجل المخاطر", name: "المنسق", lang: "English", assistant: "المساعد",
-    a1: "مراجعة مخاطر العام الماضي أولا.", p1: "تأخر المورد ما زال قائما.", a2: "ما احتمال حدوثه هذا العام؟",
+    a1: "مراجعة مخاطر العام الماضي أولا.", p1: "تأخر المورد ما زال قائما.", a2: "نسأل عن الاحتمالية.",
     ph: "اكتب إجابتك", note: "قد تكون الإجابات خاطئة. راجعها قبل الإرسال.", entry: "الإدخال", register: "السجل",
     pending: "المعلق", summary: "الملخص", rating: "التقييم", risk: "الخطر", level: "المستوى", status: "الحالة",
     r1: "تأخر المورد", r2: "فقدان البيانات", r3: "دوران الموظفين", r4: "تأخر التصريح",
-    l1: "12 مرتفع", l2: "20 حرج", l3: "6 متوسط", l4: "3 منخفض",
+    l1: "مرتفع", l2: "حرج", l3: "متوسط", l4: "منخفض", cause: "السبب", causev: "مورد واحد فقط",
+    qq: "ما احتمال حدوثه هذا العام؟", removed: "حُذف الخطر", undo: "تراجع", back: "رجوع",
     s1: "معاد", s2: "مرسل", s3: "مسودة", s4: "مقبول", q: "الاحتمالية", o1: "نادر", o2: "ممكن", o3: "مرجح",
     impact: "الأثر", miss: "ناقص", owner: "المالك", next: "لاحقا", export: "تصدير", send: "إرسال السجل",
   };
-  const swatchVars = ["ground", "panel", "inset", "line", "island-edge", "ink", "muted", "accent", "accent-soft", "assistant-box", "person-box", "rule", "focus"];
+  const swatchVars = ["ground", "panel", "inset", "line", "island-edge", "ink", "muted", "accent", "accent-soft", "dock", "picked", "person-box", "rule", "focus"];
   const tpl = document.getElementById("frame");
   function frame(style, label, sub, rtl) {
     const node = tpl.content.firstElementChild.cloneNode(true);
@@ -199,6 +302,14 @@
   const grid = document.getElementById("styles");
   styles.forEach(([s, l, sub]) => grid.appendChild(frame(s, l, sub, false)));
   document.getElementById("rtl").appendChild(frame("1", "Style 1", "right to left", true));
+  const lapTpl = document.getElementById("lap");
+  const laps = document.getElementById("laps");
+  styles.forEach(([s, l]) => {
+    const node = lapTpl.content.firstElementChild.cloneNode(true);
+    node.querySelector(".label").innerHTML = l + " <span>the island open over a list with ticked rows</span>";
+    node.querySelector(".app").setAttribute("data-ds-style", s);
+    laps.appendChild(node);
+  });
 </script>
 </body>
 </html>
