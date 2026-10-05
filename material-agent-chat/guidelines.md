@@ -71,6 +71,7 @@ Every pair, computed from the token values by the WCAG 2.x formula. Text needs 4
 | Control edge on a container | `outline` on `surface-container-high` | 3 | 3.65 | 3.03 |
 | Focus ring | `secondary` on `surface` | 3 | 10.36 | 13.67 |
 | Focus ring on the highest container | `secondary` on `surface-container-highest` | 3 | 8.05 | 7.00 |
+| Focus ring on an inverse surface | `inverse-on-surface` on `inverse-surface` | 3 | 16.45 | 16.20 |
 | Accent edge | `primary-accent` on `surface` | 3 | 3.15 | 6.40 |
 | Draft outline on its tint | `draft-outline` on `draft-container` | 3 | 4.19 | 4.94 |
 | Filled control on the page | `primary` on `surface` | 3 | 4.50 | 8.50 |
@@ -126,7 +127,7 @@ Levels 0 to 5, shown mainly as a tonal surface and only lightly as a shadow: the
 
 - **State layers** in the content colour: hover 8%, focus 10%, pressed 10%, dragged 16%. Add `.md-state` from `motion.css` to paint them.
 - **Disabled**: content at 38%, container at 12%. A disabled control that blocks progress says what unlocks it in its tooltip.
-- **Focus**: a 3px `secondary` ring 2px outside the control, on keyboard focus only, always visible. Inside a list, a table or the chat input, the ring draws inward (`.md-focus-inset`) so its neighbours never cover it.
+- **Focus**: a 3px `secondary` ring 2px outside the control, on keyboard focus only, always visible. On an inverse surface (a snackbar) the ring takes `inverse-on-surface` instead: set `data-ds-surface="inverse"` on that surface. Inside a list, a table or the chat input, the ring draws inward (`.md-focus-inset`) so its neighbours never cover it.
 - No scale or colour shift on press.
 
 ## Motion
@@ -172,7 +173,7 @@ A typical chat framework exposes a small set of theme variables on its root elem
 | accent (its hover fill) | `surface-container-high` |
 | destructive | `error` |
 | border, input | `outline-variant`, `outline` |
-| ring | `primary` |
+| ring | `secondary` |
 | radius | 8px |
 | sidebar width | 400px |
 
@@ -210,7 +211,7 @@ Every component exists in both directions and both themes, and uses Material 3 a
 | List | 56, 72 or 88px for one, two or three lines; body large headline, body medium supporting text. Selected items on `secondary-container`; chevrons mirror. |
 | Dialog | `surface-container-high`, 28px corners, level 3, up to 560px wide. Only for decisions that must interrupt. Focus is trapped and returns to the opener. Buttons are verbs, never OK or Yes. |
 | Side sheet | 400px, `surface`, a 64px header with a title and close, an `outline-variant` edge. A modal sheet adds a scrim. |
-| Snackbar | `inverse-surface`, one line ending in a full stop, one optional action, 4px corners, level 3. It leaves after six seconds unless it has a close button. |
+| Snackbar | `inverse-surface` with `data-ds-surface="inverse"`, one line ending in a full stop, one optional action, 4px corners, level 3. It leaves after six seconds unless it has a close button. |
 | Tooltip | Plain: `inverse-surface`, body small, up to 200px, names an icon. Rich: `surface-container`, level 2, 12px corners, a short subhead and line, stays while hovered. Shows on hover and on keyboard focus. |
 | Badge | A count 18px tall or a 6px dot, `error` by default. Always has an accessible name (3 new). |
 | Progress | A 4px linear bar on `surface-container-highest`, or a circle (48px, or 20 to 24px inside a button or row). Always labelled. |
@@ -277,7 +278,7 @@ The assistant plugs into the chat framework's slots; these are how each part loo
 - Keyboard access throughout with the visible focus ring. Dialogs trap focus and return it. Tabs, menus and radio groups take arrow keys, direction-aware.
 - Text alternatives on every image; every icon has a word beside it or an accessible name.
 - Nothing below 12px; targets 48px (40px dense).
-- Test at 175% zoom with nothing overlapping.
+- Test at 200% zoom with nothing overlapping.
 - Reduced motion is honoured (see Motion).
 
 ## Light pages

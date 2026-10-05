@@ -46,7 +46,8 @@
   --ds-danger: #B42318;
   --ds-danger-soft: #FDECEA;
 
-  /* The bar after Remove: ink, so it reads as news and not as a control, with Undo in a light accent. */
+  /* The bar after Remove: ink, so it reads as news and not as a control, with Undo and the keyboard ring on it
+     in a light accent. */
   --ds-bar: #232528;
   --ds-bar-ink: #FFFFFF;
   --ds-bar-act: #E7C66B;
@@ -62,8 +63,10 @@
   --ds-font-body-rtl: "Noto Kufi Arabic", ui-sans-serif, "Helvetica Neue", sans-serif;
   --ds-font-heading-rtl: "Alexandria", "Noto Kufi Arabic", ui-sans-serif, system-ui, sans-serif;
   /* Text follows the window: 16px up to a 1600px window, then growing with it (18px at 1920, 22px at 2560) up to
-     26px. Set it on html; every size is in rem, so rows, columns and the frame grow with the words, and the
-     browser's zoom and the person's own text size still count. The px notes below are at 16px. */
+     26px. Set it on html; every size is in rem, so rows, columns and the frame grow with the words. Up to a 1600px
+     window the browser's zoom and the person's own text size scale it in full. Above that they scale it less than
+     double, because the base has already grown (1.78x at 1920, at least 1.45x up to 2560, less on a wider
+     screen). The px notes below are at 16px. */
   --ds-root-size: clamp(1rem, 0.375rem + 0.625vw, 1.625rem);
   --ds-text-sm: 0.875rem;       /* 14px, the floor: labels, notes, chips. Nothing is smaller */
   --ds-text-base: 1rem;         /* 16px, reading text and the chat */
@@ -103,7 +106,6 @@
   --ds-desk-min: 1366px;        /* the layout is built for desks from this width */
   --ds-wide-from: 72rem;        /* a work area this wide splits: a list with its opened item beside, form rows in two columns */
   --ds-dock-from: 1600px;       /* from this window width the chat is a docked pane; under it, an island */
-  --ds-stack-below: 1024px;     /* deprecated: under the dock width the chat is already an island over the work */
 
   /* The docked chat pane at the reading start, from 1600px. */
   --ds-panel-width: 33.3333vw;  /* where it opens: one third of the window, the work in the other two */
@@ -131,7 +133,8 @@
   --ds-row: 3rem;               /* 48px rows */
   --ds-row-compact: 2.25rem;    /* 36px rows, 14px words */
 
-  /* Focus: a 2px ring in ink on every button, 2px away; a 2px accent line inside a field. */
+  /* Focus: a 2px ring in ink on every button, 2px away, in --ds-bar-act on the Undo bar; a 2px accent line inside
+     a field. */
   --ds-focus-width: 2px;
   --ds-focus-offset: 2px;
 

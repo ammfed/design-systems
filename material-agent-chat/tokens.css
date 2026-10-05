@@ -199,6 +199,10 @@
   --md-sys-motion-duration-spin: 1000ms;
 }
 
+/* An inverse surface (a snackbar) is near-black in light and near-white in dark, where the secondary ring cannot
+   hold 3:1: set data-ds-surface="inverse" on it and the ring takes the inverse ink of whichever theme is on. */
+[data-ds-surface="inverse"] { --md-sys-state-focus-ring-color: var(--md-sys-color-inverse-on-surface); }
+
 [dir="ltr"] {
   --ds-font-heading: var(--ds-font-heading-ltr);
   --ds-font-body: var(--ds-font-body-ltr);

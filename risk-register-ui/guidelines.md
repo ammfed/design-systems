@@ -39,7 +39,7 @@ Three complete styles share one set of token names. The page picks one with `dat
 | Status | `--ds-status-{grey,blue,amber,green}-{soft,line,ink}` | Where an item is in its journey |
 | Empty cue | `--ds-cue-empty`, `--ds-cue-empty-ink` | An answer still missing |
 | Level | `--ds-level-{low,medium,high,critical}`, `-soft`, `-ink` | A risk's level, and nothing else |
-| Focus | `--ds-ring`, `--ds-focus`, `--ds-focus-width`, `--ds-focus-offset` | The keyboard ring on buttons (ink); the message box's edge while it holds the keyboard |
+| Focus | `--ds-ring`, `--ds-focus`, `--ds-focus-width`, `--ds-focus-offset` | The keyboard ring on buttons (ink, and `--ds-bar-act` on the Undo bar); the message box's edge while it holds the keyboard |
 | Overlays | `--ds-veil`, `--ds-slide-shade` | Under the check before a send; beside the kept columns of a table that has slid |
 
 `--ds-assistant-box` and `--ds-assistant-edge` are deprecated in 1.1.0 and resolve to transparent in every style.
@@ -153,6 +153,7 @@ Controls and focus (needs 3:1)
 | Keyboard ring on the ground | `ring` on `ground` | 15.37 | 12.94 | 12.35 |
 | Keyboard ring on the chat panel | `ring` on `dock` | 13.62 | 16.11 | 15.37 |
 | Keyboard ring in a table head | `ring` on `inset` | 12.91 | 13.53 | 12.91 |
+| Keyboard ring on the Undo bar | `bar-act` on `bar` | 9.28 | 9.28 | 9.28 |
 | Message box focus edge | `focus` on `panel` | 16.88 | 5.77 | 5.00 |
 | Message box focus edge on the chat panel | `focus` on `dock` | 14.96 | 5.77 | 5.00 |
 | Rule cue border | `rule` on `panel` | 6.74 | 5.77 | 5.77 |
@@ -165,7 +166,7 @@ Controls and focus (needs 3:1)
 
 - Two families per direction: a sans heading family and a sans body family for left-to-right, an Arabic heading family and an Arabic body family for right-to-left. Named in `tokens.css`, never shipped. Headings use weights 600 and 700, never heavier.
 - Sizes: 14px (labels, notes, chips, pills, field titles), 16px (reading text, buttons, the message box, the chat, filters), 18px (the app name, a typed answer, a question in the chat), 20px (a screen title, the question in an asked row, the chat panel's name), 26px (the sign-in welcome), 32px (the greeting's welcome only). **Nothing is smaller than 14px.**
-- **Text follows the window.** Body words are 16px up to a 1600px window, then grow with it (18px at 1920, 22px at 2560) up to 26px (`--ds-root-size` on `html`). Every size is in rem, so the top bar, the rows, the columns and the panels grow with the words, and the browser's zoom and the person's own text size still count. The sizes above are at 16px.
+- **Text follows the window.** Body words are 16px up to a 1600px window, then grow with it (18px at 1920, 22px at 2560) up to 26px (`--ds-root-size` on `html`). Every size is in rem, so the top bar, the rows, the columns and the panels grow with the words. Up to a 1600px window the browser's zoom and the person's own text size scale the words in full. Above that they scale them less than double, because the base has already grown: 1.78x at 1920px, at least 1.45x up to 2560px, and less on a wider screen. The sizes above are at 16px.
 - Table words are 15px in style 1 and 16px in styles 2 and 3; compact tables drop to 14px. All three grow with the text.
 - Titles take the style's weight and tracking (`--ds-title-weight`, `--ds-title-track`); sizes stay the same across styles.
 - Words start at the reading edge and are never justified. Arabic lines open up by `--ds-leading-rtl-extra`, and a fixed-height row that holds Arabic sets its own line height. Numbers stay Western digits in both languages.
@@ -338,7 +339,7 @@ Used by the chat panel and the greeting.
 - **The microphone**: a press records, a second press stops (the icon becomes a stop square and the button takes the picked colours); what was heard lands in the box after what it already holds. A five-bar wave moves beside the controls while it records and stops the instant recording ends.
 - **Modes** (how much the assistant may do alone): three rows that open upward over the box, each an icon, a name and one line, the current one picked. A mode above the admin's setting is greyed with its reason on pointing. The highest levels always wait for a person, whatever the mode.
 - **Stop**: while the assistant works, send becomes Stop in send's place and size, in dark ink.
-- **Attached files**: a paperclip adds text, CSV, Word or Excel files, three at most. Each shows as a 32px chip with its icon, name and a cross over the words in the box, and under the person's words once sent. A file is read like typed words.
+- **Attached files**: a paperclip adds text and CSV files, documents and spreadsheets, three at most. Each shows as a 32px chip with its icon, name and a cross over the words in the box, and under the person's words once sent. A file is read like typed words.
 - A control that is not ready yet stays greyed and says so in one line when pressed.
 - One status line says what is happening (recording, hearing, why nothing was heard). In the chat panel it sits over the box, so the box and its microphone never move under the finger.
 
@@ -354,7 +355,7 @@ Used by the chat panel and the greeting.
 | State | How it shows |
 |---|---|
 | Pointer over | Main button one step darker; second and quiet buttons `--ds-second-hover`; a table row `--ds-hover`; a tile's edge `--ds-line-strong` |
-| Keyboard focus | A 2px `--ds-ring` outline 2px away on every button; a 2px accent line inside a field, search, dropdown or option; the message box's border turns `--ds-focus`; the resize bar shows its 3px accent line |
+| Keyboard focus | A 2px `--ds-ring` outline 2px away on every button, and in `--ds-bar-act` on the Undo bar; a 2px accent line inside a field, search, dropdown or option; the message box's border turns `--ds-focus`; the resize bar shows its 3px accent line |
 | Picked | Picked fill, edge and words; `aria-pressed="true"` |
 | Current | A step row on the soft accent; the asked row with a 2px accent border; a list's opened row on the soft accent |
 | Greyed | `--ds-off` with `--ds-off-ink`; the reason on pointing |
@@ -391,7 +392,7 @@ Progress is shown as progress bars with the count in words, finished ticks, a sh
 
 ## Focus, targets, direction
 
-- One keyboard ring on every button (see States), passing 3:1 on every surface it sits on (see Contrast).
+- One keyboard ring on every button (see States), passing 3:1 on every surface it sits on (see Contrast). On the ink Undo bar it takes the light accent (`--ds-bar-act`), since an ink ring would vanish there.
 - Buttons are 40 or 48px tall; filters, search, dropdowns and the message box's tools 36px, with enough room around them to reach easily; answer choices 44px; icon-only buttons 36 to 40px.
 - Icons: one outline set in one weight. 18px bold beside words, 24px on every icon-only button, 48px duotone over an empty list, inheriting the text colour. The small cross inside a chosen filter tag is 18px in a 28px button so the tag stays 32px tall. Directional icons (arrows, the double caret that folds the panel, the slider's carets, send, sign out) flip in right-to-left; the rest do not.
 - **Landmarks and headings**: a header, the chat pane or island as an `aside` (the pane with its resize bar inside it), `main`, and one level-one heading per screen.

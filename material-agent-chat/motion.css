@@ -34,13 +34,6 @@
 @keyframes md-spin { to { transform: rotate(360deg); } }
 .md-spin { animation: md-spin var(--md-sys-motion-duration-spin) linear infinite; }
 
-/* An indeterminate progress bar: the bar travels along the reading direction. */
-@keyframes md-indeterminate {
-  0% { inset-inline-start: -40%; width: 40%; }
-  60% { inset-inline-start: 100%; width: 60%; }
-  100% { inset-inline-start: 100%; width: 60%; }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .md-spin, .md-rise, .md-fade-in { animation: none !important; }
 }

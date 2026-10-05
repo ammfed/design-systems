@@ -1,6 +1,6 @@
 # Risk Register UI
 
-A UI system for a risk register workspace: a register table, a guided entry form, a setup wizard, and an AI assistant in a chat panel beside the work. Light only, fully bilingual in left-to-right and right-to-left languages, and WCAG 2.2 AA in every style. It shares its visual language with the other systems here: one accent, flat quiet surfaces, generous white space.
+A UI system for a risk register workspace: a register table, a guided entry form, a setup wizard, and an AI assistant in a chat panel beside the work. Light only, fully bilingual in left-to-right and right-to-left languages, and WCAG 2.2 AA in every style, with one exception: above a 1600px window the text has already grown with the window, so the browser's zoom and the person's own text size make it less than twice as large (at least 1.45x up to a 2560px window). It shares its visual language with the other systems here: one accent, flat quiet surfaces, generous white space.
 
 Version 1.1.0 adds what the product learned once built, through two UX and UI passes: field rows that fold, a sortable register with a fixed head row, Remove with Undo, picked and greyed states, the assistant's replies as plain words, one steady full-width frame with text that grows on big screens, the chat as a docked third of the window or an island on a laptop, and cards that show what the assistant proposes before anything is saved. See `CHANGELOG.md`.
 
