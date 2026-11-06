@@ -2,7 +2,7 @@
 
 A design system for reports, decks and briefs, and for reading them on screen. It is not a web UI kit. Its building blocks are page furniture (covers, contents, dividers, running headers, tables, callouts, key facts, captions, signature blocks), slide masters for a 16:9 deck, and two screen viewers: a deck viewer and a reading view.
 
-Version 2.1.0. Open `preview.html` to see the tokens and components in light and dark side by side.
+Version 2.2.0. Open `preview.html` to see the tokens and components in light and dark side by side.
 
 ## Design direction
 
@@ -14,7 +14,7 @@ Structure in ink, generous space, one strong rule where a page needs one, and th
 - Lead with the point, then the evidence. A claim carries its reason or its tradeoff; uncertainty is stated plainly.
 - Sentence case everywhere: headings, table headers, labels. No all-caps in running text.
 - A plain, formal voice. The document speaks as the organisation, not "we" or "I"; the reader is addressed directly only in correspondence.
-- Numbers: Latin digits in both languages, thousands separators, the unit after the value, and numbers spelled out when they open a sentence. An unknown value reads "Not yet known"; a forecast is shown as a range.
+- Numbers: Latin digits in both languages, thousands separators, the unit after the value, and numbers spelled out when they open a sentence. An unknown value reads "Not yet known"; a forecast is shown as a range; and a guessed figure carries the word Estimated, Forecast or Preliminary.
 - Single quotation marks, the Oxford comma, and "and" written out rather than "&".
 - Bold at most once or twice per paragraph. Italics for emphasis, citations and defined terms. Underline only for links.
 - No emoji, decorative Unicode, exclamation marks, taglines or filler. No em dashes: a full stop, a comma or a plain conjunction instead.

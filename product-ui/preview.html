@@ -108,6 +108,46 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
 .seg button[aria-checked="true"] { color: var(--ds-ink-strong); font-weight: 600; }
 .seg button:focus-visible { outline-offset: -2px; }
 
+/* ----- maps and time: layer list, labels on the map, scale and north mark, a forecast in words, a live number over its limit, one time handle ----- */
+.mapx { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 16px; }
+.mapx .map { display: block; width: 100%; height: auto; border: 1px solid var(--ds-line); border-radius: var(--ds-radius-control); background: var(--ds-surface-sunken); }
+.map .road { fill: none; stroke: var(--ds-line-strong); stroke-width: 3; }
+.map .river { fill: none; stroke: var(--ds-info-line); stroke-width: 5; stroke-linecap: round; }
+.map .flood { fill: var(--ds-info-soft); stroke: var(--ds-info-line); stroke-width: 1.5; transform-box: fill-box; transform-origin: center; transition: transform var(--ds-duration-data) var(--ds-ease-data), opacity var(--ds-duration-feedback) var(--ds-ease-standard); }
+.map .gauge { fill: var(--ds-surface-base); stroke: var(--ds-ink); stroke-width: 2.5; }
+.map .gauge.is-over { fill: var(--ds-error-solid); stroke: var(--ds-error-solid); }
+.map text { font-family: var(--ds-font-body); font-size: 16px; fill: var(--ds-ink); paint-order: stroke; stroke: var(--ds-surface-sunken); stroke-width: 4px; stroke-linejoin: round; }
+.map .scale, .map .north { stroke: var(--ds-ink); stroke-width: 2; fill: none; }
+.map .north-head { fill: var(--ds-ink); stroke: none; }
+.layers-h { display: flex; justify-content: space-between; margin-top: 12px; }
+.layers { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 4px; }
+.layers li { display: grid; grid-template-columns: 24px auto minmax(0, 1fr) 6rem; align-items: center; gap: 10px; min-height: var(--ds-target-min); }
+.layers .lp { width: 24px; height: 24px; }
+.layers .str { width: 100%; min-height: var(--ds-target-min); margin: 0; accent-color: var(--ds-user); }
+.live { display: grid; gap: 6px; align-content: start; }
+.live .lbl { font-weight: 500; color: var(--ds-ink-muted); }
+.live .row { gap: 12px; }
+.live .t-figure.is-over { color: var(--ds-error-text); }
+.over-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 28px; padding: 1px 10px; border-radius: var(--ds-radius-chip); background: var(--ds-error-solid); color: var(--ds-error-on); font-weight: 500; white-space: nowrap; }
+.over-chip[hidden] { display: none; }
+.fc { display: block; width: 100%; height: auto; margin-top: 12px; overflow: visible; }
+.fc .grid { stroke: var(--ds-data-grid); stroke-width: 1; }
+.fc .limit { stroke: var(--ds-line-strong); stroke-width: 1.5; stroke-dasharray: 6 4; }
+.fc .meas { fill: none; stroke: var(--ds-ink); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
+.fc .fore { fill: none; stroke: var(--ds-machine); stroke-width: 2.5; stroke-dasharray: 1 6; stroke-linecap: round; }
+.fc .cursor { stroke: var(--ds-ink); stroke-width: 1.5; transition: transform var(--ds-duration-data) var(--ds-ease-data); }
+.fc text { font-family: var(--ds-font-body); font-size: 16px; fill: var(--ds-ink-muted); font-variant-numeric: var(--ds-type-numeric); }
+.legend .key.line { width: 20px; height: 0; border-radius: 0; border-top: 2.5px solid var(--k); background: none; }
+.legend .key.dots { border-top-style: dotted; }
+.when { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.when .time { flex: 1 1 12rem; min-height: var(--ds-target-min); margin: 0; accent-color: var(--ds-ink); }
+.when output { min-width: 3.5em; font-weight: 600; color: var(--ds-ink-strong); font-variant-numeric: var(--ds-type-numeric); }
+.events { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 4px; }
+.events button { display: flex; gap: 12px; width: 100%; min-height: var(--ds-target-min); padding: 0 12px; border: 0; border-radius: var(--ds-radius-control); background: none; color: var(--ds-ink); text-align: start; align-items: center; cursor: pointer; }
+.events button:hover { background: var(--ds-surface-hover); }
+.events button[aria-current="true"] { background: var(--ds-user-soft); border-inline-start: 2px solid var(--ds-user-line); padding-inline-start: 10px; }
+.events .num { color: var(--ds-ink-muted); }
+
 /* ----- chips, status pills ----- */
 .chip { display: inline-flex; align-items: center; gap: 8px; min-height: var(--ds-target-min); padding: 0 16px; border: 1px solid var(--ds-line-strong); border-radius: var(--ds-radius-chip); background: var(--ds-surface-base); color: var(--ds-ink); font-weight: 500; cursor: pointer; }
 .chip:hover { background: var(--ds-surface-hover); }
@@ -330,7 +370,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
 </svg>
 
 <header class="top ds-material-veil">
-  <h1 class="t-title-2">Product UI <span class="ver">2.1.0</span></h1>
+  <h1 class="t-title-2">Product UI <span class="ver">2.2.0</span></h1>
   <div class="tools">
     <div class="seg icons" role="radiogroup" aria-label="Density" id="density" style="--n:3;--k:1">
       <span class="thumb ds-glide" aria-hidden="true"></span>
@@ -479,6 +519,55 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
       <span class="disc" aria-hidden="true"><svg class="i"><use href="#i-spark"/></svg></span>
       <div class="body"><span class="mchip"><svg class="i s16"><use href="#i-spark"/></svg>Generated</span><p aria-live="polite">Requests in review rose from 22 to 26 this month, mostly permit renewals waiting on one approver.</p></div>
       <div class="acts"><button type="button" class="btn link">Show the requests</button></div>
+    </div>
+
+    <h4 class="sub">Maps and time</h4>
+    <div class="mapx" data-mapx>
+      <div class="panel">
+        <svg class="map" viewBox="0 0 320 200" role="img" aria-label="Map of the river valley, with a north mark and a 1 km scale. The layers below set what it shows." data-map>
+          <path class="road" d="M0 150 L320 120"/><path class="road" d="M210 0 L250 200"/>
+          <path class="flood" d="M20 92 C80 62 150 70 210 96 C250 112 290 100 312 90 L312 128 C270 140 230 132 200 122 C140 104 80 112 20 126 Z" data-flood/>
+          <path class="river" d="M10 110 C80 82 150 92 205 108 C250 122 290 112 315 104"/>
+          <circle class="gauge" cx="150" cy="80" r="7" data-gauge/>
+          <text x="96" y="62" data-gauge-lbl>Gauge 3, over limit</text><text x="30" y="80">River</text><text x="256" y="190" data-road-lbl>Road 2</text>
+          <path class="north" d="M296 40 V16"/><path class="north-head" d="M296 8 L302 22 L290 22 Z"/><text x="290" y="56">N</text>
+          <path class="scale" d="M16 176 V184 H96 V176"/><text x="40" y="170">1 km</text>
+        </svg>
+        <p class="layers-h meta" aria-hidden="true"><span>Layer</span><span>Strength, how strongly it is drawn</span></p>
+        <ul class="layers" aria-label="Layers">
+          <li><svg class="lp" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3" fill="var(--ds-info-soft)" stroke="var(--ds-info-line)" stroke-width="1.5"/></svg><input type="checkbox" class="cbx" id="{p}-ly1" checked data-ly="flood"><label for="{p}-ly1">Flooded area</label><input type="range" class="str" min="20" max="100" value="100" aria-label="Strength, flooded area" data-str="flood"></li>
+          <li><svg class="lp" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6" fill="var(--ds-surface-base)" stroke="var(--ds-ink)" stroke-width="2.5"/></svg><input type="checkbox" class="cbx" id="{p}-ly2" checked data-ly="gauge"><label for="{p}-ly2">Gauges</label><input type="range" class="str" min="20" max="100" value="100" aria-label="Strength, gauges" data-str="gauge"></li>
+          <li><svg class="lp" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 15 L21 9" stroke="var(--ds-line-strong)" stroke-width="3" fill="none"/></svg><input type="checkbox" class="cbx" id="{p}-ly3" data-ly="road"><label for="{p}-ly3">Roads</label><input type="range" class="str" min="20" max="100" value="100" aria-label="Strength, roads" data-str="road"></li>
+        </ul>
+      </div>
+      <div class="panel live">
+        <span class="lbl" data-live-lbl>Gauge 3 water level, now</span>
+        <div class="row"><span class="t-figure" data-live>4.6 m</span><span class="over-chip" data-over><svg class="i s16"><use href="#i-warn"/></svg>Over limit</span></div>
+        <span class="meta">Limit 4.0 m</span>
+        <svg class="fc" viewBox="0 0 300 150" role="img" aria-label="Water level at Gauge 3 from 10:00 to 14:00, rising from 3.1 to 4.6 m and over the 4.0 m limit since 13:00. The forecast from 14:00 reaches 4.8 m at 15:00, then 4.5 m at 16:00." data-fc>
+          <line class="grid" x1="20" y1="120" x2="290" y2="120"/><line class="limit" x1="20" y1="70" x2="290" y2="70"/><text x="22" y="64">Limit 4.0 m</text>
+          <polyline class="meas" points="20,115 64,100 108,80 152,60 196,40"/>
+          <polyline class="fore" points="196,40 240,30 284,45"/>
+          <line class="cursor" x1="0" y1="10" x2="0" y2="120" data-cursor style="transform:translateX(196px)"/>
+          <text x="20" y="142" text-anchor="middle">10:00</text><text x="108" y="142" text-anchor="middle">12:00</text><text x="196" y="142" text-anchor="middle">14:00</text><text x="284" y="142" text-anchor="middle">16:00</text>
+        </svg>
+        <p class="meta" style="margin-top:8px">Forecast 4.5 to 4.8 m until 16:00. It may change.</p>
+        <div class="legend"><span><i class="key line" style="--k:var(--ds-ink)"></i>Measured</span><span><i class="key line dots" style="--k:var(--ds-machine)"></i><span class="pill">Forecast</span></span></div>
+      </div>
+    </div>
+    <div class="panel" style="margin-top:16px">
+      <div class="when">
+        <label class="t-label" for="{p}-time">Time</label>
+        <input type="range" class="time" id="{p}-time" min="0" max="4" step="1" value="4" aria-valuetext="14:00, now" data-time>
+        <output for="{p}-time" data-time-out>14:00</output>
+        <button type="button" class="btn outline" data-now>Now</button>
+      </div>
+      <p class="meta" style="margin-top:8px">Press an event to move the time to it.</p>
+      <ul class="events" aria-label="Events">
+        <li><button type="button" data-ev="1"><span class="num">11:00</span>Rain warning issued</button></li>
+        <li><button type="button" data-ev="3"><span class="num">13:00</span>Gauge 3 over limit</button></li>
+        <li><button type="button" data-ev="4" aria-current="true"><span class="num">14:00</span>Road 2 closed</button></li>
+      </ul>
     </div>
 
     <h4 class="sub">Feedback</h4>
@@ -698,6 +787,44 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
     });
   }
   paint(0);
+
+  /* ---- maps and time: one handle moves the map, the chart, the live number and the event list together ---- */
+  panes.forEach(function (pane) {
+    var el = pane.el, box = el.querySelector('[data-mapx]');
+    if (!box) return;
+    var times = ['10:00', '11:00', '12:00', '13:00', '14:00'], level = [3.1, 3.4, 3.8, 4.2, 4.6], limit = 4.0, xs = [20, 64, 108, 152, 196];
+    var time = el.querySelector('[data-time]'), out = el.querySelector('[data-time-out]'), evs = Array.prototype.slice.call(el.querySelectorAll('[data-ev]'));
+    function show(i) {
+      var over = level[i] > limit, now = i === times.length - 1;
+      time.value = i;
+      time.setAttribute('aria-valuetext', times[i] + (now ? ', now' : ', past'));
+      out.textContent = times[i];
+      el.querySelector('[data-live-lbl]').textContent = 'Gauge 3 water level, ' + (now ? 'now' : 'at ' + times[i] + ' (past)');
+      var fig = el.querySelector('[data-live]');
+      fig.textContent = level[i].toFixed(1) + ' m';
+      fig.classList.toggle('is-over', over);
+      el.querySelector('[data-over]').hidden = !over;
+      el.querySelector('[data-gauge]').classList.toggle('is-over', over);
+      el.querySelector('[data-gauge-lbl]').textContent = over ? 'Gauge 3, over limit' : 'Gauge 3';
+      el.querySelector('[data-flood]').style.transform = 'scale(' + (0.6 + i * 0.1) + ')';
+      el.querySelector('[data-cursor]').style.transform = 'translateX(' + xs[i] + 'px)';
+      evs.forEach(function (b) { if (+b.getAttribute('data-ev') === i) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+    }
+    time.addEventListener('input', function () { show(+time.value); });
+    evs.forEach(function (b) { b.addEventListener('click', function () { show(+b.getAttribute('data-ev')); }); });
+    el.querySelector('[data-now]').addEventListener('click', function () { show(times.length - 1); time.focus(); });
+    var parts = { flood: '[data-flood]', gauge: '[data-gauge], [data-gauge-lbl]', road: '.map .road, [data-road-lbl]' };
+    function layer(k) {
+      var on = el.querySelector('[data-ly="' + k + '"]').checked, str = el.querySelector('[data-str="' + k + '"]').value / 100;
+      el.querySelectorAll(parts[k]).forEach(function (n) { n.style.opacity = on ? str : 0; });
+    }
+    Object.keys(parts).forEach(function (k) {
+      el.querySelector('[data-ly="' + k + '"]').addEventListener('change', function () { layer(k); });
+      el.querySelector('[data-str="' + k + '"]').addEventListener('input', function () { layer(k); });
+      layer(k);
+    });
+    show(times.length - 1);
+  });
 
   /* ---- motion: replay every demo; reduce motion ---- */
   var turn = 0;

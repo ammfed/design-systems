@@ -2,7 +2,7 @@
 
 A UI system for product dashboards, work queues and public service websites: flat, quiet surfaces, one warm accent that belongs to the user, a separate colour for what a model produced, full bilingual LTR/RTL support, and WCAG 2.2 AA in both a light theme (the default) and an opt-in dark theme. It shares its visual language with the other two systems here, expressed as tokens and rules for reusable components.
 
-Version 2.1.0. See `CHANGELOG.md` for what changed and how to move from 1.x.
+Version 2.2.0. See `CHANGELOG.md` for what changed and how to move from 1.x.
 
 ## Use it
 
@@ -37,6 +37,8 @@ Every attribute is optional and works on any region as well as `<html>`: light, 
 
 **Screens and flows.** Every screen should be easy for a thirteen-year-old to follow, with specialist terms kept and explained where they appear. A screen is one fixed frame of boxes that never shift between tabs; flows take the fewest steps; each choice gets the control that fits it, at most five at a time; status and level never look alike; progress shows as small wins, never points or rankings. Table cells put words at the start and small numbers in the middle. The rules are in `guidelines.md`.
 
+**How sure, maps and time.** Every guessed value carries a word (estimated, forecast or preliminary) in a grey or green status pill, and a forecast line is the machine colour, dotted. A live number over a stated limit turns level red and says "Over limit"; the accent stays the user's. A map has a layer list (a picture, a tick box and a strength per layer), labels on the map, a scale and a north mark, and opens with few layers on. One time handle moves the map, every chart and the event list together. The flat map is the main view; a 3D scene is only ever an optional extra view for replaying an event.
+
 **A second look.** A product may offer another look, but a look changes the whole skin and never the layout. A tint alone is not a look.
 
 **Layout.** Content lives in a per-section container, never one page-wide wrapper. Mobile-first: under roughly 1024px the sidebar collapses to its rail and the website navigation collapses to a menu, and panels restack on their own container width.
@@ -63,7 +65,7 @@ One outline icon family in three weights (regular for interface icons, bold for 
 
 ## Components
 
-Actions, forms (including a date picker and calendar), navigation (including an app bar, segmented control and command menu), data display (a full table with sticky head, pinned column, selection, row and bulk actions and loading rows; chips, filter bar, panels), dashboards (KPI tile, bar charts, a progress ring, sparkline, chart legend, the machine's insight block), feedback (alerts, toasts, dialogs and drawer with focus trapping, progress, skeletons, the bulk-action bar) and public website blocks (header, footer, hero). The full inventory and the rules for each group are in `guidelines.md`.
+Actions, forms (including a date picker and calendar), navigation (including an app bar, segmented control and command menu), data display (a full table with sticky head, pinned column, selection, row and bulk actions and loading rows; chips, filter bar, panels), dashboards (KPI tile, bar charts, a progress ring, sparkline, chart legend, the machine's insight block, the word on a guessed value, a forecast line, a live number over its limit), maps and time (a layer list, a shared time handle, an optional 3D replay view), feedback (alerts, toasts, dialogs and drawer with focus trapping, progress, skeletons, the bulk-action bar) and public website blocks (header, footer, hero). The full inventory and the rules for each group are in `guidelines.md`.
 
 ## Files
 

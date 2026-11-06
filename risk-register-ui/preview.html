@@ -76,6 +76,8 @@
   .q { padding: 10px 12px; border: 2px solid var(--ds-accent); border-radius: var(--ds-radius); background: var(--ds-panel); box-shadow: var(--ds-shadow-card); }
   .q-title { color: var(--ds-ink-3); margin-bottom: 2px; }
   .answered { display: flex; gap: 12px; padding: 6px 12px; border: 1px solid var(--ds-line); border-radius: var(--ds-radius); background: var(--ds-panel); }
+  .answered .sure { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .answered .sure span:first-child { color: inherit; min-width: 0; }
   .answered span:first-child, .quiet span:first-child, .missing span:first-child { color: var(--ds-ink-3); min-width: 30%; }
   .q-label { font-family: var(--ds-family-heading); font-weight: 600; font-size: var(--ds-text-base); color: var(--ds-ink); margin-bottom: 8px; }
   .opts { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -243,6 +245,7 @@
                 </tbody>
               </table>
               <div class="answered"><span data-t="cause">Cause</span><span data-t="causev">One supplier only</span></div>
+              <div class="answered"><span data-t="cost">Cost</span><span class="sure"><span data-t="costv">About 40,000</span><span class="pill p-grey" data-t="est">Estimated</span></span></div>
               <div class="q">
                 <div class="q-title" data-t="q">Likelihood</div>
                 <div class="q-label" data-t="qq">How likely is it this year?</div>
@@ -271,7 +274,7 @@
     ph: "اكتب إجابتك", note: "قد تكون الإجابات خاطئة. راجعها قبل الإرسال.", entry: "الإدخال", register: "السجل",
     pending: "المعلق", summary: "الملخص", rating: "التقييم", risk: "الخطر", level: "المستوى", status: "الحالة",
     r1: "تأخر المورد", r2: "فقدان البيانات", r3: "دوران الموظفين", r4: "تأخر التصريح",
-    l1: "مرتفع", l2: "حرج", l3: "متوسط", l4: "منخفض", cause: "السبب", causev: "مورد واحد فقط",
+    l1: "مرتفع", l2: "حرج", l3: "متوسط", l4: "منخفض", cause: "السبب", causev: "مورد واحد فقط", cost: "التكلفة", costv: "نحو 40,000", est: "تقديري",
     qq: "ما احتمال حدوثه هذا العام؟", removed: "حُذف الخطر", undo: "تراجع", back: "رجوع",
     s1: "معاد", s2: "مرسل", s3: "مسودة", s4: "مقبول", q: "الاحتمالية", o1: "نادر", o2: "ممكن", o3: "مرجح",
     impact: "الأثر", miss: "ناقص", owner: "المالك", next: "لاحقا", export: "تصدير", send: "إرسال السجل",

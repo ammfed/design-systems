@@ -178,7 +178,7 @@ The outer page column nearest the spine (33mm) holds a mark or a full-bleed imag
   - **Density:** all three densities.
 - **Callout.** Note, important, warning, success or key; soft or solid. An icon, a title and a body, with a start rule that mirrors in RTL. Callouts carry information, never decoration.
 - **A person's words.** The only place the accent appears. A `person-tint` ground and a `person-mark` start bar. The name is in `--ds-person` and the role title is muted. Markup is `figure`, `blockquote` and `figcaption`; a citation is required.
-- **Key facts.** Two to four facts per row. The value is in the figure role (weight 200) and the unit in the lead role. One fact may take emphasis while the others step back to ink-muted. A fact can carry a meter (progress with a target tick, or a count such as "5 of 7"), or a delta with an arrow and words. An unknown value reads "Not yet known", never an invented number.
+- **Key facts.** Two to four facts per row. The value is in the figure role (weight 200) and the unit in the lead role. One fact may take emphasis while the others step back to ink-muted. A fact can carry a meter (progress with a target tick, or a count such as "5 of 7"), or a delta with an arrow and words. An unknown value reads "Not yet known", never an invented number. A guessed value carries its word (see How sure a value is).
 - **Executive summary.** A lead sentence, then short paragraphs or bullets, on a plate or under a top rule. Its body is never smaller than the document body.
 - **Caption.** "Figure 3. Title" or "Table 1. Title", with the label at weight 600. Table captions sit above the table and figure captions below the figure, each followed by the source. No dash between number and title.
 - **List.** Round markers in `--ds-marker`. Nested items take an en dash. Ordered lists use Latin digits and a full stop.
@@ -194,9 +194,16 @@ The outer page column nearest the spine (33mm) holds a mark or a full-bleed imag
   - **Labels:** values are labelled in place. The drawing takes its box's size in the medium's own units, so labels stay at the label size.
   - **RTL:** bar, range and share grow from the right; time axes keep years left to right.
   - **Accessible name:** a one-line summary written from the data.
+  - **Forecast:** where a line runs on into a forecast, the forecast part is dotted in the same series colour, with the word *Forecast* at its start. A dash stays for the target.
 - **Meter.** `role="meter"` with its values. Track `--ds-series-track`, fill `--ds-series-1`, target tick `--ds-ink-muted`. Segmented for counts.
 - **Timeline.** Done (filled), current (ring, `aria-current="step"`) and next (hollow), each with a spoken state.
 - **Pattern.** A hairline lattice, grid, dot or contour field in the rule colour, used on covers and divider fields only, never behind text.
+
+### How sure a value is
+
+- **A guessed value says so in a word.** Every figure that is not yet measured and final carries one of three words: *Estimated* (worked out from other figures), *Forecast* (expected later) or *Preliminary* (measured, but not yet checked). The same three words in every document, table, chart and slide.
+- **The word sits in a small outlined label** beside the value, in the caption role: `--ds-ink-muted` words on a `--ds-rule` edge (grey), or the success title colour on the success rule (green). Never the warning, important or note hues, and never the accent, so the word never reads as a level or a person.
+- In a table, the word sits in the cell after the number, or once in the header when it applies to the whole column. A figure with no word is measured and final.
 
 ### Slide masters
 
@@ -339,6 +346,7 @@ See the README for the condensed version. In full:
 - Slides are capped at six bullets and one idea.
 - Every table, figure and image carries its caption or alt text.
 - A forecast is shown as a range, and an unknown reads "Not yet known".
+- Every guessed figure carries *Estimated*, *Forecast* or *Preliminary*.
 
 ## 15. Do and don't
 

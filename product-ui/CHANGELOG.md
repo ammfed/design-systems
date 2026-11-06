@@ -1,5 +1,14 @@
 # Changelog — Product UI
 
+## 2.2.0 - 2026-11-06
+
+- **How sure a value is.** Every guessed value carries one of three words (estimated, forecast or preliminary) in a grey or green status pill, never a level colour. A forecast line takes `--ds-machine` and a dotted stroke, and on a chart that carries a forecast, the forecast is the only mark in the machine colour: every measured series, series 1 included, takes ink or series 2 to 4.
+- **Live numbers and limits.** A live number over a stated limit takes the level red (`--ds-error-text`, with a solid `--ds-error-solid` chip) and the words *Over limit*, with the limit shown beside it. The accent stays the user's, and colour never carries the meaning alone.
+- **Maps.** A layer list (a picture, a tick box and a strength per layer), labels on the map, a scale and a north mark, and few layers on at the start.
+- **One time handle.** A single slider sets the time for the whole screen: dragging it, or pressing an event, moves the map, every chart and the event list together.
+- **3D scenes.** The flat map stays the main view. A 3D scene is only an optional extra view for replaying an event, because of its build cost, motion sickness, weak keyboard and screen reader access, and a game-like feel in a serious tool.
+- **Preview.** A maps and time block: a map with its layer list, a live number over its limit, a forecast chart, and one time handle that moves them all. No new tokens.
+
 ## 2.1.0 — 2026-09-29
 
 - **Screens and flows**, a new section in `guidelines.md`: readable by a thirteen-year-old with specialist terms explained, one fixed frame of boxes, the fewest steps, the right control for each choice (at most five, pictures for fixed options where they help), the current step lit, space that follows content, status and level that never look alike, and progress shown as small wins only.

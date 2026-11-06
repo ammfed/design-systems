@@ -1,6 +1,6 @@
 # Product UI: guidelines
 
-Version 2.1.0. The rules behind `tokens.css`, `tokens-dark.css`, `motion.css` and `materials.css`. `preview.html` shows every system here working in both themes.
+Version 2.2.0. The rules behind `tokens.css`, `tokens-dark.css`, `motion.css` and `materials.css`. `preview.html` shows every system here working in both themes.
 
 ## Colour
 
@@ -27,7 +27,7 @@ Components read **roles**, never palette steps. A role says what a colour means;
 - **The machine has its own colour.** Anything a model produced carries the machine rule and chip, so it is never mistaken for the user's choice or for something a user entered. While it is working, a 2px bar sweeps under the content.
 - **Secondary actions are ink.** Solid, soft, outline and link buttons all come in ink; links are ink and underlined. One solid accent button per view.
 - **Status colours are for status.** Success, info, warning and error each come as soft (a ground plus text), solid (a fill plus text) and a line. A status is an outlined pill on the base surface: the line as its edge, with an icon and a word in the status text. An alert takes the soft ground, with the line as its inline-start bar.
-- **Data: four series, then "other".** Series 1 is the machine colour; series 4 is the neutral used for comparison, previous period and target. The accent marks the user's own value or series: their own reading over time, or against their own target, never a place in a ranking. Positive and negative colours are for signed deltas only, and always sit with a sign and a word or icon, never colour alone.
+- **Data: four series, then "other".** Series 1 is the machine colour, except on a chart that carries a forecast: there the forecast is the only mark in the machine colour, and every measured series takes ink or series 2 to 4. Series 4 is the neutral used for comparison, previous period and target. The accent marks the user's own value or series: their own reading over time, or against their own target, never a place in a ranking. Positive and negative colours are for signed deltas only, and always sit with a sign and a word or icon, never colour alone.
 
 ### Contrast
 
@@ -262,7 +262,8 @@ Radius roles: 8 for controls, 12 for panels and overlays, full for chips, segmen
 - **Forms:** input, textarea, select, combobox (marks the chosen option), checkbox (with a mixed state), radio group, toggle, file input, range slider, **date picker and calendar**, and errors at 16px with an icon beside the field.
 - **Navigation:** breadcrumb, tabs (a gliding bar) and pill tabs, **segmented control**, pagination, steps, dropdown menu (arrow keys, danger items), sidebar with a collapsible icon rail, **app bar**, **command menu** (Ctrl or Cmd K).
 - **Data display:** card, badge, avatar, accordion, blockquote, **table** (see below), KPI tile, description list, timeline, status pill, **chip** (toggle and applied), **filter bar**, **panel**.
-- **Dashboards:** bar chart, **progress ring** (one value closing toward its goal, never a donut or pie), sparkline, **chart legend**, **insight** (the machine's reading of the data).
+- **Dashboards:** bar chart, **progress ring** (one value closing toward its goal, never a donut or pie), sparkline, **chart legend**, **insight** (the machine's reading of the data), the **word on a guessed value** (estimated, forecast or preliminary), a forecast line, a live number over its limit.
+- **Maps and time:** map with a **layer list**, labels, scale and north mark; a **time handle** shared by the map, charts and event list; an optional 3D replay view.
 - **Feedback:** alert, toast (machine tone, action, timed dismissal that pauses), modal (default, serious, language), tooltip, popover, banner, drawer, progress (determinate and indeterminate), spinner, skeleton, empty state, error page, **bulk-action bar**.
 - **Layout blocks:** header with mega menu, footer and hero for the public website.
 
@@ -284,6 +285,41 @@ Radius roles: 8 for controls, 12 for panels and overlays, full for chips, segmen
 - **A progress ring, never a donut or a pie.** The ring carries one value closing toward its goal with the number in the middle. Length on a shared baseline is read accurately and angle is not, so a comparison across categories is labelled horizontal bars, every time. No gauges.
 - The insight block holds the machine's reading, marked with the machine rule and disc, with its actions beside it; its text is announced when it finishes.
 - A panel groups a chart or list with a title, a short sub-line and actions, and can run flush for tables.
+
+### How sure a value is
+
+- **A guessed value says so in a word.** Every value that is not yet measured and final carries one of three words: *Estimated* (worked out from other values), *Forecast* (a value expected later) or *Preliminary* (measured, but not yet checked). Use the same three words on every screen.
+- **The word sits in a status pill,** grey (the default pill) or green (the success pill), beside the value or in the chart's legend. Never red, amber or the accent, so the word is never read as a level or as the user's choice. A value with no word is measured and final.
+- **A forecast line is the machine's.** It takes `--ds-machine` and a dotted stroke, and starts where the measured line ends. On a chart that carries a forecast, the forecast is the only mark in the machine colour, and every measured series takes ink or series 2 to 4. The legend repeats the dotted key with the word *Forecast*, and the chart's summary sentence says where the forecast starts.
+- A range is better than a single guessed number where the spread is known: *Forecast 3.8 to 4.4 m*.
+
+### Live numbers and limits
+
+- **Over a stated limit, a live number turns level red and says "Over limit".** Level red is the red of a solid level chip (see Screens and flows). The figure takes `--ds-error-text`, and beside it a solid chip in `--ds-error-solid` with `--ds-error-on` words carries an icon and *Over limit*. Both pairs are in the contrast table. The limit itself is shown next to the figure (*Limit 4.0 m*), so the reader sees what was passed.
+- **Only a stated limit triggers it.** A number that is high but under its limit stays ink. A number with no stated limit never turns red.
+- **The accent stays the user's.** A live number never takes the accent or the machine colour to look urgent, and colour never carries the meaning alone: the words and the icon say it, and are read out with the value.
+
+### Maps
+
+- **A layer list beside the map.** Each layer is one row: a small picture of how it looks on the map, a tick box to show or hide it, and a strength control (how strongly it is drawn, as a short slider). The row's name is the label for all three.
+- **Few layers on at the start.** A map opens with the two or three layers most people need; the rest are listed but off. Turning one on never turns another off without saying so.
+- **Labels on the map.** Places, areas and lines are named on the map itself, next to what they name, in the `meta` role on a halo of the surface colour. A legend is for colour and pattern only, never the only way to find a name.
+- **A scale and a north mark,** small, in a corner at the reading end, in ink on the base surface. The scale bar uses a round distance (*1 km*, *5 km*).
+- Map colours come from the same roles as everything else: status colours for status, the machine colour for what a model produced or forecast, the accent for the user's own place or pick. Every coloured area also has a label or a pattern.
+- The map can be moved and zoomed from the keyboard, and every feature on it is also in a list or table beside it.
+
+### One time handle for the whole screen
+
+- **One time, shared by every part.** Where a screen shows the same events on a map, in charts and in a list, a single time handle sets the time for all of them. Dragging the handle, or pressing an event in the list or on a chart, moves the map, every chart and the event list to that time together.
+- The handle is a slider (`role="slider"`) with the time as its value text, moved with the arrow keys (Page Up and Page Down for a bigger step, Home and End for the ends). Each chart shows the chosen time as a thin ink line; the list marks the matching event with `aria-current`.
+- The current time is written out next to the handle, in tabular figures. A *Now* button returns to live time, and the screen says clearly when it shows the past.
+- Moving the handle changes values in place, through the settle transition; under reduced motion they change at once.
+
+### 3D scenes
+
+- **The flat map is the main view.** A 3D scene may appear only as an optional extra view for replaying an event, opened by the user and closed back to the flat map. It is never the main working view, and nothing can be done only in 3D.
+- Why it stays an extra: a 3D scene costs far more to build and keep accurate; moving through it can cause motion sickness; it is hard to reach by keyboard and with a screen reader; and a game-like look makes a serious tool feel less trustworthy.
+- A 3D replay follows the same time handle, honours reduced motion with still frames, and uses the same roles and labels as the flat map. No game looks: no glow, lens flare, particle effects or cinematic camera moves.
 
 ### Navigation and shell
 
