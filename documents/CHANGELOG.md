@@ -1,5 +1,9 @@
 # Changelog: Documents
 
+## 2.2.0 - 2026-11-06
+
+- **How sure a value is.** Every guessed figure carries one of three words (estimated, forecast or preliminary) in a small grey or green outlined label beside it, never in a warning hue or the accent. A forecast part of a line is dotted in its series colour, so the dash stays for the target. The preview shows a key fact marked *Preliminary*. Tokens unchanged.
+
 ## 2.1.0 - 2026-09-29
 
 - **Content rules.** Write the argument first and choose visuals as its evidence; lead with the point; one term per label with no slash-joined alternatives; no em dashes; no internal codes, drafting notes or source-type tags in the body; no speaker notes in a deck sent to others; a visual only when it is the clearest way to show the point. Tokens and components are unchanged.

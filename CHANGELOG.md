@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.4.0 - 2026-11-06
+
+- Product UI 2.2.0: a word on every guessed value (estimated, forecast or preliminary) and a dotted forecast line in the machine colour; a live number over its stated limit in level red with the words "Over limit"; map rules (a layer list, labels on the map, a scale and a north mark, few layers on at the start); one time handle that moves the map, every chart and the event list together; and 3D only as an optional extra view for replaying an event. A maps and time block in the preview. No new tokens.
+- Risk Register UI 1.2.0: a word on every guessed value in a grey or green status pill, never a level colour, with an example in the preview. No new tokens.
+- Documents 2.2.0: a word on every guessed figure and a dotted forecast line, with an example in the preview. Tokens unchanged.
+
 ## 2.3.0 - 2026-10-05
 
 - Material Agent Chat 1.0.0: a new system for a staff tool with an AI assistant beside data-heavy screens, built on Material 3 (layout, shape, elevation, state layers, motion and component anatomy) and filled with one warm accent, a neutral scale, the repo's type families and one outline icon set referenced by name with its licence. Light and opt-in dark roles with a measured WCAG 2.1 AA table, Material 3 type roles, the components a data-heavy screen needs, a data table, filter bar and empty state, the agent surfaces (chat sidebar, full-page chat, message, input, suggestion chips, result card, approval card, draft field, agent progress), a mapping to a typical chat framework's theme variables and slots, and a preview page.

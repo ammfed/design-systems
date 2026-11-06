@@ -1,6 +1,6 @@
 # Risk Register UI: guidelines
 
-Version 1.1.0. The rules behind `tokens.css`. `preview.html` shows the three styles side by side.
+Version 1.2.0. The rules behind `tokens.css`. `preview.html` shows the three styles side by side.
 
 ## Styles
 
@@ -82,6 +82,13 @@ Cues are borders and marks, never fills.
 | To look at again | 2px dotted rule cue | an icon and one line |
 
 A rule's cue stays blue: it is guidance, not an error. Errors are red words (see Error lines).
+
+### How sure a value is
+
+- **A guessed value says so in a word.** Every value that is not yet measured and final carries one of three words: *Estimated* (worked out from other values, such as a cost the assistant added up), *Forecast* (expected later, such as the level once a treatment is done) or *Preliminary* (sent but not yet checked, such as a unit's first figure). The same three words on every screen and in the export.
+- **The word sits in a grey or green status pill** beside the value, in the status shades, so it can never be read as a level. It never sits in the Status column, where a pill means where an item is in its journey.
+- **A forecast level still comes from the scoring grid.** The word says only that it is not yet true. A model never sets it.
+- A value with no word is measured and final. When the person confirms a guessed value, the word goes.
 
 ### Contrast
 
@@ -371,6 +378,7 @@ Used by the chat panel and the greeting.
 - **The assistant never says "I".** The action is the subject: *Checking the level*, *Asking the unit*. Its tone in an interview is a supportive coach in a respectful, professional register, with at most two follow-ups.
 - Natural wording in both languages, a full translation rather than a transliteration; fixed names and terms stay as they are. Every string exists in both languages; a missing side falls back to the other, never to a blank. Counts use each language's own plural forms.
 - No em dashes, no internal codes or references in anything a reader sees. An acronym is spelled out the first time.
+- **Say how sure.** A guessed value carries *Estimated*, *Forecast* or *Preliminary* (see How sure a value is).
 - Sample data in designs is invented and generic: *Supplier delay*, *Unit A*, *Low 3*.
 
 ## Mixed direction

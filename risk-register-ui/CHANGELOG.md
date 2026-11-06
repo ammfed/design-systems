@@ -1,5 +1,10 @@
 # Changelog — Risk Register UI
 
+## 1.2.0 - 2026-11-06
+
+- **How sure a value is.** Every guessed value carries one of three words (estimated, forecast or preliminary) in a grey or green status pill beside the value, never in the Status column and never in a level colour. A forecast level still comes from the scoring grid. The word goes when the person confirms the value.
+- **Preview.** An answered row shows a cost with the word *Estimated*, in both directions. No new tokens.
+
 ## 1.1.0 - 2026-10-05
 
 What the product learned once built, through two UX and UI passes, folded back into the system. Every 1.0.0 token name still resolves.

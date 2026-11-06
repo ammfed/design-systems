@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Documents 2.0.0 preview</title>
+<title>Documents 2.2.0 preview</title>
 <!-- The three token files are linked from beside this page: no fonts, images or anything off this folder is fetched. -->
 <link rel="stylesheet" href="tokens.css">
 <link rel="stylesheet" href="tokens-dark.css">
@@ -64,6 +64,7 @@ body { font-family: var(--ds-type-family-body); font-size: var(--ds-type-body-si
 .p-fact { border-top: 1px solid var(--ds-hairline); padding-top: calc(var(--ds-space-3) * var(--ds-density)); display: grid; gap: calc(var(--ds-space-2) * var(--ds-density)); align-content: start; }
 .p-fact.is-lead { border-top: 2px solid var(--ds-rule-strong); }
 .p-fact.is-back .r-figure { color: var(--ds-ink-muted); }
+.p-sure { display: inline-block; margin-inline-start: 4px; padding: 0 8px; border: 1px solid var(--ds-rule); border-radius: 999px; color: var(--ds-ink-muted); white-space: nowrap; }
 .p-fact.is-pending .r-figure { white-space: normal; font-size: var(--ds-type-subheading-size); line-height: 1.2; font-weight: 300; letter-spacing: 0; }
 .p-meter { position: relative; height: 6px; background: var(--ds-series-track); }
 .p-meter > b { position: absolute; inset-block: 0; inset-inline-start: 0; background: var(--ds-series-1); }
@@ -150,7 +151,7 @@ table.p-reft { width: 100%; border-collapse: collapse; font-size: var(--ds-type-
 <div class="p-wrap">
   <header class="p-top">
     <div>
-      <p class="p-eyebrow">Documents 2.0.0</p>
+      <p class="p-eyebrow">Documents 2.2.0</p>
       <h1 class="p-h1">Tokens and components, light and dark</h1>
       <p class="p-lede">Everything below is drawn from the three token files linked beside this page. Fonts fall back to the system; nothing is fetched.</p>
     </div>
@@ -207,7 +208,7 @@ table.p-reft { width: 100%; border-collapse: collapse; font-size: var(--ds-type-
       </div>
       <div class="p-facts">
         <div class="p-fact is-lead"><div class="r-figure">92<span class="r-unit">%</span></div><div class="p-meter" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="92" aria-label="Closed within target, target 95%"><b data-ds-grow="x" style="width:92%"></b><i style="inset-inline-start:95%"></i></div><div class="p-delta r-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>Up 4 points on last year</div><p class="r-caption">Closed within target, target 95%</p></div>
-        <div class="p-fact is-back"><div class="r-figure">5<span class="r-unit">of 7</span></div><div class="p-segs" role="meter" aria-valuemin="0" aria-valuemax="7" aria-valuenow="5" aria-label="Regions reporting"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b></b><b></b></div><p class="r-caption">Regions reporting monthly</p></div>
+        <div class="p-fact is-back"><div class="r-figure">5<span class="r-unit">of 7</span></div><div class="p-segs" role="meter" aria-valuemin="0" aria-valuemax="7" aria-valuenow="5" aria-label="Regions reporting"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b><b></b><b></b></div><p class="r-caption">Regions reporting monthly <span class="p-sure">Preliminary</span></p></div>
         <div class="p-fact is-back is-pending"><div class="r-figure">Not yet known</div><p class="r-caption">Effect of the new intake form</p></div>
       </div>
       <div class="p-scroll" tabindex="0" role="region" aria-label="Table 1, requests by region">
