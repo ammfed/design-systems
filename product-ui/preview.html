@@ -145,7 +145,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
 .events { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 4px; }
 .events button { display: flex; gap: 12px; width: 100%; min-height: var(--ds-target-min); padding: 0 12px; border: 0; border-radius: var(--ds-radius-control); background: none; color: var(--ds-ink); text-align: start; align-items: center; cursor: pointer; }
 .events button:hover { background: var(--ds-surface-hover); }
-.events button[aria-current="true"] { background: var(--ds-user-soft); box-shadow: inset 2px 0 0 var(--ds-user-line); }
+.events button[aria-current="true"] { background: var(--ds-user-soft); border-inline-start: 2px solid var(--ds-user-line); padding-inline-start: 10px; }
 .events .num { color: var(--ds-ink-muted); }
 
 /* ----- chips, status pills ----- */
@@ -524,12 +524,12 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
     <h4 class="sub">Maps and time</h4>
     <div class="mapx" data-mapx>
       <div class="panel">
-        <svg class="map" viewBox="0 0 320 200" role="img" aria-label="Map of the river valley. The flooded area spreads along the river; Gauge 3 sits on its north bank beside Road 2." data-map>
+        <svg class="map" viewBox="0 0 320 200" role="img" aria-label="Map of the river valley, with a north mark and a 1 km scale. The layers below set what it shows." data-map>
           <path class="road" d="M0 150 L320 120"/><path class="road" d="M210 0 L250 200"/>
           <path class="flood" d="M20 92 C80 62 150 70 210 96 C250 112 290 100 312 90 L312 128 C270 140 230 132 200 122 C140 104 80 112 20 126 Z" data-flood/>
           <path class="river" d="M10 110 C80 82 150 92 205 108 C250 122 290 112 315 104"/>
           <circle class="gauge" cx="150" cy="80" r="7" data-gauge/>
-          <text x="96" y="62" data-gauge-lbl>Gauge 3, over limit</text><text x="30" y="80">River</text><text x="256" y="190">Road 2</text>
+          <text x="96" y="62" data-gauge-lbl>Gauge 3, over limit</text><text x="30" y="80">River</text><text x="256" y="190" data-road-lbl>Road 2</text>
           <path class="north" d="M296 40 V16"/><path class="north-head" d="M296 8 L302 22 L290 22 Z"/><text x="290" y="56">N</text>
           <path class="scale" d="M16 176 V184 H96 V176"/><text x="40" y="170">1 km</text>
         </svg>
@@ -813,7 +813,7 @@ kbd { font-family: inherit; font-size: var(--ds-type-meta-size); line-height: 20
     time.addEventListener('input', function () { show(+time.value); });
     evs.forEach(function (b) { b.addEventListener('click', function () { show(+b.getAttribute('data-ev')); }); });
     el.querySelector('[data-now]').addEventListener('click', function () { show(times.length - 1); time.focus(); });
-    var parts = { flood: '[data-flood]', gauge: '[data-gauge]', road: '.map .road' };
+    var parts = { flood: '[data-flood]', gauge: '[data-gauge], [data-gauge-lbl]', road: '.map .road, [data-road-lbl]' };
     function layer(k) {
       var on = el.querySelector('[data-ly="' + k + '"]').checked, str = el.querySelector('[data-str="' + k + '"]').value / 100;
       el.querySelectorAll(parts[k]).forEach(function (n) { n.style.opacity = on ? str : 0; });

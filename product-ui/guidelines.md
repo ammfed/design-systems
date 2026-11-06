@@ -27,7 +27,7 @@ Components read **roles**, never palette steps. A role says what a colour means;
 - **The machine has its own colour.** Anything a model produced carries the machine rule and chip, so it is never mistaken for the user's choice or for something a user entered. While it is working, a 2px bar sweeps under the content.
 - **Secondary actions are ink.** Solid, soft, outline and link buttons all come in ink; links are ink and underlined. One solid accent button per view.
 - **Status colours are for status.** Success, info, warning and error each come as soft (a ground plus text), solid (a fill plus text) and a line. A status is an outlined pill on the base surface: the line as its edge, with an icon and a word in the status text. An alert takes the soft ground, with the line as its inline-start bar.
-- **Data: four series, then "other".** Series 1 is the machine colour; series 4 is the neutral used for comparison, previous period and target. The accent marks the user's own value or series: their own reading over time, or against their own target, never a place in a ranking. Positive and negative colours are for signed deltas only, and always sit with a sign and a word or icon, never colour alone.
+- **Data: four series, then "other".** Series 1 is the machine colour, except on a chart that carries a forecast: there the forecast is the only mark in the machine colour, and every measured series takes ink or series 2 to 4. Series 4 is the neutral used for comparison, previous period and target. The accent marks the user's own value or series: their own reading over time, or against their own target, never a place in a ranking. Positive and negative colours are for signed deltas only, and always sit with a sign and a word or icon, never colour alone.
 
 ### Contrast
 
@@ -290,7 +290,7 @@ Radius roles: 8 for controls, 12 for panels and overlays, full for chips, segmen
 
 - **A guessed value says so in a word.** Every value that is not yet measured and final carries one of three words: *Estimated* (worked out from other values), *Forecast* (a value expected later) or *Preliminary* (measured, but not yet checked). Use the same three words on every screen.
 - **The word sits in a status pill,** grey (the default pill) or green (the success pill), beside the value or in the chart's legend. Never red, amber or the accent, so the word is never read as a level or as the user's choice. A value with no word is measured and final.
-- **A forecast line is the machine's.** It takes `--ds-machine` and a dotted stroke, and starts where the measured line ends. The measured line takes ink or another series, so the machine colour belongs to the forecast alone. The legend repeats the dotted key with the word *Forecast*, and the chart's summary sentence says where the forecast starts.
+- **A forecast line is the machine's.** It takes `--ds-machine` and a dotted stroke, and starts where the measured line ends. On a chart that carries a forecast, the forecast is the only mark in the machine colour, and every measured series takes ink or series 2 to 4. The legend repeats the dotted key with the word *Forecast*, and the chart's summary sentence says where the forecast starts.
 - A range is better than a single guessed number where the spread is known: *Forecast 3.8 to 4.4 m*.
 
 ### Live numbers and limits
